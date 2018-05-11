@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
+<!-- 어노테이션 설정 빈 생성 -->
+<context:component-scan base-package="org.kosta"/>
+<!-- dbcp -->
+<bean id="dbcp" class="org.apache.commons.dbcp.BasicDataSource">
+	<property name="driverClassName"  value="oracle.jdbc.driver.OracleDriver"/>
+	<property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521:xe"/>
+	<property name="username"  value="scott"/>
+	<property name="password"  value="tiger"/>
+</bean>
+<!-- MyBatis 설정
+      SqlSessionConfig.xml 을 사용하지 않고 
+      mapperLocations :  *.xml   으로 편리하게 mapper 을 load 하고 
+      typeAliasesPackage와 mapUnderscoreToCamelCase 을 설정 
+      
+ -->
+<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+ <property name="dataSource" ref="dbcp"/>
+ <!--  SqlSessionConfig.xml 를 사용하지 않으므로 해당 디렉토리에서 지운다   -->
+ <!-- <property name="configLocation" value="classpath:/mybatis/config/SqlSessionConfig.xml"/> -->
+ <property name="mapperLocations" value="classpath:/mybatis/config/*.xml"/> 
+  <property name="typeAliasesPackage" value="org.kosta.studit.model" />
+ <property name="configuration">
+     <bean class="org.apache.ibatis.session.Configuration">
+       <property name="mapUnderscoreToCamelCase" value="true"/>
+     </bean>  
+    </property>
+</bean>
+<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+	<constructor-arg ref="sqlSessionFactory"/>
+</bean>
+<!-- Annotation aop 설정 -->
+<aop:aspectj-autoproxy/>
+<!-- Transaction 설정 -->	 
+ <bean id="transactionManager" 
+class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	<property name="dataSource" ref="dbcp" />
+</bean>
+<!-- 어노테이션 기반 트랜잭션 관리 설정 -->
+<tx:annotation-driven transaction-manager="transactionManager"/>
+</beans>
