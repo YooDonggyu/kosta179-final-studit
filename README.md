@@ -64,23 +64,23 @@
   + **AjaxViewController** : Ajax를 사용할 때 사용(ResponseBody)
 
 
-### 2.1.2. *.do 
+### 2.1.2. url-pattern '/'
 
 + CRUD
 
-+ Camel 표기법 이용 : registerMember.do, findMemberById.do
++ Camel 표기법 이용 : /registerMember, /findMemberById
 
 + 기본적으로 메소드 명과 일치하여 사용
 
-  + ajax는 맨뒤에 `Ajax`를 붙임 : idCheckAjax.do
+  + ajax는 맨뒤에 `Ajax`를 붙임 : /idCheckAjax
 
 
   + 메소드 명 : findProductListByMaker(String maker) 
-    *.do 명 : findProductListByMaker.do
+    url-pattern명 : /findProductListByMaker
 
 + <u>Redirect</u> 목적인 url-pattern은 마지막에 `View`를 추가
-  + registerMeber.do -> registerMemberView.do
-  + updateProductHit.do -> updateProductHitView.do
+  + /registerMeber -> /registerMemberView
+  + /updateProductHit -> /updateProductHitView
 
 
 
@@ -249,7 +249,7 @@
 
   + Class
 
-    + 필수요소 : @author, @version
+    + 필수요소 : @author
       + @author : 작성자
 
   + Class  변수
