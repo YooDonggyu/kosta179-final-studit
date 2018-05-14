@@ -5,5 +5,5 @@ public class AnnounceVO {
 	private String title;
 	private String content;
 	private String regdate;
-	private int companyNo; //FK
+	private CompanyVO companyVO; //FK
 }

@@ -10,7 +10,18 @@
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd">
 
 <!-- 어노테이션 기반 springmvc 설정  -->
-<mvc:annotation-driven/>
+<mvc:annotation-driven>
+	<mvc:message-converters>
+        <!-- @ResponseBody로 String 처리할때 한글처리 -->
+        <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+            <property name="supportedMediaTypes">
+                <list>
+                    <value>text/html;charset=UTF-8</value>
+                </list>
+            </property>
+        </bean>
+    </mvc:message-converters>
+</mvc:annotation-driven>
 <!-- 
 	viewResolver : 클라이언트에게 어떻게 응답할 지에 대한 방식을 제공한다
 					InternalResourceViewResolver는 jsp를 응답하게 하고
@@ -22,6 +33,7 @@ class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 	<property name="suffix" value=".jsp"/>
 	<property name="order" value="1"/>
 </bean>
+
 <!-- TilesViewResolver 설정
 	  : 일반 JSP 응답이 아니라 Tiles Layout이 적용된 화면으로 응답하기 위해 설정 
 	  order를 0으로 설정하여 viewName을 이용하여 응답할 시에는 가장 먼저 타일즈 뷰 정보를 확인해 없으면 기존 jsp를 응답하는
@@ -43,22 +55,30 @@ class="org.springframework.web.servlet.view.InternalResourceViewResolver">
  </bean>
  <!-- Handler Interceptor 설정
 	mapping path : 인터셉터 적용할 url 명시 (반드시 /필요)
-	<mvc:mapping path="/**/*.do"/>
+	<mvc:mapping path="/**/*"/>
 	** : directory, sub directory까지 포함, 0개 이상의 디렉토리와 파일 매칭
 	* : 0개 이상의 문자와 매칭
-	<mvc:exclude-mapping path="/user_*.do"/>
-	user_*.do : user_요청 url.do 로 요청하면 핸들러 인터셉터 적용 대상에서 제외
+	<mvc:exclude-mapping path="/user_*"/>
+	user_* : user_요청 url로 요청하면 핸들러 인터셉터 적용 대상에서 제외
  -->
 <mvc:interceptors>
 	<mvc:interceptor>
-		<!-- <mvc:mapping path="/cafe.do"/>
-		<mvc:mapping path="/updateMemberForm.do"/> -->
-		<mvc:mapping path="/**/*.do"/>
-		<mvc:exclude-mapping path="/home.do"/>
-		<mvc:exclude-mapping path="/user_*.do"/>
+		<!-- 
+		<mvc:mapping path="/cafe.do"/>
+		<mvc:mapping path="/updateMemberForm.do"/> 
+		-->
+		<mvc:mapping path="/**/*"/>
+		<mvc:exclude-mapping path="/"/>
+		<mvc:exclude-mapping path="/login*"/>
+		<mvc:exclude-mapping path="/resources/**"/>
 		<bean class="org.kosta.studit.controller.SessionCheckInterceptor"/>
 	</mvc:interceptor>
 </mvc:interceptors>
+
+<!--  DispatcherServlet의 url pattern 이 *.do 에서 / 로 변경된 상태에서
+        정적 파일(img ,css ,js ) 를  서비스하기 위한 설정 	  	
+ -->
+<mvc:resources mapping="/resources/**" location="/resources/" />
 </beans>
 
 

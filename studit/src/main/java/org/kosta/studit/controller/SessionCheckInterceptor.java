@@ -36,11 +36,11 @@ public class SessionCheckInterceptor extends HandlerInterceptorAdapter{
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		HttpSession session=request.getSession(false);
-		if(session!=null&&session.getAttribute("mvo")!=null) {
+		if(session!=null&&session.getAttribute("memberVO")!=null) {
 			return true;
 		}else {
 			System.out.println("로그인 하지 않은 상태!");
-			response.sendRedirect("home.do");
+			response.sendRedirect(" /studit/");
 			return false;
 		}
 	}

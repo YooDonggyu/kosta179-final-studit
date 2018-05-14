@@ -1,8 +1,11 @@
 package org.kosta.studit.model.service;
 
-import org.springframework.stereotype.Service;
+import org.kosta.studit.exception.EmailNotFoundException;
+import org.kosta.studit.exception.PasswordIncorrectException;
+import org.kosta.studit.model.vo.MemberVO;
 
-@Service
 public interface MemberService {
 
+	MemberVO login(MemberVO memberVO) throws EmailNotFoundException, PasswordIncorrectException;
+	
 }

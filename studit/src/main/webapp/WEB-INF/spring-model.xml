@@ -21,7 +21,6 @@
       SqlSessionConfig.xml 을 사용하지 않고 
       mapperLocations :  *.xml   으로 편리하게 mapper 을 load 하고 
       typeAliasesPackage와 mapUnderscoreToCamelCase 을 설정 
-      
  -->
 <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
  <property name="dataSource" ref="dbcp"/>

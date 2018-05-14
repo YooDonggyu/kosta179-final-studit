@@ -7,17 +7,19 @@ public class CompanyVO {
 	private String addr2;
 	private String addr3;
 	private String addr4;
-	private String tel;
-	private String license;
+	private double latitude;
+	private double longitude;
+	private String tel;  
+	private String license; 
 	private String regdate;
-	private String profilePath;
-	private String intro;
-	private String state;
-	private String open;
-	private String close;
-	private String holiday;
-	private String hint;
 	private String url;
-	private String memberEmail; //FK
+	private String open; 
+	private String close; 
+	private String holiday; 
+	private String intro; 
+	private String profilePath; 
+	private String state; 
+	private int hit; 
+	private MemberVO memberVO; //FK
 	
 }

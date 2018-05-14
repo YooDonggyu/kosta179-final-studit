@@ -6,5 +6,5 @@ public class StudyRoomVO {
 	private String capacity;
 	private String price;
 	private String content;
-	private String companyNo;//FK
+	private CompanyVO companyVO;//FK
 }

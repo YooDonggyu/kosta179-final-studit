@@ -5,5 +5,5 @@ public class ComReviewCommentVO {
 	private String content;
 	private String name;
 	private String regdate;
-	private int comReviewNo; //FK
+	private ComReviewVO comReviewVO; //FK
 }

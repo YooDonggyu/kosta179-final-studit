@@ -4,7 +4,7 @@ public class ComReviewVO {
 	private int comReviewNo;
 	private String content;
 	private String score;
-	private String regdate;
 	private String name;
-	private int companyNo;  //FK
+	private String regdate;
+	private CompanyVO companyVO;  //FK
 }

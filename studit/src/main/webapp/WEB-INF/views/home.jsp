@@ -30,7 +30,6 @@
                     </div>
                 </div>
 
-
                 <div class="card p-3 align-center col-12 col-md-6 col-lg-4">
                     <div class="panel-item p-3">
                         <div class="card-img pb-3">
@@ -69,17 +68,12 @@
                     </div>
                 </div>
 
-
-                
             </div>
         </div>
    </div>
 </section>
 
 <section class="section-table cid-qRwKJoTkiW" id="table1-1k">
-
-  
-  
   <div class="container container-table">
       <h2 class="mbr-section-title mbr-fonts-style align-center pb-3 display-2">
           Table
@@ -96,10 +90,6 @@
           <table class="table" cellspacing="0">
             <thead>
               <tr class="table-heads ">
-                  
-                  
-                  
-                  
               <th class="head-item mbr-fonts-style display-7">
                       NAME</th><th class="head-item mbr-fonts-style display-7">
                       AGE</th><th class="head-item mbr-fonts-style display-7">
@@ -108,45 +98,20 @@
             </thead>
 
             <tbody>
-              
-              
-              
-              
             <tr> 
-                
-                
-                
-                
               <td class="body-item mbr-fonts-style display-7">Jeanna Schmal</td><td class="body-item mbr-fonts-style display-7">44</td><td class="body-item mbr-fonts-style display-7">2016-10-17</td><td class="body-item mbr-fonts-style display-7">$317.000</td></tr><tr>
-                
-                
-                
-                
               <td class="body-item mbr-fonts-style display-7">Caren Rials</td><td class="body-item mbr-fonts-style display-7">35</td><td class="body-item mbr-fonts-style display-7">2013-04-12</td><td class="body-item mbr-fonts-style display-7">$445.500</td></tr><tr>
-                
-                
-                
-                
               <td class="body-item mbr-fonts-style display-7">Leon Rogol</td><td class="body-item mbr-fonts-style display-7">66</td><td class="body-item mbr-fonts-style display-7">2016-05-22</td><td class="body-item mbr-fonts-style display-7">$152.558</td></tr><tr>
-                
-                
-                
-                
               <td class="body-item mbr-fonts-style display-7">Shala Barrera</td><td class="body-item mbr-fonts-style display-7">70</td><td class="body-item mbr-fonts-style display-7">2016-05-15</td><td class="body-item mbr-fonts-style display-7">$459.146</td></tr></tbody>
           </table>
         </div>
         <div class="container table-info-container">
-          
         </div>
       </div>
     </div>
 </section>
 
 <section class="features18 popup-btn-cards cid-qRwHj03dob" id="features18-1b">
-
-    
-
-    
     <div class="container">
         <h2 class="mbr-section-title pb-3 align-center mbr-fonts-style display-2">
             Image features with buttons on mouseover
@@ -238,10 +203,6 @@
 </section>
 
 <section class="mbr-section info1 cid-qRwL6KacgP" id="info1-1m">
-
-    
-
-    
     <div class="container">
         <div class="row justify-content-center content-row">
             <div class="media-container-column title col-12 col-lg-7 col-md-6">

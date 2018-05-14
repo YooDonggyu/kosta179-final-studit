@@ -5,7 +5,7 @@
 <tiles-definitions>
 	<!-- Controller에서 반환하는 viewName이 home.tiles이면 tiles view가 응답 -->
 	<definition name="home.tiles" template="/WEB-INF/views/templates/layout.jsp">
-		<put-attribute name="title" value="kosta"/>
+		<put-attribute name="title" value="STUD-IT"/>
 		<put-attribute name="header" value="/WEB-INF/views/templates/header.jsp"/>
 		<put-attribute name="left" value="/WEB-INF/views/templates/left.jsp"/>
 		<put-attribute name="main" value="/WEB-INF/views/home.jsp"/>
