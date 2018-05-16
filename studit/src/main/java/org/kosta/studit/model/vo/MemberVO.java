@@ -27,6 +27,10 @@ public class MemberVO {
 		this.passwordAnswer = passwordAnswer;
 		this.picPath = picPath;
 	}
+	public MemberVO(String memberEmail, String password) {
+		this.memberEmail = memberEmail;
+		this.password = password;
+	}
 	public String getMemberEmail() {
 		return memberEmail;
 	}

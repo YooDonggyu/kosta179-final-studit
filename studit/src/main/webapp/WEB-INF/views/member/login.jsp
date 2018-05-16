@@ -1,72 +1,36 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>STUD-IT LOGIN</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/studit/css/login.css">
-<title>Insert title here</title>
-</head>
-
-<body>
-	<div class="lowin">
-		<div class="lowin-brand">
-			<img src="${pageContext.request.contextPath}/resources/assets/studit/images/login.jpg" alt="logo">
-		</div>
-		<div class="lowin-wrapper">
-			<div class="lowin-box lowin-login">
-				<div class="lowin-box-inner">
-					<form action="login" method="post">
-					.	<p>STUD-IT LOGIN</p>
-						<div class="lowin-group">
-							<label>이메일 <a href="#" class="login-back-link"></a></label>
-							<input type="email" autocomplete="email" name="memberEmail" class="lowin-input">
-						</div>
-						<div class="lowin-group password-group">
-							<label>비밀번호<a href="#" class="forgot-link">비밀번호 찾기</a></label>
-							<input type="password" name="password" autocomplete="current-password" class="lowin-input">
-						</div>
-						<button class="lowin-btn login-btn">
-							로그인
-						</button>
-
-						<div class="text-foot">
-							계정이 없으세요? <a href="" class="register-link">회원가입</a>
-						</div>
-					</form>
-				</div>
+    
+    
+<div class="modal fade" id="loginModal"  tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">×</span>
+					<span class="sr-only">닫 기</span>
+				</button>
+				<h4 class="modal-title">로그인</h4>
 			</div>
-		
-		<!-- 	<div class="lowin-box lowin-register">
-				<div class="lowin-box-inner">
-					<form>
-						<p>Let's create your account</p>
-						<div class="lowin-group">
-							<label>Name</label>
-							<input type="text" name="name" autocomplete="name" class="lowin-input">
-						</div>
-						<div class="lowin-group">
-							<label>Email</label>
-							<input type="email" autocomplete="email" name="email" class="lowin-input">
-						</div>
-						<div class="lowin-group">
-							<label>Password</label>
-							<input type="password" name="password" autocomplete="current-password" class="lowin-input">
-						</div>
-						<button class="lowin-btn">
-							Sign Up
-						</button>
+			<!-- Modal Body -->
+			<div class="modal-body">
+			    <form role="form" action="${pageContext.request.contextPath }/member/login" method="post"  id="loginForm" autocomplete="off">
+	                <div class="form-group">
+	                    <label for="email" class="sr-only">이메일</label>
+	                    <input type="email" name="loginEmail" id="loginEmail" class="form-control" placeholder="studit@studit.com">
+	                </div>
+	                <div class="form-group">
+	                    <label for="key" class="sr-only">비밀번호</label>
+	                    <input type="password" name="loginPassword" id="loginPassword" class="form-control" placeholder="Password">
+	                </div>
 
-						<div class="text-foot">
-							Already have an account? <a href="" class="login-link">Login</a>
-						</div>
-					</form>
-				</div>
+	                <input type="submit" id="btn-login" class="btn btn-custom btn-lg btn-block" value="Log in">
+	             </form>
+			</div>
+			<!-- <div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+				<button type="button" class="btn btn-custom">확인</button>
 			</div> -->
-		</div>
-	</div>
-
-</body>
-</html>
+		</div> 
+	</div> 
+</div> 

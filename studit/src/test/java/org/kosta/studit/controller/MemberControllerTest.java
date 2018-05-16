@@ -2,6 +2,7 @@ package org.kosta.studit.controller;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import javax.servlet.http.HttpSession;
@@ -40,20 +41,20 @@ public class MemberControllerTest {
 	 * @param password Test할 비밀번호
 	 */
 	 @Test
-	 public void login() {
+	 public void loginTest() {
 	 	HttpSession session = null;
 		try {
-			session = mock.perform(post("/login")
-					.param("memberEmail", "a@a.com")
-					.param("password", "1"))
+			session = mock.perform(post("/member/login")
+					.param("loginEmail", "a@a.com")
+					.param("loginPassword", "1"))
 						.andDo(print())
-						.andExpect(status().isOk())
+						/*.andExpect(status().isOk())*/
+						.andExpect(redirectedUrl("/"))
 						.andReturn().getRequest().getSession();
 			System.out.println(session.getAttribute("memberVO"));
 		} catch (Exception e) {
+			System.out.println("error");
 			e.printStackTrace();
 		}
-	 	
 	 }
-	
 }

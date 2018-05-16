@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
+@RequestMapping("/member")
 public class MemberController {
 
+	
 	@Autowired
 	private MemberService memberService;
 	
@@ -28,10 +30,10 @@ public class MemberController {
 	 * @return home.tiles 로그인 한 후 메인페이지로 이동
 	 */
 	@RequestMapping(value="/login", method=RequestMethod.POST)
-	public String login(MemberVO memberVO, HttpServletRequest request) {
-		MemberVO rMemberVO;
+	public String login(String loginEmail, String loginPassword, HttpServletRequest request) {
+		MemberVO rMemberVO = null;
 		try {
-			rMemberVO = memberService.login(memberVO);
+			rMemberVO = memberService.login(new MemberVO(loginEmail, loginPassword));
 			if(rMemberVO == null) {
 				//Null일 경우는 Error = 405
 			}else {
@@ -57,5 +59,10 @@ public class MemberController {
 	public String logout(HttpServletRequest request) {
 		request.getSession().invalidate();
 		return "redirect:/";
+	}
+	
+	@RequestMapping(value="/registerMember", method=RequestMethod.POST)
+	public String registerMember() {
+		return "";
 	}
 }
