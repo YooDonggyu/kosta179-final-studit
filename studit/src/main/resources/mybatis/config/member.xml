@@ -10,7 +10,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		from member
 		where member_email = #{value}
 	</select>
-	
+	<insert id="registerMember" parameterType="memberVO">
+		insert into member(member_email,password,name,addr,phone,regdate,password_hint,password_answer,pic_path)
+		values(#{memberEmail},#{password},#{name},#{addr},#{phone},sysdate,#{passwordHint},#{passwordAnswer},#{picPath})
+	</insert>
 </mapper>
  
  

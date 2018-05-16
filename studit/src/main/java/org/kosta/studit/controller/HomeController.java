@@ -18,7 +18,7 @@ public class HomeController {
 	//@PathVariable : 요청 url 정보를 변수로 할당받기 위한 어노테이션
 	// 요청 url과 일치하는 별도의 RequestMapping이 있으면 그 메서드가 
 	// 실행되고 없으면 PathVariable 적용된 메서드가 실행된다. 
-	@RequestMapping("/{viewName}")
+	@RequestMapping("/{viewName}")	
 	public String showTiles(@PathVariable String viewName) {
 		return "member/"+viewName+".tiles";
 	}

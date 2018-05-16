@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.kosta.studit.exception.EmailNotFoundException;
 import org.kosta.studit.exception.PasswordIncorrectException;
+import org.kosta.studit.model.dao.MemberDAO;
 import org.kosta.studit.model.service.MemberService;
 import org.kosta.studit.model.vo.MemberVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping("/member")
 public class MemberController {
-
-	
+   @Autowired
+	private MemberDAO memberDAO;
 	@Autowired
 	private MemberService memberService;
 	
@@ -62,7 +63,9 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="/registerMember", method=RequestMethod.POST)
-	public String registerMember() {
-		return "";
+	public String registerMember(MemberVO memberVO) {
+		System.out.println(memberVO);
+		memberDAO.registerMember(memberVO);
+		return "redirect:/";
 	}
 }

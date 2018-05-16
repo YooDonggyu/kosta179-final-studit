@@ -19,7 +19,11 @@
     <link href="${pageContext.request.contextPath}/resources/assets/css/font-awesome.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="${pageContext.request.contextPath}/resources/assets/css/main.css" rel="stylesheet">
-    
+     <!-- script -->
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/assets/js/bootstrap.min.js"></script>
+    <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
 	<!-- title -->
 	<title><tiles:insertAttribute name="title" ignore="true"/></title>
 </head>
@@ -70,10 +74,7 @@
 	  </div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
 
-    <!-- script -->
-    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/assets/js/bootstrap.min.js"></script>
-    
+
 </body>
 
 </html>

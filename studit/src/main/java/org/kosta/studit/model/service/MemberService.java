@@ -7,5 +7,6 @@ import org.kosta.studit.model.vo.MemberVO;
 public interface MemberService {
 
 	MemberVO login(MemberVO memberVO) throws EmailNotFoundException, PasswordIncorrectException;
+
 	
 }

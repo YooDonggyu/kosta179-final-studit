@@ -9,11 +9,16 @@ import org.springframework.stereotype.Repository;
 public class MemberDAOImpl implements MemberDAO {
 	
 	@Autowired
-	private SqlSessionTemplate template;
-	
-	@Override
-	public MemberVO findMemberByEmail(String memberEmail) {
-		return template.selectOne("member.findMemberByEmail", memberEmail);
-	}
+	   private SqlSessionTemplate template;
+	   
+	   @Override
+	   public MemberVO findMemberByEmail(String memberEmail) {
+	      return template.selectOne("member.findMemberByEmail", memberEmail);
+	   }
+	   
+	   @Override
+	   public void registerMember(MemberVO memberVO) {
+	      template.insert("member.registerMember", memberVO);
+	   }
 
 }

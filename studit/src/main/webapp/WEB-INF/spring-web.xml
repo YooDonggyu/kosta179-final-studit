@@ -69,6 +69,8 @@ class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		-->
 		<mvc:mapping path="/**/*"/>
 		<mvc:exclude-mapping path="/member/login"/>
+		<mvc:exclude-mapping path="/member/registerMember"/>
+		<mvc:exclude-mapping path="/ajax/findCheckByEmail"/>
 		<mvc:exclude-mapping path="/*"/>
 		<mvc:exclude-mapping path="/resources/**"/>
 		<bean class="org.kosta.studit.controller.SessionCheckInterceptor"/>
