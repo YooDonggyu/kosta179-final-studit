@@ -21,14 +21,9 @@ public class HomeController {
 	}
 	
 	
-	//@PathVariable : 요청 url 정보를 변수로 할당받기 위한 어노테이션
-	// 요청 url과 일치하는 별도의 RequestMapping이 있으면 그 메서드가 m
-	
-	// 실행되고 없으면 PathVariable 적용된 메서드가 실행된다. 
 	/**
 	 * session처리가 필요없는 요청에 즉각 페이지를 이동하기 위한 메서드.
 	 * 이동할 .jsp를 viewName으로 url-pattern으로 지정해서 viewName.tiles로 이동한다. 
-	 * 
 	 * @author 유동규
 	 * @param viewName @PathVariable 어노테이션을 이용해 이동할 .jsp 이름을 저장
 	 * @return member/viewName member에서만 session을 사용하지 않기 때문에 member/를 붙여준다. 

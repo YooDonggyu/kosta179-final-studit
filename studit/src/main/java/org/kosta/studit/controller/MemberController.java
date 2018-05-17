@@ -6,6 +6,7 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.kosta.studit.exception.EmailNotFoundException;
+import org.kosta.studit.exception.IsNotMemberException;
 import org.kosta.studit.exception.PasswordIncorrectException;
 import org.kosta.studit.model.dao.MemberDAO;
 import org.kosta.studit.model.service.MemberService;
@@ -35,6 +36,7 @@ public class MemberController {
 	 * @param request 세션을 담기위해 HttpServletRequest 사용
 	 * @exception EmailNotFoundException 아이디가 없을 때 발생하는 예외
 	 * @exception PasswordIncorrectException 비밀번호가 틀릴 때 발생하는 예외
+	 * @exception IsNotMemberException 회원 탈퇴상태일 때 발생하는 예외
 	 * @return redirect:/ 로그인 한 후 메인페이지로 이동
 	 */
 	@RequestMapping(value="/login", method=RequestMethod.POST)
@@ -48,7 +50,7 @@ public class MemberController {
 				//세션할당
 				request.getSession().setAttribute("memberVO", rMemberVO);
 			}
-		} catch (EmailNotFoundException | PasswordIncorrectException  e) {
+		} catch (EmailNotFoundException | PasswordIncorrectException | IsNotMemberException  e) {
 			model.addAttribute("msg", e.getMessage());
 			return "member/login_fail";
 		}
@@ -99,7 +101,6 @@ public class MemberController {
 	/**
 	 * 비밀번호 재확인을 위한 메서드
 	 * 회원정보를 수정하기전 사용자 재인증을 위한 비밀번호 확인.
-	 * 
 	 * @author 김유란,이승수
 	 * @param loginPassword  재입력한 비밀번호
 	 * @param request 세션을 호출
@@ -111,10 +112,8 @@ public class MemberController {
 		memberVO.setPassword(checkPassword);
 		try {
 			memberService.login(memberVO);
-		} catch (EmailNotFoundException  mailException) {
-			return "member/login_not_found";
-		}catch(PasswordIncorrectException passwordException) {
-			return "member/login_password_incorrect";
+		} catch (EmailNotFoundException | PasswordIncorrectException | IsNotMemberException  mailException) {
+			return "member/login_fail";
 		}
 		return "redirect:/member/updateMemberView";	
 	}
@@ -122,7 +121,6 @@ public class MemberController {
 	/**
 	 * update_member.jsp로 가기위한 메소드
 	 * update_member.jsp로 가기전에 request.set으로 정보를 저장하고 이동.
-	 * 
 	 * @author 김유란,이승수
 	 * @return String
 	 * @param request 세션을 호출
@@ -139,7 +137,6 @@ public class MemberController {
 	 * 
      * 회원정보 수정 메서드
      * 사용자가 수정한 정보를 전달받아 DB에 update한다.
-     * 
      * @author 김유란, 이승수
      * @param memberVO 수정된 회원정보를 담은 VO
      * @param multipartFile 사용자가 업로드한 파일 정보를 담은 객체타입
