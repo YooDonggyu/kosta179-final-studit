@@ -21,13 +21,14 @@
 + 점심
   + 11시 45분 ~ 12시 15분 
   + 매일 있는 회의가 아님 - 팀원 개인이 필요시 미리 공지 후 개최 
+  + Convention 논의
 + 저녁
   + 18시 00분 ~ 18시 30분 (+10)
   + 개인 브리핑 사항(전원)
     1. 아침 회의 이후 진행사항 
     2. 특이사항(이슈사항)
     3. 향 후 일정 보고
-    4. 궁금한 점
+    4. 궁금한 점(Convention 등)
   + 저녁 회의 미 참석자는 개인 브리핑 사항을 SNS로 보고
 + 추가 회의
   + 추가 회의가 필요하다고 생각되는 팀원은 SL에게 보고 후 SL이 의견수립
@@ -42,12 +43,12 @@
 | 용어 |  의미  |                             대체                             |              예              |
 | :--: | :----: | :----------------------------------------------------------: | :--------------------------: |
 |  C   | Create |                           Register                           | createFile<br>registerMember |
-|  R   |  Read  | Get : 파라미터가 없는 메서드<br>Find : 파라미터가 있는 메서드 |        readAllMember         |
+|  R   |  Read  | Get : 파라미터가 없는 메서드<br>Find : 파라미터가 있는 메서드<br>Check | readAllMember<br>checkMemberByPassword         |
 |  U   | Update |                                                              |       updateMemberById       |
 |  D   | Delete |                                                              |       deleteMemberById       |
 
 + 기능이 뚜렷한 경우는 CRUD에서 제외  : Login / Logout 등
-
++ boolean은 is가 아닌 check로 사용
 
 
 
@@ -64,22 +65,22 @@
   + **AjaxViewController** : Ajax를 사용할 때 사용(ResponseBody)
 
 
-### 2.1.2. url-pattern '/'
+### 2.1.2. url-pattern '/' 
 
 + CRUD
 
 + Camel 표기법 이용 : /registerMember, /findMemberById
 
 + 기본적으로 메소드 명과 일치하여 사용
-
-  + ajax는 맨뒤에 `Ajax`를 붙임 : /idCheckAjax
-
+  + Home을 제외한 controller에는 RequestMapping을 지정하여 사용
+  + ajax는 /ajax/findMemberEmailByEmial
+  + member는 /memeber/registerMember
 
   + 메소드 명 : findProductListByMaker(String maker) 
     url-pattern명 : /findProductListByMaker
 
 + <u>Redirect</u> 목적인 url-pattern은 마지막에 `View`를 추가
-  + /registerMeber -> /registerMemberView
+  + /registerMember -> /registerMemberView
   + /updateProductHit -> /updateProductHitView
 
 
@@ -116,7 +117,6 @@
 + XML의 sql ID
 
   + Call한 메서드와 동일
-
     + 예(sql ID = findMemberById, mapper = member)
 
       ```java
@@ -140,7 +140,8 @@
 
 + 기본 형식 
 
-  -  동사(혹은 명사, 형용사) _ Directroy명_(구체적 대상-필요시).jsp
+  -  동사(혹은 명사, 형용사) _ Directory명_(구체적 대상-필요시).jsp
+  -  Directory명: 해단 jsp를 갖고 있는 폴더명
   - Template : header / footer / left / right / layout 
 
   > Member Directory
@@ -158,7 +159,7 @@
   > > 동사_Directory.jsp : update_board.jsp, delete_board_study.jsp
 
 + 특정 형식 : 기능_상태.jsp
-
+  > 추가 시 PM, PL과 논의 후 생성
   > login 기능
   >
   > > login_fail.jsp
@@ -247,42 +248,18 @@
 
 + 적는 법
 
-  + Class
-
-    + 필수요소 : @author
-      + @author : 작성자
-
-  + Class  변수
-
-    + 변수 명과 설명
-
-      ```java
-      /**
-      * MyBatis SQL Method 호출을 위한 template 선언
-      */
-      @Autowired
-      private SqlSessionTemplate template;
-      ```
-
   + 메서드 
 
     + 요소(author 이외는 선택적)
-      + @author, @param, @return, @exception, @see 
-
+      + @author, @param, @return, @exception
+      + Tip: 최대한 나중에 주석 다는 것이 자동완성이 되어 효과적이다.
 
 + 예
 
   ```java
-  /**
-  * 사용자에 관한 DAO.  
-  * 
-  * @author 유동규, 변태섭
-  * @see (필요시 등록)
-  */
+
   Class MemberDAOImpl extends MemberDAO{
-  	/**
-  	* MyBatis에서 제공하는 template 사용.
-  	*/
+
       @Autowired
       private SqlSessionTemplate template;
 
@@ -312,6 +289,8 @@
   + 작성자, 기능요약(한 줄) 및 로직 설명
 
   + 작성자는 가장 최근의 수정자
+
+  + API의 경우 상단부에 API 기능에 대해 간단히 명시하고, 수정한 부분만 주석을 단다.
 
   + 단, `$(document).ready()`는 생략
 
@@ -359,6 +338,7 @@
     ```xml
     <!--
     	사용자의 ID로 ID에 해당하는 정보를 찾는다.
+    	@author 작성자
     	@param id 사용자 ID
     	@return memberVO ID에 해당하는 memberVO
     -->
@@ -455,7 +435,7 @@
     > >
     > > type : "get",
     > >
-    > > url : "idCheckAjax.do"
+    > > url : "/idCheckAjax"
     > >
     > > data : "id="+$("#id").text(),
     > >
@@ -480,5 +460,6 @@
 # 4. JavaScript 선언 위치(보류)
 
 참고 : [붉디붉은 피의 고양이's blog- js 선언위치](http://blog.bloodcat.com/191)
+
 
 
