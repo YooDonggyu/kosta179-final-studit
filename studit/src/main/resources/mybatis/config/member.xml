@@ -11,6 +11,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where member_email = #{value}
 	</select>
 
+    <!-- 
+    	회원가입 시 입력된 데이터를 member DB에 insert한다.
+    	@author 변태섭
+    	@param memberVO
+     -->
 	<insert id="registerMember" parameterType="memberVO">
 		insert into member(member_email,password,name,addr,phone,regdate,password_hint,password_answer,pic_path)
 		values(#{memberEmail},#{password},#{name},#{addr},#{phone},sysdate,#{passwordHint},#{passwordAnswer},#{picPath})
@@ -34,6 +39,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	update member set password=#{password} where member_email=#{memberEmail}
 	</update>
 	
+	<!-- 
+		회원의 직책을 DB에 insert한다.
+		@author 변태섭
+		@param HashMap 사용자 Email과 직책 사용
+	 -->
+	<insert id="registerMemberPosition" parameterType="string">
+	insert into MEMBER_POSITION(member_position_no, name, member_email)
+	values (member_position_no_seq.nextval,#{memberPosition},#{memberEmail})
+	</insert>
 
 </mapper>
  

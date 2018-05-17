@@ -1,5 +1,7 @@
 package org.kosta.studit.model.dao;
 
+import java.util.Map;
+
 import org.kosta.studit.model.vo.MemberVO;
 
 public interface MemberDAO {
@@ -12,6 +14,8 @@ public interface MemberDAO {
 	void updateMember(MemberVO memberVO);
 
 	void updatePassword(MemberVO memberVO);
+
+	void registerMemberPosition(Map<String, String> map);
 
 
 }

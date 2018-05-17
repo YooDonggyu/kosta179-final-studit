@@ -1,5 +1,7 @@
 package org.kosta.studit.model.dao;
 
+import java.util.Map;
+
 import org.kosta.studit.model.vo.MemberVO;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,11 @@ public class MemberDAOImpl implements MemberDAO {
 	      return template.selectOne("member.findMemberByEmail", memberEmail);
 	   }
 	   
+	   /**
+	    * 회원가입을 통해 member DB에 insert하는 메서드
+	    * @author 변태섭
+	    * @param MemberVO 회원가입 시 사용자가 입력한 데이터
+	    */
 	   @Override
 	   public void registerMember(MemberVO memberVO) {
 	      template.insert("member.registerMember", memberVO);
@@ -46,5 +53,10 @@ public class MemberDAOImpl implements MemberDAO {
 	@Override
 	public  void updateMember(MemberVO memberVO) {
 		template.update("member.updateMember",memberVO);
+	}
+	
+	@Override
+	public void registerMemberPosition(Map<String, String> map) {
+		template.insert("member.registerMemberPosition",map);
 	}
 }

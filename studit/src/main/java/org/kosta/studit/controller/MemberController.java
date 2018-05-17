@@ -69,14 +69,34 @@ public class MemberController {
 	}
 	
 
+	/**
+	 * 회원 가입 시 입력된 데이터를 DB에 insert하는 메서드
+	 * @author 변태섭
+	 * @param memberVO 회원가입 사용자가 입력한 Data
+	 * @param picFile 프로필 사진 경로
+	 */
 	@RequestMapping(value="/registerMember", method=RequestMethod.POST)
-	public String registerMember(MemberVO memberVO) {
-		memberDAO.registerMember(memberVO);
-		return "redirect:/";
+	public String registerMember(MemberVO memberVO, MultipartFile picFile) {
+		if(picFile!=null && !picFile.isEmpty()) {
+		     String fileName = memberVO.getMemberEmail()+"_"+picFile.getOriginalFilename();
+		     //String path = request.getSession(false).getServletContext().getRealPath("upload"); 개발 완료 후 적용
+		     String path = "D:/KOSTA/workspace/resources/upload/";
+		     try {
+		        picFile.transferTo(new File(path, fileName));//지정 경로에 실제 파일 저장
+		        memberVO.setPicPath(fileName);
+		     } catch (IllegalStateException | IOException e) {
+		        return "member/update_pic_fail.tiles";
+		     } 
+		  }else {//파일을 첨부하지 않았을 때
+			  memberVO.setPicPath("default.png");
+		  }
+		memberService.registerMember(memberVO);
+		return "redirect:/register_member_ok";
 	}
 	
+	 
+	
 	/**
-<<<<<<< HEAD
 	 * 비밀번호 재확인을 위한 메서드
 	 * 회원정보를 수정하기전 사용자 재인증을 위한 비밀번호 확인.
 	 * 

@@ -1,5 +1,8 @@
 package org.kosta.studit.model.dao;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kosta.studit.model.vo.MemberVO;
@@ -18,6 +21,7 @@ public class MemberDAOTest {
 	    * 아이디 유무 확인 TEST.
 	    * @author 유동규
 	    */
+		//@Test
 	   public void findMemberByEmailTest() {
 	      //아이디가 있는지 검사
 	      System.out.println(memberDAO.findMemberByEmail("a@a.com"));
@@ -28,7 +32,7 @@ public class MemberDAOTest {
 	   
 	   /**
 	    * 회원가입 시 사용자가 입력한 데이터를 DB에 insert하는 메서드
-	    * @param BTS
+	    * @author 변태섭
 	    */
 	   //@Test
 	   public void registerMember() {
@@ -54,7 +58,7 @@ public class MemberDAOTest {
 	 *  회원정보 변경확인 TEST
 	 * @author 이승수
 	 */
-	@Test
+	//@Test
 	public void updateMember() {
 		System.out.println("수정전 : "+memberDAO.findMemberByEmail("a@a.com"));
 		memberDAO.updateMember(new MemberVO("a@a.com", "11", "유스페이스", "1234", "1", "아이유유", "질문?", "답?", "path"));
@@ -65,10 +69,27 @@ public class MemberDAOTest {
 	 * 비밀번호 변경 TEST
 	 * @author 김유란
 	 */
-	@Test
+	//@Test
 	public void updatePasswordTest() {
 		System.out.println("수정 전: " + memberDAO.findMemberByEmail("a@a.com"));
 		memberDAO.updatePassword(new MemberVO("a@a.com", "1234"));
 		System.out.println("수정 후: " + memberDAO.findMemberByEmail("a@a.com"));
 	}
+	
+	/**
+	 * 회원 직책을 추가할 때 사용 하는 메서드
+	 * @author 변태섭
+	 * @param Map 회원 Email, 직책 담아서 전달
+	 */
+	//@Test
+	public void registerMemberPosition() {
+		//HashMap<String, String> map = new HashMap<String,String>();
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("memberEmail", "a@a.com");
+		map.put("memberPosition",	"회원");
+		System.out.println(map);
+		memberDAO.registerMemberPosition(map);
+		//System.out.println(memberDAO.findMemberByEmail("a@a.com"));
+	}
+	
 }

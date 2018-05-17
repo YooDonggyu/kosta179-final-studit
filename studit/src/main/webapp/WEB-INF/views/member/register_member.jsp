@@ -44,6 +44,10 @@
     }
 </script>
 <script>
+		// 작성: 변태섭
+		// 기능: 회원가입 체크
+		// 로직: 주소입력체크, 이메일 형식 및 중복 체크, 비밀번호 일치 여부 체크, 연락처 체크, Submit 시 모든 조건 체크
+
 		// submit 시 확인하는 flag
 		var emailFlag = "";
 		var retypePassFlag = "";
@@ -136,14 +140,13 @@
 			alert("개인정보 수집을 동의해주세요.");
 			return false;
 		}else{
-			alert("회원가입이 완료되었습니다.");
 			return true;
 		}
 	}
 </script>
 	<div class="col-sm-3" ></div>
 	<div class="col-sm-6">
-            <form action="${pageContext.request.contextPath }/member/registerMember" method="post" class="form-horizontal" role="form">
+            <form action="${pageContext.request.contextPath }/member/registerMember" method="post" class="form-horizontal" role="form" enctype="multipart/form-data">
                 <h2>STUD-IT 회원가입</h2>
                 <div class="form-group">
                     <label for="memberEmail" class="col-sm-3 control-label">이메일</label>
@@ -211,9 +214,9 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="picPath" class="col-sm-3 control-label">프로필 사진</label>
+                    <label for="picFile" class="col-sm-3 control-label">프로필 사진</label>
                     <div class="col-sm-9">
-                        <input type="file" id="picPath" name="picPath" class="form-control">
+                        <input type="file" id="picFile" name="picFile" class="form-control">
                     </div>
                 </div>
                 

@@ -1,11 +1,15 @@
 package org.kosta.studit.model.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.kosta.studit.exception.EmailNotFoundException;
 import org.kosta.studit.exception.PasswordIncorrectException;
 import org.kosta.studit.model.dao.MemberDAO;
 import org.kosta.studit.model.vo.MemberVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -55,5 +59,22 @@ public class MemberServiceImpl implements MemberService {
 	      memberDAO.updateMember(memberVO);
 	      return memberDAO.findMemberByEmail(memberVO.getMemberEmail());
 	   }
+
+
+	  /**
+	   * 회원가입 시 입력된 데이터를 DB에 insert하는 메서드
+	   * 동시에 직책테이블에 '회원'상태로 insert한다.
+	   * @author 변태섭
+	   * @param Map 회원 Email, 직책을 담아 전달
+	   */
+	@Override
+	@Transactional
+	public void registerMember(MemberVO memberVO) {
+		memberDAO.registerMember(memberVO);
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("memberEmail", memberVO.getMemberEmail());
+		map.put("memberPosition", "회원");
+		memberDAO.registerMemberPosition(map);
+	}
 	
 }
