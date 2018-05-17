@@ -21,7 +21,7 @@ public class MemberDAOTest {
 	    * 아이디 유무 확인 TEST.
 	    * @author 유동규
 	    */
-		//@Test
+	   //@Test
 	   public void findMemberByEmailTest() {
 	      //아이디가 있는지 검사
 	      System.out.println(memberDAO.findMemberByEmail("a@a.com"));
@@ -32,7 +32,7 @@ public class MemberDAOTest {
 	   
 	   /**
 	    * 회원가입 시 사용자가 입력한 데이터를 DB에 insert하는 메서드
-	    * @author 변태섭
+	    * @param 변태섭
 	    */
 	   //@Test
 	   public void registerMember() {
@@ -91,5 +91,12 @@ public class MemberDAOTest {
 		memberDAO.registerMemberPosition(map);
 		//System.out.println(memberDAO.findMemberByEmail("a@a.com"));
 	}
-	
+	/**
+	 * 회원이 탈퇴상태인지 확인
+	 * @author 유동규
+	 */
+	//@Test
+	public void isMemberTest() {
+		System.out.println(memberDAO.isMember("a@a.com"));
+	}
 }

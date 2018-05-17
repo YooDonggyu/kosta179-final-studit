@@ -13,7 +13,13 @@ public class MemberDAOImpl implements MemberDAO {
 	
 	@Autowired
 	   private SqlSessionTemplate template;
-	   
+	
+	   /**
+	    * 이메일에 따른 멤머 객체를 찾는 메서드.
+	    * @author 유동규
+	    * @param memberEmail 검색할 이메일
+	    * @return MemberVO 이메일에 해당하는 멤버 객체 반환
+	    */
 	   @Override
 	   public MemberVO findMemberByEmail(String memberEmail) {
 	      return template.selectOne("member.findMemberByEmail", memberEmail);
@@ -50,9 +56,26 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 	
 
+		@Override
+		public  void updateMember(MemberVO memberVO) {
+			template.update("member.updateMember",memberVO);
+		}
+	
+	/**
+	 * 회원인지 아닌지 판단하는 메서드.
+	 * @author 유동규
+	 * @param memberEmail 회원인지 확인할 이메일
+	 * @return boolean 회원이면 true 아니면 false
+	 */
 	@Override
-	public  void updateMember(MemberVO memberVO) {
-		template.update("member.updateMember",memberVO);
+	public boolean isMember(String memberEmail) {
+		if((Integer)template.selectOne("member.isMember", memberEmail) != 0) {
+			return false;
+		}else {
+			return true;
+		}
+		
+		
 	}
 	
 	@Override

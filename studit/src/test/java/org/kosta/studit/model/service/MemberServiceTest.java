@@ -1,6 +1,5 @@
 package org.kosta.studit.model.service;
 
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kosta.studit.exception.EmailNotFoundException;
 import org.kosta.studit.exception.PasswordIncorrectException;
@@ -17,7 +16,7 @@ public class MemberServiceTest {
 	
 	   /**
 	    * 로그인 TEST.
-	    * 아이디 유무(EmailNotFoundException), 비밀번호 확인(PasswordIncorrectException) 후 MemberVO 리턴까지 TEST
+	    * 아이디 유무(EmailNotFoundException), 비밀번호 확인(PasswordIncorrectException), 탈퇴여부(IsNotMemberException) 후 MemberVO 리턴까지 TEST
 	    * @author 유동규
 	    */
 	   //@Test
@@ -27,7 +26,7 @@ public class MemberServiceTest {
 	      memberVO.setPassword("1");
 	      try {
 	         System.out.println(memberService.login(memberVO));
-	      } catch (EmailNotFoundException | PasswordIncorrectException e) {
+	      } catch (EmailNotFoundException | PasswordIncorrectException  e) {
 	         System.out.println(e.getMessage());
 	      }
 	   }
@@ -35,18 +34,13 @@ public class MemberServiceTest {
 	
 	/**
 	 *	회원정보수정을 테스트
-	 *
 	 * @author 김유란,이승수
 	 */
 	//@Test
 	public void updateMember() {
 		try {
 			System.out.println(memberService.login(new MemberVO("a@a.com", "1")));
-		} catch (EmailNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (PasswordIncorrectException e) {
-			// TODO Auto-generated catch block
+		} catch (EmailNotFoundException | PasswordIncorrectException  e) {
 			e.printStackTrace();
 		}
 		System.out.println(memberService.updateMember(new MemberVO("a@a.com", "11", "유스페이스", "1234", "1", "설현", "질문?", "답?", "path")));

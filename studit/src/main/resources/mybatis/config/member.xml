@@ -4,7 +4,13 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="member">
-
+	
+	<!-- 
+		이메일을 통한 회원 객체 검색.
+		@author 유동규
+		@param memberEmail 검색할 이메일
+		@return memberVO 해당 이메일에 대해 값이 있으면 객체를 반환. 없으면 null
+	 -->
 	<select id="findMemberByEmail" resultType="memberVO">
 		select member_email,password, addr, phone, regdate, name, password_hint,password_answer,pic_path 
 		from member 
@@ -20,6 +26,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into member(member_email,password,name,addr,phone,regdate,password_hint,password_answer,pic_path)
 		values(#{memberEmail},#{password},#{name},#{addr},#{phone},sysdate,#{passwordHint},#{passwordAnswer},#{picPath})
 	</insert>
+	
 	<!-- 
 		@author 김유란, 이승수
 		@param memberVO
@@ -48,7 +55,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	insert into MEMBER_POSITION(member_position_no, name, member_email)
 	values (member_position_no_seq.nextval,#{memberPosition},#{memberEmail})
 	</insert>
-
+	<!--
+		@author 유동규
+		@param memberEmail 회원인지 아닌지 판단할 이메일
+		@return count(m.member_email) 0이면 회원 0이 아니면 탈퇴 
+ 	-->
+	 <select id="isMember" resultType="int">
+	 	select count(m.member_email) 
+		from member m, member_position p
+		where m.member_email = p.member_email and m.member_email = #{value} and p.name = '탈퇴'
+	 </select>
 </mapper>
  
  

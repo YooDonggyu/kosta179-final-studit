@@ -17,5 +17,6 @@ public interface MemberDAO {
 
 	void registerMemberPosition(Map<String, String> map);
 
+	boolean isMember(String memberEmail);
 
 }

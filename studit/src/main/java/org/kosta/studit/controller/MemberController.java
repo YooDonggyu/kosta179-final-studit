@@ -6,7 +6,6 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.kosta.studit.exception.EmailNotFoundException;
-import org.kosta.studit.exception.IsNotMemberException;
 import org.kosta.studit.exception.PasswordIncorrectException;
 import org.kosta.studit.model.dao.MemberDAO;
 import org.kosta.studit.model.service.MemberService;
@@ -50,7 +49,7 @@ public class MemberController {
 				//세션할당
 				request.getSession().setAttribute("memberVO", rMemberVO);
 			}
-		} catch (EmailNotFoundException | PasswordIncorrectException | IsNotMemberException  e) {
+		} catch (EmailNotFoundException | PasswordIncorrectException   e) {
 			model.addAttribute("msg", e.getMessage());
 			return "member/login_fail";
 		}
@@ -112,7 +111,7 @@ public class MemberController {
 		memberVO.setPassword(checkPassword);
 		try {
 			memberService.login(memberVO);
-		} catch (EmailNotFoundException | PasswordIncorrectException | IsNotMemberException  mailException) {
+		} catch (EmailNotFoundException | PasswordIncorrectException e) {
 			return "member/login_fail";
 		}
 		return "redirect:/member/updateMemberView";	
