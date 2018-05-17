@@ -51,4 +51,9 @@ public class MemberServiceTest {
 		System.out.println(memberService.updateMember(new MemberVO("a@a.com", "11", "유스페이스", "1234", "1", "설현", "질문?", "답?", "path")));
 	}
 	
+	@Test
+	public void updatePasswordTest() {
+		
+	}
+	
 }

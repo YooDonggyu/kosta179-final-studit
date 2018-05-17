@@ -35,7 +35,7 @@
 	                  <li class="divider"></li>
 	                  <li class="dropdown-header">회원정보</li>
 	                  <li><a data-toggle="modal"  href="#checkMemberModal">회원정보 수정</a></li>
-	                  <li><a href="#">비밀번호 변경</a></li>
+	                  <li><a href="${pageContext.request.contextPath}/member/updatePasswordView">비밀번호 변경</a></li>
 	                  <li><a href="${pageContext.request.contextPath}/member/logout">로그아웃</a></li>
 	                </ul>
 	              </li>
@@ -50,5 +50,4 @@
 
     <jsp:include page="../member/login.jsp" />
  <jsp:include page="../member/check_member.jsp" />
-    
-
+ 

@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-
 <section id="intro" class="text-intro no-padding-bottom">
         <div class="container">
           <div class="row">

@@ -24,6 +24,7 @@ public class MemberController {
 	private MemberDAO memberDAO;
 	@Autowired
 	private MemberService memberService;
+
 	
 	/**
 	 * 사용자 로그인을 위한 메서드.
@@ -67,6 +68,7 @@ public class MemberController {
 		return "redirect:/";
 	}
 	
+
 	@RequestMapping(value="/registerMember", method=RequestMethod.POST)
 	public String registerMember(MemberVO memberVO) {
 		memberDAO.registerMember(memberVO);
@@ -74,6 +76,7 @@ public class MemberController {
 	}
 	
 	/**
+<<<<<<< HEAD
 	 * 비밀번호 재확인을 위한 메서드
 	 * 회원정보를 수정하기전 사용자 재인증을 위한 비밀번호 확인.
 	 * 
@@ -147,5 +150,33 @@ public class MemberController {
 		  request.getSession(false).setAttribute("memberVO", rMemberVO);
 		  return "member/update_member_ok.tiles";
 	  }
+
+	/** 
+	    * 비밀번호 변경 화면으로 이동하는 메서드
+	    * 
+	    * @author 김유란
+	    * @return member/update_password.tiles  
+	 */
+	@RequestMapping("/updatePasswordView")
+	public String updatePasswordView() {
+		return "member/update_password.tiles";
+	}
+	
+	/**
+	 * 
+	    * 비밀번호 변경
+	    * 브라우저에서 입력받은 비밀번호를 DB에 반영하기 위한 메서드
+	    * 
+	    * @author 김유란
+	    * @param newPassword 사용자가 입력한 새로운 비밀번호
+	    * @param checkEmail 접속중인 사용자의 식별 정보
+	    * @return member/update_password_ok 
+	 */
+	@RequestMapping("/updatePassword")
+	public String updatePassword(String newPassword, String checkEmail) {
+		memberDAO.updatePassword(new MemberVO(checkEmail, newPassword));
+		return "member/update_password_ok";
+	}
+	
 	
 }

@@ -60,4 +60,15 @@ public class MemberDAOTest {
 		memberDAO.updateMember(new MemberVO("a@a.com", "11", "유스페이스", "1234", "1", "아이유유", "질문?", "답?", "path"));
 		System.out.println("수정 후 : "+memberDAO.findMemberByEmail("a@a.com"));
 	}
+	
+	/**
+	 * 비밀번호 변경 TEST
+	 * @author 김유란
+	 */
+	@Test
+	public void updatePasswordTest() {
+		System.out.println("수정 전: " + memberDAO.findMemberByEmail("a@a.com"));
+		memberDAO.updatePassword(new MemberVO("a@a.com", "1234"));
+		System.out.println("수정 후: " + memberDAO.findMemberByEmail("a@a.com"));
+	}
 }

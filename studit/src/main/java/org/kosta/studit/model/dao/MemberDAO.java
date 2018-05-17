@@ -8,6 +8,10 @@ public interface MemberDAO {
 	MemberVO findMemberByEmail(String memberEmail);
 
 	void registerMember(MemberVO memberVO);
+	
 	void updateMember(MemberVO memberVO);
+
+	void updatePassword(MemberVO memberVO);
+
 
 }

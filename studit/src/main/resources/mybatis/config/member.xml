@@ -10,6 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		from member 
 		where member_email = #{value}
 	</select>
+
 	<insert id="registerMember" parameterType="memberVO">
 		insert into member(member_email,password,name,addr,phone,regdate,password_hint,password_answer,pic_path)
 		values(#{memberEmail},#{password},#{name},#{addr},#{phone},sysdate,#{passwordHint},#{passwordAnswer},#{picPath})
@@ -23,6 +24,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		update member set name=#{name}, addr=#{addr}, phone=#{phone},password_hint=#{passwordHint}, password_answer=#{passwordAnswer},pic_path=#{picPath} 
 		where member_email=#{memberEmail}
 	</update>
+	
+	<!-- 
+		사용자의 비밀번호를 업데이트한다.
+		@author 김유란
+		@param memberVO 사용자 ID와 변경된 비밀번호를 담은 VO
+	 -->
+	<update id="updatePassword" parameterType="memberVO">
+	update member set password=#{password} where member_email=#{memberEmail}
+	</update>
+	
+
 </mapper>
  
  
