@@ -2,6 +2,7 @@ package org.kosta.studit.model.service;
 
 import org.junit.runner.RunWith;
 import org.kosta.studit.exception.EmailNotFoundException;
+import org.kosta.studit.exception.IsNotMemberException;
 import org.kosta.studit.exception.PasswordIncorrectException;
 import org.kosta.studit.model.vo.MemberVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,14 +20,14 @@ public class MemberServiceTest {
 	    * 아이디 유무(EmailNotFoundException), 비밀번호 확인(PasswordIncorrectException), 탈퇴여부(IsNotMemberException) 후 MemberVO 리턴까지 TEST
 	    * @author 유동규
 	    */
-	   //@Test
+		//@Test
 	   public void loginTest() {
 	      MemberVO memberVO = new MemberVO();
 	      memberVO.setMemberEmail("a@a.com");
 	      memberVO.setPassword("1");
 	      try {
 	         System.out.println(memberService.login(memberVO));
-	      } catch (EmailNotFoundException | PasswordIncorrectException  e) {
+	      } catch (EmailNotFoundException | PasswordIncorrectException | IsNotMemberException e) {
 	         System.out.println(e.getMessage());
 	      }
 	   }
@@ -40,7 +41,7 @@ public class MemberServiceTest {
 	public void updateMember() {
 		try {
 			System.out.println(memberService.login(new MemberVO("a@a.com", "1")));
-		} catch (EmailNotFoundException | PasswordIncorrectException  e) {
+		} catch (EmailNotFoundException | PasswordIncorrectException | IsNotMemberException e) {
 			e.printStackTrace();
 		}
 		System.out.println(memberService.updateMember(new MemberVO("a@a.com", "11", "유스페이스", "1234", "1", "설현", "질문?", "답?", "path")));

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.kosta.studit.exception.EmailNotFoundException;
+import org.kosta.studit.exception.IsNotMemberException;
 import org.kosta.studit.exception.PasswordIncorrectException;
 import org.kosta.studit.model.dao.MemberDAO;
 import org.kosta.studit.model.vo.MemberVO;
@@ -28,7 +29,7 @@ public class MemberServiceImpl implements MemberService {
 	    * @return MemberVO 로그인할 멤버 객체 반환
 	    */
 	   @Override
-	   public MemberVO login(MemberVO memberVO) throws EmailNotFoundException, PasswordIncorrectException {
+	   public MemberVO login(MemberVO memberVO) throws EmailNotFoundException, PasswordIncorrectException, IsNotMemberException {
 	      //1. 해당 Email 찾기
 	      MemberVO rMemberVO = memberDAO.findMemberByEmail(memberVO.getMemberEmail());
 	      //2. Email 있으면 비밀번호 확인
@@ -39,7 +40,10 @@ public class MemberServiceImpl implements MemberService {
 	    	  //3. 탈퇴된 이메일인지 확인
 	    	  throw new IsNotMemberException("탈퇴된 아이디입니다.");
 	      }*/
-	      else {
+	      else if(!memberDAO.isMember(rMemberVO.getMemberEmail())){
+	    	  //3. 탈퇴된 이메일인지 확인
+	    	  throw new IsNotMemberException("탈퇴된 아이디입니다.");
+	      }else {
 	         //4.비밀번호 확인
 	         if(rMemberVO.getPassword().equals(memberVO.getPassword())) {
 	            return rMemberVO;
