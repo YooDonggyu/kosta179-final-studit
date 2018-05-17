@@ -1,5 +1,8 @@
 package org.kosta.studit.controller;
 
+import java.io.File;
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.kosta.studit.exception.EmailNotFoundException;
@@ -12,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/member")
@@ -68,4 +72,80 @@ public class MemberController {
 		memberDAO.registerMember(memberVO);
 		return "redirect:/";
 	}
+	
+	/**
+	 * 비밀번호 재확인을 위한 메서드
+	 * 회원정보를 수정하기전 사용자 재인증을 위한 비밀번호 확인.
+	 * 
+	 * @author 김유란,이승수
+	 * @param loginPassword  재입력한 비밀번호
+	 * @param request 세션을 호출
+	 * @return String
+	 */
+	@RequestMapping(value="/check_member", method=RequestMethod.POST)
+	public String checkMember(String checkPassword,HttpServletRequest request) {
+		MemberVO memberVO=(MemberVO) request.getSession(false).getAttribute("memberVO");
+		memberVO.setPassword(checkPassword);
+		try {
+			memberService.login(memberVO);
+		} catch (EmailNotFoundException  mailException) {
+			return "member/login_not_found";
+		}catch(PasswordIncorrectException passwordException) {
+			return "member/login_password_incorrect";
+		}
+		return "redirect:/member/updateMemberView";	
+	}
+	
+	/**
+	 * update_member.jsp로 가기위한 메소드
+	 * update_member.jsp로 가기전에 request.set으로 정보를 저장하고 이동.
+	 * 
+	 * @author 김유란,이승수
+	 * @return String
+	 * @param request 세션을 호출
+	 */
+	@RequestMapping("/updateMemberView")
+	public String updateMemberView(HttpServletRequest request) {
+		MemberVO memberVO=(MemberVO) request.getSession(false).getAttribute("memberVO");
+		MemberVO rMemberVO=memberDAO.findMemberByEmail(memberVO.getMemberEmail());
+		request.setAttribute("rMemberVO", rMemberVO);
+		return"member/update_member.tiles";
+	}
+	
+	/**
+	 * 
+     * 회원정보 수정 메서드
+     * 사용자가 수정한 정보를 전달받아 DB에 update한다.
+     * 
+     * @author 김유란, 이승수
+     * @param memberVO 수정된 회원정보를 담은 VO
+     * @param multipartFile 사용자가 업로드한 파일 정보를 담은 객체타입
+     * @param HttpServletRequest 세션 및 프로젝트 절대경로를 얻기 위해 호출 
+     * @return 회원정보 수정 결과 페이지로 이동
+     * @exception IllegalStateException 
+     * @exception IOException
+     */
+	@RequestMapping(method=RequestMethod.POST, value="/updateMember")
+	public String updateMember(MemberVO memberVO, MultipartFile picFile, HttpServletRequest request) {
+		  MemberVO pMemberVO = (MemberVO) request.getSession(false).getAttribute("memberVO");
+		if(picFile!=null && !picFile.isEmpty()) {
+		     String fileName = memberVO.getMemberEmail()+"_"+picFile.getOriginalFilename();
+		     //String path = request.getSession(false).getServletContext().getRealPath("upload"); 개발 완료 후 적용
+		     String path = "C:/java-kosta/framework-workspace2/resources/upload";
+		     try {
+		        picFile.transferTo(new File(path, fileName));//지정 경로에 실제 파일 저장
+		        memberVO.setPicPath(fileName);
+		     } catch (IllegalStateException | IOException e) {
+		        return "member/update_pic_fail.tiles";
+		     } 
+		  }else if(picFile.isEmpty() && pMemberVO.getPicPath()!=null){
+			  memberVO.setPicPath(pMemberVO.getPicPath());
+		  }else {//파일을 첨부하지 않았을 때
+			  memberVO.setPicPath("default.png");
+		  }
+		  MemberVO rMemberVO = memberService.updateMember(memberVO);
+		  request.getSession(false).setAttribute("memberVO", rMemberVO);
+		  return "member/update_member_ok.tiles";
+	  }
+	
 }

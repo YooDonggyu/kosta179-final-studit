@@ -35,6 +35,7 @@ public class HomeController {
 	 */
 	@RequestMapping("/{viewName}")
 	public String showTiles(@PathVariable String viewName) {
+		System.out.println("homecontroller viewName"+ viewName);
 		return "member/"+viewName+".tiles";
 	}
 

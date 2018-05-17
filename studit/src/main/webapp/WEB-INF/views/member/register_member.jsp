@@ -116,7 +116,6 @@
 		});
 		
 	});
-	
 	// submit Btn
 	function registerFlag(){
 		var checkBox = $('[name=checkAccept]').is(':checked');

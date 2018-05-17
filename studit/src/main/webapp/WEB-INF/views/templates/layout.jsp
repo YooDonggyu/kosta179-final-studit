@@ -47,6 +47,8 @@
       ga('create','UA-XXXXX-X');ga('send','pageview');
     </script>
     
+    <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+    
 </head>
 
 <body>
@@ -65,7 +67,6 @@
 	<div id="footer">
 		<tiles:insertAttribute name="footer"/>
 	</div>
-
 </body>
 
 </html>

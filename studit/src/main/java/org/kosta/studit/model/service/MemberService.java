@@ -8,5 +8,6 @@ public interface MemberService {
 
 	MemberVO login(MemberVO memberVO) throws EmailNotFoundException, PasswordIncorrectException;
 
+	MemberVO updateMember(MemberVO memberVO);
 	
 }

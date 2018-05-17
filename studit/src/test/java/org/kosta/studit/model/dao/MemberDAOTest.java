@@ -1,5 +1,6 @@
 package org.kosta.studit.model.dao;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kosta.studit.model.vo.MemberVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,15 @@ public class MemberDAOTest {
 	      // 정상 작동 되었는지 확인
 	      System.out.println(memberDAO.findMemberByEmail(mvo.getMemberEmail()));
 	   }
-	   
-
+	
+	/**
+	 *  회원정보 변경확인 TEST
+	 * @author 이승수
+	 */
+	@Test
+	public void updateMember() {
+		System.out.println("수정전 : "+memberDAO.findMemberByEmail("a@a.com"));
+		memberDAO.updateMember(new MemberVO("a@a.com", "11", "유스페이스", "1234", "1", "아이유유", "질문?", "답?", "path"));
+		System.out.println("수정 후 : "+memberDAO.findMemberByEmail("a@a.com"));
+	}
 }

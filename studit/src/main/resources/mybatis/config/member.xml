@@ -4,16 +4,25 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="member">
-	
+
 	<select id="findMemberByEmail" resultType="memberVO">
-		select member_email, password, addr, phone, regdate, name, password_hint, password_answer,pic_path
-		from member
+		select member_email,password, addr, phone, regdate, name, password_hint,password_answer,pic_path 
+		from member 
 		where member_email = #{value}
 	</select>
 	<insert id="registerMember" parameterType="memberVO">
 		insert into member(member_email,password,name,addr,phone,regdate,password_hint,password_answer,pic_path)
 		values(#{memberEmail},#{password},#{name},#{addr},#{phone},sysdate,#{passwordHint},#{passwordAnswer},#{picPath})
 	</insert>
+	<!-- 
+		@author 김유란, 이승수
+		@param memberVO
+		@return update 된 memberVO
+	 -->
+	<update id="updateMember" parameterType="memberVO">
+		update member set name=#{name}, addr=#{addr}, phone=#{phone},password_hint=#{passwordHint}, password_answer=#{passwordAnswer},pic_path=#{picPath} 
+		where member_email=#{memberEmail}
+	</update>
 </mapper>
  
  

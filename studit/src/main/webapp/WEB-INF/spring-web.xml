@@ -9,30 +9,28 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd">
 
-<!-- 어노테이션 기반 springmvc 설정  -->
-<mvc:annotation-driven>
-	<mvc:message-converters>
-        <!-- @ResponseBody로 String 처리할때 한글처리 -->
-        <bean class="org.springframework.http.converter.StringHttpMessageConverter">
-            <property name="supportedMediaTypes">
-                <list>
-                    <value>text/html;charset=UTF-8</value>
-                </list>
-            </property>
-        </bean>
-    </mvc:message-converters>
-</mvc:annotation-driven>
-<!-- 
-	viewResolver : 클라이언트에게 어떻게 응답할 지에 대한 방식을 제공한다
-					InternalResourceViewResolver는 jsp를 응답하게 하고
-					TilesViewResolver는 자동화된 jsp include 탬플릿을 이용해 응답하기 위한 ViewResolver이다
- -->
-<bean id="viewResolver" 
-class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-	<property name="prefix" value="/WEB-INF/views/"/>
-	<property name="suffix" value=".jsp"/>
-	<property name="order" value="1"/>
-</bean>
+	<!-- 어노테이션 기반 springmvc 설정 -->
+	<mvc:annotation-driven>
+		<mvc:message-converters>
+			<!-- @ResponseBody로 String 처리할때 한글처리 -->
+			<bean
+				class="org.springframework.http.converter.StringHttpMessageConverter">
+				<property name="supportedMediaTypes">
+					<list>
+						<value>text/html;charset=UTF-8</value>
+					</list>
+				</property>
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+	<!-- viewResolver : 클라이언트에게 어떻게 응답할 지에 대한 방식을 제공한다 InternalResourceViewResolver는 
+		jsp를 응답하게 하고 TilesViewResolver는 자동화된 jsp include 탬플릿을 이용해 응답하기 위한 ViewResolver이다 -->
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".jsp" />
+		<property name="order" value="1" />
+	</bean>
 
 <!-- TilesViewResolver 설정
 	  : 일반 JSP 응답이 아니라 Tiles Layout이 적용된 화면으로 응답하기 위해 설정 
@@ -78,10 +76,14 @@ class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 	</mvc:interceptor>
 </mvc:interceptors>
 
-<!--  DispatcherServlet의 url pattern 이 *.do 에서 / 로 변경된 상태에서
-        정적 파일(img ,css ,js ) 를  서비스하기 위한 설정 	  	
- -->
-<mvc:resources mapping="/resources/**" location="/resources/" />
+	<!-- DispatcherServlet의 url pattern 이 *.do 에서 / 로 변경된 상태에서 정적 파일(img ,css 
+		,js ) 를 서비스하기 위한 설정 -->
+	<mvc:resources mapping="/resources/**"
+		location="/resources/" />
+	<!-- 파일 업로드를 위한 multipartResolver 설정 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	</bean>
 </beans>
 
 
