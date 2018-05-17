@@ -1,5 +1,9 @@
 package org.kosta.studit.model.service;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.junit.runner.RunWith;
 import org.kosta.studit.exception.EmailNotFoundException;
 import org.kosta.studit.exception.IsNotMemberException;
@@ -47,10 +51,6 @@ public class MemberServiceTest {
 		System.out.println(memberService.updateMember(new MemberVO("a@a.com", "11", "유스페이스", "1234", "1", "설현", "질문?", "답?", "path")));
 	}
 	
-	//@Test
-	public void updatePasswordTest() {
-		
-	}
 	
 	/**
 	 * 회원 가입 및 직책 추가 테스트
@@ -70,5 +70,24 @@ public class MemberServiceTest {
 		System.out.println(memberVO);
 		memberService.registerMember(memberVO);
 	}
+		/**
+	    * 회원탈퇴 시 필요한 조건 확인
+	    * @author 송용준
+	    */
+	   //@Test
+	   public void deleteMemberView() {
+	      HashMap<String,Object> map=memberService.deleteMemberView("a@a.com");
+	      System.out.println("##회원털퇴를 위한 조건##");
+	      System.out.println("신청중인 스터디룸의 수 : "+map.get("waitStudyRoomCount"));
+	      System.out.println("신청중인 스터디의 수 : "+map.get("waitStudyCount"));
+	      System.out.println("업체일 경우, 승인대기중인 예약의 수 : "+map.get("waitReservation"));
+	      System.out.println("팀장이면서 팀원을 가진 스터디 그룹 갯수 : "+map.get("myLeadStudyGroupHasMemberCount"));
+
+	      List<Map<String, Object>> list=(List<Map<String, Object>>)map.get("myLeadStudyGroupHasMemberList");
+	      System.out.println("##팀장이면서 팀원을 가진 스터디 그룹 이름##");
+	      for(int i=0; i<list.size(); i++) {
+	         System.out.println(list.get(i).get("NAME"));
+	      }
+	   }
 	
 }

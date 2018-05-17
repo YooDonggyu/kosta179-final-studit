@@ -1,12 +1,17 @@
 package org.kosta.studit.model.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.kosta.studit.exception.EmailNotFoundException;
 import org.kosta.studit.exception.IsNotMemberException;
 import org.kosta.studit.exception.PasswordIncorrectException;
+import org.kosta.studit.model.dao.CompanyDAO;
+import org.kosta.studit.model.dao.GroupDAO;
 import org.kosta.studit.model.dao.MemberDAO;
+import org.kosta.studit.model.dao.RecruitDAO;
+import org.kosta.studit.model.dao.StudyRoomDAO;
 import org.kosta.studit.model.vo.MemberVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +23,14 @@ public class MemberServiceImpl implements MemberService {
 
 	   @Autowired
 	   private MemberDAO memberDAO;
+	   @Autowired
+	   private CompanyDAO companyDAO;
+	   @Autowired
+	   private StudyRoomDAO studyRoomDAO;
+	   @Autowired
+	   private GroupDAO groupDAO;
+	   @Autowired
+	   private RecruitDAO recruitDAO;
 	   
 	   /**
 	    * 회원의 로그인 로직을 처리하는 메서드.
@@ -85,5 +98,42 @@ public class MemberServiceImpl implements MemberService {
 		map.put("memberPosition", "회원");
 		memberDAO.registerMemberPosition(map);
 	}
+	
+
+	   /**
+	    * 회원탈퇴를 위한 메서드.
+	    * 탈퇴의 조건 : 1.신청중인 스터디가 있는가  2.팀장이면서 팀원을 가진 스터디가 있는가  3.신청중인 스터디룸이 있는가  4.업체일 경우, 승인대기중인 예약이 있는가
+	    * @author 송용준, 김유란
+	    * @param memberEmail 탈퇴 조건을 확인하기 위한 매개변수
+	    * @return map 탈퇴 조건을 담은 HashMap 객체
+	    */
+	   @Override
+	   public HashMap<String, Object> deleteMemberView(String memberEmail) {
+	      HashMap<String, Object> map=new HashMap<String, Object>();
+	      //업체인지 확인
+	      //Boolean isCompany=memberDAO.checkCompanyByEmail(memberEmail);
+	      //팀장인 스터디 그룹 수
+	      //int studyGroupCount=groupDAO.findMyLeadStudyGroupCountByEmail(memberEmail);
+	      
+	      //신청중인 스터디의 수
+	      String waitStudyCount=recruitDAO.findWaitStudyByEmail(memberEmail);
+	      //팀장이면서 팀원을 가진 스터디 그룹 번호, 스터디 그룹 이름
+	      List<Map<String, Object>> myLeadStudyGroupHasMemberList=groupDAO.findMyLeadGroupHasMemberByEmail(memberEmail);
+	      //신청중인 스터디룸의 수
+	      String waitStudyRoomCount=studyRoomDAO.findWaitStudyRoomByEmail(memberEmail);
+	      //업체일 경우, 승인대기중인 예약의 수
+	      String waitReservation=companyDAO.findWaitReservationByEmail(memberEmail);
+	      
+	      
+	      map.put("waitStudyRoomCount", waitStudyRoomCount);
+	      map.put("waitStudyCount", waitStudyCount);
+	      map.put("waitReservation", waitReservation);
+	      //팀장이면서 팀원을 가진 스터디 그룹 갯수
+	      map.put("myLeadStudyGroupHasMemberCount", myLeadStudyGroupHasMemberList.size());
+	      //팀장이면서 팀원을 가진 스터디 그룹 번호, 스터디 그룹 이름 리스트
+	      map.put("myLeadStudyGroupHasMemberList", myLeadStudyGroupHasMemberList);
+	      
+	      return map;
+	   }
 	
 }

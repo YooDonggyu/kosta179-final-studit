@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Sql Mapper -->
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="company">
+	<!-- 
+      회원 이메일로 승인대기중인 예약건수 조회
+      @author 송용준
+      @param memberEmail 회원 이메일
+      @return string 승인대기중인 예약건수
+    -->
+   <select id="findWaitReservationByEmail" resultType="string">
+      select count(sc.state) 
+      from studyroom_condition sc, studyroom sr, company com
+      where sc.state='승인대기중' and sc.studyroom_no=sr.studyroom_no 
+         and sr.company_no=com.company_no and com.member_email=#{value}
+   </select>
+</mapper>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

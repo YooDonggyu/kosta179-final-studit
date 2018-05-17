@@ -1,5 +1,7 @@
 package org.kosta.studit.model.dao;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.kosta.studit.model.vo.MemberVO;
@@ -13,6 +15,7 @@ public class MemberDAOImpl implements MemberDAO {
 	
 	@Autowired
 	   private SqlSessionTemplate template;
+	
 	
 	   /**
 	    * 이메일에 따른 멤머 객체를 찾는 메서드.
@@ -35,7 +38,6 @@ public class MemberDAOImpl implements MemberDAO {
 	      template.insert("member.registerMember", memberVO);
 	   }
 
-	
 	/**
 	 * 
 	    * 회원정보 수정 뷰 이동 메서드
@@ -80,14 +82,34 @@ public class MemberDAOImpl implements MemberDAO {
 		}else {
 			return true;
 		}
-		
-		
 	}
 	
-	@Override
-	public void registerMemberPosition(Map<String, String> map) {
-		template.insert("member.registerMemberPosition",map);
-		
-		
-	}
+	
+	/**
+	    * 회원이 업체인지 아닌지 확인
+	    * @author 송용준
+	    * @param memberEmail 회원 이메일
+	    * @return Boolean 업체일 경우 true, 아닌 경우 false
+	    */
+	   @Override
+	   public Boolean checkCompanyByEmail(String memberEmail) {
+	      int isCompany=template.selectOne("member.checkCompanyByEmail", memberEmail);
+	      if(isCompany!=0) {
+	         return true;
+	      }else {
+	         return false;
+	      }
+	   }
+
+	   /**
+	    * 회원 가입 시 직책테이블에 직책을 추가하는 메서드
+	    * @author 변태섭
+	    * @param Map 회원 Email, 직책
+	    */
+	   @Override
+	   public void registerMemberPosition(Map<String, String> map) {
+	      template.insert("member.registerMemberPosition",map);
+	   }
+	   
+	   
 }

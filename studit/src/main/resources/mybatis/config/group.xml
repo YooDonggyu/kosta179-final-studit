@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Sql Mapper -->
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="group">
+	<!-- 
+      본인이 팀장인 스터디 그룹의 개수 조회
+      @author 송용준
+      @param memberEmail 회원 이메일
+      @return string 본인이 팀장인 스터디 그룹의 개수
+    -->
+   <select id="findMyLeadStudyGroupCountByEmail" parameterType="string" resultType="int">
+      select count(sg.sg_no)
+      from recruit_post rp, study_group sg, sg_member sm
+      where rp.member_email=#{value} and rp.recruit_post_no=sg.recruit_post_no and sg.sg_no=sm.sg_no and sm.position='팀장'
+   </select>
+   <!-- 
+      본인이 팀장인 스터디 그룹 중 팀원이 있는 그룹 조회
+      @author 송용준, 유동규
+      @param memberEmail 회원 이메일
+      @return string 스터디 그룹 정보. Key : 스터디 그룹 넘버, 그룹 이름
+    -->
+   <select id="findMyLeadGroupHasMemberByEmail" parameterType="string" resultType="map">
+      select a.sg_no, sg.name
+      from (
+         select sm1.sg_no as sg_no, count(sm2.email) as cnt
+         from sg_member sm1, sg_member sm2 
+         where sm1.email=#{value} 
+               and sm1.position='팀장' 
+                 and sm1.sg_no = sm2.sg_no
+         group by sm1.sg_no
+      ) a, RECRUIT_POST rp, study_group sg
+      where sg.sg_no = a.sg_no and sg.recruit_post_no = rp.recruit_post_no and a.cnt>1
+   </select>
+</mapper>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

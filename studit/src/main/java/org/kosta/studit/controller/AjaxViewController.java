@@ -5,6 +5,7 @@ import org.kosta.studit.model.dao.MemberDAO;
 import javax.servlet.http.HttpServletRequest;
 
 import org.kosta.studit.exception.EmailNotFoundException;
+import org.kosta.studit.exception.IsNotMemberException;
 import org.kosta.studit.exception.PasswordIncorrectException;
 import org.kosta.studit.model.service.MemberService;
 
@@ -62,7 +63,7 @@ public class AjaxViewController {
 		String password = request.getParameter("nowPassword");
 		try {
 			memberService.login(new MemberVO(memberEmail, password));
-		} catch (EmailNotFoundException | PasswordIncorrectException e) {
+		} catch (EmailNotFoundException | PasswordIncorrectException | IsNotMemberException e) {
 			return false;
 		}
 		return true;

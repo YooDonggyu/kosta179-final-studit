@@ -1,5 +1,24 @@
 package org.kosta.studit.model.dao;
 
-public class StudyRoomDAOTest {
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations= {"file:src/main/webapp/WEB-INF/spring-model.xml"})
+public class StudyRoomDAOTest {
+	@Autowired
+	   private StudyRoomDAO studyroomDAO;
+	   
+	   /**
+	    * 신청한 스터디룸 중 승인대기중인 스터디룸 수를 확인.
+	    * @author 송용준
+	    */
+	   @Test
+	   public void findWaitStudyRoomByEmail() {
+	      System.out.println(studyroomDAO.findWaitStudyRoomByEmail("a@a.com"));
+	   }
 }

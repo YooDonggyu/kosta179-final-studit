@@ -65,6 +65,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		from member m, member_position p
 		where m.member_email = p.member_email and m.member_email = #{value} and p.name = '탈퇴'
 	 </select>
+	 
+	 
+	 <!-- 
+      회원의 직책이 업체인지 확인
+      @author 송용준
+      @param memberEmail 회원 이메일
+      @return string 업체라면 1, 아니라면 0를 반환
+    -->
+   <select id="checkCompanyByEmail" parameterType="string" resultType="string">
+      select count(mp.member_position_no)
+      from member m, member_position mp
+      where m.member_email = #{value} and m.member_email=mp.member_email and mp.name='업체'
+   </select>
+	 
 </mapper>
  
  
