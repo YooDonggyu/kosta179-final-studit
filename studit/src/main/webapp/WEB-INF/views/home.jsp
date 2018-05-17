@@ -1,108 +1,59 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-	<div id="headerwrap">
-		<div class="container">
-			<div class="row centered">
-				<div class="col-lg-8 col-lg-offset-2">
-				<h1>It Doesn't Take a Rocket <b>Scientist</b></h1>
-				<h2>It Takes a Designer</h2>
-				</div>
-			</div><!-- row -->
-		</div><!-- container -->
-	</div><!-- headerwrap -->
+
+<section id="intro" class="text-intro no-padding-bottom">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <h1>This could be your perfect <!-- <span class="rotate">startup intro site, landing page, bootstrap template</span> --> </h1>
+              <h3 class="weight-300">It is SEO friendly, responsive and free.</h3>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <p>500,000 users have already trusted <a href="http://bootstrapious.com">Bootstrapious templates</a>.<br />Try it for yourself.</p>
+         <!--      <form class="form-inline margin-top sign-up-form">
+                <input id="email_intro" type="email" placeholder="name@company.com" class="form-control">
+                <input id="submit_intro" type="submit" value="Get started for FREE" class="btn btn-primary">
+              </form> -->
+            </div>
+            <div class="col-md-12 col-lg-8 col-lg-offset-2">
+              <p class="margin-bottom--zero"><img alt="" src="${pageContext.request.contextPath }/resources/assets/img/features3.png" class="img-responsive"></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="section background-gray-lightest"> 
+        <div class="container">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="box-simple">
+                <div class="icon"><i class="pe-7s-map-2"></i></div>
+                <h3>Address</h3>
+                <p>13/25 New Avenue<br>New Heaven, 45Y 73J<br>England, <strong>Great Britain</strong></p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="box-simple">
+                <div class="icon"><i class="pe-7s-phone"></i></div>
+                <h3>Call center</h3>
+                <p class="text-muted">This number is toll free if calling from Great Britain otherwise we advise you to use the electronic form of communication.</p>
+                <p><strong>+33 555 444 333</strong></p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="box-simple">
+                <div class="icon"><i class="pe-7s-mail-open-file"></i></div>
+                <h3>Electronic support</h3>
+                <p class="text-muted">Please feel free to write an email to us or to use our electronic ticketing system.</p>
+                <p><strong><a href="mailto:">info@bootstrap.com</a></strong></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
 
-	<div class="container w">
-		<div class="row centered">
-			<br><br>
-			<div class="col-lg-4">
-				<i class="fa fa-heart"></i>
-				<h4>DESIGN</h4>
-				<p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even believable.</p>
-			</div><!-- col-lg-4 -->
 
-			<div class="col-lg-4">
-				<i class="fa fa-laptop"></i>
-				<h4>BOOTSTRAP</h4>
-				<p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even believable.</p>
-			</div><!-- col-lg-4 -->
-
-			<div class="col-lg-4">
-				<i class="fa fa-trophy"></i>
-				<h4>SUPPORT</h4>
-				<p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even believable.</p>
-			</div><!-- col-lg-4 -->
-		</div><!-- row -->
-		<br>
-		<br>
-	</div><!-- container -->
-
-
-	<!-- PORTFOLIO SECTION -->
-	<div id="dg">
-		<div class="container">
-			<div class="row centered">
-				<h4>LATEST WORKS</h4>
-				<br>
-				<div class="col-lg-4">
-					<div class="tilt">
-					<a href="#"><img src="${pageContext.request.contextPath}/resources/assets/img/p01.png" alt=""></a>
-					</div>
-				</div>
-
-				<div class="col-lg-4">
-					<div class="tilt">
-					<a href="#"><img src="${pageContext.request.contextPath}/resources/assets/img/p03.png" alt=""></a>
-					</div>
-				</div>
-
-				<div class="col-lg-4">
-					<div class="tilt">
-					<a href="#"><img src="${pageContext.request.contextPath}/resources/assets/img/p02.png" alt=""></a>
-					</div>
-				</div>
-			</div><!-- row -->
-		</div><!-- container -->
-	</div><!-- DG -->
-
-
-	<!-- FEATURE SECTION -->
-	<div class="container wb">
-		<div class="row centered">
-			<br><br>
-			<div class="col-lg-8 col-lg-offset-2">
-				<h4>WE CREATE FIRST CLASS DESIGN</h4>
-				<p>By being true to the brand we represent, we elevate the audiences’ relationship to it. Like becomes love becomes a passion. Passion becomes advocacy. And we see the brand blossom from within, creating a whole story the audience embraces. That’s when the brand can truly flex its muscles.</p>
-			<p><br/><br/></p>
-			</div>
-			<div class="col-lg-2"></div>
-			<div class="col-lg-10 col-lg-offset-1">
-				<img class="img-responsive" src="${pageContext.request.contextPath}/resources/assets/img/munter.png" alt="">
-			</div>
-		</div><!-- row -->
-	</div><!-- container -->
-
-
-	<div id="lg">
-		<div class="container">
-			<div class="row centered">
-				<h4>OUR AWESOME CLIENTS</h4>
-				<div class="col-lg-2 col-lg-offset-1">
-					<img src="${pageContext.request.contextPath}/resources/assets/img/c01.gif" alt="">
-				</div>
-				<div class="col-lg-2">
-					<img src="${pageContext.request.contextPath}/resources/assets/img/c02.gif" alt="">
-				</div>
-				<div class="col-lg-2">
-					<img src="${pageContext.request.contextPath}/resources/assets/img/c03.gif" alt="">
-				</div>
-				<div class="col-lg-2">
-					<img src="${pageContext.request.contextPath}/resources/assets/img/c04.gif" alt="">
-				</div>
-				<div class="col-lg-2">
-					<img src="${pageContext.request.contextPath}/resources/assets/img/c05.gif" alt="">
-				</div>
-			</div><!-- row -->
-		</div><!-- container -->
-	</div><!-- dg -->

@@ -5,28 +5,50 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<!-- meta -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
+
+<meta charset="utf-8">
+  <title><tiles:insertAttribute name="title" ignore="true" /></title> 
+  
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+    <!-- Bootstrap-->
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/assets/css/bootstrap.min.css">
+    <!-- Google fonts - Open Sans-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,700,800,400italic">
+    <!-- Stroke 7 font by Pixeden (http://www.pixeden.com/icon-fonts/stroke-7-icon-font-set)-->
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/assets/css/pe-icon-7-stroke.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/assets/css/helper.css">
+    <!-- theme stylesheet-->
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/assets/css/style.default.css" id="theme-stylesheet">
+    <!-- owl carousel-->
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/assets/css/owl.carousel.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/assets/css/owl.theme.css">
+    <!-- plugins-->
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/assets/css/simpletextrotator">
+    <!-- Custom stylesheet - for your changes-->
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/assets/css/custom.css">
+    <!-- Favicon-->
     
-    <!-- link -->
-    <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/assets/ico/favicon.png">
-    <!-- Bootstrap core CSS -->
-    <link href="${pageContext.request.contextPath}/resources/assets/css/bootstrap.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/resources/assets/css/font-awesome.min.css" rel="stylesheet">
-    <!-- Custom styles for this template -->
-    <link href="${pageContext.request.contextPath}/resources/assets/css/main.css" rel="stylesheet">
-     <!-- script -->
-    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/assets/js/bootstrap.min.js"></script>
-    <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
-	<!-- title -->
-	<title><tiles:insertAttribute name="title" ignore="true"/></title>
+    <!-- Javascript files-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="${pageContext.request.contextPath }/resources/assets/js/bootstrap.min.js"> </script>
+    <script src="${pageContext.request.contextPath }/resources/assets/js/jquery.cookie.js"> </script>
+    <script src="${pageContext.request.contextPath }/resources/assets/js/ekko-lightbox.js"></script>
+    <script src="${pageContext.request.contextPath }/resources/assets/js/jquery.simple-text-rotator.min.js"></script>
+    <script src="${pageContext.request.contextPath }/resources/assets/js/jquery.scrollTo.min.js"></script>
+    <script src="${pageContext.request.contextPath }/resources/assets/js/owl.carousel.min.js"></script>
+    <script src="${pageContext.request.contextPath }/resources/assets/js/front.js"></script>
+    <script>
+      (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+      function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+      e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+      e.src='//www.google-analytics.com/analytics.js';
+      r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+      ga('create','UA-XXXXX-X');ga('send','pageview');
+    </script>
+    
 </head>
+
 <body>
 	<div id="header">
 		<tiles:insertAttribute name="header"/>
@@ -43,37 +65,6 @@
 	<div id="footer">
 		<tiles:insertAttribute name="footer"/>
 	</div>
-	
-	<!-- MODAL FOR CONTACT -->
-	<!-- Modal -->
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	        <h4 class="modal-title" id="myModalLabel">contact us</h4>
-	      </div>
-	      <div class="modal-body">
-		        <div class="row centered">
-		        	<p>We are available 24/7, so don't hesitate to contact us.</p>
-		        	<p>
-		        		Somestreet Ave, 987<br/>
-						London, UK.<br/>
-						+44 8948-4343<br/>
-						hi@blacktie.co
-		        	</p>
-		        	<div id="mapwrap">
-		<iframe height="300" width="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.google.es/maps?t=m&amp;ie=UTF8&amp;ll=52.752693,22.791016&amp;spn=67.34552,156.972656&amp;z=2&amp;output=embed"></iframe>
-					</div>	
-		        </div>
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-danger" data-dismiss="modal">Save & Go</button>
-	      </div>
-	    </div><!-- /.modal-content -->
-	  </div><!-- /.modal-dialog -->
-	</div><!-- /.modal -->
-
 
 </body>
 

@@ -6,8 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-@RequestMapping("/ajax")
+
 @Controller
+@RequestMapping("/ajax")
 public class AjaxViewController {
 	@Autowired
 	   private MemberDAO memberDAO;

@@ -1,22 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-	<div id="r">
-		<div class="container">
-			<div class="row centered">
-				<div class="col-lg-8 col-lg-offset-2">
-					<h4>WE ARE STORYTELLERS. BRANDS ARE OUR SUBJECTS. DESIGN IS OUR VOICE.</h4>
-					<p>We believe ideas come from everyone, everywhere. At BlackTie, everyone within our agency walls is a designer in their own right. And there are a few principles we believe—and we believe everyone should believe—about our design craft. These truths drive us, motivate us, and ultimately help us redefine the power of design.</p>
-				</div>
-			</div><!-- row -->
-		</div><!-- container -->
-	</div><!-- r wrap -->
-	
-	
-<!-- 		<div id="f">
-		<div class="container">
-			<div class="row centered">
-				<a href="#"><i class="fa fa-twitter"></i></a><a href="#"><i class="fa fa-facebook"></i></a><a href="#"><i class="fa fa-dribbble"></i></a>
-		
-			</div>row
-		</div>container
-	</div>Footer -->
+    
+    <footer class="footer">
+        <div class="footer__copyright">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-6">
+                <p>&copy;2016 Best company</p>
+              </div>
+              <div class="col-md-6">
+                <p class="credit pull-right">Code by <a href="https://bootstrapious.com/landing-pages" class="external">Bootstrapious</a></p>
+               <!-- Not removing these links is part of the license conditions of the template. Thanks for understanding :) If you want to use the template without the attribution links, you can do so after supporting further themes development at https://bootstrapious.com/donate  -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    
+    

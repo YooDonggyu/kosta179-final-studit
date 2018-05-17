@@ -10,7 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration(locations= {"file:src/main/webapp/WEB-INF/spring-model.xml"})
 public class MemberDAOTest {
 	
-	@Autowired
+		@Autowired
 	   private MemberDAO memberDAO;
 	   
 	   /**
@@ -49,4 +49,5 @@ public class MemberDAOTest {
 	      System.out.println(memberDAO.findMemberByEmail(mvo.getMemberEmail()));
 	   }
 	   
+
 }
