@@ -3,7 +3,6 @@ package org.kosta.studit.model.service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.kosta.studit.model.PagingBean;
 import org.kosta.studit.model.dao.RecruitDAO;
 import org.kosta.studit.model.vo.StudyConditionListVO;
@@ -42,4 +41,39 @@ public class RecruitServiceImpl implements RecruitService {
 		
 		return studyConditionListVO;
 	}
+
+	/**
+	 * 스터디를 신청할떄 사용하는 메서드.
+	 * 
+	 * 스터디게시글번호,회원이메일,자기소개내용을 받아 Map에 저장해서 DAO에 전달
+	 * 
+	 * @author 이승수
+     * @param 스터디게시글번호,회원이메일,자기소개내용
+	 */
+	@Override
+	public void registerRecruitStudy(int recruitPostNo, String memberEmail, String context) {
+			HashMap<String,Object> map = new HashMap<String,Object>();
+			map.put("recruitPostNo", recruitPostNo);
+			map.put("memberEmail", memberEmail);
+			map.put("context", context);
+			recruitDAO.registerRecruitStudy(map);
+	}
+	
+	/**
+	 * 스터디를 신청할떄 사용하는 메서드.
+	 * 
+	 * 스터디신청시 이미 거절상태일때 다시 미승인 상태로 바꿔주는 메서드.
+	 * 
+	 * @author 이승수
+     * @param 스터디게시글번호,회원이메일,자기소개내용
+	 */
+	@Override
+	public void updateRecruitStudy(int recruitPostNo, String memberEmail, String context) {
+			HashMap<String,Object> map = new HashMap<String,Object>();
+			map.put("recruitPostNo", recruitPostNo);
+			map.put("memberEmail", memberEmail);
+			map.put("context", context);
+			recruitDAO.updateRecruitStudy(map);
+	}
+
 }

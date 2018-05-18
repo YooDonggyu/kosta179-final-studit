@@ -1,7 +1,6 @@
 package org.kosta.studit.model.dao;
 
-import java.util.HashMap;
-import java.util.List;
+
 import java.util.Map;
 
 import org.kosta.studit.model.vo.MemberVO;
@@ -52,10 +51,13 @@ public class MemberDAOImpl implements MemberDAO {
 		return "member/update_member"+".tiles";
 	}
 	
-		@Override
-		public  void updateMember(MemberVO memberVO) {
-			template.update("member.updateMember",memberVO);
-		}
+	/**
+	 *  회원 정보를 변경하는 메서드.
+	 */
+	@Override
+	public  void updateMember(MemberVO memberVO) {
+		template.update("member.updateMember",memberVO);
+	}
 	
 	/**
 	 * 회원인지 아닌지 판단하는 메서드.
@@ -109,4 +111,5 @@ public class MemberDAOImpl implements MemberDAO {
 	   public void registerMemberPosition(Map<String, String> map) {
 	      template.insert("member.registerMemberPosition",map);
 	   }
+
 }

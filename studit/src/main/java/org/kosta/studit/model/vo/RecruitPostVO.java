@@ -11,9 +11,7 @@ public class RecruitPostVO {
 	private String condition;
 	private MemberVO memberVO; //FK
 	private SmallCategoryVO smallCategoryVO;//FK
-	public RecruitPostVO() {
-		super();
-	}
+
 	public RecruitPostVO(int recruitPostNo, String title, String content, String regdate, int hit, int capacity,
 			String location, String condition, MemberVO memberVO, SmallCategoryVO smallCategoryVO) {
 		super();
@@ -27,6 +25,15 @@ public class RecruitPostVO {
 		this.condition = condition;
 		this.memberVO = memberVO;
 		this.smallCategoryVO = smallCategoryVO;
+	}
+	
+	public RecruitPostVO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public RecruitPostVO(int recruitPostNo) {
+		super();
+		this.recruitPostNo = recruitPostNo;
 	}
 	public int getRecruitPostNo() {
 		return recruitPostNo;
@@ -94,4 +101,5 @@ public class RecruitPostVO {
 				+ ", regdate=" + regdate + ", hit=" + hit + ", capacity=" + capacity + ", location=" + location
 				+ ", condition=" + condition + ", memberVO=" + memberVO + ", smallCategoryVO=" + smallCategoryVO + "]";
 	}
+	
 }

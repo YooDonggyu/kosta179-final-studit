@@ -5,7 +5,7 @@
  
     <div role="navigation" class="navbar navbar-default navbar-fixed-top">
           <div class="container">
-            <div class="navbar-header"><a href="#all" class="navbar-brand scroll-to"><img src="${pageContext.request.contextPath }/resources/assets/img/logo.png" alt="logo" class="hidden-xs hidden-sm"><img src="${pageContext.request.contextPath }/resources/assets/img/logo-small.png" alt="logo" class="visible-xs visible-sm"><span class="sr-only">Go to homepage</span></a>
+            <div class="navbar-header"><a href="${pageContext.request.contextPath}/" class="navbar-brand scroll-to"><img src="${pageContext.request.contextPath }/resources/assets/img/logo.png" alt="logo" class="hidden-xs hidden-sm"><img src="${pageContext.request.contextPath }/resources/assets/img/logo-small.png" alt="logo" class="visible-xs visible-sm"><span class="sr-only">Go to homepage</span></a>
               <div class="navbar-buttons">
                 <button type="button" data-toggle="collapse" data-target=".navbar-collapse" class="navbar-toggle navbar-btn">Menu<i class="pe-7s-menu"></i></button>
               </div>
@@ -17,7 +17,7 @@
 		            <li><a href="${pageContext.request.contextPath}/recruit/getRecruitList">STUDY</a></li>
 		            <li><a href="${pageContext.request.contextPath}/">STUDY-ROOM</a></li>
 		            <li><a href="${pageContext.request.contextPath}/">PLACE</a></li>
-		            <li><a data-toggle="modal" data-target="#myModal" href="#myModal"><i class="fa fa-envelope-o"></i></a></li>
+		            <li><a data-toggle="modal" href="#"><i class="fa fa-envelope-o"></i></a></li>
 	          	</ul>
             
               <ul class="nav navbar-nav navbar-right">
@@ -50,4 +50,3 @@
 
     <jsp:include page="../member/login.jsp" />
  <jsp:include page="../member/check_member.jsp" />
- 
