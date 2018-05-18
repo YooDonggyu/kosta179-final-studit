@@ -99,7 +99,6 @@ public class MemberServiceImpl implements MemberService {
 		memberDAO.registerMemberPosition(map);
 	}
 	
-
 	   /**
 	    * 회원탈퇴를 위한 메서드.
 	    * 탈퇴의 조건 : 1.신청중인 스터디가 있는가  2.팀장이면서 팀원을 가진 스터디가 있는가  3.신청중인 스터디룸이 있는가  4.업체일 경우, 승인대기중인 예약이 있는가
@@ -135,5 +134,4 @@ public class MemberServiceImpl implements MemberService {
 	      
 	      return map;
 	   }
-	
 }

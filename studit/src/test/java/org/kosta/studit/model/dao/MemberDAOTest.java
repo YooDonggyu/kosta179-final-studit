@@ -3,7 +3,6 @@ package org.kosta.studit.model.dao;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kosta.studit.model.vo.MemberVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class MemberDAOTest {
 	
 		@Autowired
-	   private MemberDAO memberDAO;
+		private MemberDAO memberDAO;
 	   
 	   /**
 	    * 아이디 유무 확인 TEST.

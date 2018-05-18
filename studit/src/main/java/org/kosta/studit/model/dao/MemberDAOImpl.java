@@ -84,7 +84,6 @@ public class MemberDAOImpl implements MemberDAO {
 		}
 	}
 	
-	
 	/**
 	    * 회원이 업체인지 아닌지 확인
 	    * @author 송용준
@@ -110,6 +109,4 @@ public class MemberDAOImpl implements MemberDAO {
 	   public void registerMemberPosition(Map<String, String> map) {
 	      template.insert("member.registerMemberPosition",map);
 	   }
-	   
-	   
 }

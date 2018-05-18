@@ -4,12 +4,14 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.kosta.studit.exception.EmailNotFoundException;
 import org.kosta.studit.exception.IsNotMemberException;
 import org.kosta.studit.exception.PasswordIncorrectException;
 import org.kosta.studit.model.dao.MemberDAO;
 import org.kosta.studit.model.service.MemberService;
+import org.kosta.studit.model.service.RecruitService;
 import org.kosta.studit.model.vo.MemberVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +27,8 @@ public class MemberController {
 	private MemberDAO memberDAO;
 	@Autowired
 	private MemberService memberService;
+	@Autowired
+	private RecruitService recruitService;
 
 	
 	/**
@@ -195,5 +199,22 @@ public class MemberController {
 		return "member/update_password_ok";
 	}
 	
+	/**
+	 * 스터디 현황 조회 시 List를 넘긴다.
+	 * 
+	 * @author 변태섭
+	 * @param HttpServletRequest Session에 있는 memberEmail을 사용한다.
+	 * @param Model 받아온 list 객체를 담아 전달한다.
+	 * @param String 페이지 번호
+	 * @return mypage
+	 */
+	@RequestMapping("/getMyPage")
+	public String getMyPage(HttpServletRequest request, Model model, String pageNo) {
+		HttpSession session=request.getSession(false);
+		MemberVO mvo=(MemberVO) session.getAttribute("memberVO");
+		System.out.println(mvo);
+		model.addAttribute("studyConditionList", recruitService.findStudyConditionByMemberEmail(mvo.getMemberEmail(), pageNo));
+		return "member/mypage.tiles";
+	}
 	
 }

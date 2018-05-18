@@ -15,6 +15,54 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       from study_condition
       where member_email=#{value} and state='승인대기중'
    </select>
+   
+   <!-- 
+	    findStudyConditionByMemberEmail 쿼리에서 사용하는 resultMap
+	    
+		@author 변태섭
+	 -->
+	<resultMap type="studyConditionVO" id="scRM">
+		<result property="studyConditionNo" column="condition_no" />
+		<result property="recruitPostVO.smallCategoryVO.name" column="sc_name" />
+		<result property="recruitPostVO.location" column="location" />
+		<result property="recruitPostVO.title" column="title" />
+		<result property="memberVO.name" column="member_name" />
+		<result property="regdate" column="stc_regdate" />
+		<result property="state" column="state" />
+		<result property="recruitPostVO.recruitPostNo" column="recruit_post_no" />
+	</resultMap>
+	<!-- 
+		스터디 현황 조회 시 필요한 데이터를 뽑는다.
+		
+		@author 변태섭
+		@param String 로그인한 회원의 Email
+		@return StudyConditionVO resultMap을 이용하여 스터디 현황 조회 시 필요한 데이터 뽑기
+	 -->
+	<select id="findStudyConditionByMemberEmail" parameterType="object" resultMap="scRM">
+		select condition_no, sc_name, location, title, member_name, stc_regdate, state, recruit_post_no
+		from
+				(select row_number() over(order by study_condition_no desc) condition_no,  sc.name sc_name, rp.location, rp.title,
+							m.name member_name, to_char(stc.regdate,'yyyy-MM-dd hh24:mi:ss') stc_regdate, stc.state, rp.recruit_post_no
+				from small_category sc, recruit_post rp, member m, study_condition stc
+				where stc.member_email = #{memberEmail}
+							and sc.small_category_no = rp.small_category_no
+							and rp.recruit_post_no = stc.recruit_post_no
+							and m.member_email = rp.member_email)
+		where condition_no between #{pb.startRowNumber} and #{pb.endRowNumber}
+	</select>
+	
+	<!-- 
+		스터디 현황 데이터의 개수를 불어오는 쿼리
+		
+		@author 변태섭
+		@param String 로그인한 회원의 Email
+		@return int 스터디 현황 데이터의 개수
+	 -->
+	<select id="findCountStudyConditionByMemberEmail" parameterType="string" resultType="int">
+		select count(*)	
+		from study_condition
+		where member_email = #{memberEmail}
+	</select>
 </mapper>
  
  
