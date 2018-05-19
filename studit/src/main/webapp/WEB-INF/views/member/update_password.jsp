@@ -45,7 +45,7 @@
 	function updatePassword(){
 				$.ajax({
 					type:"post",
-					url:"${pageContext.request.contextPath}/ajax/checkPasswordAjax",
+					url:"${pageContext.request.contextPath}/ajax/checkPassword",
 					dataType:"json",
 					data:"memberEmail="+$("#checkEmail").val()+"&nowPassword="+$("#nowPassword").val(),
 					success:function(data){

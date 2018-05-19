@@ -1,21 +1,22 @@
 package org.kosta.studit.controller;
 
 
-import org.kosta.studit.model.dao.MemberDAO;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.kosta.studit.exception.EmailNotFoundException;
 import org.kosta.studit.exception.IsNotMemberException;
 import org.kosta.studit.exception.PasswordIncorrectException;
+import org.kosta.studit.model.dao.MemberDAO;
+import org.kosta.studit.model.dao.RecruitDAO;
 import org.kosta.studit.model.service.MemberService;
-
 import org.kosta.studit.model.vo.MemberVO;
+import org.kosta.studit.model.vo.SmallCategoryVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
@@ -26,6 +27,9 @@ public class AjaxViewController {
 	   private MemberDAO memberDAO;
 	@Autowired
 		private MemberService memberService;
+	@Autowired
+		private RecruitDAO recruitDAO;
+	
 	   
 	   /**
 	    *  아아디 중복확인을 위한 메서드.
@@ -45,10 +49,10 @@ public class AjaxViewController {
 	   }
 
 
-	/**
+   /**
 	 * 
 	    * 비밀번호 검증 메서드
-	    * 사용자가 입력한 현재 비밀번호를 
+	    * 사용자가 입력한 현재 비밀번호를 DB에 저장된 정보와 비교하여 검증하여 결과값을 반환
 	    * 
 	    * @author 김유란
 	    * @param HttpServletRequest 파라미터를 받아오기 위해 호출
@@ -56,7 +60,7 @@ public class AjaxViewController {
 	    * @exception PasswordIncorrectException 비밀번호가 틀릴 때 발생하는 예외
 	    * @return boolean 파라미터로 받아온 비밀번호 입력값의 DB 일치 여부에 따라 true/false 반환
 	 */
-	@RequestMapping(method=RequestMethod.POST, value="/checkPasswordAjax")
+	@RequestMapping(method=RequestMethod.POST, value="/checkPassword")
 	@ResponseBody
 	public boolean checkPassword(HttpServletRequest request) {
 		String memberEmail = request.getParameter("memberEmail");
@@ -67,6 +71,25 @@ public class AjaxViewController {
 			return false;
 		}
 		return true;
+	}
+	
+	
+	
+	
+	/**
+	 * 
+	    * 소분류 목록을 불러오는 메서드
+	    * 사용자가 선택한 대분류 번호를 전달받아 소분류 목록을 즉시 로드하기 위해  
+	    * 
+	    * @author 김유란
+	    * @param bigCategoryNo 사용자가 선택한 대분류 번호
+
+	    * @return List<SmallCategoryVO> 소분류 번호와 이름 정보를 담은 VO 리스트 
+	 */
+@RequestMapping(method=RequestMethod.POST, value="/getSmallCategoryList")
+	@ResponseBody
+	public List<SmallCategoryVO> getSmallCategoryList(String bigCategoryNo){
+		return recruitDAO.findSmallCategoryListByBigCategoryNo(bigCategoryNo);
 	}
 
 }

@@ -14,7 +14,7 @@
             
               <ul class="nav navbar-nav ">
 		            <li class="active"><a href="${pageContext.request.contextPath}/">HOME</a></li>
-		            <li><a href="${pageContext.request.contextPath}/recruit/getRecruitList">STUDY</a></li>
+		            <li><a href="${pageContext.request.contextPath}/recruit/getRecruitPostList">STUDY</a></li>
 		            <li><a href="${pageContext.request.contextPath}/">STUDY-ROOM</a></li>
 		            <li><a href="${pageContext.request.contextPath}/">PLACE</a></li>
 		            <li><a data-toggle="modal" href="#"><i class="fa fa-envelope-o"></i></a></li>

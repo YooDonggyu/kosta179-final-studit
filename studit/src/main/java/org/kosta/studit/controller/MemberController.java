@@ -86,7 +86,8 @@ public class MemberController {
 		if(picFile!=null && !picFile.isEmpty()) {
 		     String fileName = memberVO.getMemberEmail()+"_"+picFile.getOriginalFilename();
 		     //String path = request.getSession(false).getServletContext().getRealPath("upload"); 개발 완료 후 적용
-		     String path = "D:/KOSTA/workspace/resources/upload/";
+		     //String path = "D:/KOSTA/workspace/resources/upload/";
+		     String path = "C:/java-kosta/framework-workspace2/resources/upload/";
 		     try {
 		        picFile.transferTo(new File(path, fileName));//지정 경로에 실제 파일 저장
 		        memberVO.setPicPath(fileName);
@@ -176,7 +177,7 @@ public class MemberController {
 	    * 비밀번호 변경 화면으로 이동하는 메서드
 	    * 
 	    * @author 김유란
-	    * @return member/update_password.tiles  
+	    * @return member/update_password.tiles 비밀번호 변경 페이지 
 	 */
 	@RequestMapping("/updatePasswordView")
 	public String updatePasswordView() {
@@ -191,7 +192,7 @@ public class MemberController {
 	    * @author 김유란
 	    * @param newPassword 사용자가 입력한 새로운 비밀번호
 	    * @param checkEmail 접속중인 사용자의 식별 정보
-	    * @return member/update_password_ok 
+	    * @return member/update_password_ok 변경 결과를 보여주는 페이지
 	 */
 	@RequestMapping("/updatePassword")
 	public String updatePassword(String newPassword, String checkEmail) {
