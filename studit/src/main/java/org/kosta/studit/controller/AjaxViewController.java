@@ -10,12 +10,16 @@ import javax.servlet.http.HttpServletRequest;
 import org.kosta.studit.exception.EmailNotFoundException;
 import org.kosta.studit.exception.IsNotMemberException;
 import org.kosta.studit.exception.PasswordIncorrectException;
+import org.kosta.studit.model.PagingBean;
 import org.kosta.studit.model.dao.MemberDAO;
 import org.kosta.studit.model.dao.RecruitDAO;
+import org.kosta.studit.model.dao.StudyRoomDAO;
 import org.kosta.studit.model.service.MemberService;
 import org.kosta.studit.model.service.RecruitService;
 import org.kosta.studit.model.vo.MemberVO;
 import org.kosta.studit.model.vo.SmallCategoryVO;
+import org.kosta.studit.model.vo.StudyRoomConditionListVO;
+import org.kosta.studit.model.vo.StudyRoomConditionVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,6 +38,9 @@ public class AjaxViewController {
 		private RecruitDAO recruitDAO;
 	@Autowired
 	private RecruitService recruitService;
+	@Autowired
+	private StudyRoomDAO studyroomDAO;
+	
 	   
 	   /**
 	    *  아아디 중복확인을 위한 메서드.
@@ -107,6 +114,27 @@ public class AjaxViewController {
 		commentMap.put("recruitNo", recruitNo);
 		recruitDAO.registerCommentByRecruitNo(commentMap);
 		return "true";
+	}
+	
+	
+	@RequestMapping("/findStudyRoomConditionByNowPage")
+	@ResponseBody
+	public StudyRoomConditionListVO findStudyRoomConditionByNowPage(int nowPage, HttpServletRequest request){
+		//1. 총 게시물로 pagingbean 만들기
+		int totalPage = studyroomDAO.getTotalStudyRoomCondition();
+		PagingBean pb= new PagingBean(totalPage, nowPage);
+		//2. 조건문을 위해 이메일과 pb로 Map을 만들어 전달
+		Map<String, Object> map = new HashMap<>();
+		map.put("pagingBean", pb);
+		map.put("memberEmail", ((MemberVO)request.getSession().getAttribute("memberVO")).getMemberEmail());
+		//3. Map으로 paging처리된 결과 List로 받아오기
+		List<StudyRoomConditionVO>list =  studyroomDAO.findStudyConditionByEmail(map);
+		pb.setMyTotalPostCount(list.size());
+		//4. paging된 list와 pb객체를 StudyRoomConditionListVO에 담아 전달
+		StudyRoomConditionListVO srcListVO = new StudyRoomConditionListVO();
+		srcListVO.setList(list);
+		srcListVO.setPagingBean(pb);
+		return srcListVO;
 	}
 
 }

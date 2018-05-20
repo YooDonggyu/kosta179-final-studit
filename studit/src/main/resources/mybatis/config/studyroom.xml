@@ -4,6 +4,58 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="studyroom">
+
+		<resultMap type="studyRoomConditionVO" id="srRM">
+		<result property="useDate" column="usedate" />
+		<result property="studyRoomVO.companyVO.companyNo" column="company_no" />
+		<result property="studyRoomVO.companyVO.name" column="comName" />
+		<result property="studyRoomVO.name" column="studyRoomName" />
+		<result property="studyRoomVO.studyRoomNo" column="studyroom_no" />
+		<result property="memberVO.memberEmail" column="memberEmail" />
+		<result property="memberVO.name" column="memberName" />
+		<result property="useDate" column="usedate" />
+		<result property="startTime" column="start_time" />
+		<result property="endTime" column="end_time" />
+		<result property="state" column="state" />
+		<result property="regDate" column="regdate" />
+	</resultMap>
+		
+	<!-- resultMap	End -->
+	
+	<!-- 
+		스터디룸 신청 현황에 필요한 정보 가져오기
+		@author 유동규
+	 -->
+   <select id="findStudyConditionByEmail" resultMap="srRM">
+		select sc.*
+				, m.name as memberName, sc.member_email as memberEmail
+				, c.name as comName, c.company_no
+				, s.name as studyRoomName, s.studyroom_no
+		from (
+				select studyroom_condition_no, start_time, end_time, state, member_email, studyroom_no
+						, to_char(use_date, 'YYYY.MM.DD') as usedate, to_char(regdate, 'YYYY.MM.DD') as regdate
+						, row_number() over(order by studyroom_condition_no desc) as rnum 
+				from studyroom_condition
+				where member_email= #{memberEmail}
+		) sc, studyroom s, company c, member m
+		<where>
+		 	s.studyroom_no=sc.studyroom_no 
+			and c.company_no = s.company_no
+			and m.member_email = sc.member_email
+			<if test="pagingBean.startRowNumber != null"> 
+				and  rnum between #{pagingBean.startRowNumber} and #{pagingBean.endRowNumber}
+			</if>
+		</where>
+   </select>
+  
+  <!-- 
+	전체 studyroom_condition 수를 가져온다
+	@author 유동규
+   -->
+   <select id="getTotalStudyRoomCondition" resultType="int">
+   		select count(*) from studyroom_condition 
+   </select>
+	
 	<!-- 
       신청한 스터디룸 중 승인대기중인 스터디룸 조회
       @author 송용준
@@ -15,6 +67,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       from studyroom_condition sc
       where sc.member_email=#{value} and sc.state='승인대기중'
    </select>
+   
+   
+
 </mapper>
  
  
