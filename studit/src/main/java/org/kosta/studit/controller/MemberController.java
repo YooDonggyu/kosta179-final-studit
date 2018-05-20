@@ -2,6 +2,7 @@ package org.kosta.studit.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -53,6 +54,8 @@ public class MemberController {
 			}else {
 				//세션할당
 				request.getSession().setAttribute("memberVO", rMemberVO);
+				//조회수 증가 판단을 위한 session
+				request.getSession().setAttribute("hitList", new ArrayList<>());
 			}
 		} catch (EmailNotFoundException | PasswordIncorrectException | IsNotMemberException  e) {
 			model.addAttribute("msg", e.getMessage());

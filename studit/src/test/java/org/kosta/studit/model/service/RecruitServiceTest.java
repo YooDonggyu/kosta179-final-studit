@@ -15,18 +15,17 @@ public class RecruitServiceTest {
 	@Autowired
 	private RecruitService recruitService;
 
-	@Test
+	//@Test
 	public void registerRecruiteTest() {
 		recruitService.registerRecruitStudy(2, "j@k.com", "자기소개냐??");
 	}
 
 	/**
 	 * 전체 모집글 목록 확인 TEST.
-	 * 
 	 * @author 김유란
 	 */
-	@Test
-	public void getRecruitPostList() {
+	//@Test
+	public void getRecruitPostListTest() {
 		List<RecruitPostVO> list = recruitService.getRecruitPostList("1").getRecruitPostList();
 		for (RecruitPostVO vo : list) {
 			System.out.println(vo);
@@ -35,11 +34,10 @@ public class RecruitServiceTest {
 
 	/**
 	 * 검색된 모집글 목록 가져오기 확인 TEST.
-	 * 
 	 * @author 김유란
 	 */
-	@Test
-	public void findRecruitPostByCategoryAndKeyword() {
+	//@Test
+	public void findRecruitPostByCategoryAndKeywordTest() {
 		String category[] = { "1", "2", "3" };
 		List<RecruitPostVO> list = recruitService.findRecruitPostByCategoryAndKeyword(null, "강남", "1")
 				.getRecruitPostList();
@@ -47,4 +45,17 @@ public class RecruitServiceTest {
 			System.out.println(vo);
 		}
 	}
+	
+	/**
+	 * 모집 게시글 번호에 따른 정보 가져오기 TEST
+	 * @author 유동규
+	 */
+	@Test
+	public void findRecruitPostDetailByRecruitNoTest() {
+		System.out.println(recruitService.findRecruitPostDetailByRecruitNo("",1).get("comment"));
+		System.out.println(recruitService.findRecruitPostDetailByRecruitNo("",1).get("day"));
+		System.out.println(((RecruitPostVO)recruitService.findRecruitPostDetailByRecruitNo("",1).get("detail")));
+		System.out.println(recruitService.findRecruitPostDetailByRecruitNo("d@d.com",1).get("studyState"));
+	}
+	
 }

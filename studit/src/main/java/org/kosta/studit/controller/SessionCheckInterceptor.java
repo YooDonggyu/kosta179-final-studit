@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.kosta.studit.exception.IsNotMemberException;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 /**
  * Spring Handler Interceptor : 
@@ -29,7 +30,7 @@ public class SessionCheckInterceptor extends HandlerInterceptorAdapter{
 	 * 	session이 null인지 확인
 	 * 	session null 아니면 인증정보 객체 유무 확인
 	 * 	1,2을 통과하면 true/ 아니면 false
-	 * 	반환 전에 response.sendRedirect("home.do")
+	 * 	반환 전에 response.sendRedirect("")
 	 */
 	
 	@Override
@@ -39,9 +40,9 @@ public class SessionCheckInterceptor extends HandlerInterceptorAdapter{
 		if(session!=null&&session.getAttribute("memberVO")!=null) {
 			return true;
 		}else {
-			System.out.println("로그인 하지 않은 상태!");
-			response.sendRedirect(" /studit/");
+			response.sendRedirect(" /studit/loginNeed");
 			return false;
+			
 		}
 	}
 }

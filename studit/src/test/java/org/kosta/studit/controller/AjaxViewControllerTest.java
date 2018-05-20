@@ -34,17 +34,17 @@ public class AjaxViewControllerTest {
 	    * 회원가입 시 ID로 사용하는 Email 입력 시 실시간으로 중복 체크 하는 메서드
 	    * @author 변태섭
 	    */
-	   @Test
+	   //@Test
 	    public void findCheckByEmailTest() throws Exception{
 	      // email이 중복인 경우 false return
-	       mock.perform(get("/findCheckByEmail")
+	       mock.perform(get("/ajax/findCheckByEmail")
 	             .param("memberEmail", "a@a.com"))
 	          .andDo(print())
 	          .andExpect(content().contentType("application/json;charset=UTF-8")) 
 	          .andExpect(status().isOk());
 	       
 	       // email이 중복이 아닌 경우 true returnX
-	       mock.perform(get("/findCheckByEmail")
+	       mock.perform(get("/ajax/findCheckByEmail")
 	             .param("memberEmail", "bts@a.com"))
 	       .andDo(print())
 	       .andExpect(content().contentType("application/json;charset=UTF-8")) 

@@ -450,3 +450,16 @@ create sequence study_condition_no_seq nocache;
 drop sequence study_condition_no_seq
 select *from study_condition
 
+insert into study_condition(study_condition_no, regdate, state, self_appeal, member_email, recruit_post_no)
+values(study_condition_no_seq.nextval, sysdate, '미승인', '열심히 할게요 ! ', 'f@f.com', 1);
+insert into study_condition(study_condition_no, regdate, state, self_appeal, member_email, recruit_post_no)
+values(study_condition_no_seq.nextval, sysdate, '거절', '열심히 할게요 ! ', 'd@d.com', 1); --def
+insert into study_condition(study_condition_no, regdate, state, self_appeal, member_email, recruit_post_no)
+values(study_condition_no_seq.nextval, sysdate, '승인', '열심히 할게요 ! ', 'e@e.com', 1); --def
+insert into study_condition(study_condition_no, regdate, state, self_appeal, member_email, recruit_post_no)
+values(study_condition_no_seq.nextval, sysdate, '승인', '열심히 할게요 ! ', 'h@h.com', 1); --def
+insert into study_condition(study_condition_no, regdate, state, self_appeal, member_email, recruit_post_no)
+values(study_condition_no_seq.nextval, sysdate, '미승인', '열심히 할게요 ! ', 'g@g.com', 1); --def
+
+
+

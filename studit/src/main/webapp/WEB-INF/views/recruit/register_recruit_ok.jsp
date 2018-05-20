@@ -3,5 +3,5 @@
 
 <script type="text/javascript">
 	alert("신청하였습니다.")
-	location.href="${pageContext.request.contextPath}/recruit/detail_recruit"
+	location.href="${pageContext.request.contextPath}/recruit/getRecruitPostList?pageNo=1" 
 </script>

@@ -82,6 +82,7 @@
 		,js ) 를 서비스하기 위한 설정 -->
 	<mvc:resources mapping="/resources/**"
 		location="/resources/" />
+		
 	<!-- 파일 업로드를 위한 multipartResolver 설정 -->
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">

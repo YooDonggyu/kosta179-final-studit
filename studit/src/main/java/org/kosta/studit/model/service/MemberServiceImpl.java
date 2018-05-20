@@ -71,7 +71,6 @@ public class MemberServiceImpl implements MemberService {
 	   * 
        * 회원정보 수정
        * 회원정보를 수정한 후 새로운 회원정보를 반환함
-       * 
        * @author 김유란, 이승수
        * @param MemberVO 수정된 회원정보를 담은 VO
        * @return MemberVO DB에 반영된 새로운 회원 정보를 반환(세션 회원정보 업데이트 위해)

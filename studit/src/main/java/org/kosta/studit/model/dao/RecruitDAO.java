@@ -8,6 +8,7 @@ import org.kosta.studit.model.vo.StudyConditionVO;
 import org.kosta.studit.model.PagingBean;
 import org.kosta.studit.model.vo.BigCategoryVO;
 import org.kosta.studit.model.vo.GroupMemberVO;
+import org.kosta.studit.model.vo.RecruitPostCommentVO;
 import org.kosta.studit.model.vo.RecruitPostVO;
 import org.kosta.studit.model.vo.SmallCategoryVO;
 
@@ -40,5 +41,29 @@ public interface RecruitDAO {
 	List<SmallCategoryVO> findSmallCategoryListByBigCategoryNo(String bigCategoryNo);
 
 	List<BigCategoryVO> getBigCategoryList();
+
+	RecruitPostVO findDetailRecruitPostAndCategoryByRecruitNo(int recruitNo);
+
+	List<String> findDayByRecruitNo(int recruitNo);
+
+	List<RecruitPostCommentVO> findRecruitCommentByRecruitNo(int recruitNo);
+
+	void updateRecruitPostHitByRecruitNo(int recruitNo);
+
+	String findRecruitWriterByRecruitNo(int recruitNo);
+
+	String findStudyConditionStateByEmailAndRecruitNo(Map<String, Object> map);
+
+	void updateSmallCategoryNoByRecruitNo(Map<String, Integer> map);
+
+	void updateRecruitPostByRecruitNo(RecruitPostVO recruitPostVO);
+
+	void deleteDayByRecruitNo(int recruitNo);
+
+	void registerRecruitDay(Map<String, Object> map);
+
+	void updateDeleteStudyConditionByRecruitNo(int recruitNo);
+
+	void registerCommentByRecruitNo(Map<String, Object> map);
 
 }

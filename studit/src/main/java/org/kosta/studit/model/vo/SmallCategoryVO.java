@@ -13,6 +13,9 @@ public class SmallCategoryVO {
 		this.name = name;
 		this.bigCategoryVO = bigCategoryVO;
 	}
+	public SmallCategoryVO(int smallCategoryNo) {
+		this.smallCategoryNo = smallCategoryNo;
+	}
 	public int getSmallCategoryNo() {
 		return smallCategoryNo;
 	}

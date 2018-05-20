@@ -1,5 +1,59 @@
 package org.kosta.studit.controller;
 
-public class RecruitControllerTest {
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
+
+@WebAppConfiguration
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations= {"file:src/main/webapp/WEB-INF/spring-model.xml", "file:src/main/webapp/WEB-INF/spring-web.xml"})
+public class RecruitControllerTest {
+	
+	
+
+	@Autowired
+	private WebApplicationContext wac;
+	
+	private MockMvc mock;
+	
+	@Before
+	public void setUp() {
+		this.mock = MockMvcBuilders.webAppContextSetup(wac).build();
+	}
+	
+	
+	/**
+	 * 스터디 모집 게시글 상세보기 TEST 
+	 * 		(로그인이 선행되어야 하기 때문에 현재로썬 
+	 * 		spring-web.xml에서 interceptor 예외처리 후 TEST  - TEST 완료 후 꼭 다시 주석 !) 
+	 * @author 유동규
+	 */
+	@Test
+	 public void findDetailRecruitPostInfoByRecruitNoTest() {
+		// Test하기 위해서 Login이 선행되어야 함
+		// 따라서 spring-web.xml 의 interceptor 부분에서
+		// mapping exclude - /recruit/findDetailRecruitPostInfoByRecruitNo 를 주석 해제하고 TEST
+			 try {
+				mock.perform(get("/recruit/findDetailRecruitPostInfoByRecruitNo")
+						//parameter type이 int여도 String으로 넣어주면 실행 가능
+						.param("recruitNo", "1"))
+							.andDo(print())
+							.andExpect(status().isOk());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	
+	
 }

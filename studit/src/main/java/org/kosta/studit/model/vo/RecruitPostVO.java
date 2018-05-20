@@ -1,5 +1,7 @@
 package org.kosta.studit.model.vo;
 
+import java.util.List;
+
 public class RecruitPostVO {
 	private int recruitPostNo;
 	private String title;
@@ -11,6 +13,8 @@ public class RecruitPostVO {
 	private String condition;
 	private MemberVO memberVO; //FK
 	private SmallCategoryVO smallCategoryVO;//FK
+	
+	
 
 	public RecruitPostVO(int recruitPostNo, String title, String content, String regdate, int hit, int capacity,
 			String location, String condition, MemberVO memberVO, SmallCategoryVO smallCategoryVO) {
@@ -27,6 +31,19 @@ public class RecruitPostVO {
 		this.smallCategoryVO = smallCategoryVO;
 	}
 	
+	
+	
+	public RecruitPostVO(int recruitPostNo, String title, String content, int capacity, String location) {
+		super();
+		this.recruitPostNo = recruitPostNo;
+		this.title = title;
+		this.content = content;
+		this.capacity = capacity;
+		this.location = location;
+	}
+
+
+
 	public RecruitPostVO() {
 		super();
 		// TODO Auto-generated constructor stub

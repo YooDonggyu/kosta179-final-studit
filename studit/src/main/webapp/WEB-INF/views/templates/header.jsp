@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+ 
 
  
     <div role="navigation" class="navbar navbar-default navbar-fixed-top">
@@ -12,12 +13,12 @@
             </div>
             <div id="navigation" class="collapse navbar-collapse navbar-right">
             
-              <ul class="nav navbar-nav ">
+              <ul class="nav navbar-nav headerUl" >
 		            <li class="active"><a href="${pageContext.request.contextPath}/">HOME</a></li>
 		            <li><a href="${pageContext.request.contextPath}/recruit/getRecruitPostList">STUDY</a></li>
 		            <li><a href="${pageContext.request.contextPath}/">STUDY-ROOM</a></li>
 		            <li><a href="${pageContext.request.contextPath}/">PLACE</a></li>
-		            <li><a data-toggle="modal" href="#"><i class="fa fa-envelope-o"></i></a></li>
+		            <li><a href=""></a></li>
 	          	</ul>
             
               <ul class="nav navbar-nav navbar-right">
@@ -28,7 +29,7 @@
            		 </c:when>
            		 <c:otherwise>
 					<li class="dropdown">
-	                <a href="#" class="dropdown-toggle" data-toggle="dropdown">${sessionScope.memberVO.name }님<b class="caret"></b></a>
+	                <a href="" class="dropdown-toggle" data-toggle="dropdown">${sessionScope.memberVO.name }님<b class="caret"></b></a>
 	                <ul class="dropdown-menu multi-level">
 	                  <li class="dropdown-header">관리</li>
 	                  <li><a href="${pageContext.request.contextPath}/member/getMyPage">스터디통합관리</a></li>
@@ -48,5 +49,5 @@
         </div>
         
 
-    <jsp:include page="../member/login.jsp" />
+    <jsp:include page="../member/login_modal.jsp" />
  <jsp:include page="../member/check_member.jsp" />

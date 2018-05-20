@@ -23,4 +23,5 @@ public interface MemberDAO {
 	Boolean checkCompanyByEmail(String memberEmail);
 
 
+
 }

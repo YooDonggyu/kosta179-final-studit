@@ -7,11 +7,14 @@ import java.util.Map;
 
 import org.kosta.studit.model.PagingBean;
 import org.kosta.studit.model.dao.RecruitDAO;
+import org.kosta.studit.model.vo.RecruitPostCommentVO;
 import org.kosta.studit.model.vo.RecruitPostListVO;
+import org.kosta.studit.model.vo.RecruitPostVO;
 import org.kosta.studit.model.vo.StudyConditionListVO;
 import org.kosta.studit.model.vo.StudyConditionVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class RecruitServiceImpl implements RecruitService {
@@ -20,7 +23,6 @@ public class RecruitServiceImpl implements RecruitService {
 	
 	/**
 	 * 스터디 현황 조회 시 내역 list를 불러온다.
-	 * 
 	 * @author 변태섭
 	 * @param String 회원 Email
 	 * @return StudyConditionVO 스터디 현황 내역 list
@@ -39,17 +41,13 @@ public class RecruitServiceImpl implements RecruitService {
 		map.put("pb", pb);
 		
 		List<StudyConditionVO> list = recruitDAO.findStudyConditionByMemberEmail(map);
-		
 		StudyConditionListVO studyConditionListVO = new StudyConditionListVO(list, pb);
-		
 		return studyConditionListVO;
 	}
 
 	/**
 	 * 스터디를 신청할떄 사용하는 메서드.
-	 * 
 	 * 스터디게시글번호,회원이메일,자기소개내용을 받아 Map에 저장해서 DAO에 전달
-	 * 
 	 * @author 이승수
      * @param 스터디게시글번호,회원이메일,자기소개내용
 	 */
@@ -64,9 +62,7 @@ public class RecruitServiceImpl implements RecruitService {
 	
 	/**
 	 * 스터디를 신청할떄 사용하는 메서드.
-	 * 
 	 * 스터디신청시 이미 거절상태일때 다시 미승인 상태로 바꿔주는 메서드.
-	 * 
 	 * @author 이승수
      * @param 스터디게시글번호,회원이메일,자기소개내용
 	 */
@@ -80,14 +76,13 @@ public class RecruitServiceImpl implements RecruitService {
 	}
 	
 	 /**
-	    * 
-	       * 전체 모집글 목록을 불러오기 위한 메서드
-	       *  전체 모집글 목록을 페이징 처리하여 받아온 후 pagingBean과 함께 담아 넘겨준다.
-	       * 
-	       * @author 김유란
-	       * @param pagingBean
-	       * @return List<RecruitPostVO> 전체 모집글 목록
-	    */
+	   * 
+       * 전체 모집글 목록을 불러오기 위한 메서드
+       *  전체 모집글 목록을 페이징 처리하여 받아온 후 pagingBean과 함께 담아 넘겨준다.
+       * @author 김유란
+       * @param pagingBean
+       * @return List<RecruitPostVO> 전체 모집글 목록
+	   */
 	@Override
 	public RecruitPostListVO getRecruitPostList(String pageNo){
 		int totalCount = recruitDAO.getTotalRecruitPostCount();
@@ -101,17 +96,17 @@ public class RecruitServiceImpl implements RecruitService {
 	}
 	
 	 /**
-	    * 
-	       * 모집글 검색 결과 목록을 불러오기 위한 메서드
-	       * Controller에게 선택된  카테고리와 키워드, 페이지넘버를 전달받아 map객체에 담은 후
-	       * 소분류와 키워드로 검색된 모집글 pagingBean과 함께 넘겨준다.
-	       * 검색 키워드는 글 제목, 내용, 지역 컬럼을 검색한다.
-	       * @param category[] 체크박스로 선택한 소분류값을 담은 배열 
-	       * @param keyword 사용자가 입력한 검색어
-	       * @param pageNo 검색결과 목록 페이지 번호
-	       * @author 김유란
-	       * @return List<RecruitPostVO> 검색된 모집글 목록
-	    */
+	   * 
+       * 모집글 검색 결과 목록을 불러오기 위한 메서드
+       * Controller에게 선택된  카테고리와 키워드, 페이지넘버를 전달받아 map객체에 담은 후
+       * 소분류와 키워드로 검색된 모집글 pagingBean과 함께 넘겨준다.
+       * 검색 키워드는 글 제목, 내용, 지역 컬럼을 검색한다.
+       * @param category[] 체크박스로 선택한 소분류값을 담은 배열 
+       * @param keyword 사용자가 입력한 검색어
+       * @param pageNo 검색결과 목록 페이지 번호
+       * @author 김유란
+       * @return List<RecruitPostVO> 검색된 모집글 목록
+	   */
 	@Override
 	public RecruitPostListVO findRecruitPostByCategoryAndKeyword(String category[], String keyword, String pageNo){
 		
@@ -136,5 +131,84 @@ public class RecruitServiceImpl implements RecruitService {
 		map.put("pagingBean", pagingBean);
 		return new RecruitPostListVO(pagingBean, recruitDAO.findRecruitPostByCategoryAndKeyword(map));
 	}
+	
+	/**
+	 * 조회할 번호에 따른 게시글 정보을 검색.
+	 * 조회할 정보에는 게시글 상세정보, 희망 요일, 카테고리(소,대), 댓글
+	 * @author 유동규
+	 * @param recruitNo 조회할 모집 게시글 번호
+	 * @return list 조회한 정보가 담겨있는 list  
+	 */
+	@Override
+	public Map<String, Object> findRecruitPostDetailByRecruitNo(String memberEmail, int recruitNo){
+		/*
+		 *  1. 게시글 내용과 카테고리 내용 가져오기
+		 *  2. 요일 가져오기
+		 *  3. 댓글가져오기
+		 *  4. 신청할 수 있는 사람인지 확인
+		 */
+		Map<String, Object> map = new HashMap<>();
+		//게시글 내용과 카테고리 내용 가져오기
+		map.put("detail", recruitDAO.findDetailRecruitPostAndCategoryByRecruitNo(recruitNo));
+
+		//요일 가져오기
+		List<String> dayList = recruitDAO.findDayByRecruitNo(recruitNo);
+		map.put("day", dayList);
+		
+		//스터디 모집 신청할 수 있는지 여부 
+		//memberEmail이 null이면 수정
+		//memberEmail이 null이 아니면 상세보기 
+		//   상세보기 1 - 상세보기일 땐 신청할 수 있는지 확인 
+		//   상세보기 2 - study_condition에서 member_email과 recurit_post_no를 비교 : 있으면 불가, 없으면 신청가능
+		if(memberEmail != null) {
+			//댓글 가져오기
+			List<RecruitPostCommentVO> commentList = recruitDAO.findRecruitCommentByRecruitNo(recruitNo);
+			map.put("comment", commentList);
+			//study_condition에 있는 상태 가져오기(미승인, 승인, 거절 등)
+			Map<String, Object> stateMap = new HashMap<String, Object>();
+			stateMap.put("memberEmail", memberEmail);
+			stateMap.put("recruitNo", recruitNo);
+			String state = recruitDAO.findStudyConditionStateByEmailAndRecruitNo(stateMap);
+			if(state != null) {
+				map.put("studyState", state);
+			}
+		}
+		return map;
+	}
+	
+	/**
+	 * 카테고리(소, 대), 상세내용(제목, 내용, 희망인원, 지역, 수정시간), 요일을 변경하는 메서드.
+	 * 트랜잭션을 통해 하나라도 실행이 되지 않았을 경우 Rollback
+	 * 모집 요일은 전부 지웠다가 다시 등록 - 함수 재사용성
+	 * @author 유동규
+	 * @param recruitPostVO 수정할 내용이 담긴 객체
+	 * @param days 수정할 요일들이 담긴 객체
+	 */
+	@Override
+	@Transactional
+	public void updateRecruitPostInfoByRecruitNo(RecruitPostVO recruitPostVO, List<String> days ) {
+		//1 카테고리 업데이트
+		Map<String, Integer> smallCategoryMap = new HashMap<>();
+		smallCategoryMap.put("smallCategoryNo", recruitPostVO.getSmallCategoryVO().getSmallCategoryNo());
+		smallCategoryMap.put("recruitNo", recruitPostVO.getRecruitPostNo());
+		recruitDAO.updateSmallCategoryNoByRecruitNo(smallCategoryMap);
+		
+		//2, 상세정보 업데이트
+		recruitDAO.updateRecruitPostByRecruitNo(recruitPostVO);
+		
+		//3. 요일 업데이트
+		//   3-1 모집 게시글 관련 요일 삭제
+		recruitDAO.deleteDayByRecruitNo(recruitPostVO.getRecruitPostNo());
+		//   3-2 새로 등록
+		Map<String, Object> dayMap;
+		for(int i =0; i<days.size(); i++) {
+			dayMap = new HashMap<>();
+			dayMap.put("recruitPostNo", recruitPostVO.getRecruitPostNo());
+			dayMap.put("recruitDay", days.get(i));
+			recruitDAO.registerRecruitDay(dayMap);
+		}
+	}
+	
+	
 
 }

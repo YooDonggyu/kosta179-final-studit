@@ -1,7 +1,9 @@
 package org.kosta.studit.controller;
 
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -11,6 +13,7 @@ import org.kosta.studit.exception.PasswordIncorrectException;
 import org.kosta.studit.model.dao.MemberDAO;
 import org.kosta.studit.model.dao.RecruitDAO;
 import org.kosta.studit.model.service.MemberService;
+import org.kosta.studit.model.service.RecruitService;
 import org.kosta.studit.model.vo.MemberVO;
 import org.kosta.studit.model.vo.SmallCategoryVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +32,8 @@ public class AjaxViewController {
 		private MemberService memberService;
 	@Autowired
 		private RecruitDAO recruitDAO;
-	
+	@Autowired
+	private RecruitService recruitService;
 	   
 	   /**
 	    *  아아디 중복확인을 위한 메서드.
@@ -73,23 +77,36 @@ public class AjaxViewController {
 		return true;
 	}
 	
-	
-	
-	
 	/**
 	 * 
 	    * 소분류 목록을 불러오는 메서드
 	    * 사용자가 선택한 대분류 번호를 전달받아 소분류 목록을 즉시 로드하기 위해  
-	    * 
 	    * @author 김유란
 	    * @param bigCategoryNo 사용자가 선택한 대분류 번호
-
 	    * @return List<SmallCategoryVO> 소분류 번호와 이름 정보를 담은 VO 리스트 
 	 */
-@RequestMapping(method=RequestMethod.POST, value="/getSmallCategoryList")
+	@RequestMapping(method=RequestMethod.POST, value="/getSmallCategoryList")
 	@ResponseBody
 	public List<SmallCategoryVO> getSmallCategoryList(String bigCategoryNo){
 		return recruitDAO.findSmallCategoryListByBigCategoryNo(bigCategoryNo);
+	}
+	
+	/**
+	 * 모집게시글에 따른 댓글 등록
+	 * @param recruitNo
+	 * @param comment
+	 * @return
+	 */
+	@RequestMapping(value="/registerComment", method=RequestMethod.POST)
+	@ResponseBody
+	public String registerComment(int recruitNo, String comment, HttpServletRequest request) {
+		String userName = ((MemberVO)request.getSession().getAttribute("memberVO")).getName();
+		Map<String, Object> commentMap = new HashMap<>();
+		commentMap.put("comment", comment);
+		commentMap.put("name", userName);
+		commentMap.put("recruitNo", recruitNo);
+		recruitDAO.registerCommentByRecruitNo(commentMap);
+		return "true";
 	}
 
 }

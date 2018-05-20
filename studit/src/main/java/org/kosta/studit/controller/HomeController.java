@@ -20,6 +20,13 @@ public class HomeController {
 		return"home.tiles";
 	}
 	
+	@RequestMapping("/loginNeed")
+	public String loginNeed() {
+		return"member/login_needed";
+	}
+	
+	
+	
 	
 	/**
 	 * session처리가 필요없는 요청에 즉각 페이지를 이동하기 위한 메서드.

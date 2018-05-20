@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/assets/css/owl.carousel.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/assets/css/owl.theme.css">
     <!-- plugins-->
-    <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/assets/css/simpletextrotator">
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/assets/css/simpletextrotator.css">
     <!-- Custom stylesheet - for your changes-->
     <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/assets/css/custom.css">
     <!-- Favicon-->
@@ -69,6 +69,20 @@
 		<tiles:insertAttribute name="footer"/>
 	</div>
 </body>
+
+<!-- 
+	header 클릭하면 css 바뀌는건데 안먹는 이유를 모르겠음
+ -->
+<script type="text/javascript">
+$(document).ready(function() {
+		
+	$('.headerUl').on('click', 'li', function() {
+	    $('.headerUl li.active').removeClass('active');
+	    $(this).addClass('active');
+	});
+})
+</script>
+
 
 </html>
 
