@@ -107,20 +107,23 @@ insert into com_review(com_review_no, content, score, regdate, name, company_no)
 values(com_review_seq.nextval, '다신 안가요', 1, sysdate, '유란', 1) ;
 
 --업체 후기 댓글
+drop table com_review_comment;
 CREATE TABLE com_review_comment(
 	com_comment_no number primary key,
 	content clob not null,
 	com_review_no number not null,
-	name varchar2(100) not null,
+	company_no number not null,
 	regdate date not null,
-	constraint fk_com_review_no foreign key(com_review_no) references com_review(com_review_no)
+	constraint fk_com_review_no foreign key(com_review_no) references com_review(com_review_no),
+	constraint fkcompany_no foreign key(company_no) references company(company_no)
 );
 
+drop sequence com_review_comment_seq; 
 create sequence com_review_comment_seq nocache;
 
-insert into com_review_comment(com_comment_no, content, com_review_no, name, regdate) values(com_review_comment_seq.nextval, '왜그러세요', 2, 'MOIM', sysdate);
+insert into com_review_comment(com_comment_no, content, com_review_no, company_no, regdate) values(com_review_comment_seq.nextval, '왜그러세요', 2, 2, sysdate);
 
-select com.name, r.content, r.name, c.content, c.name 
+select com.name, r.content, r.name, c.content, c.company_no 
 from com_review_comment c, com_review r, company com
 where com.company_no=r.company_no and r.com_review_no=c.com_review_no
 

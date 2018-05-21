@@ -3,21 +3,21 @@ package org.kosta.studit.model.vo;
 public class RecruitPostCommentVO {
 	private int recruitCommentNo;
 	private String content;
-	private String name;
 	private String regdate;
 	private RecruitPostVO recruitPostVO; //FK
+	private MemberVO memberVO;//FK
 	public RecruitPostCommentVO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public RecruitPostCommentVO(int recruitCommentNo, String content, String name, String regdate,
-			RecruitPostVO recruitPostVO) {
+	public RecruitPostCommentVO(int recruitCommentNo, String content, String regdate, RecruitPostVO recruitPostVO,
+			MemberVO memberVO) {
 		super();
 		this.recruitCommentNo = recruitCommentNo;
 		this.content = content;
-		this.name = name;
 		this.regdate = regdate;
 		this.recruitPostVO = recruitPostVO;
+		this.memberVO = memberVO;
 	}
 	public int getRecruitCommentNo() {
 		return recruitCommentNo;
@@ -31,12 +31,6 @@ public class RecruitPostCommentVO {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
 	public String getRegdate() {
 		return regdate;
 	}
@@ -49,10 +43,18 @@ public class RecruitPostCommentVO {
 	public void setRecruitPostVO(RecruitPostVO recruitPostVO) {
 		this.recruitPostVO = recruitPostVO;
 	}
+	public MemberVO getMemberVO() {
+		return memberVO;
+	}
+	public void setMemberVO(MemberVO memberVO) {
+		this.memberVO = memberVO;
+	}
 	@Override
 	public String toString() {
-		return "RecruitPostCommentVO [recruitCommentNo=" + recruitCommentNo + ", content=" + content + ", name=" + name
-				+ ", regdate=" + regdate + ", recruitPostVO=" + recruitPostVO + "]";
+		return "RecruitPostCommentVO [recruitCommentNo=" + recruitCommentNo + ", content=" + content + ", regdate="
+				+ regdate + ", recruitPostVO=" + recruitPostVO + ", memberVO=" + memberVO + "]";
 	}
+	
+	
 	
 }

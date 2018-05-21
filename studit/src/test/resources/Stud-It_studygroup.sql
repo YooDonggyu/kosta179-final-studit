@@ -112,20 +112,21 @@ insert into sg_post(sg_post_no, sg_no, title,  content, regdate, hit, name)
 values(sg_post_seq.nextval, 1, '첫글이네요', '다들 성공하세요', sysdate, 1, '아이유');
 
 --모집 완료된 스터디 게시글 댓글
+drop table sg_post_comment;
 create table sg_post_comment(
 	sg_comment_no number primary key,
 	content clob not null,
 	sg_post_no number not null,
-	name varchar2(100) not null,
+	member_email varchar2(100) not null,
 	regdate date not null,
-	constraint fk_sg_post_no foreign key(sg_post_no) references sg_post(sg_post_no)
+	constraint fk_sg_post_no foreign key(sg_post_no) references sg_post(sg_post_no),
+	constraint fk12member_email foreign key(member_email) references member(member_email)
 )
-
+drop sequence sg_post_comment_seq;
 create sequence sg_post_comment_seq nocache;
-insert into sg_post_comment(sg_comment_no, content, sg_post_no, name, regdate)
-values (sg_post_comment_seq.nextval, '네 화이팅', 1, 'b', sysdate);
-insert into sg_post_comment(sg_comment_no, content, sg_post_no, name, regdate)
-values (sg_post_comment_seq.nextval, '네 화이팅22', 1, 'c', sysdate);
+
+insert into sg_post_comment(sg_comment_no, content, sg_post_no, member_email, regdate)
+values (sg_post_comment_seq.nextval, '첫 모임', 1, 'a@a.com', sysdate);
 
 select p.title, c.content
 from sg_post p, sg_post_comment c

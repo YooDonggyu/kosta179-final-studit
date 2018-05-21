@@ -412,26 +412,28 @@ values(recruit_day_no_seq.nextval,'토요일',23);
 
 
 --모집 게시글 댓글
+drop table recruit_post_comment;
 CREATE TABLE recruit_post_comment
 (
 	recruit_comment_no number primary key ,
 	content clob not null,
-	name varchar2(100) not null,
+	member_email varchar2(100) not null,
 	regdate date not null, 
 	recruit_post_no number not null,
-	constraint fk2_recruit_post_no foreign key(recruit_post_no) references recruit_post(recruit_post_no)
+	constraint fk2_recruit_post_no foreign key(recruit_post_no) references recruit_post(recruit_post_no),
+	constraint fk2member_email foreign key(member_email) references member(member_email)
 );
-drop table recruit_post_comment
-create sequence recruit_comment_no_seq nocache;
 drop sequence recruit_comment_no_seq
+create sequence recruit_comment_no_seq nocache;
 
 
-insert into recruit_post_comment(recruit_comment_no, content, name, regdate, recruit_post_no)
-values(recruit_comment_no_seq.nextval, '혹시 월수만 참여해도 될까요?','제이썬' ,sysdate,1);
-insert into recruit_post_comment(recruit_comment_no, content, name, regdate, recruit_post_no)
-values(recruit_comment_no_seq.nextval, '스터디 시간이 안 적혀있네요..','모지리' ,sysdate,1);
-insert into recruit_post_comment(recruit_comment_no, content, name, regdate, recruit_post_no)
-values(recruit_comment_no_seq.nextval, '화목 싫은데요? 에벱베베','강호동' ,sysdate,2);
+insert into recruit_post_comment(recruit_comment_no, content, member_email, regdate, recruit_post_no)
+values(recruit_comment_no_seq.nextval, '혹시 월수만 참여해도 될까요?', 'd@d.com' ,sysdate,1);
+insert into recruit_post_comment(recruit_comment_no, content, member_email, regdate, recruit_post_no)
+values(recruit_comment_no_seq.nextval, '스터디 시간이 안 적혀있네요..','e@e.com' ,sysdate,1);
+insert into recruit_post_comment(recruit_comment_no, content, member_email, regdate, recruit_post_no)
+values(recruit_comment_no_seq.nextval, '화목 싫은데요? 에벱베베','c@c.com' ,sysdate,1);
+
 
 --회원이 신청한 스터디 현황
 CREATE TABLE study_condition

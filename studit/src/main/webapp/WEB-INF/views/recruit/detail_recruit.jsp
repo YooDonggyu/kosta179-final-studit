@@ -33,6 +33,7 @@
 		    comment : ${comment.content}&nbsp;
 		    name : ${comment.name} &nbsp;
 		    regdate : ${comment.regdate } &nbsp;
+		    <if></if>
 		    <br>
 	    </c:forEach>
 	    </span><br>
