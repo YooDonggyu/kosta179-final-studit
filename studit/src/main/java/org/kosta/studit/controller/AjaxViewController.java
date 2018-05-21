@@ -15,7 +15,6 @@ import org.kosta.studit.model.dao.MemberDAO;
 import org.kosta.studit.model.dao.RecruitDAO;
 import org.kosta.studit.model.dao.StudyRoomDAO;
 import org.kosta.studit.model.service.MemberService;
-import org.kosta.studit.model.service.RecruitService;
 import org.kosta.studit.model.vo.MemberVO;
 import org.kosta.studit.model.vo.SmallCategoryVO;
 import org.kosta.studit.model.vo.StudyRoomConditionListVO;
@@ -36,8 +35,6 @@ public class AjaxViewController {
 		private MemberService memberService;
 	@Autowired
 		private RecruitDAO recruitDAO;
-	@Autowired
-	private RecruitService recruitService;
 	@Autowired
 	private StudyRoomDAO studyroomDAO;
 	
@@ -100,9 +97,10 @@ public class AjaxViewController {
 	
 	/**
 	 * 모집게시글에 따른 댓글 등록
-	 * @param recruitNo
-	 * @param comment
-	 * @return
+	 * @author 유동규
+	 * @param recruitNo 댓글을 가지고 있는 모집 게시글 번호
+	 * @param comment 입력할 댓글
+	 * @return true 정상 작동하면 true
 	 */
 	@RequestMapping(value="/registerComment", method=RequestMethod.POST)
 	@ResponseBody
@@ -116,20 +114,26 @@ public class AjaxViewController {
 		return "true";
 	}
 	
-	
+	/**
+	 * 스터디 룸 현황 조회를 위한 페이징.
+	 * 해당 사용자에 따른 전체 수를 구한 뒤 페이징처리를 한다.
+	 * @author 유동규
+	 * @param nowPage 현재 페이지
+	 * @return StudyRoomConditionListVO 페이징한 결과(list)와 페이징 객체가 담겨있는 객체
+	 */
 	@RequestMapping("/findStudyRoomConditionByNowPage")
 	@ResponseBody
 	public StudyRoomConditionListVO findStudyRoomConditionByNowPage(int nowPage, HttpServletRequest request){
 		//1. 총 게시물로 pagingbean 만들기
-		int totalPage = studyroomDAO.getTotalStudyRoomCondition();
-		PagingBean pb= new PagingBean(totalPage, nowPage);
+		int myTotalPage = studyroomDAO.findTotalStudyRoomConditionByEmail(((MemberVO)request.getSession().getAttribute("memberVO")).getMemberEmail());
+		PagingBean pb= new PagingBean(myTotalPage, nowPage);
+		/*pb.setMyTotalPostCount(myTotalPage);*/
 		//2. 조건문을 위해 이메일과 pb로 Map을 만들어 전달
 		Map<String, Object> map = new HashMap<>();
 		map.put("pagingBean", pb);
 		map.put("memberEmail", ((MemberVO)request.getSession().getAttribute("memberVO")).getMemberEmail());
 		//3. Map으로 paging처리된 결과 List로 받아오기
 		List<StudyRoomConditionVO>list =  studyroomDAO.findStudyConditionByEmail(map);
-		pb.setMyTotalPostCount(list.size());
 		//4. paging된 list와 pb객체를 StudyRoomConditionListVO에 담아 전달
 		StudyRoomConditionListVO srcListVO = new StudyRoomConditionListVO();
 		srcListVO.setList(list);

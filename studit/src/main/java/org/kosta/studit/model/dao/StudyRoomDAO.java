@@ -10,11 +10,10 @@ public interface StudyRoomDAO {
 	String findWaitStudyRoomByEmail(String memberEmail);
 
 
-	int getTotalStudyRoomCondition();
-
-
-
 
 	List<StudyRoomConditionVO> findStudyConditionByEmail(Map<String, Object> map);
+
+
+	int findTotalStudyRoomConditionByEmail(String MemberEmail);
 
 }

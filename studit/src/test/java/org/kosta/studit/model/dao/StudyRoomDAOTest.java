@@ -35,7 +35,7 @@ public class StudyRoomDAOTest {
 		   //1. 전체 현황 수로 pagingBean 생성
 		   //2. pb와 email을 map으로 담아 전송
 		   
-		   PagingBean pb = new PagingBean(studyroomDAO.getTotalStudyRoomCondition());
+		   PagingBean pb = new PagingBean(studyroomDAO.findTotalStudyRoomConditionByEmail("a@a.com"));
 		   Map<String, Object> map = new HashMap<>();
 		   map.put("pagingBean", pb);
 		   map.put("memberEmail", "a@a.com");

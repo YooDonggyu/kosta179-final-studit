@@ -104,7 +104,7 @@ CREATE TABLE com_review
 
 create sequence com_review_seq nocache;
 insert into com_review(com_review_no, content, score, regdate, name, company_no) 
-values(com_review_seq.nextval, '다신 안가요', 1, sysdate, '유란', 2) 
+values(com_review_seq.nextval, '다신 안가요', 1, sysdate, '유란', 1) ;
 
 --업체 후기 댓글
 CREATE TABLE com_review_comment(
@@ -114,7 +114,7 @@ CREATE TABLE com_review_comment(
 	name varchar2(100) not null,
 	regdate date not null,
 	constraint fk_com_review_no foreign key(com_review_no) references com_review(com_review_no)
-)
+);
 
 create sequence com_review_comment_seq nocache;
 
@@ -130,10 +130,10 @@ create table com_business_day (
 	day varchar2(50) not null,
 	company_no number not null,
 	constraint fk4_company_no foreign key(company_no) references company(company_no)
-)
+);
 create sequence com_business_day_seq nocache;
-insert into com_business_day(com_day_no, day, company_no) values(com_business_day_seq.nextval, '월', 2);
-insert into com_business_day(com_day_no, day, company_no) values(com_business_day_seq.nextval, '수', 2);
+insert into com_business_day(com_day_no, day, company_no) values(com_business_day_seq.nextval, '월', 1);
+insert into com_business_day(com_day_no, day, company_no) values(com_business_day_seq.nextval, '수', 1);
 
 select c.name, d.day 
 from com_business_day d, company c
@@ -149,7 +149,7 @@ create table hashtag (
 )
 
 create sequence hashtag_seq nocache;
-insert into hashtag(hashtag_no, content, company_no) values(hashtag_seq.nextval, '화이트보드', 2);
+insert into hashtag(hashtag_no, content, company_no) values(hashtag_seq.nextval, '화이트보드', 1);
 
 --스터디룸
 create table studyroom(
@@ -164,9 +164,9 @@ create table studyroom(
 
 create sequence studyroom_seq nocache;
 insert into studyroom(studyroom_no, name, capacity, price, content, company_no)
-values(studyroom_seq.nextval, 'room-A', 15, 10000, '쾌적한 공간', 2);
+values(studyroom_seq.nextval, 'room-A', 15, 10000, '쾌적한 공간', 1);
 insert into studyroom(studyroom_no, name, capacity, price, content, company_no)
-values(studyroom_seq.nextval, 'room-B', 6, 5000, '소규모 모임에 적합', 2);
+values(studyroom_seq.nextval, 'room-B', 6, 5000, '소규모 모임에 적합', 1);
 
 select c.name, s.name, s.capacity, s.price, s.content, c.addr1
 from studyroom s, company c
@@ -242,6 +242,35 @@ insert into studyroom_condition(studyroom_condition_no, member_email, regdate, s
 values(studyroom_condition_seq.nextval, 'b@b.com', sysdate, 1, '11:00','12:00', '승인', to_date('2018-09-09','YYYY-MM-DD'));
 insert into studyroom_condition(studyroom_condition_no, member_email, regdate, studyroom_no, start_time, end_time, state, use_date) 
 values(studyroom_condition_seq.nextval, 'a@a.com', sysdate, 1, '15:00','16:00', '대기중', to_date('2018-12-31','YYYY-MM-DD'));
+
+insert into studyroom_condition(studyroom_condition_no, member_email, regdate, studyroom_no, start_time, end_time, state, use_date) 
+values(studyroom_condition_seq.nextval, 'a@a.com', sysdate, 1, '12:00','13:00', '거절', to_date('2018-11-12','YYYY-MM-DD'));
+insert into studyroom_condition(studyroom_condition_no, member_email, regdate, studyroom_no, start_time, end_time, state, use_date) 
+values(studyroom_condition_seq.nextval, 'c@c.com', sysdate, 1, '08:00','10:00', '대기중', to_date('2019-06-13','YYYY-MM-DD'));
+insert into studyroom_condition(studyroom_condition_no, member_email, regdate, studyroom_no, start_time, end_time, state, use_date) 
+values(studyroom_condition_seq.nextval, 'a@a.com', sysdate, 1, '15:00','16:00', '거절', to_date('2019-09-20','YYYY-MM-DD'));
+insert into studyroom_condition(studyroom_condition_no, member_email, regdate, studyroom_no, start_time, end_time, state, use_date) 
+values(studyroom_condition_seq.nextval, 'b@b.com', sysdate, 1, '12:00','12:00', '승인', to_date('2018-10-09','YYYY-MM-DD'));
+insert into studyroom_condition(studyroom_condition_no, member_email, regdate, studyroom_no, start_time, end_time, state, use_date) 
+values(studyroom_condition_seq.nextval, 'a@a.com', sysdate, 1, '13:00','14:00', '대기중', to_date('2018-11-30','YYYY-MM-DD'));
+
+insert into studyroom_condition(studyroom_condition_no, member_email, regdate, studyroom_no, start_time, end_time, state, use_date) 
+values(studyroom_condition_seq.nextval, 'a@a.com', sysdate, 1, '12:00','13:00', '거절', to_date('2018-11-12','YYYY-MM-DD'));
+insert into studyroom_condition(studyroom_condition_no, member_email, regdate, studyroom_no, start_time, end_time, state, use_date) 
+values(studyroom_condition_seq.nextval, 'c@c.com', sysdate, 1, '08:00','10:00', '대기중', to_date('2019-06-13','YYYY-MM-DD'));
+insert into studyroom_condition(studyroom_condition_no, member_email, regdate, studyroom_no, start_time, end_time, state, use_date) 
+values(studyroom_condition_seq.nextval, 'a@a.com', sysdate, 1, '15:00','16:00', '거절', to_date('2019-09-20','YYYY-MM-DD'));
+insert into studyroom_condition(studyroom_condition_no, member_email, regdate, studyroom_no, start_time, end_time, state, use_date) 
+values(studyroom_condition_seq.nextval, 'b@b.com', sysdate, 1, '12:00','12:00', '승인', to_date('2018-10-09','YYYY-MM-DD'));
+insert into studyroom_condition(studyroom_condition_no, member_email, regdate, studyroom_no, start_time, end_time, state, use_date) 
+values(studyroom_condition_seq.nextval, 'a@a.com', sysdate, 1, '13:00','14:00', '대기중', to_date('2018-11-30','YYYY-MM-DD'));
+
+insert into studyroom_condition(studyroom_condition_no, member_email, regdate, studyroom_no, start_time, end_time, state, use_date) 
+values(studyroom_condition_seq.nextval, 'a@a.com', sysdate, 1, '13:00','14:00', '대기중', to_date('2018-11-30','YYYY-MM-DD'));
+
+commit
+
+
 
 select s.name, sc.member_email, sc.use_date, sc.start_time, sc.end_time, sc.state
 from studyroom s, studyroom_condition sc

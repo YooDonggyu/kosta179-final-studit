@@ -57,8 +57,9 @@
 	    <c:if test="${sessionEmail == requestEmail }"> 
 	    	<a href="${pageContext.request.contextPath}/recruit/updateRecruitPostInfoByRecruitNoView?recruitNo=${recruitInfo.detail.recruitPostNo}&bigCategoryNo=${recruitInfo.detail.smallCategoryVO.bigCategoryVO.bigCategoryNo}" 
 	    	class="btn btn-primary">수정</a> &nbsp;
-	    	<a  data-toggle="modal"  href="#deleteConfrimModal" class="btn btn-primary">삭제</a> &emsp;
+	    	<a  data-toggle="modal"  href="#deleteConfrimModal" class="btn btn-primary">삭제</a> &nbsp;
 	    </c:if>
+	    	<a  href="${pageContext.request.contextPath}/recruit/getRecruitPostList?pageNo=1" class="btn btn-primary">이전</a> &nbsp;
 	    
     </section>
     <jsp:include page="register_recruit_study.jsp" />

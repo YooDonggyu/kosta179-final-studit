@@ -14,11 +14,11 @@
             <div id="navigation" class="collapse navbar-collapse navbar-right">
             
               <ul class="nav navbar-nav headerUl" >
-		            <li class="active"><a href="${pageContext.request.contextPath}/">HOME</a></li>
-		            <li><a href="${pageContext.request.contextPath}/recruit/getRecruitPostList">STUDY</a></li>
+		            <li class="active"><a  href="${pageContext.request.contextPath}/">HOME</a></li>
+		            <li ><a href="${pageContext.request.contextPath}/recruit/getRecruitPostList">STUDY</a></li>
 		            <li><a href="${pageContext.request.contextPath}/">STUDY-ROOM</a></li>
-		            <li><a href="${pageContext.request.contextPath}/">PLACE</a></li>
-		            <li><a href=""></a></li>
+		            <li><a  href="${pageContext.request.contextPath}/">PLACE</a></li>
+		            <li><a ></a></li>
 	          	</ul>
             
               <ul class="nav navbar-nav navbar-right">

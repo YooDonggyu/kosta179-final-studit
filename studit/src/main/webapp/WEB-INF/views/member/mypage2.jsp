@@ -21,37 +21,44 @@
 	</span>
 	<br><br>
 		<c:set var="pb" value="${srcListVO.pagingBean}" />
-	<c:if test="	${pb.nextPage }">
-		<input type="button" id="pbBtn" onclick ="srPagingBtn()" value="더보기"><br>
+	<c:if test="${pb.nextPage == true}">
+		<input type="button" id="pbBtn"  value="더보기"><br>
 	</c:if>
 	<input type="hidden" id="hiddenNowPage" value="${pb.nowPage}">
 </section>
 
 <script>
 	$(document).ready(function(){
+		var pageNo = 1;
 		$("#pbBtn").click(function(){
-			var nowPage = $("#hiddenNowPage").val();
+			pageNo += 1;
 			$.ajax({
 				type:"get",
 				url:"${pageContext.request.contextPath}/ajax/findStudyRoomConditionByNowPage",
-				data:"nowPage="+nowPage,
+				data:"nowPage="+pageNo,
 				success:function(data){
 					var temp="";
 				 	$.each(data.list, function(index, item) {
 						/* result +=	"<option value="+item.smallCategoryNo+">"+item.name+"</option>"; */
 						/* alert(item.studyRoomConditionNo) */
 						temp += "useDate : "+item.useDate+
-							"regDate : "+item.regDate+
-							"startTime : "+item.startTime +
-							"endTime : "+item.endTime +
-							"state : "+item.state +
-							"memberName : "+item.memberVO.name+
-							"memberEmail : "+item.memberVO.memberEmail+
-							"studyroomName : "+item.studyRoomVO.name+
-							"companyName : "+item.studyRoomVO.companyVO.name+
+							" &emsp; regDate : "+item.regDate+
+							" &emsp; startTime : "+item.startTime +
+							" &emsp; endTime : "+item.endTime +
+							" &emsp; state : "+item.state +
+							" &emsp; memberName : "+item.memberVO.name+
+							" &emsp; memberEmail : "+item.memberVO.memberEmail+
+							" &emsp; studyroomName : "+item.studyRoomVO.name+
+							" &emsp; companyName : "+item.studyRoomVO.companyVO.name+
 							"<br>";
 					})//each 
 					$("#ajaxResult").append(temp);
+				 	if(!data.pagingBean.nextPage){
+				 		$("#pbBtn").hide();
+				 	}else{
+				 		$("#pbBtn").show();
+				 	}
+				 	
 				}//success
 			})
 		})

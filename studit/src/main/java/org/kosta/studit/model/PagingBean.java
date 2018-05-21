@@ -14,16 +14,6 @@ public class PagingBean {
 	  * database에 저장된 총게시물수
 	  */
 	 private int totalPostCount;
-	 
-	 private int myTotalPostCount;
-	 
-	 public int getMyTotalPostCount() {
-		return myTotalPostCount;
-	}
-
-	public void setMyTotalPostCount(int myTotalPostCount) {
-		this.myTotalPostCount = myTotalPostCount;
-	}
 
 	public PagingBean() {
 	 }
@@ -203,11 +193,12 @@ public class PagingBean {
 	 
 	 /**
 	  * 다음 페이지가 있는지확인하는 메서드
-	  * @return
+	  * @author 유동규
+	  * @return boolean 다음 페이지가 있으면 true 없으면 false
 	  */
 	public boolean isNextPage() {
 		boolean flag = false;
-		if(this.myTotalPostCount-this.getNowPage()*postCountPerPage>0) {
+		if(this.getTotalPage()-this.getNowPage()>0) {
 			flag = true;
 		}
 		return flag;

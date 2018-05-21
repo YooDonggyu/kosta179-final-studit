@@ -31,8 +31,8 @@ public class StudyRoomDAOImpl implements StudyRoomDAO {
 	    * @return 전체 스터디룸 신청현황 수
 	    */
 	   @Override
-	   public int getTotalStudyRoomCondition() {
-		   return template.selectOne("studyroom.getTotalStudyRoomCondition");
+	   public int findTotalStudyRoomConditionByEmail(String memberEmail) {
+		   return template.selectOne("studyroom.findTotalStudyRoomConditionByEmail", memberEmail);
 	   }
 	   /**
 	    * 사용자에 따른 스터디 룸 신청현황을 반환

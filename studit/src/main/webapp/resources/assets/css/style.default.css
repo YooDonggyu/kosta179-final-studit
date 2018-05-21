@@ -1842,7 +1842,7 @@ a.list-group-item.active > .badge,
   background-color: #ffffff;
 }
 .nav-pills > li > a > .badge {
-  margin-left: 3px;
+  margin-left: 3px;	
 }
 /*
 
