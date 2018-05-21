@@ -3,6 +3,7 @@ package org.kosta.studit.model.dao;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kosta.studit.model.vo.MemberVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,7 +95,7 @@ public class MemberDAOTest {
 	 * 회원이 탈퇴상태인지 확인
 	 * @author 유동규
 	 */
-	//@Test
+	@Test
 	public void isMemberTest() {
 		System.out.println(memberDAO.isMember("a@a.com"));
 	}

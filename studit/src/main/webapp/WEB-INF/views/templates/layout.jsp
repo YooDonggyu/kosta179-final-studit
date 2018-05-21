@@ -8,7 +8,9 @@
 
 <meta charset="utf-8">
   <title><tiles:insertAttribute name="title" ignore="true" /></title> 
-  
+  	<!-- favicon -->
+  	<link rel="shortcut icon" href="${pageContext.request.contextPath }/resources/assets/img/favicon.ico">
+    
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
     <!-- Bootstrap-->

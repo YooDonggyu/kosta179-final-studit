@@ -17,4 +17,5 @@ public interface MemberService {
 
 	HashMap<String, Object> deleteMemberView(String memberEmail);
 	
+	void deleteMember(String memberEmail);
 }

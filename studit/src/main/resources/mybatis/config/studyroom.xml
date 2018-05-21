@@ -55,18 +55,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    </select>
 	
 	<!-- 
-      신청한 스터디룸 중 승인대기중인 스터디룸 조회
-      @author 송용준
-      @param memberEmail 회원 이메일
-      @return string 신청한 스터디룸 중 승인대기중인 스터디룸 개수
+      	신청한 스터디룸 중 승인대기중인 스터디룸 조회
+     	@author 송용준
+     	@param memberEmail 회원 이메일
+     	@return string 신청한 스터디룸 중 승인대기중인 스터디룸 개수
     -->
    <select id="findWaitStudyRoomByEmail" parameterType="string" resultType="string">
       select count(sc.studyroom_condition_no)
       from studyroom_condition sc
       where sc.member_email=#{value} and sc.state='승인대기중'
    </select>
-   
-   
 
 </mapper>
  

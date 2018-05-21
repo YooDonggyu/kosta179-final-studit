@@ -1,6 +1,5 @@
 package org.kosta.studit.model.dao;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.kosta.studit.model.vo.MemberVO;
@@ -21,6 +20,8 @@ public interface MemberDAO {
 	boolean isMember(String memberEmail);
 
 	Boolean checkCompanyByEmail(String memberEmail);
+
+	void deleteMember(String memberEmail);
 
 
 

@@ -57,5 +57,9 @@ public class RecruitServiceTest {
 		System.out.println(((RecruitPostVO)recruitService.findRecruitPostDetailByRecruitNo("",1).get("detail")));
 		System.out.println(recruitService.findRecruitPostDetailByRecruitNo("d@d.com",1).get("studyState"));
 	}
-	
 }
+
+
+
+
+

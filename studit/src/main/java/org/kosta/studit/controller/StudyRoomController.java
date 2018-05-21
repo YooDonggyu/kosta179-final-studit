@@ -27,6 +27,7 @@ public class StudyRoomController {
 	 * @author 유동규
 	 * @return StudyRoomConditionListVO 페이징한 결과(list)와 페이징 객체가 담겨있는 객체
 	 */
+
 	@RequestMapping("/findStudyConditionByEmail")
 	public String findStudyConditionByEmail(HttpServletRequest request, Model model) {
 		//1. 총 게시물로 pagingbean 만들기
@@ -38,7 +39,7 @@ public class StudyRoomController {
 		map.put("pagingBean", pb);
 		map.put("memberEmail", ((MemberVO)request.getSession().getAttribute("memberVO")).getMemberEmail());
 		//3. Map으로 paging처리된 결과 List로 받아오기
-		List<StudyRoomConditionVO>list =  studyroomDAO.findStudyConditionByEmail(map);
+		List<StudyRoomConditionVO> list =  studyroomDAO.findStudyConditionByEmail(map);
 		//4. paging된 list와 pb객체를 StudyRoomConditionListVO에 담아 전달
 		StudyRoomConditionListVO srcListVO = new StudyRoomConditionListVO();
 		srcListVO.setList(list);
@@ -46,5 +47,5 @@ public class StudyRoomController {
 		model.addAttribute("srcListVO", srcListVO);
 		return "member/mypage2.tiles";
 	}
-	
+
 }

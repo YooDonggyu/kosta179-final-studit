@@ -3,12 +3,13 @@ package org.kosta.studit.model.service;
 import java.util.List;
 import java.util.Map;
 
+import org.kosta.studit.model.vo.BigCategoryVO;
 import org.kosta.studit.model.vo.RecruitPostListVO;
 import org.kosta.studit.model.vo.RecruitPostVO;
+import org.kosta.studit.model.vo.SmallCategoryVO;
 import org.kosta.studit.model.vo.StudyConditionListVO;
 
 public interface RecruitService {
-	
 	public void registerRecruitStudy(int recruitPostNo,String memberEmail, String context);
 
 	void updateRecruitStudy(int recruitPostNo, String memberEmail, String context);
@@ -23,4 +24,9 @@ public interface RecruitService {
 
 	void updateRecruitPostInfoByRecruitNo(RecruitPostVO recruitPostVO, List<String> days);
 	
+	public void createRecruitPost(RecruitPostVO recruitPostVO, String[] recruitDay);
+
+	public List<BigCategoryVO> getBigCategoryList();
+
+	public List<SmallCategoryVO> findSmallCategoryListByBigCategoryNo(String bigCategoryNo);
 }

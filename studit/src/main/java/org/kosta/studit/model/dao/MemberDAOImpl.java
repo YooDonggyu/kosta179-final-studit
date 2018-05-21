@@ -65,7 +65,6 @@ public class MemberDAOImpl implements MemberDAO {
 		template.update("member.updatePassword", memberVO);
 	}
 
-
 	/**
 	 * 회원인지 아닌지 판단하는 메서드.
 	 * 
@@ -85,6 +84,7 @@ public class MemberDAOImpl implements MemberDAO {
 
 	/**
 	 * 회원이 업체인지 아닌지 확인
+	 * 
 	 * @author 송용준
 	 * @param memberEmail
 	 *            회원 이메일
@@ -112,6 +112,15 @@ public class MemberDAOImpl implements MemberDAO {
 		template.insert("member.registerMemberPosition", map);
 	}
 	
-	
-	
+	/**
+	 * 회원 탈퇴 시 회원의 직책 상태를 회원에서 탈퇴로 변경하는 메서드
+	 * 
+	 * @author 송용준
+	 * @param memberEmail 탈퇴하고자 하는 회원의 이메일
+	 */
+	@Override
+	public void deleteMember(String memberEmail) {
+		template.update("member.deleteMember", memberEmail);
+	}
+
 }

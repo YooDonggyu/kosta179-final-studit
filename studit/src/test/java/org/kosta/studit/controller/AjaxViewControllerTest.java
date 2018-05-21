@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -49,5 +50,13 @@ public class AjaxViewControllerTest {
 	       .andExpect(content().contentType("application/json;charset=UTF-8")) 
 	       .andExpect(status().isOk());
 	    }
-	    
+	   
+	   @Test
+	   public void getSmallCategoryByBigCategory() throws Exception {
+		   mock.perform(get("/getSmallCategoryByBigCategoryAjax")
+		             .param("bigCategoryNo", "3"))
+		          .andDo(print())
+		          .andExpect(content().contentType("application/json;charset=UTF-8")) 
+		          .andExpect(status().isOk());
+	   }
 }

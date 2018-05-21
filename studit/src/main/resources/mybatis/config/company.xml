@@ -5,17 +5,70 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="company">
 	<!-- 
-      회원 이메일로 승인대기중인 예약건수 조회
-      @author 송용준
-      @param memberEmail 회원 이메일
-      @return string 승인대기중인 예약건수
-    -->
-   <select id="findWaitReservationByEmail" resultType="string">
-      select count(sc.state) 
-      from studyroom_condition sc, studyroom sr, company com
-      where sc.state='승인대기중' and sc.studyroom_no=sr.studyroom_no 
-         and sr.company_no=com.company_no and com.member_email=#{value}
-   </select>
+		  회원 이메일로 승인대기중인 예약건수 조회
+		 @author 송용준 
+		 @param memberEmail 회원 이메일
+		 @return string 승인대기중인 예약건수 
+	-->
+	<select id="findWaitReservationByEmail" resultType="string">
+		select count(sc.state)
+		from studyroom_condition sc, studyroom sr, company com
+		where sc.state='승인대기중' and sc.studyroom_no=sr.studyroom_no
+		and sr.company_no=com.company_no and com.member_email=#{value}
+	</select>
+	
+	<!-- 
+		 등록이 승인된 스터디 룸의 addr1 값 조회
+		 @author 송용준 
+		 @return string company 테이블의 addr1 값
+	-->
+	<select id="readFirstAddr" resultType="string">
+		select addr1
+		from company
+		where state='승인'
+	</select>
+	
+	<!-- 
+		 등록이 승인된 업체 목록을 불러온다
+		 @author 송용준 
+		 @return companyVO 등록이 승인된 업체 객체
+	-->
+	<select id="readAllCompany" resultType="companyVO">
+		select company_no, name, intro, profile_path
+		from company
+		where state='승인'
+		order by regdate desc
+	</select>
+	<!-- 
+		 등록이 승인된 업체 목록들의 해쉬태그를 불러온다
+		 @author 송용준 
+		 @return map 해쉬태그 정보를 담은 map 객체
+	-->
+	<select id="readAllHashTag" resultType="map">
+		select h.content, h.company_no
+		from hashtag h, company c
+		where c.company_no=h.company_no and c.state='승인'
+	</select>
+	<!-- 
+		선택된 addr1을 가진 업체들의 addr2를 불러온다
+		 @author 송용준 
+		 @return string company 테이블의 addr2 값
+	-->
+	<select id="findSecondAddressListByFirstAddressName" parameterType="string" resultType="string">
+		select addr2
+		from company
+		where addr1=#{value} and state='승인'
+	</select>
+	<!-- 
+		 선택된 addr2을 가진 업체들의 addr3를 불러온다
+		 @author 송용준 
+		 @return string company 테이블의 addr3 값
+	-->
+	<select id="findThirdAddressListBySecondAddressName" parameterType="string" resultType="string">
+		select addr3
+		from company
+		where addr2=#{value} and state='승인'
+	</select>
 </mapper>
  
  

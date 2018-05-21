@@ -1,21 +1,19 @@
 package org.kosta.studit.model.dao;
 
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.kosta.studit.model.vo.StudyConditionVO;
+
 import org.kosta.studit.model.PagingBean;
 import org.kosta.studit.model.vo.BigCategoryVO;
 import org.kosta.studit.model.vo.GroupMemberVO;
 import org.kosta.studit.model.vo.RecruitPostCommentVO;
 import org.kosta.studit.model.vo.RecruitPostVO;
 import org.kosta.studit.model.vo.SmallCategoryVO;
-
+import org.kosta.studit.model.vo.StudyConditionVO;
 
 public interface RecruitDAO {
-	
-	
+
 	public void registerRecruitStudy(HashMap<String, Object> map);
 
 	GroupMemberVO findGroupMemberByRecruitPostNo(int recruitPostNo);
@@ -25,7 +23,7 @@ public interface RecruitDAO {
 	int findStudyConditionCountByEmailAndRecruitNo(HashMap<String, Object> map);
 
 	String findWaitStudyByEmail(String memberEmail);
-	
+
 	List<StudyConditionVO> findStudyConditionByMemberEmail(Map<String, Object> map);
 
 	int findCountStudyConditionByMemberEmail(String memberEmail);
@@ -65,5 +63,7 @@ public interface RecruitDAO {
 	void updateDeleteStudyConditionByRecruitNo(int recruitNo);
 
 	void registerCommentByRecruitNo(Map<String, Object> map);
+
+	void createRecruitPost(RecruitPostVO recruitPostVO);
 
 }

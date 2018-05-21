@@ -6,10 +6,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.kosta.studit.model.PagingBean;
+import org.kosta.studit.model.dao.GroupDAO;
 import org.kosta.studit.model.dao.RecruitDAO;
+import org.kosta.studit.model.vo.BigCategoryVO;
 import org.kosta.studit.model.vo.RecruitPostCommentVO;
 import org.kosta.studit.model.vo.RecruitPostListVO;
 import org.kosta.studit.model.vo.RecruitPostVO;
+import org.kosta.studit.model.vo.SmallCategoryVO;
 import org.kosta.studit.model.vo.StudyConditionListVO;
 import org.kosta.studit.model.vo.StudyConditionVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +23,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class RecruitServiceImpl implements RecruitService {
 	@Autowired
 	private RecruitDAO recruitDAO;
-	
+	@Autowired
+	private GroupDAO groupDAO;
 	/**
 	 * 스터디 현황 조회 시 내역 list를 불러온다.
 	 * @author 변태섭
@@ -209,6 +213,59 @@ public class RecruitServiceImpl implements RecruitService {
 		}
 	}
 	
-	
+	/**
+	 * 스터디 모집글 등록, 해당 모집글의 요일 등록, 해당 모집글의 스터디 그룹 등록, 해당 스터디 그룹에 팀장 등록
+	 * @author 송용준
+	 * @param RecruitPostVO 등록할 모집글의 정보를 담은 객체
+	 * @param String[] recruitDay 등록할 모집글의 활동 요일을 담은 배열 객체
+	 */
+	@Override
+	public void createRecruitPost(RecruitPostVO recruitPostVO, String[] recruitDay) {
+		// 작성한 글을 데이터베이스에 등록
+		recruitDAO.createRecruitPost(recruitPostVO);
 
+		// 등록된 글의 모집 요일들을 데이터베이스에 등록
+		HashMap<String, Object> RecruitPostDay = new HashMap<>();
+		for (int i = 0; i < recruitDay.length; i++) {
+			RecruitPostDay.put("recruitPostNo", recruitPostVO.getRecruitPostNo());
+			RecruitPostDay.put("recruitDay", recruitDay[i]);
+			recruitDAO.registerRecruitDay(RecruitPostDay);
+		}
+
+		// 등록된 글의 스터디 그룹을 생성
+		HashMap<String, Object> createStudyGroupInfo = new HashMap<>();
+		createStudyGroupInfo.put("memberName", recruitPostVO.getMemberVO().getName());
+		createStudyGroupInfo.put("recruitPostNo", recruitPostVO.getRecruitPostNo());
+		groupDAO.createStudyGroup(createStudyGroupInfo);
+
+		// 등록된 글의 작성자를 해당 스터디 그룹맴버로 등록 : 팀장
+		HashMap<String, Object> registerStudyGroupMemberInfo = new HashMap<>();
+		int studyGroupNo = groupDAO.findStudyGroupNoByRecruitPostNo(recruitPostVO.getRecruitPostNo());
+		registerStudyGroupMemberInfo.put("memberEmail", recruitPostVO.getMemberVO().getMemberEmail());
+		registerStudyGroupMemberInfo.put("groupPosition", "팀장");
+		registerStudyGroupMemberInfo.put("studyGroupNo", studyGroupNo);
+		groupDAO.registerStudyGroupMember(registerStudyGroupMemberInfo);
+
+	}
+	
+	/**
+	 * 모든 대분류 리스트를 조회
+	 * @author 송용준
+	 * @return List<BigCategoryVO> 대분류 정보를 담은 리스트
+	 */
+	@Override
+	public List<BigCategoryVO> getBigCategoryList() {
+		return recruitDAO.getBigCategoryList();
+	}
+	
+	/**
+	 * 선택된 대분류가 포함하고 있는 소분류 리스트를 조회
+	 * @author 송용준
+	 * @param bigCategoryNo 선택된 대분류 넘버
+	 * @param List<SmallCategoryVO> 소분류 정보를 담은 리스트
+	 */
+	@Override
+	public List<SmallCategoryVO> findSmallCategoryListByBigCategoryNo(String bigCategoryNo) {
+		return recruitDAO.findSmallCategoryListByBigCategoryNo(bigCategoryNo);
+	}
 }

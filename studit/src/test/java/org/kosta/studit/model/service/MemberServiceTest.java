@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kosta.studit.exception.EmailNotFoundException;
 import org.kosta.studit.exception.IsNotMemberException;
@@ -74,7 +75,7 @@ public class MemberServiceTest {
 	    * 회원탈퇴 시 필요한 조건 확인
 	    * @author 송용준
 	    */
-	   //@Test
+	   @Test
 	   public void deleteMemberView() {
 	      HashMap<String,Object> map=memberService.deleteMemberView("a@a.com");
 	      System.out.println("##회원털퇴를 위한 조건##");

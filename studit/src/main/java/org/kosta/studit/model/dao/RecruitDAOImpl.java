@@ -170,8 +170,6 @@ public class RecruitDAOImpl implements RecruitDAO {
 		return template.selectList("recruit.getRecruitPostList", pagingBean);
 	}
 	
-	
-	
 	   /**
 	    * 모집 게시글 번호에 따른 모집 게시글 내용과 카테고리(소, 대)를 검색 
 	    * @author 유동규
@@ -262,11 +260,6 @@ public class RecruitDAOImpl implements RecruitDAO {
 		template.delete("recruit.deleteDayByRecruitNo", recruitNo);
 	}
 	
-	@Override
-	public void registerRecruitDay(Map<String, Object> map) {
-		template.insert("recruit.registerRecruitDay", map);
-	}
-	
 	/**
 	 * 모집게시글 번호에 따른 상태변경(모집중->삭제).
 	 * @author 유동규
@@ -282,4 +275,27 @@ public class RecruitDAOImpl implements RecruitDAO {
 		template.insert("recruit.registerCommentByRecruitNo", map);
 	}
 	
+	/**
+	 * 모집글을 작성하는 메서드.
+	 * @author 송용준
+	 * @param RecruitPostVO 등록할 모집글의 정보를 담은 객체
+	 */
+	@Override
+	public void createRecruitPost(RecruitPostVO recruitPostVO) {
+		template.insert("recruit.createRecruitPost", recruitPostVO);
+	}
+	
+	/**
+	 * 등록할 모집글의 요일을 등록하는 메서드.
+	 * @author 송용준
+	 * @param HashMap<String, Object> map 등록할 요일을 담은 객체
+	 */
+	@Override
+	public void registerRecruitDay(Map<String, Object> map) {
+		template.insert("recruit.registerRecruitDay", map);
+	}
 }
+
+
+
+
