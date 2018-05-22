@@ -14,7 +14,6 @@ public interface RecruitService {
 
 	void updateRecruitStudy(int recruitPostNo, String memberEmail, String context);
 
-	StudyConditionListVO findStudyConditionByMemberEmail(String memberEmail, String pageNo);
 
 	RecruitPostListVO findRecruitPostByCategoryAndKeyword(String[] category, String keyword, String pageNo);
 
@@ -23,6 +22,9 @@ public interface RecruitService {
 	Map<String, Object> findRecruitPostDetailByRecruitNo(String memberEmail, int recruitNo);
 
 	void updateRecruitPostInfoByRecruitNo(RecruitPostVO recruitPostVO, List<String> days);
+
+
+	StudyConditionListVO findStudyConditionByMemberEmail(String memberEmail, int nowPage);
 	
 	public void createRecruitPost(RecruitPostVO recruitPostVO, String[] recruitDay);
 

@@ -5,440 +5,410 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="recruit">
 
-	<!--*** resultMap *** -->
+	<!--*** resultMap ***-->
 	<!-- 
-		findStudyConditionByMemberEmail 쿼리에서 사용하는 resultMap 
-		@author 변태섭 
-	-->
+	    findStudyConditionByMemberEmail 쿼리에서 사용하는 resultMap
+	    
+		@author 변태섭
+	 -->
 	<resultMap type="studyConditionVO" id="scRM">
 		<result property="studyConditionNo" column="condition_no" />
-		<result property="recruitPostVO.smallCategoryVO.name"
-			column="sc_name" />
+		<result property="recruitPostVO.smallCategoryVO.name" column="sc_name" />
 		<result property="recruitPostVO.location" column="location" />
 		<result property="recruitPostVO.title" column="title" />
 		<result property="memberVO.name" column="member_name" />
 		<result property="regdate" column="stc_regdate" />
 		<result property="state" column="state" />
-		<result property="recruitPostVO.recruitPostNo"
-			column="recruit_post_no" />
+		<result property="recruitPostVO.recruitPostNo" column="recruit_post_no" />
 	</resultMap>
-
-	<!-- 
-		SmallCategoryVO에 값을 담기 위한 resultMap 
-		@author 김유란 
-	-->
-	<resultMap type="smallCategoryVO" id="smallCategoryMap">
-		<result column="small_category_no" property="smallCategoryNo" />
-		<result column="big_category_no"
-			property="bigCategoryVO.bigCategoryNo" />
-	</resultMap>
-
-	<!-- 
-		recruitPostVO에 값을 담기 위한 resultMap 
+	
+	 <!-- 
+		SmallCategoryVO에 값을 담기 위한 resultMap
 		@author 김유란
-	-->
+	 -->
+	<resultMap type="smallCategoryVO" id="smallCategoryMap">
+		<result column="small_category_no" property="smallCategoryNo"/>
+		<result column="big_category_no" property="bigCategoryVO.bigCategoryNo"/>
+	</resultMap>
+	
+	<!-- 
+		recruitPostVO에 값을 담기 위한 resultMap
+		@author 김유란
+	 -->
 	<resultMap type="recruitPostVO" id="recruitPostMap">
-		<result column="member_email" property="memberVO.memberEmail" />
-		<result column="name" property="memberVO.name" />
-		<result column="recruit_post_no" property="recruitPostNo" />
-	</resultMap>
-
+		<result column="member_email" property="memberVO.memberEmail"/>
+ 		<result column="name" property="memberVO.name"/>
+ 		<result column="recruit_post_no" property="recruitPostNo"/>
+ 	</resultMap>
+	
 	<!-- 
-		recruitPostVO에 카테고리(소,대)와 member_email을 담기위한 resultMap 
-		@author 유동규 
-	-->
-	<resultMap type="recruitPostVO" id="rpMap"
-		extends="recruitPostMap">
-		<result column="small_category_no"
-			property="smallCategoryVO.smallCategoryNo" />
-		<result column="smallName" property="smallCategoryVO.name" />
-		<result column="bigName"
-			property="smallCategoryVO.bigCategoryVO.name" />
-		<result column="bigCategoryNo"
-			property="smallCategoryVO.bigCategoryVO.bigCategoryNo" />
-	</resultMap>
-
-	<!--*** /resultMap *** -->
-
-
-
-
-
+		recruitPostVO에 카테고리(소,대)와 member_email을 담기위한 resultMap
+		@author 유동규	
+	 -->
+	<resultMap type="recruitPostVO" id="rpMap" extends="recruitPostMap">
+      <result column="small_category_no" property="smallCategoryVO.smallCategoryNo"/>
+      <result column="smallName" property="smallCategoryVO.name"/>
+      <result column="bigName" property="smallCategoryVO.bigCategoryVO.name"/>
+      <result column="bigCategoryNo" property="smallCategoryVO.bigCategoryVO.bigCategoryNo" />
+   </resultMap>
+   
+   <!-- 
+   		recruit_post_comment에 member 담기
+   		@author 유동규
+    -->
+    <resultMap type="recruitPostCommentVO" id="rpcMap">
+    	<result column="member_email" property="memberVO.memberEmail" />
+    	<result column="name" property="memberVO.name" />
+    </resultMap>
+    
+	
+	<!--*** /resultMap ***-->
+	
+	
+	
+	
+	
 	<!-- 
-		신청한 스터디 중 승인대기중인 스터디 수 조회
-		@author 송용준
-		@param memberEmail 회원 이메일
-		@return string 신청한 스터디 중 승인대기중인 스터디 수 
-	-->
-	<select id="findWaitStudyByEmail" parameterType="string"
-		resultType="string">
-		select count(study_condition_no)
-		from study_condition
-		where member_email=#{value} and state='미승인'
-	</select>
-
-
+      신청한 스터디 중 승인대기중인 스터디 수 조회
+      @author 송용준
+      @param memberEmail 회원 이메일
+      @return string 신청한 스터디 중 승인대기중인 스터디 수
+    -->
+   <select id="findWaitStudyByEmail" parameterType="string" resultType="string">
+      select count(study_condition_no)
+      from study_condition
+      where member_email=#{value} and state='미승인'
+   </select>
+   
+   
 	<!-- 
-		스터디 현황 조회 시 필요한 데이터를 뽑는다. 
-		@author 변태섭 
-		@param String 로그인한 회원의 Email 
-		@return StudyConditionVO resultMap을 이용하여 스터디 현황 조회 시 필요한 데이터 뽑기 
-	-->
-	<select id="findStudyConditionByMemberEmail"
-		parameterType="object" resultMap="scRM">
-		select condition_no, sc_name,
-		location, title, member_name, stc_regdate, state, recruit_post_no
-		from
-		(select row_number() over(order by study_condition_no desc)
-		condition_no, sc.name sc_name, rp.location, rp.title,
-		m.name member_name, to_char(stc.regdate,'yyyy-MM-dd hh24:mi:ss')
-		stc_regdate, stc.state, rp.recruit_post_no
-		from small_category sc, recruit_post rp, member m, study_condition stc
-		where stc.member_email = #{memberEmail}
-		and sc.small_category_no = rp.small_category_no
-		and rp.recruit_post_no = stc.recruit_post_no
-		and m.member_email = rp.member_email)
-		where condition_no between
-		#{pb.startRowNumber} and #{pb.endRowNumber}
-	</select>
-
-	<!-- 
-		스터디 현황 데이터의 개수를 불어오는 쿼리 
+		스터디 현황 조회 시 필요한 데이터를 뽑는다.
+		
 		@author 변태섭
-		@param String 로그인한 회원의 Email 
+		@param String 로그인한 회원의 Email
+		@return StudyConditionVO resultMap을 이용하여 스터디 현황 조회 시 필요한 데이터 뽑기
+	 -->
+	<select id="findStudyConditionByMemberEmail" parameterType="object" resultMap="scRM">
+		select condition_no, sc_name, location, title, member_name, stc_regdate, state, recruit_post_no
+		from
+				(select row_number() over(order by study_condition_no desc) condition_no,  sc.name sc_name, rp.location, rp.title,
+							m.name member_name, to_char(stc.regdate,'yyyy-MM-dd hh24:mi:ss') stc_regdate, stc.state, rp.recruit_post_no
+				from small_category sc, recruit_post rp, member m, study_condition stc
+				where stc.member_email = #{memberEmail}
+							and sc.small_category_no = rp.small_category_no
+							and rp.recruit_post_no = stc.recruit_post_no
+							and m.member_email = rp.member_email)
+		where condition_no between #{pb.startRowNumber} and #{pb.endRowNumber}
+	</select>
+	
+	<!-- 
+		스터디 현황 데이터의 개수를 불어오는 쿼리
+		
+		@author 변태섭
+		@param String 로그인한 회원의 Email
 		@return int 스터디 현황 데이터의 개수
-	-->
-	<select id="findCountStudyConditionByMemberEmail"
-		parameterType="string" resultType="int">
-		select count(*)
+	 -->
+	<select id="findCountStudyConditionByMemberEmail" parameterType="string" resultType="int">
+		select count(*)	
 		from study_condition
 		where member_email = #{memberEmail}
 	</select>
 	<!-- 
-		스터디 신청을하는 SQL문 
-		@param Hashmap<Stirng,Object> 
-		@author 이승수 
-	-->
-	<insert id="registerRecruitStudy" parameterType="object">
-		insert
-		into study_condition
-		(study_condition_no,regdate,self_appeal,recruit_post_no,member_email)
-		values(study_condition_no_seq.nextval,sysdate,#{context},#{recruitPostNo},#{memberEmail})
-	</insert>
-
+		스터디 신청을하는 SQL문
+		@param Hashmap<Stirng,Object>
+		@author 이승수
+	 -->
+	<insert id="registerRecruitStudy" parameterType="object" >
+		insert into study_condition (study_condition_no,regdate,self_appeal,recruit_post_no,member_email)  
+		values(study_condition_no_seq.nextval,sysdate,#{context},#{recruitPostNo},#{memberEmail}) 
+	</insert> 
+	
 	<!-- 
-		글번호로 스터디그룹멤버를 찾는 메소드. 
-		@param int recruitPostNo 
-		@author 이승수 
-	-->
-	<select id="findGroupMemberByRecruitPostNo" parameterType="int"
-		resultType="groupMemberVO">
+		글번호로 스터디그룹멤버를 찾는 메소드.
+		@param int recruitPostNo
+		@author 이승수
+	 -->
+	<select id="findGroupMemberByRecruitPostNo" parameterType="int" resultType="groupMemberVO">
 		select m.email , m.position , m.state
-		from study_group g ,
-		sg_member m
+		from study_group g , sg_member m
 		where g.sg_no = m.sg_no and g.sg_no = (select s.sg_no
-		from
-		recruit_post r, study_group s
+		from recruit_post r, study_group s 
 		where r.recruit_post_no = s.recruit_post_no and r.recruit_post_no=#{value})
 	</select>
 	<!-- 
-		이메일과 게시글번호로 스터디신청 현황을 불러오는 쿼리문. 
-		@param map 
-		@author 이승수 
-	-->
-	<select id="findStudyConditionCountByEmailAndRecruitNo"
-		resultType="int">
-		select count(*)
-		from study_condition
-		where member_email = #{memberEmail} and recruit_post_no=#{recruitNo}
-	</select>
+		이메일과 게시글번호로 스터디신청 현황을 불러오는 쿼리문.
+		@param map
+		@author 이승수
+	 -->
+	<select id="findStudyConditionCountByEmailAndRecruitNo"  resultType="int">
+         select count(*)
+         from study_condition
+         where member_email = #{memberEmail} and recruit_post_no=#{recruitNo}
+   </select>
+   	<!-- 
+		다시 신청했을 때 상태를 거절에서 미승인으로 바꿔주는 SQL문
+		@param int recruitPostNo
+		@author 이승수
+	 -->
+   <update id="updateRecruitStudy" parameterType="object">
+   		update study_condition set state='미승인', self_appeal=#{context}
+   		where recruit_post_no=#{recruitPostNo} and member_email=#{memberEmail}
+   </update>
+   
+  
+	
 	<!-- 
-		다시 신청했을 때 상태를 거절에서 미승인으로 바꿔주는 SQL문 
-		@param int recruitPostNo 
-		@author 이승수 
-	-->
-	<update id="updateRecruitStudy" parameterType="object">
-		update study_condition set state='미승인', self_appeal=#{context}
-		where recruit_post_no=#{recruitPostNo} and member_email=#{memberEmail}
-	</update>
-
-
-
-	<!-- 
-		대분류 목록을 가져온다. 
-		@author 김유란 
-		@return BigCategoryVO 
-	-->
+		대분류 목록을 가져온다.
+		@author 김유란
+		@return BigCategoryVO
+	 -->
 	<select id="getBigCategoryList" resultType="bigCategoryVO">
-		select big_category_no as bigCategoryNo, name 
-		from big_category
+		select big_category_no, name from big_category
 	</select>
 
 	<!-- 
-		대분류 번호에 따른 소분류 목록을 가져온다. 
-		@author 김유란 
-		@return SmallCategoryVO 
-	-->
-	<select id="findSmallCategoryListByBigCategoryNo"
-		resultMap="smallCategoryMap">
+		대분류 번호에 따른 소분류 목록을 가져온다.
+		@author 김유란
+		@return SmallCategoryVO
+	 -->
+	<select id="findSmallCategoryListByBigCategoryNo" resultMap="smallCategoryMap">
 		select s.small_category_no, s.name, b.big_category_no
-		from
-		small_category s, big_category b
-		where
-		s.big_category_no=b.big_category_no and s.big_category_no=#{value}
+		from small_category s, big_category b
+		where s.big_category_no=b.big_category_no and s.big_category_no=#{value}
 	</select>
+	
 
-
-	<!-- 
+		<!-- 
 		전체 모집글 수를 가져온다. 
-		@author 김유란 
-		@return int 
-	-->
-	<select id="getTotalRecruitPostCount" resultType="int">
-		select count(*) from recruit_post where condition='모집중'
-	</select>
-
-	<!-- 
-		전체 모집글을 페이징 처리하여 가져온다. 
-		@author 김유란 
+		@author 김유란
+		@return int
+	 -->
+ 	<select id="getTotalRecruitPostCount" resultType="int">
+ 	select count(*) from recruit_post where condition='모집중'
+ 	</select> 
+ 	
+ 		<!-- 
+		전체 모집글을 페이징 처리하여 가져온다.
+		@author 김유란
 		@return List<RecruitPostVO> 
-	-->
-	<select id="getRecruitPostList" parameterType="pagingBean"
-		resultMap="recruitPostMap">
-		select r.recruit_post_no, r.title, r.regdate, r.location, r.hit, m.name from
-		(
-		select recruit_post_no, title, to_char(regdate, 'YYYY.MM.DD') regdate,
-		hit, member_email, location, row_number() over(order by recruit_post_no
-		desc) as rnum
-		from recruit_post where condition='모집중') r, member m
-		where r.member_email=m.member_email and rnum between #{startRowNumber} AND
-		#{endRowNumber}
-		ORDER BY r.recruit_post_no DESC
-	</select>
-
-	<!-- 
-		소분류와 키워드로 검색한 모집글 수를 가져온다. 
-		@author 김유란 
+	 -->
+	<select id="getRecruitPostList" parameterType="pagingBean" resultMap="recruitPostMap">
+ 	select r.recruit_post_no, r.title, r.regdate, r.location, r.hit, m.name from (
+	select recruit_post_no, title, to_char(regdate, 'YYYY.MM.DD') regdate, 
+				hit, member_email, location, row_number() over(order by recruit_post_no desc) as rnum 
+				from recruit_post where condition='모집중') r, member m
+	where r.member_email=m.member_email and rnum between #{startRowNumber} AND #{endRowNumber} 
+	ORDER BY r.recruit_post_no DESC
+ 	</select> 
+	
+ 	<!-- 
+		소분류와 키워드로 검색한 모집글 수를 가져온다.
+		@author 김유란
 		@return int 
-	-->
-	<select id="findRecruitPostCountByCategoryAndKeyword"
-		resultType="int">
-		select count(*) from recruit_post r, member m
+	 -->	
+	<select id="findRecruitPostCountByCategoryAndKeyword" resultType="int">
+	    select count(*) from recruit_post r, member m
 		<where>
-			r.member_email=m.member_email
+			r.member_email=m.member_email 
 			and r.condition='모집중'
 			<if test="category!=null">
-				and r.small_category_no in
-				<foreach collection="category" item="item" index="index"
-					open="(" separator="," close=")">
-					#{item}
-				</foreach>
-			</if>
+			and r.small_category_no in
+		 	<foreach collection="category" item="item" index="index"  open="(" separator="," close=")">
+			#{item}
+			</foreach> 
+			</if> 
 			<if test="keyword!=null and keyword!=''">
-				and r.title || r.content || r.location like '%' || #{keyword}||'%'
+			 and r.title || r.content || r.location like '%' || #{keyword}||'%' 
 			</if>
-		</where>
-	</select>
-
-	<!-- 
-		카테고리와 키워드로 검색한 게시물을 페이징 처리하여 가져온다. 
-		@author 김유란 
+		</where>	
+ 	</select>	
+ 	
+ 	<!-- 
+		카테고리와 키워드로 검색한 게시물을 페이징 처리하여 가져온다.
+		@author 김유란
 		@return List<RecruitPostVO> 
-	-->
-	<select id="findRecruitPostByCategoryAndKeyword"
-		resultMap="recruitPostMap">
-		select r.recruit_post_no, r.title, r.regdate, r.member_email,
-		r.location, r.hit, m.name
-		from (select recruit_post_no, title,
-		to_char(regdate, 'YYYY.MM.DD') regdate, member_email, hit, location,
-		row_number() over(order by recruit_post_no desc) as rnum from
-		recruit_post
+	 -->
+	 <select id="findRecruitPostByCategoryAndKeyword" resultMap="recruitPostMap">
+		select r.recruit_post_no, r.title, r.regdate, r.member_email, r.location, r.hit, m.name
+		from (select recruit_post_no, title, to_char(regdate, 'YYYY.MM.DD') regdate, member_email, hit, location, row_number() over(order by recruit_post_no desc) as rnum from recruit_post
 		<where>
-			condition='모집중'
-			<if test="category!=null">
-				and small_category_no in
-				<foreach collection="category" item="item" index="index"
-					open="(" separator="," close=")">
-					#{item}
-				</foreach>
-			</if>
-			<if test="keyword!=null and keyword!=''">
-				and title || content || location like '%' || #{keyword}||'%'
-			</if>
+		condition='모집중'
+		<if test="category!=null">
+		and small_category_no in
+	 	<foreach collection="category" item="item" index="index"  open="(" separator="," close=")">
+		#{item}
+		</foreach> 
+		</if> 
+		<if test="keyword!=null and keyword!=''">
+		 and title || content || location like '%' || #{keyword}||'%' 
+		</if>
 		</where>
 		) r, member m
 		where
-		r.member_email=m.member_email
-		and r.rnum between #{pagingBean.startRowNumber} AND
-		#{pagingBean.endRowNumber} ORDER BY r.recruit_post_no DESC
-	</select>
-
-	<!-- 
-		모집 게시글 번호를 이용하여 모집 게시글 정보와 카테고리를 검색 
-		@author 유동규 
-		@param recruitPostNo 검색할 모집 게시글 번호 
-		@return recruitPostMap recruitPostVO 안의 smallCategory, bigCategory를 연결 
-	-->
-	<select id="findDetailRecruitPostAndCategoryByRecruitNo"
-		resultMap="rpMap">
-		select r.recruit_post_no, r.title, r.content, to_char(r.regdate,
-		'YYYY-MM-DD') as regdate, r.hit, r.condition, r.capacity,
-		m.name as name, m.member_email as member_email, r.small_category_no,
-		r.location,
-		s.name as smallName, b.name as bigName, b.big_category_no as bigCategoryNo
-		from recruit_post r, small_category s, big_category b, member m
-		where
-		r.recruit_post_no = #{value}
-		and r.small_category_no = s.small_category_no
-		and s.big_category_no = b.big_category_no
-		and m.member_email = r.member_email
-	</select>
-
-	<!-- 
-		스터디 모집 게시글에 따른 모집 요일들을 반환 
-		@author 유동규 
-		@return day 게시글 번호에 따른 스터디 요일 출력 
-	-->
-	<select id="findDayByRecruitNo" resultType="string">
-		select day
-		from recruit_day
-		where recruit_post_no = 1
-	</select>
-	<!-- 
-		모집 게시글 번호에 따른 댓글을 반환 
-		@author 유동규 
-		@return recruitPostCommentVO 댓글 객체를 반환 -->
-	<select id="findRecruitCommentByRecruitNo"
-		resultType="recruitPostCommentVO">
-		select recruit_comment_no ,content, name, to_char(regdate,
-		'YYYY-MM-DD') as regdate
-		from recruit_post_comment
-		where recruit_post_no
-		= #{value}
-		order by recruit_comment_no asc
-	</select>
-
-	<!-- 
-		모집 게시글 번호에 따른 조회수 증가 
-		@author 유동규 
-	-->
-	<update id="updateRecruitPostHitByRecruitNo">
-		update recruit_post
-		set hit = hit+1
-		where recruit_post_no = #{value}
-	</update>
-
-	<!-- 
-		모집 게시글 번호에 따른 작성자 조회 
-		@author 유동규 
-		@param recruitNo 모집 게시글 번호 
-		@return	member_email 작성자 이메일 반환(PK) 
-	-->
-	<select id="findRecruitWriterByRecruitNo" resultType="string">
-		select r.member_email
-		from member m, recruit_post r
-		where m.member_email = r.member_email and r.recruit_post_no = ${value}
-	</select>
-
-	<!-- 
-		회원 이메일과 모집 게시글 번호를 통해 study_condition의 목록을 조회 
-		@author 유동규
-		@param recruitNo 조회할 모집 게시글 번호 
-		@param memberEmail 조회할 회원 이메일 
-		@return state 멤버와 모집 게시글 번호에 따른 상태 반환 
-	-->
-	<select id="findStudyConditionStateByEmailAndRecruitNo"
-		resultType="string">
-		select state
-		from study_condition
-		where member_email = #{memberEmail} and recruit_post_no=#{recruitNo}
-	</select>
-
-	<!-- 
-		모집 게시글 번호에 따른 소분류 카테고리 수정 
-		@author 유동규 
-		@param recruitNo 수정할 모집 게시글 번호 
-		@param smallCategoryNo 소분류 변경될 내용 
-	-->
-	<update id="updateSmallCategoryNoByRecruitNo">
-		update recruit_post
-		set small_category_no = #{smallCategoryNo}
-		where recruit_post_no = #{recruitNo}
-	</update>
-
-	<!-- 
-		모집 게시글 번호에 따른 상세정보 수정 
-		@author 유동규 
-		@param recruitPostVO 변경할 상세정보 내용이 담긴 객체 
-	-->
-	<update id="updateRecruitPostByRecruitNo">
-		update recruit_post
-		set title = #{title},
-		content = #{content},
-		regdate = sysdate,
-		capacity = #{capacity},
-		location = #{location}
-		where recruit_post_no = #{recruitPostNo}
-	</update>
-	<!-- 
-		모집게시글에 따른 모집요일을 삭제 
-		@author 유동규 
-	-->
-	<delete id="deleteDayByRecruitNo">
-		delete from recruit_day
-		where recruit_post_no =
-		#{value}
-	</delete>
-
-	<!-- 
-		모집중인 게시글 삭제할 때 상태를 변경.(모집중 -> 삭제) 
-		@author 유동규 
-	-->
-	<update id="updateDeleteStudyConditionByRecruitNo">
-		update recruit_post
-		set condition = '삭제'
-		where
-		recruit_post_no = #{value}
-	</update>
-
-
-	<!-- 
-		모집 게시글에 따른 댓글 등록 
-	-->
-	<insert id="registerCommentByRecruitNo">
-		insert into recruit_post_comment(recruit_comment_no,
-		content, name, regdate, recruit_post_no)
-		values(recruit_comment_no_seq.nextval, #{comment}, #{name}, sysdate,
-		#{recruitNo})
-	</insert>
+		r.member_email=m.member_email 
+		and r.rnum between #{pagingBean.startRowNumber} AND  #{pagingBean.endRowNumber} ORDER BY r.recruit_post_no DESC
+	</select> 
 	
 	<!-- 
-		스터디 모집 게시판에 글작성 
-		@author 송용준 
-	-->
-	<insert id="createRecruitPost" parameterType="recruitPostVO">
-		<selectKey keyProperty="recruitPostNo" resultType="int"
-			order="BEFORE">
-			select recruit_post_no_seq.nextVal from dual
-		</selectKey>
-		insert into recruit_post(recruit_post_no, title, content, regdate,
-		capacity, location, condition, member_email, small_category_no)
-		values(#{recruitPostNo}, #{title}, #{content}, sysdate, #{capacity},
-		#{location}, '모집중',
-		#{memberVO.memberEmail},#{smallCategoryVO.smallCategoryNo})
-	</insert>
+		모집 게시글 번호를 이용하여 모집 게시글 정보와 카테고리를 검색 
+		@author 유동규
+		@param recruitPostNo 검색할 모집 게시글 번호
+		@return recruitPostMap recruitPostVO 안의 smallCategory, bigCategory 를 연결	
+	 -->
+   <select id="findDetailRecruitPostAndCategoryByRecruitNo" resultMap="rpMap">
+    	select r.recruit_post_no, r.title, r.content, to_char(r.regdate, 'YYYY-MM-DD') as regdate, r.hit, r.condition, r.capacity, 
+				m.name as name, m.member_email as member_email, r.small_category_no, r.location,
+				s.name as smallName, b.name as bigName, b.big_category_no as bigCategoryNo
+		from recruit_post r, small_category s, big_category b, member m
+		where r.recruit_post_no = #{value} 
+					and r.small_category_no = s.small_category_no
+					and s.big_category_no = b.big_category_no
+					and m.member_email = r.member_email
+   </select>
+   
+   <!-- 
+   		스터디 모집 게시글에 따른 모집 요일들을 반환
+   		@author 유동규
+   		@return day 게시글 번호에 따른 스터디 요일 출력
+    -->
+   <select id="findDayByRecruitNo" resultType="string">
+  		select  day
+		from recruit_day
+		where recruit_post_no = 1
+   </select>
+   <!-- 
+   		모집 게시글 번호에 따른 댓글을 반환
+   		@author 유동규
+   		@return recruitPostCommentVO 댓글 객체를 반환
+    -->
+   <select id="findRecruitCommentByRecruitNo" resultMap="rpcMap">
+		select rpc.recruit_comment_no, rpc.content, to_char(rpc.regdate, 'YYYY.MM.DD') as regdate
+				, m.member_email, m.name
+		from RECRUIT_POST_COMMENT rpc, MEMBER m
+		where m.member_email = rpc.member_email
+				and rpc.recruit_post_no = #{value}
+		order by recruit_comment_no asc
+   </select>
+   
+   <!-- 
+   		모집 게시글 번호에 따른 조회수 증가
+   		@author 유동규
+    -->
+   <update id="updateRecruitPostHitByRecruitNo">
+   		update recruit_post 
+   		set hit = hit+1
+   		where recruit_post_no = #{value}
+   </update>
+   
+   <!-- 
+   		모집 게시글 번호에 따른 작성자 조회
+   		@author 유동규
+   		@param recruitNo 모집 게시글 번호
+   		@return member_email 작성자 이메일 반환(PK)
+    -->
+   <select id="findRecruitWriterByRecruitNo" resultType="string">
+   		select r.member_email
+   		from member m, recruit_post r
+   		where m.member_email = r.member_email and r.recruit_post_no = ${value}
+   </select>
+   
+   <!--
+   		회원 이메일과 모집 게시글 번호를 통해 study_condition의 목록을 조회 
+   		@author 유동규
+   		@param recruitNo 조회할 모집 게시글 번호
+   		@param memberEmail 조회할 회원 이메일
+   		@return state 멤버와 모집 게시글 번호에 따른 상태 반환
+    -->
+   <select id="findStudyConditionStateByEmailAndRecruitNo" resultType="string">
+   		select state
+   		from study_condition
+   		where member_email = #{memberEmail} and recruit_post_no=#{recruitNo}
+   </select>
+   
+   <!-- 
+   		모집 게시글 번호에 따른 소분류 카테고리 수정 
+   		@author 유동규
+   		@param recruitNo 수정할 모집 게시글 번호
+   		@param smallCategoryNo 소분류 변경될 내용
+    -->
+   <update id="updateSmallCategoryNoByRecruitNo">
+   		update recruit_post
+   		set small_category_no = #{smallCategoryNo}
+   		where recruit_post_no = #{recruitNo}
+   </update>
+   
+   <!-- 
+   		모집 게시글 번호에 따른 상세정보 수정
+   		@author 유동규
+   		@param recruitPostVO 변경할 상세정보 내용이 담긴 객체
+    -->
+   <update id="updateRecruitPostByRecruitNo">
+   		update recruit_post
+   		set title = #{title},
+   			content = #{content},
+   			regdate = sysdate,
+   			capacity = #{capacity},
+   			location = #{location}
+   		where recruit_post_no = #{recruitPostNo}
+   </update>
+   	<!-- 
+   		모집게시글에 따른 모집요일을 삭제
+   		@author 유동규
+   	 -->
+	<delete id = "deleteDayByRecruitNo">
+		delete from recruit_day
+		where recruit_post_no = #{value}
+	</delete>
 	
 	<!-- 
 		작성한 글의 모집 요일을 등록
-		@author 송용준 
-	-->
+		@author 송용준
+	 -->
 	<insert id="registerRecruitDay" parameterType="map">
-		insert into
-		recruit_day(recruit_day_no, recruit_post_no, day)
+		insert into recruit_day(recruit_day_no, recruit_post_no, day)
 		values(recruit_day_no_seq.nextVal, #{recruitPostNo}, #{recruitDay})
 	</insert>
-
-
+	
+	<!-- 
+		모집중인 게시글 삭제할 때 상태를 변경.(모집중 -> 삭제)
+		@author 유동규
+	 -->
+	<update id="updateDeleteStudyConditionByRecruitNo">
+		update recruit_post
+		set condition = '삭제'
+		where recruit_post_no = #{value}
+	</update>
+	
+	
+	<!-- 
+		모집 게시글에 따른 댓글 등록
+		@author 유동규
+	 -->
+	<insert id="registerCommentByRecruitNo">
+		insert into recruit_post_comment(recruit_comment_no, content, member_email, regdate, recruit_post_no)
+		values(recruit_comment_no_seq.nextval, #{comment}, #{userEmail}, sysdate, #{recruitNo})
+	</insert>
+	
+	<!-- 
+		댓글번호에 해당하는 내용을 삭제
+		@author 유동규
+	 -->
+	<delete id="deleteCommentByCommentNo">
+		delete from recruit_post_comment
+		where recruit_comment_no = #{value}
+	</delete>
+	
+	<!-- 
+		댓글 번호에 따른 내용 수정
+		@author 유동규
+	 -->
+	 <update id="updateCommentByCommentNo">
+	 	update recruit_post_comment
+	 	set content = #{content}, regdate = sysdate
+	 	where recruit_comment_no = #{commentNo}
+	 </update>
+	
+	
 </mapper>
  
  

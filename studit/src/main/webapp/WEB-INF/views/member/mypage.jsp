@@ -7,71 +7,153 @@ div.sc-table {
 }
 </style>
 <section>
-<div class="col-sm-2" ></div>
+<div class="col-sm-1"></div>
+<!-- 스터디 신청 현황 -->
 <div class="col-sm-4 sc-table">
-<table class="table table-hover">
-	<thead>
-		<tr>
-			<th>No</th>
-			<th>Category</th>
-			<th>Location</th>
-			<th>Title</th>
-			<th>Writer</th>
-			<th>regDate</th>
-			<th>Status</th>
-		</tr>
-	</thead>
-	<tbody>
-		<c:forEach items="${studyConditionList.list }" var="list">
+	<table class="table table-hover">
+		<thead>
 			<tr>
-				<td>${list.studyConditionNo }</td>
-				<td>${list.recruitPostVO.smallCategoryVO.name }</td>
-				<td>${list.recruitPostVO.location }</td>
-				<td>${list.recruitPostVO.title }</td>
-				<td>${list.memberVO.name }</td>
-				<td>${list.regdate}</td>
-				<td><input type="button" value="${list.state }" class="btn btn-secondary"></td>
+				<th>No</th>
+				<th>Category</th>
+				<th>Location</th>
+				<th>Title</th>
+				<th>Writer</th>
+				<th>regDate</th>
+				<th>Status</th>
 			</tr>
-		</c:forEach>
-	</tbody>
-</table>
-<div class="pagingInfo">
-	<%-- 코드를 줄이기 위해 pb 변수에 pagingBean을 담는다. --%>
-	<c:set var="pb" value="${studyConditionList.pagingBean}"></c:set>
-	<!-- 
-			step2 1) 이전 페이지 그룹이 있으면 화살표 보여준다
-				   		페이징빈의 previousPageGroup 이용 
-				   2)  이미지에 이전 그룹의 마지막 페이지번호를 링크한다. 
-				   	    hint)   startPageOfPageGroup-1 하면 됨 		 
-	 -->  
-	<!-- step1. 1)현 페이지 그룹의 startPage부터 endPage까지 forEach 를 이용해 출력한다
-				   2) 현 페이지가 아니면 링크를 걸어서 서버에 요청할 수 있도록 한다.
-				      현 페이지이면 링크를 처리하지 않는다.  
-				      PagingBean의 nowPage
-				      jstl choose 를 이용  
-				      예) <a href="DispatcherServlet?command=list&pageNo=...">				   
-	 -->	
-		<ul class="pagination">
-			<c:if test="${pb.previousPageGroup}">	
-				<li><a href="${pageContext.request.contextPath}/member/getMyPage?pageNo=${pb.startPageOfPageGroup-1}">&laquo;</a></li>
-			</c:if>
-			<c:forEach var="i" begin="${pb.startPageOfPageGroup}" end="${pb.endPageOfPageGroup}">
-				<c:choose>
-					<c:when test="${pb.nowPage!=i}">
-						<li><a href="${pageContext.request.contextPath}/member/getMyPage?pageNo=${i}">${i}</a></li> 
-					</c:when>
-					<c:otherwise>
-						<li class="active"><a href="#" >${i}</a></li>
-					</c:otherwise>
-				</c:choose>
-				&nbsp;
+		</thead>
+		<tbody id="recruitAjaxResult">
+			<c:forEach items="${studyConditionList.list }" var="list">
+				<tr>
+					<td>${list.studyConditionNo }</td>
+					<td>${list.recruitPostVO.smallCategoryVO.name }</td>
+					<td>${list.recruitPostVO.location }</td>
+					<td>${list.recruitPostVO.title }</td>
+					<td>${list.memberVO.name }</td>
+					<td>${list.regdate}</td>
+					<td><input type="button" value="${list.state }" class="btn btn-secondary"></td>
+				</tr>
 			</c:forEach>
-			<c:if test="${pb.nextPageGroup}">	
-				<li>
-					<a href="${pageContext.request.contextPath}/member/getMyPage=${pb.endPageOfPageGroup+1}">&raquo;</a>
-				</li>
-			</c:if>
-		</ul>	 		
-	</div> 
-</div>
+		</tbody>
+		<c:set var="recruitpb" value="${studyConditionList.pagingBean}" />
+		<c:if test="${recruitpb.nextPage == true}">
+			<tr>
+				<td colspan="7"><input type="button" id="recruitpbBtn"  value="더보기"></td>
+			</tr>
+		</c:if>
+	</table>
+	</div>
+	
+	<div class="col-sm-1"></div>
+	<!-- 스터디 룸 신청현황 -->
+	<div class="col-sm-4 sc-table">
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th>companyName</th>
+				<th>studyroomName</th>
+				<th>useDate</th>
+				<th>startTime</th>
+				<th>endTime</th>
+				<th>regDate</th>
+				<th>state</th>
+			</tr>
+		</thead>
+		<tbody id="roomAjaxResult">
+			<c:forEach items="${srcListVO.list}" var="srlist">
+				<tr>
+					<td>${srlist.studyRoomVO.companyVO.name }</td>
+					<td>${srlist.studyRoomVO.name }</td>
+					<td>${srlist.useDate }</td>
+					<td>${srlist.startTime }</td>
+					<td>${srlist.endTime }</td>
+					<td>${srlist.regDate }</td>
+					<td><input type="button" value="${srlist.state }" class="btn btn-secondary"></td>
+				</tr>
+			</c:forEach>
+		</tbody>
+		<c:set var="roompb" value="${srcListVO.pagingBean}" />
+		<c:if test="${roompb.nextPage == true}">
+			<tr>
+				<td colspan="7"><input type="button" id="roompbBtn"  value="더보기"></td>
+			</tr>
+		</c:if>
+	</table>
+	</div>
+	<div class="col-sm-1"></div>
 </section>
+
+
+
+<script>
+	$(document).ready(function(){
+		var roomPageNo = 1;
+		var recruitPageNo = 1;
+		$("#roompbBtn").click(function(){
+			roomPageNo += 1;
+			$.ajax({
+				type:"get",
+				url:"${pageContext.request.contextPath}/ajax/findStudyRoomConditionByNowPage",
+				data:"nowPage="+roomPageNo,
+				success:function(data){
+					var temp="";
+				 	$.each(data.list, function(index, item) {
+						temp += 
+							"<tr>"+
+							"<td>"+item.studyRoomVO.companyVO.name+"</td>"+
+							"<td>"+item.studyRoomVO.name+"</td>"+
+							"<td>"+item.useDate+"</td>"+
+							"<td>"+item.startTime+"</td>"+
+							"<td>"+item.endTime+"</td>"+
+							"<td>"+item.regDate+"</td>"+
+							"<td>"+"<input type='button' value="+item.state+" class='btn btn-secondary'>"+"</td>"
+							+"</td>"
+					})//each 
+					$("#roomAjaxResult").append(temp);
+				 	if(!data.pagingBean.nextPage){
+				 		$("#roompbBtn").hide();
+				 	}else{
+				 		$("#roompbBtn").show();
+				 	}
+				}//success
+			})//ajax
+		})//click
+		
+		
+		
+		$("#recruitpbBtn").click(function(){
+			recruitPageNo += 1;
+			$.ajax({
+				type:"get",
+				url:"${pageContext.request.contextPath}/ajax/findStudyConditionByNowPage",
+				data:"nowPage="+recruitPageNo,
+				success:function(data){
+					var temp="";
+				 	$.each(data.list, function(index, item) {
+						temp += 
+							"<tr>"+
+							"<td>"+item.studyRoomVO.companyVO.name+"</td>"+
+							"<td>"+item.studyRoomVO.name+"</td>"+
+							"<td>"+item.useDate+"</td>"+
+							"<td>"+item.startTime+"</td>"+
+							"<td>"+item.endTime+"</td>"+
+							"<td>"+item.regDate+"</td>"+
+							"<td>"+"<input type='button' value="+item.state+" class='btn btn-secondary'>"+"</td>"
+							+"</td>"
+					})//each 
+					$("#recruitAjaxResult").append(temp);
+				 	if(!data.pagingBean.nextPage){
+				 		$("#recruitpbBtn").hide();
+				 	}else{
+				 		$("#recruitpbBtn").show();
+				 	}
+				}//success
+			})//ajax
+		})//click
+	})//ready
+</script>
+
+
+
+
+ 

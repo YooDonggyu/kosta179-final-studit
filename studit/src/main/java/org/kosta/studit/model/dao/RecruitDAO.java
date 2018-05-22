@@ -65,5 +65,8 @@ public interface RecruitDAO {
 	void registerCommentByRecruitNo(Map<String, Object> map);
 
 	void createRecruitPost(RecruitPostVO recruitPostVO);
+	public void deleteCommentByCommentNo(int commentNo);
+
+	public void updateCommentByCommentNo(Map<String, Object> map);
 
 }

@@ -9,17 +9,17 @@ import javax.servlet.http.HttpServletRequest;
 import org.kosta.studit.exception.EmailNotFoundException;
 import org.kosta.studit.exception.IsNotMemberException;
 import org.kosta.studit.exception.PasswordIncorrectException;
-import org.kosta.studit.model.PagingBean;
 import org.kosta.studit.model.dao.CompanyDAO;
 import org.kosta.studit.model.dao.MemberDAO;
 import org.kosta.studit.model.dao.RecruitDAO;
 import org.kosta.studit.model.dao.StudyRoomDAO;
 import org.kosta.studit.model.service.MemberService;
 import org.kosta.studit.model.service.RecruitService;
+import org.kosta.studit.model.service.StudyRoomService;
 import org.kosta.studit.model.vo.MemberVO;
 import org.kosta.studit.model.vo.SmallCategoryVO;
+import org.kosta.studit.model.vo.StudyConditionListVO;
 import org.kosta.studit.model.vo.StudyRoomConditionListVO;
-import org.kosta.studit.model.vo.StudyRoomConditionVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,6 +42,10 @@ public class AjaxViewController {
 	private CompanyDAO companyDAO;
 	@Autowired
 	private RecruitService recruitService;
+	@Autowired
+	private StudyRoomService studyroomService;
+	
+	   
 
 	/**
 	 * 아아디 중복확인을 위한 메서드. 사용자가 입력한 Email을 실시간으로 중복확인 한다.
@@ -116,10 +120,10 @@ public class AjaxViewController {
 	@RequestMapping(value = "/registerComment", method = RequestMethod.POST)
 	@ResponseBody
 	public String registerComment(int recruitNo, String comment, HttpServletRequest request) {
-		String userName = ((MemberVO) request.getSession().getAttribute("memberVO")).getName();
+		String userEmail = ((MemberVO)request.getSession().getAttribute("memberVO")).getMemberEmail();
 		Map<String, Object> commentMap = new HashMap<>();
 		commentMap.put("comment", comment);
-		commentMap.put("name", userName);
+		commentMap.put("userEmail", userEmail);
 		commentMap.put("recruitNo", recruitNo);
 		recruitDAO.registerCommentByRecruitNo(commentMap);
 		return "true";
@@ -136,21 +140,7 @@ public class AjaxViewController {
 	@RequestMapping("/findStudyRoomConditionByNowPage")
 	@ResponseBody
 	public StudyRoomConditionListVO findStudyRoomConditionByNowPage(int nowPage, HttpServletRequest request){
-		//1. 총 게시물로 pagingbean 만들기
-		int myTotalPage = studyroomDAO.findTotalStudyRoomConditionByEmail(((MemberVO)request.getSession().getAttribute("memberVO")).getMemberEmail());
-		PagingBean pb= new PagingBean(myTotalPage, nowPage);
-		/*pb.setMyTotalPostCount(myTotalPage);*/
-		//2. 조건문을 위해 이메일과 pb로 Map을 만들어 전달
-		Map<String, Object> map = new HashMap<>();
-		map.put("pagingBean", pb);
-		map.put("memberEmail", ((MemberVO)request.getSession().getAttribute("memberVO")).getMemberEmail());
-		//3. Map으로 paging처리된 결과 List로 받아오기
-		List<StudyRoomConditionVO>list =  studyroomDAO.findStudyConditionByEmail(map);
-		//4. paging된 list와 pb객체를 StudyRoomConditionListVO에 담아 전달
-		StudyRoomConditionListVO srcListVO = new StudyRoomConditionListVO();
-		srcListVO.setList(list);
-		srcListVO.setPagingBean(pb);
-		return srcListVO;
+		return studyroomService.findStudyRoomConditionListVOByEmail(((MemberVO)request.getSession().getAttribute("memberVO")).getMemberEmail(), nowPage);
 	}
 	
 	/**
@@ -192,5 +182,43 @@ public class AjaxViewController {
 		List<String> list=companyDAO.findThirdAddressListBySecondAddressName(addr2);
 		return list;
 	}
+	/**
+	 * 스터디 현황 조회를 위한 페이징.
+	 * 해당 사용자에 따른 전체 수를 구한 뒤 페이징처리를 한다.
+	 * @author 유동규, 변태섭
+	 * @param nowPage 현재 페이지
+	 * @return StudyConditionListVO 페이징한 결과(list)와 페이징 객체가 담겨있는 객체
+	 */
+	@RequestMapping("/findStudyConditionByNowPage")
+	@ResponseBody
+	public StudyConditionListVO findStudyConditionByNowPage(int nowPage, HttpServletRequest request) {
+		return  recruitService.findStudyConditionByMemberEmail(((MemberVO)request.getSession().getAttribute("memberVO")).getMemberEmail(), nowPage);
+	}
+	
+	/**
+	 * 댓글 삭제하기
+	 * @param commentNo 삭제할 댓글 번호
+	 */
+	@RequestMapping(value="/deleteCommentByCommentNo", method=RequestMethod.POST)
+	@ResponseBody
+	public void deleteCommentByCommentNo(int commentNo) {
+		recruitDAO.deleteCommentByCommentNo(commentNo);
+	}
+	
+	/**
+	 * 댓글 수정하기
+	 * @param commentNo 수정할 댓글번호
+	 * @param content 수정할 내용
+	 */
+	@RequestMapping(value="/updateCommentByCommentNo", method=RequestMethod.POST)
+	@ResponseBody
+	public void updateCommentByCommentNo(int commentNo, String content) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("commentNo", commentNo);
+		map.put("content", content);
+		recruitDAO.updateCommentByCommentNo(map);
+	}
+	
+	
 
 }

@@ -71,7 +71,7 @@ public class PagingBean {
 	  * 
 	  * @return
 	  */
-	 private int getTotalPage() {
+	 public int getTotalPage() {
 	  int num = this.totalPostCount % this.postCountPerPage;
 	  int totalPage = 0;
 	  if (num == 0) {
@@ -198,7 +198,7 @@ public class PagingBean {
 	  */
 	public boolean isNextPage() {
 		boolean flag = false;
-		if(this.getTotalPage()-this.getNowPage()>0) {
+		if(this.totalPostCount>this.getEndRowNumber()) {
 			flag = true;
 		}
 		return flag;

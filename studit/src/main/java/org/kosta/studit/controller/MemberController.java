@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -11,10 +13,15 @@ import javax.servlet.http.HttpSession;
 import org.kosta.studit.exception.EmailNotFoundException;
 import org.kosta.studit.exception.IsNotMemberException;
 import org.kosta.studit.exception.PasswordIncorrectException;
+import org.kosta.studit.model.PagingBean;
 import org.kosta.studit.model.dao.MemberDAO;
+import org.kosta.studit.model.dao.StudyRoomDAO;
 import org.kosta.studit.model.service.MemberService;
 import org.kosta.studit.model.service.RecruitService;
+import org.kosta.studit.model.service.StudyRoomService;
 import org.kosta.studit.model.vo.MemberVO;
+import org.kosta.studit.model.vo.StudyRoomConditionListVO;
+import org.kosta.studit.model.vo.StudyRoomConditionVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,6 +38,8 @@ public class MemberController {
 	private MemberService memberService;
 	@Autowired
 	private RecruitService recruitService;
+	@Autowired
+	private StudyRoomService studyroomService;
 
 	/**
 	 * 사용자 로그인을 위한 메서드. 가장 먼저 아이디 확인한 후 비밀번호 일치여부를 확인한다.
@@ -239,24 +248,26 @@ public class MemberController {
 	}
 
 	/**
-	 * 스터디 현황 조회 시 List를 넘긴다.
-	 * 
-	 * @author 변태섭
-	 * @param HttpServletRequest
-	 *            Session에 있는 memberEmail을 사용한다.
-	 * @param Model
-	 *            받아온 list 객체를 담아 전달한다.
-	 * @param String
-	 *            페이지 번호
+	 * 스터디 현황 조회, 스터디 룸 현황 조회를 위한 페이징.
+	 * 해당 사용자에 따른 전체 수를 구한 뒤 페이징처리를 한다.
+	 * @author 변태섭, 유동규
+	 * @param HttpServletRequest Session에 있는 memberEmail을 사용한다.
+	 * @param Model 받아온 list 객체를 담아 전달한다.
+	 * @param String 페이지 번호
 	 * @return mypage
 	 */
 	@RequestMapping("/getMyPage")
-	public String getMyPage(HttpServletRequest request, Model model, String pageNo) {
-		HttpSession session = request.getSession(false);
-		MemberVO mvo = (MemberVO) session.getAttribute("memberVO");
-		System.out.println(mvo);
-		model.addAttribute("studyConditionList",
-				recruitService.findStudyConditionByMemberEmail(mvo.getMemberEmail(), pageNo));
+	public String getMyPage(HttpServletRequest request, Model model) {
+		HttpSession session=request.getSession(false);
+		MemberVO mvo=(MemberVO) session.getAttribute("memberVO");
+		int nowPage =0;
+		if(request.getParameter("nowPage") != null) {
+			nowPage = Integer.parseInt(request.getParameter("nowPage"));
+		}
+		//스터디 현황조회
+		model.addAttribute("studyConditionList", recruitService.findStudyConditionByMemberEmail(mvo.getMemberEmail(), nowPage));
+		//스터디 룸 현황조회
+		model.addAttribute("srcListVO", studyroomService.findStudyRoomConditionListVOByEmail(mvo.getMemberEmail(), nowPage));
 		return "member/mypage.tiles";
 	}
 

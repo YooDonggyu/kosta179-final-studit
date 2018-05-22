@@ -254,25 +254,49 @@ public class RecruitDAOImpl implements RecruitDAO {
 	 * 모집 게시글 번호에 따른 요일들 삭제.
 	 * 삭제 후 다시 등록하는 로직을 위해 먼제 삭제할 때 사용
 	 * @author 유동규
+	 * @param recruitNo 모집 게시글 번호
 	 */
 	@Override
 	public void deleteDayByRecruitNo(int recruitNo) {
 		template.delete("recruit.deleteDayByRecruitNo", recruitNo);
 	}
-	
 	/**
 	 * 모집게시글 번호에 따른 상태변경(모집중->삭제).
 	 * @author 유동규
+	 * @param recruitNo 모집 게시글 번호
 	 */
 	@Override
 	public void updateDeleteStudyConditionByRecruitNo(int recruitNo) {
 		template.update("recruit.updateDeleteStudyConditionByRecruitNo", recruitNo);
 	}
 	
-	
+	/**
+	 * 모집 게시글 번호에 따른 댓글 등록
+	 * @author 유동규
+	 * @param map 모집 게시글과 댓글 내용이 담긴 MAP
+	 */
 	@Override
 	public void registerCommentByRecruitNo(Map<String, Object> map) {
 		template.insert("recruit.registerCommentByRecruitNo", map);
+	}
+
+	/**
+	 * Comment 번호를 삭제
+	 * @author 유동규
+	 * @param commentNo comment 번호
+	 */
+	@Override
+	public void deleteCommentByCommentNo(int commentNo) {
+		template.delete("recruit.deleteCommentByCommentNo", commentNo);
+	}
+	/**
+	 * comment 번호에 따른 수정
+	 * @author 유동규 
+	 * @param map 수정할 comment 번호와 comment 내용이 담긴 MAP
+	 */
+	@Override
+	public void updateCommentByCommentNo(Map<String, Object> map) {
+		template.update("recruit.updateCommentByCommentNo", map);
 	}
 	
 	/**

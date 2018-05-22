@@ -50,7 +50,7 @@ public class RecruitServiceTest {
 	 * 모집 게시글 번호에 따른 정보 가져오기 TEST
 	 * @author 유동규
 	 */
-	@Test
+	//@Test
 	public void findRecruitPostDetailByRecruitNoTest() {
 		System.out.println(recruitService.findRecruitPostDetailByRecruitNo("",1).get("comment"));
 		System.out.println(recruitService.findRecruitPostDetailByRecruitNo("",1).get("day"));

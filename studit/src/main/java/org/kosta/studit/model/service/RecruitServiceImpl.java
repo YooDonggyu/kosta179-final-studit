@@ -32,18 +32,16 @@ public class RecruitServiceImpl implements RecruitService {
 	 * @return StudyConditionVO 스터디 현황 내역 list
 	 */
 	@Override
-	public StudyConditionListVO findStudyConditionByMemberEmail(String memberEmail, String pageNo) {
-		PagingBean pb=null;
-		if(pageNo==null) {
+	public StudyConditionListVO findStudyConditionByMemberEmail(String memberEmail, int nowPage) {
+		PagingBean pb = null;
+		if(nowPage == 0) {
 			pb = new PagingBean(recruitDAO.findCountStudyConditionByMemberEmail(memberEmail));
 		}else {
-			pb = new PagingBean(recruitDAO.findCountStudyConditionByMemberEmail(memberEmail), Integer.parseInt(pageNo));
+			pb = new PagingBean(recruitDAO.findCountStudyConditionByMemberEmail(memberEmail), nowPage);
 		}
-		
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("memberEmail", memberEmail);
 		map.put("pb", pb);
-		
+		map.put("memberEmail", memberEmail);
 		List<StudyConditionVO> list = recruitDAO.findStudyConditionByMemberEmail(map);
 		StudyConditionListVO studyConditionListVO = new StudyConditionListVO(list, pb);
 		return studyConditionListVO;
@@ -132,6 +130,7 @@ public class RecruitServiceImpl implements RecruitService {
 		}else {
 			pagingBean = new PagingBean(totalCount, Integer.parseInt(pageNo));
 		}
+		
 		map.put("pagingBean", pagingBean);
 		return new RecruitPostListVO(pagingBean, recruitDAO.findRecruitPostByCategoryAndKeyword(map));
 	}

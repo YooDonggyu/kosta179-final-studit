@@ -274,7 +274,6 @@ values(studyroom_condition_seq.nextval, 'a@a.com', sysdate, 1, '13:00','14:00', 
 commit
 
 
-
 select s.name, sc.member_email, sc.use_date, sc.start_time, sc.end_time, sc.state
 from studyroom s, studyroom_condition sc
 where s.studyroom_no=sc.studyroom_no

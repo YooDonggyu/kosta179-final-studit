@@ -20,7 +20,7 @@
 		
 	</span>
 	<br><br>
-		<c:set var="pb" value="${srcListVO.pagingBean}" />
+	<c:set var="pb" value="${srcListVO.pagingBean}" />
 	<c:if test="${pb.nextPage == true}">
 		<input type="button" id="pbBtn"  value="더보기"><br>
 	</c:if>
