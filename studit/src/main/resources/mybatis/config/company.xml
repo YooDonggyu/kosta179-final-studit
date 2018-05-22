@@ -4,6 +4,25 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="company">
+
+	<!--*** resultMap ***-->
+	<resultMap type="companyVO" id="companyMap">
+		<result column="member_email" property="memberVO.memberEmail"/>
+		<result column="company_no" property="companyNo"/>
+		<result column="profile_path" property="profilePath"/>
+	</resultMap>
+	
+	<resultMap type="studyRoomConditionVO" id="studyRoomConditionMap">
+		<result column="member_email" property="memberVO.memberEmail"/>
+		<result column="name" property="memberVO.name"/>
+		<result column="phone" property="memberVO.phone"/>
+		<result column="studyroom_no" property="studyRoomVO.studyRoomNo"/>
+		<result column="studyRoomName" property="studyRoomVO.name"/>
+		<result column="capacity" property="studyRoomVO.capacity"/>
+		<!-- <result column="studyroom_condition_no" property="studyRoomConditionNo"/> -->
+	</resultMap>
+	<!--*** resultMap ***-->
+	
 	<!-- 
 		  회원 이메일로 승인대기중인 예약건수 조회
 		 @author 송용준 
@@ -68,6 +87,60 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select addr3
 		from company
 		where addr2=#{value} and state='승인'
+	</select>
+	
+	  <!-- 
+      회원 이메일로 업체 정보 조회
+      @author 김유란
+      @param memberEmail 업체로 등록된 회원 이메일
+      @return companyVO 
+    -->
+   <select id="findCompanyByMemberEmail" resultMap="companyMap">
+   	select c.company_no, c.name, c.addr1, c.addr2, c.addr3, c.addr4, c.latitude, c.longitude, 
+	c.tel, c.license, c.regdate, c.profile_path, c.intro, c.state, c.open, c.close, c.holiday, c.url, m.member_email
+	from company c, member m
+	where c.member_email=#{value} and c.member_email=m.member_email 
+   </select>
+  
+   <!-- 
+            업체 번호로 스터디룸 정보 조회
+      @author 김유란
+      @param companyNo 업체 식별 번호
+      @return studyRoomVO
+    -->
+  <select id="findStudyRoomByCompanyNo" resultType="studyRoomVO">
+  	select studyroom_no, name, capacity, price, content
+	from studyroom 
+	where company_no=#{value}
+   </select> 
+   
+   <!-- 
+         스터디룸 번호로 스터디룸 예약 현황  조회
+      @author 김유란
+      @param studyRoomNo 스터디룸 식별 번호
+      @return studyRoomConditionVO
+    -->
+   <select id="findStudyRoomConditionByStudyRoomNo" resultMap="studyRoomConditionMap">
+   	select sc.studyroom_condition_no, sc.member_email, to_char(sc.use_date, 'YYYY-MM-DD') use_date, sc.start_time, sc.end_time, sc.state, s.studyroom_no, m.name
+	from studyroom s, studyroom_condition sc, member m
+	where s.studyroom_no=sc.studyroom_no and m.member_email=sc.member_email and sc.studyroom_no=#{value}
+   </select>
+   
+
+	<!-- 
+             스터디룸 예약 현황  수정
+      @author 김유란
+      @param studyRoomConditionNo 스터디룸 예약 식별 번호
+      @return studyRoomConditionVO
+    -->
+	<update id="updatStudyRoomCondition" parameterType="studyRoomConditionVO">
+		update studyroom_condition set use_date=to_date(#{useDate}, 'YYYY-MM-DD'), start_time=#{startTime}, end_time=#{endTime}, 
+		state=#{state}
+		where studyroom_condition_no=#{studyRoomConditionNo} 
+	</update>
+	
+	<select id="findBusinessDayByCompanyNo" resultType="string">
+		select day from com_business_day where company_no=#{value}
 	</select>
 </mapper>
  

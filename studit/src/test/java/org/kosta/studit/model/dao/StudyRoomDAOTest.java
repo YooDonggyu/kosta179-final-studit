@@ -41,4 +41,9 @@ public class StudyRoomDAOTest {
 		   map.put("memberEmail", "a@a.com");
 		   System.out.println(studyroomDAO.findStudyConditionByEmail(map));
 	   }
+	   
+	   @Test
+	   public void findStudyRoomInfoByStudyRoomNoTest() {
+		   System.out.println(studyroomDAO.findStudyRoomInfoByStudyRoomNo("1"));
+	   }
 }

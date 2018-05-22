@@ -29,6 +29,10 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/assets/css/simpletextrotator.css">
     <!-- Custom stylesheet - for your changes-->
     <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/assets/css/custom.css">
+    <!-- fullCalendar -->
+    <link href='${pageContext.request.contextPath}/resources/fullcalendar-scheduler/lib/fullcalendar.min.css' rel='stylesheet' />
+	<link href='${pageContext.request.contextPath}/resources/fullcalendar-scheduler/lib/fullcalendar.print.min.css' rel='stylesheet' media='print' />
+	<link href='${pageContext.request.contextPath}/resources/fullcalendar-scheduler/scheduler.min.css' rel='stylesheet' />
     <!-- Favicon-->
     
     <!-- Javascript files-->
@@ -40,6 +44,10 @@
     <script src="${pageContext.request.contextPath }/resources/assets/js/jquery.scrollTo.min.js"></script>
     <script src="${pageContext.request.contextPath }/resources/assets/js/owl.carousel.min.js"></script>
     <script src="${pageContext.request.contextPath }/resources/assets/js/front.js"></script>
+    <script src='${pageContext.request.contextPath}/resources/fullcalendar-scheduler/lib/moment.min.js'></script>
+	<script src='${pageContext.request.contextPath}/resources/fullcalendar-scheduler/lib/fullcalendar.min.js'></script>
+	<script src='${pageContext.request.contextPath}/resources/fullcalendar-scheduler/scheduler.min.js'></script>
+	<script type='text/javascript' src='${pageContext.request.contextPath}/resources/fullcalendar-scheduler/gcal.js'></script>
     <script>
       (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
       function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;

@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.kosta.studit.model.vo.CompanyVO;
+import org.kosta.studit.model.vo.StudyRoomConditionVO;
+import org.kosta.studit.model.vo.StudyRoomVO;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -82,6 +84,68 @@ public class CompanyDAOImpl implements CompanyDAO {
 	public List<String> findThirdAddressListBySecondAddressName(String addr2) {
 		return template.selectList("company.findThirdAddressListBySecondAddressName", addr2);
 	}
+	
+	   /**
+	    * 회원 이메일로 업체 정보 불러오기
+	    * 업체권한을 가진 회원인지 인증한 후 사용
+	    * @author 김유란
+	    * @param memberEmail 회원 이메일
+	    * @return CompanyVO 업체 정보를 담은 VO
+	    */
+	   @Override
+	   public CompanyVO findCompanyByMemberEmail(String memberEmail) {
+		   return template.selectOne("company.findCompanyByMemberEmail", memberEmail);
+	   }
+	   
+	   /**
+	    * 업체 번호로 스터디룸 정보 불러오기
+	    * 업체가 보유한 스터디룸 목록을 조회한다.
+	    * @author 김유란
+	    * @param companyNo 업체 식별 번호
+	    * @return List<StudyRoomVO> 스터디룸 객체를 담은 리스트
+	    */
+	   @Override
+	   public List<StudyRoomVO> findStudyRoomByCompanyNo(int companyNo) {
+		   return template.selectList("company.findStudyRoomByCompanyNo", companyNo);
+	   }
+	   
+	   /**
+	    * 스터디룸 번호로 스터디룸 예약현황 정보 불러오기
+	    * 회원이메일이 아닌 스터디룸 번호로 조회하므로 업체 예약 관리, 스터디룸 예약 등에 사용 가능
+	    * @author 김유란
+	    * @param studyRoomNo 업체 식별 번호
+	    * @return List<StudyRoomConditionVO> 스터디룸 예약정보 객체를 담은 리스트
+	    */
+	   @Override
+	   public List<StudyRoomConditionVO> findStudyRoomConditionByStudyRoomNo(int studyRoomNo){
+		   return template.selectList("company.findStudyRoomConditionByStudyRoomNo", studyRoomNo);
+	   }
+	   
+
+	   /**
+	    * 스터디룸 예약 정보를 수정하는 메서드
+	    * 
+	    * @author 김유란
+	    * @param studyRoomConditionNo 스터디룸 예약 식별 번호
+	    */
+	   @Override
+	   public void updatStudyRoomCondition(StudyRoomConditionVO studyRoomConditionVO) {
+		   template.update("company.updatStudyRoomCondition", studyRoomConditionVO);
+	   }
+	   
+	   /**
+	    * 업체 영업일 조회
+	    * 업체 번호로 조회한 영업 요일을 List<String> 타입으로 반환받는다.
+	    * @author 김유란
+	    * @param studyRoomNo 업체 식별 번호
+	    * @return List<StudyRoomConditionVO> 스터디룸 예약정보 객체를 담은 리스트
+	    */
+	   @Override
+	   public List<String> findBusinessDayByCompanyNo(int companyNo) {
+		   return template.selectList("company.findBusinessDayByCompanyNo", companyNo); 
+	   }
+
+
 }
 
 

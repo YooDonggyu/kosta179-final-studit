@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.kosta.studit.model.vo.StudyRoomConditionVO;
+import org.kosta.studit.model.vo.StudyRoomVO;
 
 public interface StudyRoomDAO {
 
@@ -15,5 +16,9 @@ public interface StudyRoomDAO {
 
 
 	int findTotalStudyRoomConditionByEmail(String MemberEmail);
+
+
+
+	StudyRoomVO findStudyRoomInfoByStudyRoomNo(String studyRoomNo);
 
 }

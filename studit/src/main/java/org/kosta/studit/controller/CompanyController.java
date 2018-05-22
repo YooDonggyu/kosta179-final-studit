@@ -5,8 +5,11 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.kosta.studit.model.dao.CompanyDAO;
 import org.kosta.studit.model.service.CompanyService;
 import org.kosta.studit.model.vo.CompanyVO;
+import org.kosta.studit.model.vo.MemberVO;
+import org.kosta.studit.model.vo.StudyRoomConditionVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/company")
 @Controller
 public class CompanyController {
+	
+	@Autowired
+	private CompanyDAO companyDAO;
 	@Autowired
 	private CompanyService companyService;
 	
@@ -38,5 +44,38 @@ public class CompanyController {
 		request.setAttribute("allHashTagList", allHashTagList);
 		
 		return "company/findCompanyView.tiles";
+	}
+	
+	/**
+	 * 업체의 스터디룸 예약현황 뷰를 호출하는 메서드
+	 * 업체회원이 보유한 스터디룸의 예약현황 정보 조회를 위해 
+	 * 영업일, 스터디룸 정보, 각 스터디룸별 예약현황 데이터를 가져와 뷰로 전송한다.
+	 * 
+	 * @author 김유란
+	 * @param request 세션을 얻기 위해 호출
+	 * @return 업체 스터디룸 예약현황 관리 뷰로 이동(tiles)
+	 */
+	@RequestMapping("/findStudyRoomConditionByCompanyNo")
+	public String findStudyRoomConditionByCompanyNo(HttpServletRequest request) {
+		MemberVO memberVO = (MemberVO) request.getSession(false).getAttribute("memberVO");
+		request.setAttribute("businessHour", companyService.findBusinessDayByMemberEmail(memberVO.getMemberEmail()));
+		request.setAttribute("studyRoomResource", companyService.findStudyRoomByMemberEmail(memberVO.getMemberEmail()));
+		request.setAttribute("studyRoomCondition", companyService.findStudyRoomConditionByMemberEmail(memberVO.getMemberEmail()));
+		return "company/find_studyRoom_condition.tiles";
+	}
+	
+	/**
+	 * 업체의 스터디룸 예약현황 수정 메서드
+	 * 업체회원이 스터디룸 예약을 승인하거나 수정할 때 실행 
+	 * 
+	 * @author 김유란
+	 * @param studyRoomConditionVO 수정된 예약정보를 담은 VO
+	 * @return 업체 스터디룸 예약현황 관리 뷰로 이동하기 위해 해당 뷰 호출 메서드로 redirect
+	 */
+	@RequestMapping("/updateStudyRoomCondition")
+	public String updateStudyRoomCondition(StudyRoomConditionVO studyRoomConditionVO){
+		System.out.println(studyRoomConditionVO);
+		companyDAO.updatStudyRoomCondition(studyRoomConditionVO);
+		return "redirect:/company/findStudyRoomConditionByCompanyNo";
 	}
 }

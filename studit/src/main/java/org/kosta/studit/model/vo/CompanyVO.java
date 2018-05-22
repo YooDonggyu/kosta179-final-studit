@@ -34,6 +34,15 @@ public class CompanyVO {
 		this.intro = intro;
 		this.profilePath = profilePath;
 	}
+	
+	public CompanyVO(int companyNo, String name, String open, String close, String holiday) {
+		super();
+		this.companyNo = companyNo;
+		this.name = name;
+		this.open = open;
+		this.close = close;
+		this.holiday = holiday;
+	}
 
 	public CompanyVO(int companyNo, String name, String addr1, String addr2, String addr3, String addr4,
 			double latitude, double longitude, String tel, String license, String regdate, String url, String open,

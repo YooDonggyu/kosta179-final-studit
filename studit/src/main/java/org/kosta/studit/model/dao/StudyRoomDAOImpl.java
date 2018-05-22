@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.kosta.studit.model.vo.StudyRoomConditionVO;
+import org.kosta.studit.model.vo.StudyRoomVO;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -43,5 +44,10 @@ public class StudyRoomDAOImpl implements StudyRoomDAO {
 	   @Override
 	   public List<StudyRoomConditionVO> findStudyConditionByEmail(Map<String, Object> map){
 		   return template.selectList("studyroom.findStudyConditionByEmail", map);
+	   }
+	   
+	   @Override
+	   public StudyRoomVO findStudyRoomInfoByStudyRoomNo(String studyRoomNo) {
+		   return template.selectOne("studyroom.findStudyRoomInfoByStudyRoomNo", studyRoomNo);
 	   }
 }

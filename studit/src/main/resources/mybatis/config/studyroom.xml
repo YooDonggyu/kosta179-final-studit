@@ -20,6 +20,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="state" column="state" />
 		<result property="regDate" column="regdate" />
 	</resultMap>
+	
+	<resultMap type="studyRoomVO" id="studyRoomRM">
+		<result property="companyVO.companyNo" column="company_no"/>
+		<result property="companyVO.name" column="c_name"/>
+		<result property="companyVO.holiday" column="holiday"/>
+	</resultMap>
 	<!-- resultMap	End -->
 	
 	<!-- 
@@ -65,7 +71,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       from studyroom_condition sc
       where sc.member_email=#{value} and sc.state='승인대기중'
    </select>
-
+   
+   <select id="findStudyRoomInfoByStudyRoomNo" resultMap="studyRoomRM">
+		select  c.company_no, c.name as c_name, c.holiday, s.studyroom_no, s.name, s.capacity, s.price
+		from company c, studyroom s
+		where c.company_no=s.company_no and s.studyroom_no=#{value}
+	</select>
 </mapper>
  
  

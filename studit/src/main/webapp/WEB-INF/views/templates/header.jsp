@@ -16,8 +16,8 @@
               <ul class="nav navbar-nav headerUl" >
 		            <li class="active"><a  href="${pageContext.request.contextPath}/">HOME</a></li>
 		            <li><a href="${pageContext.request.contextPath}/recruit/getRecruitPostList">STUDY</a></li>
-		            <li><a href="${pageContext.request.contextPath}/">STUDY-ROOM</a></li>
-		            <li><a href="${pageContext.request.contextPath}/">PLACE</a></li>
+		            <li><a href="${pageContext.request.contextPath}/studyroom/createStudyRoomReservation">STUDY-ROOM</a></li>
+		            <li><a href="${pageContext.request.contextPath}/company/findStudyRoomConditionByCompanyNo/">PLACE</a></li>
 		            <%-- <li><a href="${pageContext.request.contextPath}/member/getMyPage?nowPage=1"></a></li> --%>
 		            <li><a href="${pageContext.request.contextPath}/company/findCompanyView"></a></li>
 	          	</ul>
