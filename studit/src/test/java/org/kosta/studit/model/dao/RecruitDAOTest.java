@@ -8,12 +8,10 @@ import java.util.Map;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kosta.studit.model.PagingBean;
-import org.kosta.studit.model.vo.RecruitPostVO;
-import org.kosta.studit.model.vo.SmallCategoryVO;
-import org.kosta.studit.model.vo.StudyConditionVO;
 import org.kosta.studit.model.vo.MemberVO;
 import org.kosta.studit.model.vo.RecruitPostVO;
 import org.kosta.studit.model.vo.SmallCategoryVO;
+import org.kosta.studit.model.vo.StudyConditionVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -322,7 +320,7 @@ public class RecruitDAOTest {
 	 * 
 	 * @author 송용준
 	 */
-	// @Test
+	 //@Test
 	public void createRecruitPost() {
 		// RecruitPostVO Has A MemberVO
 		MemberVO memberVO = new MemberVO();
@@ -340,7 +338,7 @@ public class RecruitDAOTest {
 	 * 
 	 * @author 송용준
 	 */
-	// @Test
+	 //@Test
 	public void registerRecruitDay() {
 		String[] recruitDay = { "월", "수" };
 		// 등록하는 모집글의 번호
@@ -354,7 +352,7 @@ public class RecruitDAOTest {
 		}
 	}
 
-	@Test
+	//@Test
 	public void findSmallCategoryListByBigCategoryNo() {
 		String bigCategoryNo = "3";
 

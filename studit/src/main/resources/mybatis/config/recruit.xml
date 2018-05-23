@@ -369,6 +369,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		values(recruit_day_no_seq.nextVal, #{recruitPostNo}, #{recruitDay})
 	</insert>
 	
+	<insert id="createRecruitPost" parameterType="recruitPostVO" >
+		<selectKey resultType="int" keyProperty="recruitPostNo" order="BEFORE">
+			select recruit_post_no_seq.nextVal from dual
+		</selectKey>
+		insert into recruit_post(recruit_post_no,title,content,regdate,condition,capacity,member_email,small_category_no,location)
+		values(#{recruitPostNo},#{title},#{content},sysdate,'모집중',#{capacity},#{memberVO.memberEmail},#{smallCategoryVO.smallCategoryNo},#{location})
+	</insert>
+	
 	<!-- 
 		모집중인 게시글 삭제할 때 상태를 변경.(모집중 -> 삭제)
 		@author 유동규

@@ -43,7 +43,7 @@ public class CompanyController {
 		request.setAttribute("allCompanyList", allCompanyList);
 		request.setAttribute("allHashTagList", allHashTagList);
 		
-		return "company/findCompanyView.tiles";
+		return "company/find_Company_View.tiles";
 	}
 	
 	/**

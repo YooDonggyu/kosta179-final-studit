@@ -66,7 +66,7 @@
 	<div class="container">
 	  <!-- <h2>Table</h2>
 	  <p>The .table-hover class enables a hover state on table rows within a tbody:</p>                    -->           
-	 <button class="btn btn-transparent" style="float: right;" onclick=""><b>새 스터디 모집하기</b></button>
+	 <button class="btn btn-transparent" style="float: right;" id="createRecruitPost"><b>새 스터디 모집하기</b></button>
 	 <br>
 	 <br>
 	 <br>
@@ -144,9 +144,12 @@
 					})//each
 					$("#checkbox").html(result);
 				}//success
-			})//ajax
-		})//change
+			});//ajax
+		});//change
 		
+		$("#createRecruitPost").click(function(){
+			location.href="${pageContext.request.contextPath}/recruit/createRecruitPostView";
+		});
 	})//ready
 
 

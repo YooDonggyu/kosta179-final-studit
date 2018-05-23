@@ -1,7 +1,12 @@
 package org.kosta.studit.model.dao;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.kosta.studit.model.vo.CompanyVO;
 import org.kosta.studit.model.vo.StudyRoomConditionVO;
 import org.kosta.studit.model.vo.StudyRoomVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,4 +83,16 @@ public class CompanyDAOTest {
 		   System.out.println(companyDAO.findBusinessDayByCompanyNo(1));
 	   }
 	   
+	   @Test
+	   public void findCompanyListByAddressAndKeywordAndHashTag() {
+		   Map<String, String> map=new HashMap<>();		
+			map.put("firstAddr", null);
+			map.put("secondAddr", null);
+			map.put("thirdAddr", null);
+			map.put("keywordORhashtag", "고백");
+			List<CompanyVO> list=companyDAO.findCompanyListByAddress(map);
+			for(CompanyVO vo:list) {
+				System.out.println(vo);
+			}
+	   }
 }

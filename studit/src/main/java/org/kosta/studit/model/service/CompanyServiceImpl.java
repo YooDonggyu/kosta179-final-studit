@@ -195,4 +195,11 @@ public class CompanyServiceImpl implements CompanyService {
 
 
 
+	@Override
+	public List<CompanyVO> findCompanyListByAddress(Map<String, String> map) {
+		List<CompanyVO> list=companyDAO.findCompanyListByAddress(map);
+	
+		return list;
+	}
+
 }

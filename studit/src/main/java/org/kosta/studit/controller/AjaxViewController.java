@@ -13,9 +13,11 @@ import org.kosta.studit.model.dao.CompanyDAO;
 import org.kosta.studit.model.dao.MemberDAO;
 import org.kosta.studit.model.dao.RecruitDAO;
 import org.kosta.studit.model.dao.StudyRoomDAO;
+import org.kosta.studit.model.service.CompanyService;
 import org.kosta.studit.model.service.MemberService;
 import org.kosta.studit.model.service.RecruitService;
 import org.kosta.studit.model.service.StudyRoomService;
+import org.kosta.studit.model.vo.CompanyVO;
 import org.kosta.studit.model.vo.MemberVO;
 import org.kosta.studit.model.vo.SmallCategoryVO;
 import org.kosta.studit.model.vo.StudyConditionListVO;
@@ -44,7 +46,8 @@ public class AjaxViewController {
 	private RecruitService recruitService;
 	@Autowired
 	private StudyRoomService studyroomService;
-	
+	@Autowired
+	private CompanyService companyService;
 	   
 
 	/**
@@ -153,9 +156,10 @@ public class AjaxViewController {
 	@ResponseBody
 	public List<SmallCategoryVO> getSmallCategoryByBigCategory(String bigCategoryNo) {
 		List<SmallCategoryVO> list = recruitService.findSmallCategoryListByBigCategoryNo(bigCategoryNo);
-		System.out.println(list);
+		//System.out.println(list);
 		return list;
 	}
+	
 	
 	/**
 	 * 스터디룸(업체) 검색 뷰에서 선택된 addr1에 대응되는 addr2를 조회.
@@ -219,6 +223,44 @@ public class AjaxViewController {
 		recruitDAO.updateCommentByCommentNo(map);
 	}
 	
+	@RequestMapping("/findCompanyListByAddressAjax")
+	@ResponseBody
+	public List<CompanyVO> findCompanyListByAddress(String addr1, String addr2, String addr3){
+		Map<String, String> map=new HashMap<>();	
+		map.put("firstAddr", addr1);
+		map.put("secondAddr", addr2);
+		map.put("thirdAddr", addr3);
+		List<CompanyVO> comList=companyService.findCompanyListByAddress(map);
+		return comList;
+	}
 	
-
+	@RequestMapping("/findCompanyListByAddressAndKeywordAndHashTagAjax")
+	@ResponseBody
+	public List<CompanyVO> findCompanyListByAddressAndKeywordAndHashTag(String addr1, String addr2, String addr3, String keywordORhashtag){
+		Map<String, String> map=new HashMap<>();
+		if(addr1.equals("주소1")) {
+			map.put("firstAddr", null);
+		}else {
+			map.put("firstAddr", addr1);
+		}
+		if(addr2.equals("주소2")) {
+			map.put("secondAddr", null);
+		}else {
+			map.put("secondAddr", addr2);
+		}
+		if(addr3.equals("주소3")) {
+			map.put("thirdAddr", null);
+		}else {
+			map.put("thirdAddr", addr3);
+		}
+		map.put("keywordORhashtag", keywordORhashtag);
+		/*System.out.println(map.get("firstAddr"));
+		System.out.println(map.get("secondAddr"));
+		System.out.println(map.get("thirdAddr"));
+		System.out.println(map.get("keywordORhashtag"));*/
+		List<CompanyVO> comList=companyService.findCompanyListByAddress(map);
+		return comList;
+	}
+	
+	
 }

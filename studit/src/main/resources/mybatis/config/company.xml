@@ -32,7 +32,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="findWaitReservationByEmail" resultType="string">
 		select count(sc.state)
 		from studyroom_condition sc, studyroom sr, company com
-		where sc.state='승인대기중' and sc.studyroom_no=sr.studyroom_no
+		where sc.state='대기중' and sc.studyroom_no=sr.studyroom_no
 		and sr.company_no=com.company_no and com.member_email=#{value}
 	</select>
 	
@@ -42,7 +42,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 @return string company 테이블의 addr1 값
 	-->
 	<select id="readFirstAddr" resultType="string">
-		select addr1
+		select distinct addr1
 		from company
 		where state='승인'
 	</select>
@@ -53,7 +53,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 @return companyVO 등록이 승인된 업체 객체
 	-->
 	<select id="readAllCompany" resultType="companyVO">
-		select company_no, name, intro, profile_path
+		select company_no, name, addr1, addr2, addr3, intro, profile_path
 		from company
 		where state='승인'
 		order by regdate desc
@@ -74,7 +74,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 @return string company 테이블의 addr2 값
 	-->
 	<select id="findSecondAddressListByFirstAddressName" parameterType="string" resultType="string">
-		select addr2
+		select distinct addr2
 		from company
 		where addr1=#{value} and state='승인'
 	</select>
@@ -84,7 +84,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 @return string company 테이블의 addr3 값
 	-->
 	<select id="findThirdAddressListBySecondAddressName" parameterType="string" resultType="string">
-		select addr3
+		select distinct addr3
 		from company
 		where addr2=#{value} and state='승인'
 	</select>
@@ -142,10 +142,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="findBusinessDayByCompanyNo" resultType="string">
 		select day from com_business_day where company_no=#{value}
 	</select>
+	
+	<select id="findCompanyListByAddress" parameterType="map" resultType="companyVO">
+		select com.company_no, com.name, com.addr1, com.addr2, com.addr3, com.intro, com.profile_path 
+		from company com, (
+			select distinct c.company_no as company_no
+			from company c, hashtag h
+			<where>
+				 c.state='승인'
+				<if test="firstAddr != null">
+					and c.addr1=#{firstAddr}
+				</if>
+				<if test="secondAddr != null">
+					and c.addr2=#{secondAddr}
+				</if>
+				<if test="thirdAddr != null">
+					and c.addr3=#{thirdAddr}
+				</if>
+				<if test="keywordORhashtag != null">
+					and c.company_no=h.company_no and c.name || h.content like '%'||#{keywordORhashtag}||'%'
+				</if> 
+			</where>
+		) dc
+		where com.company_no = dc.company_no 
+		order by regdate desc
+		
+	</select>
+	
 </mapper>
- 
- 
- 
  
  
  

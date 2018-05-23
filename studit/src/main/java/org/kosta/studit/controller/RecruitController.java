@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.kosta.studit.model.dao.RecruitDAO;
 import org.kosta.studit.model.service.RecruitService;
@@ -218,8 +219,10 @@ public class RecruitController {
 	 * @return 작성완료된 글의 상세보기 페이지로 이동
 	 */
 	@RequestMapping("/createRecruitPost")
-	public String createRecruitPost(RecruitPostVO recruitPostVO, String Days) {
+	public String createRecruitPost(RecruitPostVO recruitPostVO, String Days, HttpServletRequest request) {
 		String[] recruitDay = Days.split(",");
+		HttpSession session=request.getSession();
+		recruitPostVO.setMemberVO((MemberVO)session.getAttribute("memberVO"));
 		recruitService.createRecruitPost(recruitPostVO, recruitDay);
 
 		// 모집글 상세보기로 이동

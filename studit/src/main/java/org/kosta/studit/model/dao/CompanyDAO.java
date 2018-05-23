@@ -30,5 +30,7 @@ public interface CompanyDAO {
 	List<StudyRoomVO> findStudyRoomByCompanyNo(int companyNo);
 
 	CompanyVO findCompanyByMemberEmail(String memberEmail);
+	
+	List<CompanyVO> findCompanyListByAddress(Map<String, String> map);
 
 }

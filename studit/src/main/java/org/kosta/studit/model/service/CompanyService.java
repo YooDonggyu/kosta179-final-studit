@@ -23,5 +23,7 @@ public interface CompanyService {
 	JSONObject findBusinessDayByCompanyNo(int companyNo);
 
 	JSONObject findBusinessDayByMemberEmail(String memberEmail);
+	
+	List<CompanyVO> findCompanyListByAddress(Map<String, String> map);
 
 }

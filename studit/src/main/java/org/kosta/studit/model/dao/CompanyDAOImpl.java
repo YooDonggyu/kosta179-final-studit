@@ -146,6 +146,11 @@ public class CompanyDAOImpl implements CompanyDAO {
 	   }
 
 
+	@Override
+	public List<CompanyVO> findCompanyListByAddress(Map<String, String> map) {
+		return template.selectList("company.findCompanyListByAddress", map);
+	}
+
 }
 
 

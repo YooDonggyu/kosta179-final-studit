@@ -24,7 +24,6 @@ CREATE TABLE company(
 );
 create sequence company_no_seq nocache;
 
-insert into member_position values( member_position_no_seq.nextval, '업체', 'd@d.com');
 insert into company(
 company_no
 , name
@@ -64,10 +63,344 @@ values(company_no_seq.nextval
 ,'22:00'
 ,'영업'
 ,'http://www.moimstudy.com/'
-,'d@d.com'
+,'f@f.com'
 );
 
+insert into company(
+company_no
+, name
+, addr1
+, addr2
+, addr3
+, addr4
+, latitude
+, longitude
+, tel
+, license
+, regdate
+, profile_path
+, intro
+, state
+, open
+, close
+, holiday
+, url
+, member_email
+)
+values(company_no_seq.nextval
+, 'CLARA'
+,'경기도'
+,'성남시'
+,'분당구'
+,'분당로53번길 12 서현나산플라자'
+, 3
+, 3
+,'031-8017-3537'
+,'222-18-56167'
+,sysdate
+,'/image'
+,'★ 분당 서현역 스터디모임 전문공간 CLARA 입니다! CLARA은 공간이 필요하신 모든 연령대, 어떠한 모임이든 환영합니다.'
+,'승인'
+, '09:00'
+,'22:00'
+,'영업'
+,'http://www.clarastudy.com/'
+,'g@g.com'
+);
 
+insert into company(
+company_no
+, name
+, addr1
+, addr2
+, addr3
+, addr4
+, latitude
+, longitude
+, tel
+, license
+, regdate
+, profile_path
+, intro
+, state
+, open
+, close
+, holiday
+, url
+, member_email
+)
+values(company_no_seq.nextval
+, 'IU'
+,'경기도'
+,'성남시'
+,'분당구'
+,'분당로53번길 12 서현나산플라자'
+, 3
+, 3
+,'031-8017-3537'
+,'222-18-56167'
+,sysdate
+,'/image'
+,'★ IU와 함께하는 스터디공간 IU 입니다! 문의는 서정우 강사님께 하시면 되겠습니다.'
+,'승인'
+, '09:00'
+,'22:00'
+,'영업'
+,'http://www.iustudy.com/'
+,'h@h.com'
+);
+
+insert into company(
+company_no
+, name
+, addr1
+, addr2
+, addr3
+, addr4
+, latitude
+, longitude
+, tel
+, license
+, regdate
+, profile_path
+, intro
+, state
+, open
+, close
+, holiday
+, url
+, member_email
+)
+values(company_no_seq.nextval
+, 'REDVELVET'
+,'경기도'
+,'성남시'
+,'수정구'
+,'분당로53번길 12 서현나산플라자'
+, 3
+, 3
+,'031-8017-3537'
+,'222-18-56167'
+,sysdate
+,'/image'
+,'★ REDVELVET와 함께하는 스터디공간 REDVELVET 입니다! 찾아주셔서 감사합니다.'
+,'승인'
+, '09:00'
+,'22:00'
+,'영업'
+,'http://www.iustudy.com/'
+,'f@f.com'
+);
+
+insert into company(
+company_no
+, name
+, addr1
+, addr2
+, addr3
+, addr4
+, latitude
+, longitude
+, tel
+, license
+, regdate
+, profile_path
+, intro
+, state
+, open
+, close
+, holiday
+, url
+, member_email
+)
+values(company_no_seq.nextval
+, '소녀시대'
+,'경기도'
+,'성남시'
+,'수정구'
+,'분당로53번길 12 서현나산플라자'
+, 3
+, 3
+,'031-8017-3537'
+,'222-18-56167'
+,sysdate
+,'/image'
+,'★ 소녀시대와 함께하는 스터디공간 소녀시대 입니다! 오늘은 소녀시대! 감사합니다.'
+,'승인'
+, '09:00'
+,'22:00'
+,'영업'
+,'http://www.iustudy.com/'
+,'g@g.com'
+);
+
+insert into company(
+company_no
+, name
+, addr1
+, addr2
+, addr3
+, addr4
+, latitude
+, longitude
+, tel
+, license
+, regdate
+, profile_path
+, intro
+, state
+, open
+, close
+, holiday
+, url
+, member_email
+)
+values(company_no_seq.nextval
+, 'EXO'
+,'경기도'
+,'성남시'
+,'중원구'
+,'분당로53번길 12 서현나산플라자'
+, 3
+, 3
+,'031-8017-3537'
+,'222-18-56167'
+,sysdate
+,'/image'
+,'★ EXO 함께하는 스터디공간 EXO 입니다! 문의는 조선화군에게 하시면 됩니다.'
+,'승인'
+, '09:00'
+,'22:00'
+,'영업'
+,'http://www.iustudy.com/'
+,'h@h.com'
+);
+
+insert into company(
+company_no
+, name
+, addr1
+, addr2
+, addr3
+, addr4
+, latitude
+, longitude
+, tel
+, license
+, regdate
+, profile_path
+, intro
+, state
+, open
+, close
+, holiday
+, url
+, member_email
+)
+values(company_no_seq.nextval
+, '방탄소년단'
+,'서울특별시'
+,'강남구'
+,'논현동'
+,'분당로53번길 12 서현나산플라자'
+, 3
+, 3
+,'031-8017-3537'
+,'222-18-56167'
+,sysdate
+,'/image'
+,'★ 방탄소년단 함께하는 스터디공간 방탄소년단 입니다! 문의는 변태섭군에게 하시면 됩니다.'
+,'승인'
+, '09:00'
+,'22:00'
+,'영업'
+,'http://www.iustudy.com/'
+,'f@f.com'
+);
+
+insert into company(
+company_no
+, name
+, addr1
+, addr2
+, addr3
+, addr4
+, latitude
+, longitude
+, tel
+, license
+, regdate
+, profile_path
+, intro
+, state
+, open
+, close
+, holiday
+, url
+, member_email
+)
+values(company_no_seq.nextval
+, '여자친구'
+,'서울특별시'
+,'강남구'
+,'자곡동'
+,'분당로53번길 12 서현나산플라자'
+, 3
+, 3
+,'031-8017-3537'
+,'222-18-56167'
+,sysdate
+,'/image'
+,'★ 여자친구가 있으신 분만 오실 수 있는 스터디공간 여자친구 입니다! 솔로지옥 커플천국.'
+,'승인'
+, '09:00'
+,'22:00'
+,'영업'
+,'http://www.iustudy.com/'
+,'g@g.com'
+);
+
+insert into company(
+company_no
+, name
+, addr1
+, addr2
+, addr3
+, addr4
+, latitude
+, longitude
+, tel
+, license
+, regdate
+, profile_path
+, intro
+, state
+, open
+, close
+, holiday
+, url
+, member_email
+)
+values(company_no_seq.nextval
+, '시를 잊은 그대에게'
+,'서울특별시'
+,'구로구'
+,'신도림동'
+,'분당로53번길 12 서현나산플라자'
+, 3
+, 3
+,'031-8017-3537'
+,'222-18-56167'
+,sysdate
+,'/image'
+,'★ 시낭송 위주의 스터디가 주인 스터디공간 시를 잊은 그대에게 입니다! 문의는 호유란님께.'
+,'승인'
+, '09:00'
+,'22:00'
+,'영업'
+,'http://www.iustudy.com/'
+,'h@h.com'
+);
 --공지사항
 CREATE TABLE com_announcement
 (
@@ -103,6 +436,7 @@ CREATE TABLE com_review
 );
 
 create sequence com_review_seq nocache;
+
 insert into com_review(com_review_no, content, score, regdate, name, company_no) 
 values(com_review_seq.nextval, '다신 안가요', 1, sysdate, '유란', 1) ;
 
@@ -135,6 +469,7 @@ create table com_business_day (
 	constraint fk4_company_no foreign key(company_no) references company(company_no)
 );
 create sequence com_business_day_seq nocache;
+
 insert into com_business_day(com_day_no, day, company_no) values(com_business_day_seq.nextval, '월', 1);
 insert into com_business_day(com_day_no, day, company_no) values(com_business_day_seq.nextval, '수', 1);
 
@@ -153,7 +488,24 @@ create table hashtag (
 
 create sequence hashtag_seq nocache;
 insert into hashtag(hashtag_no, content, company_no) values(hashtag_seq.nextval, '화이트보드', 1);
-
+insert into hashtag(hashtag_no, content, company_no) values(hashtag_seq.nextval, '#분위기', 1);
+insert into hashtag(hashtag_no, content, company_no) values(hashtag_seq.nextval, '#꽃향기', 1);
+insert into hashtag(hashtag_no, content, company_no) values(hashtag_seq.nextval, '#고백', 2);
+insert into hashtag(hashtag_no, content, company_no) values(hashtag_seq.nextval, '#성공적', 2);
+insert into hashtag(hashtag_no, content, company_no) values(hashtag_seq.nextval, '#분위기', 2);
+insert into hashtag(hashtag_no, content, company_no) values(hashtag_seq.nextval, '#커피리필무료', 3);
+insert into hashtag(hashtag_no, content, company_no) values(hashtag_seq.nextval, '#커피향', 3);
+insert into hashtag(hashtag_no, content, company_no) values(hashtag_seq.nextval, '#커피존맛', 4);
+insert into hashtag(hashtag_no, content, company_no) values(hashtag_seq.nextval, '#고백', 5);
+insert into hashtag(hashtag_no, content, company_no) values(hashtag_seq.nextval, '#24시', 5);
+insert into hashtag(hashtag_no, content, company_no) values(hashtag_seq.nextval, '#24시', 6);
+insert into hashtag(hashtag_no, content, company_no) values(hashtag_seq.nextval, '#주차공간', 6);
+insert into hashtag(hashtag_no, content, company_no) values(hashtag_seq.nextval, '#밝은조명', 6);
+insert into hashtag(hashtag_no, content, company_no) values(hashtag_seq.nextval, '#스터디', 7);
+insert into hashtag(hashtag_no, content, company_no) values(hashtag_seq.nextval, '#조용한', 8);
+insert into hashtag(hashtag_no, content, company_no) values(hashtag_seq.nextval, '#북카페', 8);
+insert into hashtag(hashtag_no, content, company_no) values(hashtag_seq.nextval, '#고양이카페', 9);
+insert into hashtag(hashtag_no, content, company_no) values(hashtag_seq.nextval, '#강아지카페', 9);
 --스터디룸
 create table studyroom(
 	studyroom_no number primary key,
@@ -166,6 +518,7 @@ create table studyroom(
 )
 
 create sequence studyroom_seq nocache;
+
 insert into studyroom(studyroom_no, name, capacity, price, content, company_no)
 values(studyroom_seq.nextval, 'room-A', 15, 10000, '쾌적한 공간', 1);
 insert into studyroom(studyroom_no, name, capacity, price, content, company_no)
