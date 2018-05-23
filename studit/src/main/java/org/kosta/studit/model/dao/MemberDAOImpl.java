@@ -101,18 +101,6 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 
 	/**
-	 * 회원 가입 시 직책테이블에 직책을 추가하는 메서드
-	 * 
-	 * @author 변태섭
-	 * @param Map
-	 *            회원 Email, 직책
-	 */
-	@Override
-	public void registerMemberPosition(Map<String, String> map) {
-		template.insert("member.registerMemberPosition", map);
-	}
-	
-	/**
 	 * 회원 탈퇴 시 회원의 직책 상태를 회원에서 탈퇴로 변경하는 메서드
 	 * 
 	 * @author 송용준
@@ -123,4 +111,25 @@ public class MemberDAOImpl implements MemberDAO {
 		template.update("member.deleteMember", memberEmail);
 	}
 
+	   /**
+	    * 회원 가입 시 직책테이블에 직책을 추가하는 메서드
+	    * @author 변태섭
+	    * @param Map 회원 Email, 직책
+	    */
+	   @Override
+	   public void registerMemberPosition(Map<String, String> map) {
+	      template.insert("member.registerMemberPosition",map);
+	   }
+	   
+	   /**
+	    * 회원의 직책의 유무를 체크하는 쿼리
+	    * 
+	    * @author 변태섭
+	    * @param map 찾고자 하는 회원의 이메일과 직책을 담은 객체
+	    * @return 있으면 1, 없으면 0
+	    */
+	   @Override
+	   public int findCountMemberPositionByMemberPositionAndMemberEmail(Map<String, String> map) {
+		   return template.selectOne("member.findCountMemberPositionByMemberPositionAndMemberEmail", map);
+	   }
 }

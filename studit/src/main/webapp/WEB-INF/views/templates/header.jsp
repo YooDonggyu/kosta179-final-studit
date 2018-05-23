@@ -17,7 +17,8 @@
 		            <li class="active"><a  href="${pageContext.request.contextPath}/">HOME</a></li>
 		            <li><a href="${pageContext.request.contextPath}/recruit/getRecruitPostList">STUDY</a></li>
 		            <li><a href="${pageContext.request.contextPath}/company/findCompanyView">STUDY-ROOM</a></li>
-		            <li><a href="${pageContext.request.contextPath}/company/findStudyRoomConditionByCompanyNo/">PLACE</a></li>
+		            <li><a href="${pageContext.request.contextPath}/company/companyView">PLACE</a></li>
+		            <%-- <li><a href="${pageContext.request.contextPath}/company/findStudyRoomConditionByCompanyNo/">PLACE</a></li> --%>
 		            <%-- <li><a href="${pageContext.request.contextPath}/member/getMyPage?nowPage=1"></a></li> --%>
 		            <li><a href="${pageContext.request.contextPath}/member/deleteMemberView">HIDE</a></li>
 	          	</ul>

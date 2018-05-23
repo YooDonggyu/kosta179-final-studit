@@ -62,7 +62,4 @@ public class StudyRoomVO {
 		return "StudyRoomVO [studyRoomNo=" + studyRoomNo + ", name=" + name + ", capacity=" + capacity + ", price="
 				+ price + ", content=" + content + ", companyVO=" + companyVO + "]";
 	}
-	
-	
-	
 }

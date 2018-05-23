@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!-- tiles framework 선언부 -->
 <%@taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <!DOCTYPE html>
@@ -57,7 +56,7 @@
       ga('create','UA-XXXXX-X');ga('send','pageview');
     </script>
 
-    
+    <!-- daum 우편번호, kakao map API -->
     <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
     
 </head>

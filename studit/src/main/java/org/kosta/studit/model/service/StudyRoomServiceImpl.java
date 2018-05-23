@@ -8,8 +8,10 @@ import org.kosta.studit.model.PagingBean;
 import org.kosta.studit.model.dao.StudyRoomDAO;
 import org.kosta.studit.model.vo.StudyRoomConditionListVO;
 import org.kosta.studit.model.vo.StudyRoomConditionVO;
+import org.kosta.studit.model.vo.StudyRoomVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class StudyRoomServiceImpl implements StudyRoomService {
@@ -44,4 +46,24 @@ public class StudyRoomServiceImpl implements StudyRoomService {
 		return srcListVO;
 	}
 	
+	/**
+	 * 스터디룸 및 스터디룸 연관 테이블을 등록하는 메서드
+	 * 
+	 * @author 변태섭
+	 * @param StudyRoomVO 스터디룸 정보가 담긴 객체
+	 * @param List 스터디룸 사진 경로들이 담긴 객체
+	 */
+	@Transactional
+	@Override
+	public void registerStudyRoom(StudyRoomVO studyRoomVO, List<String> studyRoomPicFileList) {
+		studyroomDAO.registerStudyRoom(studyRoomVO);
+		
+		Map<String, Object> studyRoomPicFileMap = new HashMap<String, Object>();
+		studyRoomPicFileMap.put("studyRoomNo", studyRoomVO.getStudyRoomNo());
+		
+		for(int i=0; i<studyRoomPicFileList.size(); i++) {
+			studyRoomPicFileMap.put("studyRoomPicPath", studyRoomPicFileList.get(i));
+			studyroomDAO.registerStudyRoomPicPath(studyRoomPicFileMap);
+		}
+	}
 }

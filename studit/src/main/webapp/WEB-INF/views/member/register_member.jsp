@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 	<script>
+		// 작성: 변태섭
+		// 기능: 우편번호 API Sciprt
     function sample6_execDaumPostcode() {
         new daum.Postcode({
             oncomplete: function(data) {

@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -13,15 +11,11 @@ import javax.servlet.http.HttpSession;
 import org.kosta.studit.exception.EmailNotFoundException;
 import org.kosta.studit.exception.IsNotMemberException;
 import org.kosta.studit.exception.PasswordIncorrectException;
-import org.kosta.studit.model.PagingBean;
 import org.kosta.studit.model.dao.MemberDAO;
-import org.kosta.studit.model.dao.StudyRoomDAO;
 import org.kosta.studit.model.service.MemberService;
 import org.kosta.studit.model.service.RecruitService;
 import org.kosta.studit.model.service.StudyRoomService;
 import org.kosta.studit.model.vo.MemberVO;
-import org.kosta.studit.model.vo.StudyRoomConditionListVO;
-import org.kosta.studit.model.vo.StudyRoomConditionVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -109,8 +103,8 @@ public class MemberController {
 			// String path =
 			// request.getSession(false).getServletContext().getRealPath("upload"); 개발 완료 후
 			// 적용
-			// String path = "D:/KOSTA/workspace/resources/upload/";
-			String path = "C:/java-kosta/framework-workspace2/resources/upload/";
+			String path = "D:/KOSTA/workspace/resources/upload/"; //변태섭 경로
+			//String path = "C:/java-kosta/framework-workspace2/resources/upload/";
 			try {
 				picFile.transferTo(new File(path, fileName));// 지정 경로에 실제 파일 저장
 				memberVO.setPicPath(fileName);
@@ -120,21 +114,7 @@ public class MemberController {
 		} else {// 파일을 첨부하지 않았을 때
 			memberVO.setPicPath("default.png");
 		}
-		if (picFile != null && !picFile.isEmpty()) {
-			String fileName = memberVO.getMemberEmail() + "_" + picFile.getOriginalFilename();
-			// String path =
-			// request.getSession(false).getServletContext().getRealPath("upload"); 개발 완료 후
-			// 적용
-			String path = "D:/KOSTA/workspace/resources/upload/";
-			try {
-				picFile.transferTo(new File(path, fileName));// 지정 경로에 실제 파일 저장
-				memberVO.setPicPath(fileName);
-			} catch (IllegalStateException | IOException e) {
-				return "member/update_pic_fail.tiles";
-			}
-		} else {// 파일을 첨부하지 않았을 때
-			memberVO.setPicPath("default.png");
-		}
+		
 		memberService.registerMember(memberVO);
 		return "redirect:/register_member_ok";
 	}

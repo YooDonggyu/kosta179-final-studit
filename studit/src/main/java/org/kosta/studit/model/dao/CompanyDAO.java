@@ -32,5 +32,12 @@ public interface CompanyDAO {
 	CompanyVO findCompanyByMemberEmail(String memberEmail);
 	
 	List<CompanyVO> findCompanyListByAddress(Map<String, String> map);
+	
+	void registerHashtag(Map<String, Object> map);
 
+	void registerBusinessDay(Map<String, Object> map);
+
+	void registerCompany(CompanyVO companyVO);
+
+	void registerCompanyPicPath(Map<String, Object> map);
 }

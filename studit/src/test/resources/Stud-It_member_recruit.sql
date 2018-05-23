@@ -288,6 +288,7 @@ values(recruit_post_no_seq.nextval,'모여서 시 낭송 하실분들구해요',
 insert into recruit_post (recruit_post_no,title,content,regdate,condition,capacity,member_email,small_category_no,location) 
 values(recruit_post_no_seq.nextval,'모여서 시 낭송 하실분들구해요','시를 낭송하시면서 내면의 평화를 찾으세요',sysdate,'모집중',5,'g@g.com',15,'판교');
 
+<<<<<<< HEAD
 commit
 
 --모집 요일 선택
@@ -434,6 +435,152 @@ values(recruit_comment_no_seq.nextval, '스터디 시간이 안 적혀있네요.
 insert into recruit_post_comment(recruit_comment_no, content, member_email, regdate, recruit_post_no)
 values(recruit_comment_no_seq.nextval, '화목 싫은데요? 에벱베베','c@c.com' ,sysdate,1);
 
+=======
+
+
+--모집 요일 선택
+CREATE TABLE recruit_day
+(
+	recruit_day_no number primary key ,
+	day varchar(50) not null, 
+	recruit_post_no not null,
+	constraint fk_recruit_post_no foreign key(recruit_post_no) references recruit_post(recruit_post_no)
+);
+drop table recruit_day
+create sequence recruit_day_no_seq nocache;
+drop sequence recruit_day_no_seq
+select *from recruit_day
+
+insert into recruit_day(recruit_day_no,day,recruit_post_no) 
+values(recruit_day_no_seq.nextval,'월요일',1);
+insert into recruit_day(recruit_day_no,day,recruit_post_no) 
+values(recruit_day_no_seq.nextval,'수요일',1);
+insert into recruit_day(recruit_day_no,day,recruit_post_no) 
+values(recruit_day_no_seq.nextval,'금요일',1);
+
+insert into recruit_day(recruit_day_no,day,recruit_post_no) 
+values(recruit_day_no_seq.nextval,'화요일',2);
+insert into recruit_day(recruit_day_no,day,recruit_post_no) 
+values(recruit_day_no_seq.nextval,'목요일',2);
+
+insert into recruit_day(recruit_day_no,day,recruit_post_no) 
+values(recruit_day_no_seq.nextval,'토요일',3);
+insert into recruit_day(recruit_day_no,day,recruit_post_no) 
+values(recruit_day_no_seq.nextval,'수요일',3);
+
+insert into recruit_day(recruit_day_no,day,recruit_post_no) 
+values(recruit_day_no_seq.nextval,'토요일',4);
+insert into recruit_day(recruit_day_no,day,recruit_post_no) 
+values(recruit_day_no_seq.nextval,'일요일',4);
+
+insert into recruit_day(recruit_day_no,day,recruit_post_no) 
+values(recruit_day_no_seq.nextval,'월요일',5);
+insert into recruit_day(recruit_day_no,day,recruit_post_no) 
+values(recruit_day_no_seq.nextval,'수요일',5);
+insert into recruit_day(recruit_day_no,day,recruit_post_no) 
+values(recruit_day_no_seq.nextval,'금요일',5);
+
+insert into recruit_day(recruit_day_no,day,recruit_post_no) 
+values(recruit_day_no_seq.nextval,'수요일',6);
+insert into recruit_day(recruit_day_no,day,recruit_post_no) 
+values(recruit_day_no_seq.nextval,'목요일',6);
+
+insert into recruit_day(recruit_day_no,day,recruit_post_no) 
+values(recruit_day_no_seq.nextval,'화요일',7);
+insert into recruit_day(recruit_day_no,day,recruit_post_no) 
+values(recruit_day_no_seq.nextval,'목요일',7);
+insert into recruit_day(recruit_day_no,day,recruit_post_no) 
+values(recruit_day_no_seq.nextval,'토요일',7);
+
+insert into recruit_day(recruit_day_no,day,recruit_post_no) 
+values(recruit_day_no_seq.nextval,'화요일',8);
+insert into recruit_day(recruit_day_no,day,recruit_post_no) 
+values(recruit_day_no_seq.nextval,'목요일',8);
+
+insert into recruit_day(recruit_day_no,day,recruit_post_no) 
+values(recruit_day_no_seq.nextval,'토요일',9);
+
+insert into recruit_day(recruit_day_no,day,recruit_post_no) 
+values(recruit_day_no_seq.nextval,'수요일',10);
+
+insert into recruit_day(recruit_day_no,day,recruit_post_no) 
+values(recruit_day_no_seq.nextval,'월요일',11);
+insert into recruit_day(recruit_day_no,day,recruit_post_no) 
+values(recruit_day_no_seq.nextval,'토요일',11);
+
+insert into recruit_day(recruit_day_no,day,recruit_post_no) 
+values(recruit_day_no_seq.nextval,'수요일',12);
+insert into recruit_day(recruit_day_no,day,recruit_post_no) 
+values(recruit_day_no_seq.nextval,'토요일',12);
+
+insert into recruit_day(recruit_day_no,day,recruit_post_no) 
+values(recruit_day_no_seq.nextval,'월요일',13);
+insert into recruit_day(recruit_day_no,day,recruit_post_no) 
+values(recruit_day_no_seq.nextval,'금요일',13);
+
+insert into recruit_day(recruit_day_no,day,recruit_post_no) 
+values(recruit_day_no_seq.nextval,'목요일',14);
+
+insert into recruit_day(recruit_day_no,day,recruit_post_no) 
+values(recruit_day_no_seq.nextval,'화요일',15);
+
+insert into recruit_day(recruit_day_no,day,recruit_post_no) 
+values(recruit_day_no_seq.nextval,'화요일',3);
+insert into recruit_day(recruit_day_no,day,recruit_post_no) 
+values(recruit_day_no_seq.nextval,'금요일',16);
+
+insert into recruit_day(recruit_day_no,day,recruit_post_no) 
+values(recruit_day_no_seq.nextval,'금요일',17);
+
+insert into recruit_day(recruit_day_no,day,recruit_post_no) 
+values(recruit_day_no_seq.nextval,'화요일',18);
+insert into recruit_day(recruit_day_no,day,recruit_post_no) 
+values(recruit_day_no_seq.nextval,'일요일',18);
+
+insert into recruit_day(recruit_day_no,day,recruit_post_no) 
+values(recruit_day_no_seq.nextval,'월요일',19);
+insert into recruit_day(recruit_day_no,day,recruit_post_no) 
+values(recruit_day_no_seq.nextval,'토요일',19);
+
+insert into recruit_day(recruit_day_no,day,recruit_post_no) 
+values(recruit_day_no_seq.nextval,'화요일',20);
+insert into recruit_day(recruit_day_no,day,recruit_post_no) 
+values(recruit_day_no_seq.nextval,'수요일',20);
+
+insert into recruit_day(recruit_day_no,day,recruit_post_no) 
+values(recruit_day_no_seq.nextval,'금요일',21);
+
+insert into recruit_day(recruit_day_no,day,recruit_post_no) 
+values(recruit_day_no_seq.nextval,'월요일',22);
+insert into recruit_day(recruit_day_no,day,recruit_post_no) 
+values(recruit_day_no_seq.nextval,'수요일',22);
+
+insert into recruit_day(recruit_day_no,day,recruit_post_no) 
+values(recruit_day_no_seq.nextval,'토요일',23);
+
+
+--모집 게시글 댓글
+CREATE TABLE recruit_post_comment
+(
+	recruit_comment_no number primary key ,
+	content clob not null,
+	name varchar2(100) not null,
+	regdate date not null, 
+	recruit_post_no number not null,
+	constraint fk2_recruit_post_no foreign key(recruit_post_no) references recruit_post(recruit_post_no)
+);
+drop table recruit_post_comment
+create sequence recruit_comment_no_seq nocache;
+drop sequence recruit_comment_no_seq
+
+
+insert into recruit_post_comment(recruit_comment_no, content, name, regdate, recruit_post_no)
+values(recruit_comment_no_seq.nextval, '혹시 월수만 참여해도 될까요?','제이썬' ,sysdate,1);
+insert into recruit_post_comment(recruit_comment_no, content, name, regdate, recruit_post_no)
+values(recruit_comment_no_seq.nextval, '스터디 시간이 안 적혀있네요..','모지리' ,sysdate,1);
+insert into recruit_post_comment(recruit_comment_no, content, name, regdate, recruit_post_no)
+values(recruit_comment_no_seq.nextval, '화목 싫은데요? 에벱베베','강호동' ,sysdate,2);
+>>>>>>> stash
 
 --회원이 신청한 스터디 현황
 CREATE TABLE study_condition

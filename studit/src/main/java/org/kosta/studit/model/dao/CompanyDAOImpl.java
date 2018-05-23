@@ -151,6 +151,49 @@ public class CompanyDAOImpl implements CompanyDAO {
 		return template.selectList("company.findCompanyListByAddress", map);
 	}
 
+	   /**
+	    * 업체 등록 시 해시태그를 등록하는 메서드
+	    * 
+	    * @author 변태섭
+	    * @param Map 업체 번호와 해시태그들을 담은 맵
+	    */
+	   @Override
+	   public void registerHashtag(Map<String, Object> map) {
+		   template.insert("company.registerHashtag", map);
+	   }
+	   
+	   /**
+	    * 업체 등록 시 영업 요일을 등록하는 메서드
+	    * 
+	    * @author 변태섭
+	    * @param Map 업체 번호와 영업 요일을 담은 맵
+	    */
+	   @Override
+	   public void registerBusinessDay(Map<String, Object> map) {
+		   template.insert("company.registerBusinessDay", map);
+	   }
+	  
+	   /**
+	    * 업체 등록 시 입력된 데이터를 업체 테이블에 등록하는 메서드
+	    * 
+	    * @author 변태섭
+	    * @param Map 입력된 업체 정보와 해당 회원 이메일을 담은 맵
+	    */
+	   @Override
+	   public void registerCompany(CompanyVO companyVO) {
+		   template.insert("company.registerCompany", companyVO);
+	   }
+	   
+	   /**
+	    * 업체 등록 시 업로드 된 사진들의 경로를 등록하는 메서드
+	    * 
+	    * @author 변태섭
+	    * @param Map 사진의 경로와 해당 업체 번호를 담은 객체
+	    */
+	   @Override
+	   public void registerCompanyPicPath(Map<String, Object> map) {
+		   template.insert("company.registerCompanyPicPath", map);
+	   }
 }
 
 

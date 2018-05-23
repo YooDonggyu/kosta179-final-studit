@@ -52,9 +52,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		@param HashMap 사용자 Email과 직책 사용
 	 -->
 	<insert id="registerMemberPosition" parameterType="string">
-	insert into MEMBER_POSITION(member_position_no, name, member_email)
-	values (member_position_no_seq.nextval,#{memberPosition},#{memberEmail})
+		insert into MEMBER_POSITION(member_position_no, name, member_email)
+		values (member_position_no_seq.nextval,#{memberPosition},#{memberEmail})
 	</insert>
+	
+	<!-- 
+		회원의 직책의 유무를 체크하는 쿼리
+		
+		@author 변태섭
+		@param memberEmail 찾고자 하는 회원의 이메일
+		@param memberPosition 찾고자 하는 회원의 직책
+	 -->
+	<select id="findCountMemberPositionByMemberPositionAndMemberEmail" parameterType="map" resultType="int">
+		select count(*) from member_position
+		where member_email = #{memberEmail}
+		and name = #{memberPosition}
+	</select>
+	
 	<!--
 		@author 유동규
 		@param memberEmail 회원인지 아닌지 판단할 이메일

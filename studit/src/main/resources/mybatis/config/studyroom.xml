@@ -77,6 +77,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		from company c, studyroom s
 		where c.company_no=s.company_no and s.studyroom_no=#{value}
 	</select>
+	
+    <!-- 
+   		업체 등록 시 입력된 스터디룸 데이터를 insert하는 쿼리
+   
+   		@author 변태섭
+   		@param StudyRoomVO 스터디룸 정보가 담긴 객체
+    -->
+   <insert id="registerStudyRoom" parameterType="studyRoomVO">
+   		<selectKey keyProperty="studyRoomNo" resultType="int" order="BEFORE">
+					select
+					studyroom_seq.nextval from dual
+		</selectKey>
+   		insert into studyroom(studyroom_no, name, capacity, price, content, company_no)
+		values(#{studyRoomNo}, #{name}, #{capacity}, #{price}, #{content}, #{companyVO.companyNo})
+   </insert>
+   
+   <!-- 
+		스터디룸 등록 시 업로드 된 사진들의 경로를 테이블에 insert하는 쿼리
+		
+		@author 변태섭
+		@param map 사진들의 경로와 스터디룸 번호를 담은 객체
+    -->
+   <insert id="registerStudyRoomPicPath" parameterType="map">
+   		insert into studyroom_pic(studyroom_pic_no, path, studyroom_no)
+   		values(studyroom_pic_seq.nextval, #{studyRoomPicPath}, #{studyRoomNo})
+   </insert>
 </mapper>
  
  

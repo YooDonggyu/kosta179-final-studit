@@ -5,6 +5,16 @@
 div.sc-table {
     font-size: 60%;
 }
+
+th{
+	text-align: center;
+}
+
+.stateBtn{
+    font-size: 60%;
+    width: 100%;
+}
+
 </style>
 <section>
 <div class="col-sm-1"></div>
@@ -31,7 +41,21 @@ div.sc-table {
 					<td>${list.recruitPostVO.title }</td>
 					<td>${list.memberVO.name }</td>
 					<td>${list.regdate}</td>
-					<td><input type="button" value="${list.state }" class="btn btn-secondary"></td>
+					<!-- warning 주황, default 흰색, primary 핑크?, sucess 초록, danger 빨강, info 하늘 -->
+					<c:choose>
+						<c:when test="${'미승인' eq list.state}">
+							<td><input type="button" value="${list.state }" class="btn btn-default stateBtn"></td>
+						</c:when>
+						<c:when test="${'승인' eq list.state}">
+							<td><input type="button" value="${list.state }" class="btn btn-sucess stateBtn"></td>
+						</c:when>
+						<c:when test="${'거절' eq list.state}">
+							<td><input type="button" value="${list.state }" class="btn btn-danger stateBtn"></td>
+						</c:when>
+						<c:when test="${'진행중' eq list.state}">
+							<td><input type="button" value="${list.state }" class="btn btn-warning stateBtn"></td>
+						</c:when>
+					</c:choose>
 				</tr>
 			</c:forEach>
 		</tbody>

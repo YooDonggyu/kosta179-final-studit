@@ -1,15 +1,18 @@
 package org.kosta.studit.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.kosta.studit.model.dao.CompanyDAO;
+import org.kosta.studit.model.dao.MemberDAO;
 import org.kosta.studit.model.vo.CompanyVO;
 import org.kosta.studit.model.vo.StudyRoomConditionVO;
 import org.kosta.studit.model.vo.StudyRoomVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import net.minidev.json.JSONArray;
 import net.minidev.json.JSONObject;
@@ -18,6 +21,8 @@ import net.minidev.json.JSONObject;
 public class CompanyServiceImpl implements CompanyService {
 	@Autowired
 	private CompanyDAO companyDAO;
+	@Autowired
+	private MemberDAO memberDAO;
 	
 	/**
 	 * 
@@ -193,8 +198,6 @@ public class CompanyServiceImpl implements CompanyService {
 		return obj;
 	}
 
-
-
 	@Override
 	public List<CompanyVO> findCompanyListByAddress(Map<String, String> map) {
 		List<CompanyVO> list=companyDAO.findCompanyListByAddress(map);
@@ -202,4 +205,54 @@ public class CompanyServiceImpl implements CompanyService {
 		return list;
 	}
 
+	/**
+	 * 업체 및 업체 연관 테이블을 등록하는 메서드
+	 * 
+	 * @author 변태섭
+	 * @param CompanyVO 업체 관련 정보가 담긴 객체
+	 * @param String day 영업요일
+	 * @param String hashtag 해시태그
+	 * @param List 업체 사진들의 경로가 담긴 객체
+	 */
+	@Transactional
+	@Override
+	public void registerCompany(CompanyVO companyVO, String day, String hashtag, List<String> companyPicFileList) {
+		String[] days = day.split(" ");
+		String[] hashtags = hashtag.split(",");
+		Map<String, Object> map = new HashMap<String, Object>();
+		System.out.println("days: "+days+", hashtags: "+hashtags+",before map: "+map);
+		
+		companyDAO.registerCompany(companyVO);
+		System.out.println("registerCompany Complete");
+		
+		map.put("companyNo", companyVO.getCompanyNo());
+		System.out.println("after map: "+map);
+		
+		for(int i=0; i<days.length; i++) {
+			map.put("day", days[i]);
+			System.out.println("days map: "+map);
+			companyDAO.registerBusinessDay(map);
+		}
+		System.out.println("registerBusinessDay  Complete");
+		
+		for(int i=0; i<hashtags.length; i++) {
+			map.put("tag", hashtags[i]);
+			System.out.println("hashtags map: "+map);
+			companyDAO.registerHashtag(map);
+		}
+		System.out.println("registerHashtag  Complete");
+		
+		for(int i=0; i<companyPicFileList.size(); i++) {
+			map.put("companyPicPath", companyPicFileList.get(i));
+			companyDAO.registerCompanyPicPath(map);
+		}
+		System.out.println("companyPicFile Upload Complete");
+		
+		Map<String, String> memberPositionMap = new HashMap<String, String>();
+		memberPositionMap.put("memberEmail", companyVO.getMemberVO().getMemberEmail());
+		memberPositionMap.put("memberPosition", "업체");
+		if(memberDAO.findCountMemberPositionByMemberPositionAndMemberEmail(memberPositionMap)==0) {
+			memberDAO.registerMemberPosition(memberPositionMap);
+		}
+	}
 }

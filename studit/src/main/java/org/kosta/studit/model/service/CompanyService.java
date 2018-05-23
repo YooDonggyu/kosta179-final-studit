@@ -25,5 +25,7 @@ public interface CompanyService {
 	JSONObject findBusinessDayByMemberEmail(String memberEmail);
 	
 	List<CompanyVO> findCompanyListByAddress(Map<String, String> map);
+	
+	void registerCompany(CompanyVO companyVO, String day, String hashtag, List<String> companyPicFileList);
 
 }

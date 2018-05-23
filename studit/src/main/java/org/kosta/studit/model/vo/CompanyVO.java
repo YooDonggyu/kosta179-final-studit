@@ -238,5 +238,4 @@ public class CompanyVO {
 				+ ", close=" + close + ", holiday=" + holiday + ", intro=" + intro + ", profilePath=" + profilePath
 				+ ", state=" + state + ", hit=" + hit + ", memberVO=" + memberVO + "]";
 	}
-
 }

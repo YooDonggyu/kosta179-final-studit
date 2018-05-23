@@ -23,6 +23,6 @@ public interface MemberDAO {
 
 	void deleteMember(String memberEmail);
 
-
+	int findCountMemberPositionByMemberPositionAndMemberEmail(Map<String, String> map);
 
 }

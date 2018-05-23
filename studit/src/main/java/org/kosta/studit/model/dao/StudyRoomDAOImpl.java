@@ -26,6 +26,7 @@ public class StudyRoomDAOImpl implements StudyRoomDAO {
 	      String list=template.selectOne("studyroom.findWaitStudyRoomByEmail", memberEmail);
 	      return list;
 	   }
+	   
 	   /**
 	    * paging처리를 위한 전체 스터디 룸 신청현황 수를 반환
 	    * @author 유동규
@@ -49,5 +50,27 @@ public class StudyRoomDAOImpl implements StudyRoomDAO {
 	   @Override
 	   public StudyRoomVO findStudyRoomInfoByStudyRoomNo(String studyRoomNo) {
 		   return template.selectOne("studyroom.findStudyRoomInfoByStudyRoomNo", studyRoomNo);
+	   }
+	   
+	   /**
+	    * 업체 등록 시 입력된 스터디룸 정보를 등록하는 메서드
+	    * 
+	    * @author 변태섭
+	    * @param studyRoomVO
+	    */
+	   @Override
+	   public void registerStudyRoom(StudyRoomVO studyRoomVO) {
+		   template.insert("studyroom.registerStudyRoom", studyRoomVO);
+	   }
+	   
+	   /**
+	    * 스터디룸 등록 시 업로드 된 사진들의 경로를 등록하는 메서드
+	    * 
+	    * @author 변태섭
+	    * @param Map 사진의 경로와 해당 스터디룸 번호를 담은 객체
+	    */
+	   @Override
+	   public void registerStudyRoomPicPath(Map<String, Object> map) {
+		   template.insert("studyroom.registerStudyRoomPicPath", map);
 	   }
 }
