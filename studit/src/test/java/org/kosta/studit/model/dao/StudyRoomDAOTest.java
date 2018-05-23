@@ -24,7 +24,7 @@ public class StudyRoomDAOTest {
 	    * @author 송용준
 	    */
 	   //@Test
-	   public void findWaitStudyRoomByEmail() {
+	   public void findWaitStudyRoomByEmailTest() {
 	      System.out.println(studyroomDAO.findWaitStudyRoomByEmail("a@a.com"));
 	   }
 	   
@@ -33,7 +33,7 @@ public class StudyRoomDAOTest {
 	    * @author 유동규
 	    */
 	   //@Test
-	   public void findStudyConditionByEmail() {
+	   public void findStudyConditionByEmailTest() {
 		   //1. 전체 현황 수로 pagingBean 생성
 		   //2. pb와 email을 map으로 담아 전송
 		   

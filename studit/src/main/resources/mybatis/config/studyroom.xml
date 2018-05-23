@@ -43,7 +43,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 						, row_number() over(order by studyroom_condition_no desc) as rnum 
 				from studyroom_condition
 				where member_email= #{memberEmail}
-		) sc, studyroom s, company c, member m
+				) sc, studyroom s, company c, member m
 		where
 		 	s.studyroom_no=sc.studyroom_no 
 			and c.company_no = s.company_no
@@ -114,6 +114,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into studyroom_function(function_no, name, studyroom_no)
 		values(studyroom_function_seq.nextval, #{studyRoomFunction}, #{studyRoomNo})
    </insert>
+
+
+	<!-- 
+		스터디룸 신청
+		@author 유동규
+		@param StudyRoomConditionVO 등록할 정보가 담긴 객체
+	 -->
+	<insert id="registerStudyRoomCondition">
+		insert into studyroom_condition(
+			studyroom_condition_no, use_date, start_time
+			, end_time, state, regdate, member_email, studyroom_no
+			)
+		values(
+			studyroom_condition_seq.nextval, to_date(#{useDate}, 'YYYY-MM-DD')
+			,#{startTime}, #{endTime}, '예약대기', sysdate, #{memberVO.memberEmail}, #{studyRoomVO.studyRoomNo}
+		)
+	</insert>
+
+
 </mapper>
  
  

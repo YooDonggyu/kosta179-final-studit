@@ -5,15 +5,15 @@ public class PagingBean {
 	 /**
 	  * 페이지당 게시물수
 	  */
-	 private int postCountPerPage = 5;
+	 public int postCountPerPage = 5;
 	 /**
 	  * 페이지 그룹당 페이지수
 	  */
-	 private int pageCountPerPageGroup = 4;
+	 public int pageCountPerPageGroup = 4;
 	 /**
 	  * database에 저장된 총게시물수
 	  */
-	 private int totalPostCount;
+	 public int totalPostCount;
 
 	public PagingBean() {
 	 }
@@ -94,7 +94,7 @@ public class PagingBean {
 	  * 페이지그룹 1234(1그룹) 5(2그룹)<br>
 	  * 
 	  */
-	 private int getTotalPageGroup() {
+	 public int getTotalPageGroup() {
 	  int num = this.getTotalPage() % this.pageCountPerPageGroup;
 	  int totalPageGroup = 0;
 	  if (num == 0) {
@@ -115,7 +115,7 @@ public class PagingBean {
 	  * 
 	  * @return
 	  */
-	 private int getNowPageGroup() {
+	 public int getNowPageGroup() {
 	  int num = this.nowPage % this.pageCountPerPageGroup;
 	  int nowPageGroup = 0;
 	  if (num == 0) {

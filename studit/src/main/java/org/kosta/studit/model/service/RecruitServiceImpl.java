@@ -77,63 +77,6 @@ public class RecruitServiceImpl implements RecruitService {
 			recruitDAO.updateRecruitStudy(map);
 	}
 	
-	 /**
-	   * 
-       * 전체 모집글 목록을 불러오기 위한 메서드
-       *  전체 모집글 목록을 페이징 처리하여 받아온 후 pagingBean과 함께 담아 넘겨준다.
-       * @author 김유란
-       * @param pagingBean
-       * @return List<RecruitPostVO> 전체 모집글 목록
-	   */
-	@Override
-	public RecruitPostListVO getRecruitPostList(String pageNo){
-		int totalCount = recruitDAO.getTotalRecruitPostCount();
-		PagingBean pagingBean = null;
-		if(pageNo==null) {
-			pagingBean = new PagingBean(totalCount);
-		}else {
-			pagingBean = new PagingBean(totalCount, Integer.parseInt(pageNo));
-		}
-		return new RecruitPostListVO(pagingBean, recruitDAO.getRecruitPostList(pagingBean));
-	}
-	
-	 /**
-	   * 
-       * 모집글 검색 결과 목록을 불러오기 위한 메서드
-       * Controller에게 선택된  카테고리와 키워드, 페이지넘버를 전달받아 map객체에 담은 후
-       * 소분류와 키워드로 검색된 모집글 pagingBean과 함께 넘겨준다.
-       * 검색 키워드는 글 제목, 내용, 지역 컬럼을 검색한다.
-       * @param category[] 체크박스로 선택한 소분류값을 담은 배열 
-       * @param keyword 사용자가 입력한 검색어
-       * @param pageNo 검색결과 목록 페이지 번호
-       * @author 김유란
-       * @return List<RecruitPostVO> 검색된 모집글 목록
-	   */
-	@Override
-	public RecruitPostListVO findRecruitPostByCategoryAndKeyword(String category[], String keyword, String pageNo){
-		
-		Map<String, Object> map = new HashMap<>();
-		if(category!=null) {
-			List<String> list = new ArrayList<>();
-			for(int i=0; i<category.length; i++) {
-				System.out.println(category[i]);
-				list.add(category[i]);
-			}
-			map.put("category", list);
-		}
-		map.put("keyword", keyword);
-		
-		int totalCount = recruitDAO.findRecruitPostCountByCategoryAndKeyword(map);
-		PagingBean pagingBean = null;
-		if(pageNo==null) {
-			pagingBean = new PagingBean(totalCount);
-		}else {
-			pagingBean = new PagingBean(totalCount, Integer.parseInt(pageNo));
-		}
-		
-		map.put("pagingBean", pagingBean);
-		return new RecruitPostListVO(pagingBean, recruitDAO.findRecruitPostByCategoryAndKeyword(map));
-	}
 	
 	/**
 	 * 조회할 번호에 따른 게시글 정보을 검색.
@@ -153,11 +96,9 @@ public class RecruitServiceImpl implements RecruitService {
 		Map<String, Object> map = new HashMap<>();
 		//게시글 내용과 카테고리 내용 가져오기
 		map.put("detail", recruitDAO.findDetailRecruitPostAndCategoryByRecruitNo(recruitNo));
-
 		//요일 가져오기
 		List<String> dayList = recruitDAO.findDayByRecruitNo(recruitNo);
 		map.put("day", dayList);
-		
 		//스터디 모집 신청할 수 있는지 여부 
 		//memberEmail이 null이면 수정
 		//memberEmail이 null이 아니면 상세보기 
@@ -195,10 +136,8 @@ public class RecruitServiceImpl implements RecruitService {
 		smallCategoryMap.put("smallCategoryNo", recruitPostVO.getSmallCategoryVO().getSmallCategoryNo());
 		smallCategoryMap.put("recruitNo", recruitPostVO.getRecruitPostNo());
 		recruitDAO.updateSmallCategoryNoByRecruitNo(smallCategoryMap);
-		
 		//2, 상세정보 업데이트
 		recruitDAO.updateRecruitPostByRecruitNo(recruitPostVO);
-		
 		//3. 요일 업데이트
 		//   3-1 모집 게시글 관련 요일 삭제
 		recruitDAO.deleteDayByRecruitNo(recruitPostVO.getRecruitPostNo());
@@ -222,7 +161,6 @@ public class RecruitServiceImpl implements RecruitService {
 	public void createRecruitPost(RecruitPostVO recruitPostVO, String[] recruitDay) {
 		// 작성한 글을 데이터베이스에 등록
 		recruitDAO.createRecruitPost(recruitPostVO);
-
 		// 등록된 글의 모집 요일들을 데이터베이스에 등록
 		HashMap<String, Object> RecruitPostDay = new HashMap<>();
 		for (int i = 0; i < recruitDay.length; i++) {
@@ -230,13 +168,11 @@ public class RecruitServiceImpl implements RecruitService {
 			RecruitPostDay.put("recruitDay", recruitDay[i]);
 			recruitDAO.registerRecruitDay(RecruitPostDay);
 		}
-
 		// 등록된 글의 스터디 그룹을 생성
 		HashMap<String, Object> createStudyGroupInfo = new HashMap<>();
 		createStudyGroupInfo.put("memberName", recruitPostVO.getMemberVO().getName());
 		createStudyGroupInfo.put("recruitPostNo", recruitPostVO.getRecruitPostNo());
 		groupDAO.createStudyGroup(createStudyGroupInfo);
-
 		// 등록된 글의 작성자를 해당 스터디 그룹맴버로 등록 : 팀장
 		HashMap<String, Object> registerStudyGroupMemberInfo = new HashMap<>();
 		int studyGroupNo = groupDAO.findStudyGroupNoByRecruitPostNo(recruitPostVO.getRecruitPostNo());
@@ -266,5 +202,41 @@ public class RecruitServiceImpl implements RecruitService {
 	@Override
 	public List<SmallCategoryVO> findSmallCategoryListByBigCategoryNo(String bigCategoryNo) {
 		return recruitDAO.findSmallCategoryListByBigCategoryNo(bigCategoryNo);
+	}
+	
+	/**
+	 * 검색조건을 통한 페이징 처리
+	 * 1. 소분류를 리스트로 담고
+	 * 2. 대분류, 소분류(리스트), 키워드를 Map으로 담기
+	 * 3. 검색 조건의 게시글 수 구하기
+	 * 4. 검색 조건의 게시글 수에 따른 pagingBean 구하기
+	 * 5. pagingBean과 검색 조건의 게시글 수를 이용해 검색 내용 가져오기
+	 * 6. 검색 내용과 pagingBean을 담은 RecruitPostListVO를 반환 
+	 * @author 김유란, 유동규 
+	 * @parm map 검색 조건이 담긴 map
+	 * @pram nowPage 현재 페이지
+	 * @return RecruitPostListVO 페이징 처리가 된 모집 게시글 목록 객체
+	 */
+	@Override
+	public RecruitPostListVO findRecruitPostByCategoryOrKeyword(String bigCategoryNo, String smallCategoryNo, String keyword, int nowPage) {
+		List<Integer> smallCategoryList = new ArrayList<>();
+		if(smallCategoryNo != "" && smallCategoryNo != null) {
+			String[] sCategory = smallCategoryNo.split(",");
+			for(int i=0; i<sCategory.length; i++) {
+				smallCategoryList.add(Integer.parseInt(sCategory[i]));
+			}
+		}
+		Map<String, Object> map = new HashMap<>();
+		map.put("bigCategoryNo", bigCategoryNo);
+		map.put("smallCategoryNo", smallCategoryList);
+		map.put("keyword", keyword);
+		
+		int cnt = recruitDAO.findRecruitPostCountByCategoryOrKeyword(map);
+		PagingBean pb = new PagingBean(cnt, nowPage);
+		Map<String, Object> dataMap =new HashMap<>();
+		dataMap.put("pb", pb);
+		dataMap.put("dataMap", map);
+		List<RecruitPostVO> rList = recruitDAO.findRecruitPostByPagingBeanAndData(dataMap);
+		return  new RecruitPostListVO(pb, rList);
 	}
 }

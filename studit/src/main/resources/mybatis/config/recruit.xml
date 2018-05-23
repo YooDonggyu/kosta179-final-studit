@@ -8,7 +8,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!--*** resultMap ***-->
 	<!-- 
 	    findStudyConditionByMemberEmail 쿼리에서 사용하는 resultMap
-	    
 		@author 변태섭
 	 -->
 	<resultMap type="studyConditionVO" id="scRM">
@@ -61,7 +60,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     	<result column="name" property="memberVO.name" />
     </resultMap>
     
-	
+    
+    <!-- 
+    	모집 게시글 관련 resultMap
+    	@author 유동규
+     -->
+    <resultMap type="recruitPostVO" id="recruitPagingMap">
+		<result column="member_email" property="memberVO.memberEmail"/>
+ 		<result column="memberName" property="memberVO.name"/>
+ 		<result column="recruit_post_no" property="recruitPostNo"/>
+ 		<result column="smallName" property="smallCategoryVO.name"/>
+ 		<result column="bigName" property="smallCategoryVO.bigCategoryVO.name"/>
+    </resultMap>
+    
 	<!--*** /resultMap ***-->
 	
 	
@@ -83,7 +94,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    
 	<!-- 
 		스터디 현황 조회 시 필요한 데이터를 뽑는다.
-		
 		@author 변태섭
 		@param String 로그인한 회원의 Email
 		@return StudyConditionVO resultMap을 이용하여 스터디 현황 조회 시 필요한 데이터 뽑기
@@ -103,7 +113,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 
 		스터디 현황 데이터의 개수를 불어오는 쿼리
-		
 		@author 변태섭
 		@param String 로그인한 회원의 Email
 		@return int 스터디 현황 데이터의 개수
@@ -113,6 +122,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		from study_condition
 		where member_email = #{memberEmail}
 	</select>
+	
 	<!-- 
 		스터디 신청을하는 SQL문
 		@param Hashmap<Stirng,Object>
@@ -135,6 +145,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		from recruit_post r, study_group s 
 		where r.recruit_post_no = s.recruit_post_no and r.recruit_post_no=#{value})
 	</select>
+	
 	<!-- 
 		이메일과 게시글번호로 스터디신청 현황을 불러오는 쿼리문.
 		@param map
@@ -145,6 +156,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          from study_condition
          where member_email = #{memberEmail} and recruit_post_no=#{recruitNo}
    </select>
+   
    	<!-- 
 		다시 신청했을 때 상태를 거절에서 미승인으로 바꿔주는 SQL문
 		@param int recruitPostNo
@@ -155,8 +167,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    		where recruit_post_no=#{recruitPostNo} and member_email=#{memberEmail}
    </update>
    
-  
-	
 	<!-- 
 		대분류 목록을 가져온다.
 		@author 김유란
@@ -176,78 +186,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		from small_category s, big_category b
 		where s.big_category_no=b.big_category_no and s.big_category_no=#{value}
 	</select>
-	
-
-		<!-- 
-		전체 모집글 수를 가져온다. 
-		@author 김유란
-		@return int
-	 -->
- 	<select id="getTotalRecruitPostCount" resultType="int">
- 	select count(*) from recruit_post where condition='모집중'
- 	</select> 
- 	
- 		<!-- 
-		전체 모집글을 페이징 처리하여 가져온다.
-		@author 김유란
-		@return List<RecruitPostVO> 
-	 -->
-	<select id="getRecruitPostList" parameterType="pagingBean" resultMap="recruitPostMap">
- 	select r.recruit_post_no, r.title, r.regdate, r.location, r.hit, m.name from (
-	select recruit_post_no, title, to_char(regdate, 'YYYY.MM.DD') regdate, 
-				hit, member_email, location, row_number() over(order by recruit_post_no desc) as rnum 
-				from recruit_post where condition='모집중') r, member m
-	where r.member_email=m.member_email and rnum between #{startRowNumber} AND #{endRowNumber} 
-	ORDER BY r.recruit_post_no DESC
- 	</select> 
-	
- 	<!-- 
-		소분류와 키워드로 검색한 모집글 수를 가져온다.
-		@author 김유란
-		@return int 
-	 -->	
-	<select id="findRecruitPostCountByCategoryAndKeyword" resultType="int">
-	    select count(*) from recruit_post r, member m
-		<where>
-			r.member_email=m.member_email 
-			and r.condition='모집중'
-			<if test="category!=null">
-			and r.small_category_no in
-		 	<foreach collection="category" item="item" index="index"  open="(" separator="," close=")">
-			#{item}
-			</foreach> 
-			</if> 
-			<if test="keyword!=null and keyword!=''">
-			 and r.title || r.content || r.location like '%' || #{keyword}||'%' 
-			</if>
-		</where>	
- 	</select>	
- 	
- 	<!-- 
-		카테고리와 키워드로 검색한 게시물을 페이징 처리하여 가져온다.
-		@author 김유란
-		@return List<RecruitPostVO> 
-	 -->
-	 <select id="findRecruitPostByCategoryAndKeyword" resultMap="recruitPostMap">
-		select r.recruit_post_no, r.title, r.regdate, r.member_email, r.location, r.hit, m.name
-		from (select recruit_post_no, title, to_char(regdate, 'YYYY.MM.DD') regdate, member_email, hit, location, row_number() over(order by recruit_post_no desc) as rnum from recruit_post
-		<where>
-		condition='모집중'
-		<if test="category!=null">
-		and small_category_no in
-	 	<foreach collection="category" item="item" index="index"  open="(" separator="," close=")">
-		#{item}
-		</foreach> 
-		</if> 
-		<if test="keyword!=null and keyword!=''">
-		 and title || content || location like '%' || #{keyword}||'%' 
-		</if>
-		</where>
-		) r, member m
-		where
-		r.member_email=m.member_email 
-		and r.rnum between #{pagingBean.startRowNumber} AND  #{pagingBean.endRowNumber} ORDER BY r.recruit_post_no DESC
-	</select> 
 	
 	<!-- 
 		모집 게시글 번호를 이용하여 모집 게시글 정보와 카테고리를 검색 
@@ -377,6 +315,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		values(#{recruitPostNo},#{title},#{content},sysdate,'모집중',#{capacity},#{memberVO.memberEmail},#{smallCategoryVO.smallCategoryNo},#{location})
 	</insert>
 	
+	
 	<!-- 
 		모집중인 게시글 삭제할 때 상태를 변경.(모집중 -> 삭제)
 		@author 유동규
@@ -415,6 +354,86 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 	set content = #{content}, regdate = sysdate
 	 	where recruit_comment_no = #{commentNo}
 	 </update>
+	
+	
+	<!-- 
+		페이징빈을 이용한 모집 게시글 검색
+		@author 유동규, 김유란
+	 -->
+	<select id="findRecruitPostByPagingBeanAndData" resultMap="recruitPagingMap">
+		select a.*, m.name as memberName, s.name as smallName, b.name as bigName
+		from (
+				select recruit_post_no, title, to_char(regdate, 'YYYY-MM-DD') as regdate, hit, location
+							, member_email, small_category_no
+							, row_number() over(order by recruit_post_no desc) as rnum
+				from recruit_post
+				<where>
+				 condition = '모집중' 
+					<choose>
+						<when test="dataMap.smallCategoryNo != null and dataMap.smallCategoryNo.size != 0">
+							<!-- 소분류 검색 -->
+								and small_category_no in 
+								<foreach collection="dataMap.smallCategoryNo"  item="item" index="index" separator="," open="(" close=")">
+									#{item}
+								</foreach>
+						</when>
+						<otherwise>
+						<!-- 대분류 검색 -->
+						<if test="dataMap.bigCategoryNo != null and dataMap.bigCategoryNo != ''">
+							and small_category_no in (
+								select small_category_no 
+								from small_category
+								where big_category_no = #{dataMap.bigCategoryNo}
+							)
+							</if>
+						</otherwise>
+					</choose>
+					<if test="dataMap.keyword != null and dataMap.keyword !=''">
+						and location || title  like '%' || #{dataMap.keyword} || '%'
+					</if>
+				</where>
+				) a, member m, small_category s, big_category b
+				where
+					 m.member_email =a.member_email
+					and s.small_category_no = a.small_category_no
+					and s.big_category_no = b.big_category_no
+					and  rnum between #{pb.startRowNumber} and #{pb.endRowNumber}
+				order by a.recruit_post_no desc
+					
+	</select>
+	
+	
+	<!-- 
+		키워드나 카테고리(소, 대)에 따른 전체 글 조회
+		@author  김유란, 유동규
+	 -->
+	<select id="findRecruitPostCountByCategoryOrKeyword" resultType="int">
+		select count(*) from recruit_post
+		<where>
+			condition = '모집중'
+			<choose>
+				<when test="smallCategoryNo != null and smallCategoryNo.size != 0">
+					<!-- 소분류 검색 -->
+						and small_category_no in 
+					<foreach collection="smallCategoryNo"  item="item" index="index" separator="," open="(" close=")">
+							#{item}
+					</foreach>
+				</when>
+				<otherwise>
+				<!-- 대분류 검색 -->
+				<if test="bigCategoryNo != null and bigCategoryNo != ''">
+					and small_category_no in (
+						select small_category_no from small_category
+						where big_category_no = #{bigCategoryNo}
+					)
+				</if>
+				</otherwise>
+			</choose>
+			<if test="keyword != null and keyword != ''">
+				and location || title like '%' || #{keyword} || '%'
+			</if>
+		</where>
+	</select>
 	
 	
 </mapper>

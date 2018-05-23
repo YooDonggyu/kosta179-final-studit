@@ -15,10 +15,6 @@ public interface RecruitService {
 	void updateRecruitStudy(int recruitPostNo, String memberEmail, String context);
 
 
-	RecruitPostListVO findRecruitPostByCategoryAndKeyword(String[] category, String keyword, String pageNo);
-
-	RecruitPostListVO getRecruitPostList(String pageNo);
-
 	Map<String, Object> findRecruitPostDetailByRecruitNo(String memberEmail, int recruitNo);
 
 	void updateRecruitPostInfoByRecruitNo(RecruitPostVO recruitPostVO, List<String> days);
@@ -31,4 +27,8 @@ public interface RecruitService {
 	public List<BigCategoryVO> getBigCategoryList();
 
 	public List<SmallCategoryVO> findSmallCategoryListByBigCategoryNo(String bigCategoryNo);
+
+
+	public RecruitPostListVO findRecruitPostByCategoryOrKeyword(String bigCategoryNo, String smallCategoryNo,
+			String keyword, int nowPage);
 }

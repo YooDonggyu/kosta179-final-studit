@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.kosta.studit.model.PagingBean;
 import org.kosta.studit.model.vo.BigCategoryVO;
 import org.kosta.studit.model.vo.GroupMemberVO;
 import org.kosta.studit.model.vo.RecruitPostCommentVO;
@@ -54,7 +53,6 @@ public class RecruitDAOImpl implements RecruitDAO {
 	public int findCountStudyConditionByMemberEmail(String memberEmail) {
 		return template.selectOne("recruit.findCountStudyConditionByMemberEmail", memberEmail);
 	}
-
 	
 	/**
 	 * 스터디 신청 메소드
@@ -69,7 +67,6 @@ public class RecruitDAOImpl implements RecruitDAO {
 	/**
 	 * 게시판번호로 스터디그룹멤버를 찾는 메소드
 	 * 스터디그룹에 멤버를 찾아서 스터디신청시 예외사항판단에 사용한다.
-	 * 
 	 * @author 이승수
 	 */
 	@Override
@@ -77,12 +74,14 @@ public class RecruitDAOImpl implements RecruitDAO {
 		GroupMemberVO gmVO = template.selectOne("recruit.findGroupMemberByRecruitPostNo", recruitPostNo);
 		return gmVO;
 	}
-	
+	/**
+	 * 사용자와 모집 게시글 번호에 따른 모집 게시글 수 구하기
+	 * @author 이승수
+	 */
 	@Override
     public int findStudyConditionCountByEmailAndRecruitNo(HashMap<String, Object> map) {
        return template.selectOne("recruit.findStudyConditionCountByEmailAndRecruitNo", map);
     }
-	
 	
 	/**
 	 *  스터디 신청시 사용하는 메서드.
@@ -118,57 +117,6 @@ public class RecruitDAOImpl implements RecruitDAO {
 		return template.selectList("recruit.findSmallCategoryListByBigCategoryNo", bigCategoryNo);
 	}
 	
-	 /**
-	   * 
-	   * 모집글 검색 결과 수 가져오기
-	   * 카테고리와 키워드로 검색한 모집글 수를 계산하여 가져오는 메서드.
-	   * 검색결과 목록을 페이징 처리하기 위해 필요
-	   * @author 김유란
-	   * @param map 사용자가 입력한 검색조건(keyword, category list)을 담은 map
-	   * @return int 검색된 모집글 개수
-	    */
-	@Override
-	public int findRecruitPostCountByCategoryAndKeyword(Map<String, Object> map) {
-		return template.selectOne("recruit.findRecruitPostCountByCategoryAndKeyword", map);
-	}
-	
-	  /**
-	   * 
-       * 검색 목록 가져오기
-       * 소분류와 검색 키워드로 모집글을 검색하여 페이징 처리 후 반환하는 메서드
-       * 검색 키워드는 글 제목, 내용, 지역 컬럼을 검색한다.
-       * @param Map<String, Object> category와 keyword(list), PagingBean을 담은 map
-       * @author 김유란
-       * @return List<RecruitPostVO> 검색된 모집글 목록
-	    */
-	@Override
-	public List<RecruitPostVO> findRecruitPostByCategoryAndKeyword(Map<String, Object> map){
-		return template.selectList("recruit.findRecruitPostByCategoryAndKeyword", map);
-	}
-	
-	 /**
-	   * 
-       * 전체 모집글 수 가져오기
-       * 전체 모집글 목록을 페이징 처리하기 위해 필요
-       * @author 김유란
-       * @return int 전체 모집글 개수
-	   */
-	@Override
-	public int getTotalRecruitPostCount() {
-		return template.selectOne("recruit.getTotalRecruitPostCount");
-	}
-	
-	 /**
-	  * 	
-	  * 전체 모집글을 페이징 처리하여 가져오기
-	  * @author 김유란
-	  * @param pagingBean
-	  * @return List<RecruitPostVO> 전체 모집글 목록
-  	  */
-	@Override
-	public List<RecruitPostVO> getRecruitPostList(PagingBean pagingBean){
-		return template.selectList("recruit.getRecruitPostList", pagingBean);
-	}
 	
 	   /**
 	    * 모집 게시글 번호에 따른 모집 게시글 내용과 카테고리(소, 대)를 검색 
@@ -318,6 +266,25 @@ public class RecruitDAOImpl implements RecruitDAO {
 	public void registerRecruitDay(Map<String, Object> map) {
 		template.insert("recruit.registerRecruitDay", map);
 	}
+	
+	/**
+	 * 카테고리 혹은 키워드로 총 게시글 수 구하기
+	 * @author 김유란, 유동규 
+	 */
+	@Override
+	public int findRecruitPostCountByCategoryOrKeyword(Map<String, Object> map) {
+		return template.selectOne("recruit.findRecruitPostCountByCategoryOrKeyword", map);
+	}
+	
+	/**
+	 * pagingBean과 검색조건을 통한 페이징 검색
+	 * @author 김유란, 유동규
+	 */
+	@Override
+	public List<RecruitPostVO> findRecruitPostByPagingBeanAndData(Map<String, Object> dataMap) {
+		return template.selectList("recruit.findRecruitPostByPagingBeanAndData", dataMap);
+	}
+	
 }
 
 

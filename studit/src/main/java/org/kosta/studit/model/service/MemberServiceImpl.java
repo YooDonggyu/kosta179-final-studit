@@ -35,34 +35,23 @@ public class MemberServiceImpl implements MemberService {
 	 * 회원의 로그인 로직을 처리하는 메서드.
 	 * 
 	 * @author 유동규
-	 * @param MemberVO
-	 *            로그인할 아이디와 비밀번호가 담겨있는 객체
-	 * @exception EmailNotFoundException
-	 *                이메일이 없는 예외처리
-	 * @exception PasswordIncorrectException
-	 *                비밀번호가 틀린 예외처리
-	 * @exception IsNotMemberException
-	 *                탈퇴된 회원 예외처리
+	 * @param MemberVO 로그인할 아이디와 비밀번호가 담겨있는 객체
+	 * @exception EmailNotFoundException 이메일이 없는 예외처리
+	 * @exception PasswordIncorrectException 비밀번호가 틀린 예외처리
+	 * @exception IsNotMemberException 탈퇴된 회원 예외처리
 	 * @return MemberVO 로그인할 멤버 객체 반환
 	 */
 	@Override
-	public MemberVO login(MemberVO memberVO)
-			throws EmailNotFoundException, PasswordIncorrectException, IsNotMemberException {
+	public MemberVO login(MemberVO memberVO) throws EmailNotFoundException, PasswordIncorrectException, IsNotMemberException {
 		// 1. 해당 Email 찾기
 		MemberVO rMemberVO = memberDAO.findMemberByEmail(memberVO.getMemberEmail());
-		// 2. Email 있으면 비밀번호 확인
+		// 2. Email 있으면 탈퇴된 이메일인지 확인
 		if (rMemberVO == null) {
 			throw new EmailNotFoundException("해당 아이디가 없습니다.");
-		}
-		/*
-		 * else if(!memberDAO.isMember(rMemberVO.getMemberEmail())){ //3. 탈퇴된 이메일인지 확인
-		 * throw new IsNotMemberException("탈퇴된 아이디입니다."); }
-		 */
-		else if (!memberDAO.isMember(rMemberVO.getMemberEmail())) {
-			// 3. 탈퇴된 이메일인지 확인
+		}else if (!memberDAO.isMember(rMemberVO.getMemberEmail())) {
 			throw new IsNotMemberException("탈퇴된 아이디입니다.");
 		} else {
-			// 4.비밀번호 확인
+			// 3.비밀번호 확인
 			if (rMemberVO.getPassword().equals(memberVO.getPassword())) {
 				return rMemberVO;
 			} else {
@@ -74,10 +63,8 @@ public class MemberServiceImpl implements MemberService {
 	/**
 	 * 
 	 * 회원정보 수정 회원정보를 수정한 후 새로운 회원정보를 반환함
-	 * 
 	 * @author 김유란, 이승수
-	 * @param MemberVO
-	 *            수정된 회원정보를 담은 VO
+	 * @param MemberVO 수정된 회원정보를 담은 VO
 	 * @return MemberVO DB에 반영된 새로운 회원 정보를 반환(세션 회원정보 업데이트 위해)
 	 */
 	@Override
@@ -88,10 +75,8 @@ public class MemberServiceImpl implements MemberService {
 
 	/**
 	 * 회원가입 시 입력된 데이터를 DB에 insert하는 메서드 동시에 직책테이블에 '회원'상태로 insert한다.
-	 * 
 	 * @author 변태섭
-	 * @param Map
-	 *            회원 Email, 직책을 담아 전달
+	 * @param Map 회원 Email, 직책을 담아 전달
 	 */
 	@Override
 	@Transactional
@@ -106,10 +91,8 @@ public class MemberServiceImpl implements MemberService {
 	/**
 	 * 회원탈퇴를 위한 메서드. 탈퇴의 조건 : 1.신청중인 스터디가 있는가 2.팀장이면서 팀원을 가진 스터디가 있는가 3.신청중인 스터디룸이
 	 * 있는가 4.업체일 경우, 승인대기중인 예약이 있는가
-	 * 
 	 * @author 송용준, 김유란
-	 * @param memberEmail
-	 *            탈퇴하고하는 회원의 이메일
+	 * @param memberEmail 탈퇴하고하는 회원의 이메일
 	 * @return map 탈퇴 조건을 담은 HashMap 객체
 	 */
 	@Override

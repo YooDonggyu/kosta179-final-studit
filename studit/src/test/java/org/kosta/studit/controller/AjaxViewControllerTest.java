@@ -1,6 +1,7 @@
 package org.kosta.studit.controller;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -51,12 +52,27 @@ public class AjaxViewControllerTest {
 	       .andExpect(status().isOk());
 	    }
 	   
-	   @Test
+	  // @Test
 	   public void getSmallCategoryByBigCategory() throws Exception {
 		   mock.perform(get("/getSmallCategoryByBigCategoryAjax")
 		             .param("bigCategoryNo", "3"))
 		          .andDo(print())
 		          .andExpect(content().contentType("application/json;charset=UTF-8")) 
 		          .andExpect(status().isOk());
+	   }
+	   
+	   //@Test
+	   public void findRecruitPostByCategoryAndKeywordTest() {
+		   try {
+			mock.perform(post("/ajax/findRecruitPostByCategoryAndKeyword")
+			             .param("bigCategoryNo", "1")
+			             .param("smallCategoryNo", "1,2")
+			             )
+			          .andDo(print())
+			          //.andExpect(content().contentType("application/json;charset=UTF-8")) 
+			          .andExpect(status().isOk());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	   }
 }

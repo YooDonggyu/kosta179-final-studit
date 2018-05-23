@@ -34,7 +34,7 @@
 	                <a href="" class="dropdown-toggle" data-toggle="dropdown">${sessionScope.memberVO.name }님<b class="caret"></b></a>
 	                <ul class="dropdown-menu multi-level">
 	                  <li class="dropdown-header">관리</li>
-	                  <li><a href="${pageContext.request.contextPath}/studyroom/findStudyConditionByEmail">스터디통합관리</a></li>
+	                  <li><a href="${pageContext.request.contextPath}/member/getMyPage?nowPage">스터디통합관리</a></li>
 	                  <li class="divider"></li>
 	                  <li class="dropdown-header">회원정보</li>
 	                  <li><a data-toggle="modal"  href="#checkMemberModal">회원정보 수정</a></li>

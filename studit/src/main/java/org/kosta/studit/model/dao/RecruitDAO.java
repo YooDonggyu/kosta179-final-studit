@@ -28,13 +28,7 @@ public interface RecruitDAO {
 
 	int findCountStudyConditionByMemberEmail(String memberEmail);
 
-	List<RecruitPostVO> getRecruitPostList(PagingBean pagingBean);
 
-	int getTotalRecruitPostCount();
-
-	List<RecruitPostVO> findRecruitPostByCategoryAndKeyword(Map<String, Object> map);
-
-	int findRecruitPostCountByCategoryAndKeyword(Map<String, Object> map);
 
 	List<SmallCategoryVO> findSmallCategoryListByBigCategoryNo(String bigCategoryNo);
 
@@ -68,5 +62,13 @@ public interface RecruitDAO {
 	public void deleteCommentByCommentNo(int commentNo);
 
 	public void updateCommentByCommentNo(Map<String, Object> map);
+
+
+
+	int findRecruitPostCountByCategoryOrKeyword(Map<String, Object> map);
+
+
+
+	List<RecruitPostVO> findRecruitPostByPagingBeanAndData(Map<String, Object> dataMap);
 
 }

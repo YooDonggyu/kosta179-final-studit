@@ -12,6 +12,7 @@ import org.kosta.studit.model.dao.RecruitDAO;
 import org.kosta.studit.model.service.RecruitService;
 import org.kosta.studit.model.vo.BigCategoryVO;
 import org.kosta.studit.model.vo.MemberVO;
+import org.kosta.studit.model.vo.RecruitPostListVO;
 import org.kosta.studit.model.vo.RecruitPostVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,23 +28,13 @@ public class RecruitController {
 	@Autowired
 	private RecruitDAO recruitDAO;
 
-	@RequestMapping("/getRecruitList")
-	public String getRecruitList() {
-		return "recruit/list_recruit.tiles";
-	}
-
 	/**
 	 * 스터디를 신청시 사용하는 메서드
-	 * 
 	 * @author 이승수
-	 * @param recruitPostNo
-	 *            현재 보고있는 등록게시글 번호
-	 * @param memberEmail
-	 *            현재 로그인되어있는 회원 이메일
-	 * @param context
-	 *            신청시 작성하는 자기소개
-	 * @param request
-	 *            세션을 불러오기위해 사용
+	 * @param recruitPostNo 현재 보고있는 등록게시글 번호
+	 * @param memberEmail 현재 로그인되어있는 회원 이메일
+	 * @param context 신청시 작성하는 자기소개
+	 * @param request 세션을 불러오기위해 사용
 	 */
 	@RequestMapping("/registerRcruitStudy")
 	public String registerRecruitStudy(int recruitPostNo, String memberEmail, String context) {
@@ -52,7 +43,6 @@ public class RecruitController {
 		map.put("memberEmail", memberEmail);
 		int state = recruitDAO.findStudyConditionCountByEmailAndRecruitNo(map);
 		if (state == 1) {
-
 			if (recruitDAO.findStudyConditionStateByEmailAndRecruitNo(map).equals("미승인")) {
 				return "recruit/register_recruit_fail";
 			}
@@ -65,59 +55,30 @@ public class RecruitController {
 
 	/**
 	 * 전체 모집글을 불러오는 메서드
-	 * 
-	 * @author 이승수
-	 * @param pageNo
-	 *            요청된 페이지 번호
-	 * @param model
-	 *            모집글 리스트 객체를 담아 전송하기 위해 호출
+	 * @author 이승수, 유동규
+	 * @param pageNo 요청된 페이지 번호
+	 * @param model 모집글 리스트 객체를 담아 전송하기 위해 호출
 	 * @return recruit/list_recruit.tiles 스터디 모집 메인 페이지
 	 */
 	@RequestMapping("/getRecruitPostList")
 	public String getRecruitPostList(Model model, String pageNo) {
+		RecruitPostListVO rplVO = recruitService.findRecruitPostByCategoryOrKeyword("", "", "", 1);
+		model.addAttribute("recruitPostListVO", rplVO);
 		model.addAttribute("bigCategoryList", recruitDAO.getBigCategoryList());
-		model.addAttribute("recruitPostListVO", recruitService.getRecruitPostList(pageNo));
 		return "recruit/list_recruit.tiles";
-	}
-
-	/**
-	 * 검색된 모집글을 불러오는 메서드
-	 * 
-	 * @author 김유란
-	 * @param category
-	 *            선택된 소분류 배열
-	 * @param keyword
-	 *            사용자가 입력한 검색어
-	 * @param pageNo
-	 *            요청된 페이지 번호
-	 * @param model
-	 *            모집글 리스트 객체를 담아 전송하기 위해 호출
-	 * @return recruit/findRecruitPostByCategoryAndKeyword 스터디 모집글 검색결과 페이지
-	 */
-	@RequestMapping("/findRecruitPostByCategoryAndKeyword")
-	public String findRecruitPostCountByCategoryAndKeyword(String[] category, String keyword, String pageNo,
-			Model model) {
-		model.addAttribute("bigCategoryList", recruitDAO.getBigCategoryList());
-		model.addAttribute("recruitPostListVO",
-				recruitService.findRecruitPostByCategoryAndKeyword(category, keyword, pageNo));
-		return "recruit/findRecruitPostByCategoryAndKeyword.tiles";
 	}
 
 	/**
 	 * 모집 게시글 번호에 따른 상세보기 및 조회수 증가 및 정보, 카테고리(소, 대), 댓글, 요일을 반환 
 	 * 조회수는 자기자신 것과 session이 유효한 상태에서 들어갔던 게시글은 올리지 않는다.
 	 * @author 유동규
-	 * @param recruitNo
-	 *            조회할 모집 게시글 번호
-	 * @param model
-	 *            view에 데이터 보여주기 위한 model
-	 * @param request
-	 *            request객체를 이용해서 session 값 가져오기
+	 * @param recruitNo 조회할 모집 게시글 번호
+	 * @param model view에 데이터 보여주기 위한 model
+	 * @param request request객체를 이용해서 session 값 가져오기
 	 * @return detail_recruit.tiles tiles가 적용된 상세보기화면으로 이동
 	 */
 	@RequestMapping("/findDetailRecruitPostInfoByRecruitNo")
 	public String findDetailRecruitPostInfoByRecruitNo(int recruitNo, Model model, HttpServletRequest request) {
-
 		// 1.세션 이메일과 게시글 작성자를 비교해서 작성자이면 조회수 증가 방지
 		// 2.hitList에 포함된 게시글은 조회수 증가 방지
 		String sessionEmail = ((MemberVO) request.getSession().getAttribute("memberVO")).getMemberEmail();
@@ -130,21 +91,16 @@ public class RecruitController {
 		// 값 가져오기
 		Map<String, Object> map = recruitService.findRecruitPostDetailByRecruitNo(sessionEmail, recruitNo);
 		model.addAttribute("recruitInfo", map);
-
 		return "recruit/detail_recruit.tiles";
 	}
 
 	/**
 	 * 모집 게시글 상세보기에서 수정하기 눌렀을 때 데이터를 가지고 이동하기 위한 메서드. 카테고리 상태를 유지하기 위해서 해당 대분류번호를 같이
 	 * 넘겨 소분류 목록을 조회후 반환
-	 * 
 	 * @author 유동규
-	 * @param recruitNo
-	 *            수정할 모집 게시글 번호
-	 * @param model
-	 *            데이터를 넘겨주기 위한 Model 사용
-	 * @param bigCategoryNo
-	 *            소분류 목록을 조회하기 위해 선택한 대분류 목록을 사용
+	 * @param recruitNo 수정할 모집 게시글 번호
+	 * @param model 데이터를 넘겨주기 위한 Model 사용
+	 * @param bigCategoryNo 소분류 목록을 조회하기 위해 선택한 대분류 목록을 사용
 	 * @return update_recruit.tiles tiles가 적용된 update 페이지로 이동
 	 */
 	@RequestMapping("/updateRecruitPostInfoByRecruitNoView")
@@ -152,20 +108,15 @@ public class RecruitController {
 		Map<String, Object> map = recruitService.findRecruitPostDetailByRecruitNo(null, recruitNo);
 		model.addAttribute("recruitInfo", map);
 		model.addAttribute("bigCategoryList", recruitDAO.getBigCategoryList());
-		model.addAttribute("smallCategoryList",
-				recruitDAO.findSmallCategoryListByBigCategoryNo(Integer.toString(bigCategoryNo)));
-
+		model.addAttribute("smallCategoryList", recruitDAO.findSmallCategoryListByBigCategoryNo(Integer.toString(bigCategoryNo)));
 		return "recruit/update_recruit.tiles";
 	}
 
 	/**
 	 * 카테고리, 모집게시글 정보와 요일을 수정.
-	 * 
 	 * @author 유동규
-	 * @param recruitPostVO
-	 *            수정할 정보가 담긴 객체
-	 * @param day
-	 *            수정할 요일(배열)
+	 * @param recruitPostVO 수정할 정보가 담긴 객체
+	 * @param day 수정할 요일(배열)
 	 * @return detail_recruit 수정된 내용을 확인해주기 위해 상세화면으로 이동
 	 */
 	@RequestMapping(method = RequestMethod.POST, value = "/updateRecruitPostInfoByRecruitNo")
@@ -182,10 +133,9 @@ public class RecruitController {
 
 	/**
 	 * 모집 게시글 번호의 상태를 '삭제'로 변경.
-	 * 
-	 * @param recruitNo
-	 *            상태 변경할 모집게시글 번호
-	 * @return /getRecruitPostList 전체 목록 조회 화면으로 보내준다.
+	 * @author 유동규
+	 * @param recruitNo 상태 변경할 모집게시글 번호
+	 * @return getRecruitPostList 전체 목록 조회 화면으로 보내준다.
 	 */
 	@RequestMapping(value = "deleteRecruitPostByRecruitNo", method = RequestMethod.POST)
 	public String deleteRecruitPostByRecruitNo(int recruitNo) {
@@ -196,7 +146,6 @@ public class RecruitController {
 	/**
 	 * 
 	 * 모집 게시판에 글을 작성하고자 할 때 제공되는 작성 페이지
-	 * 
 	 * @author 송용준
 	 * @return 글작성을 위한 폼을 제공하는 페이지
 	 */
@@ -210,12 +159,9 @@ public class RecruitController {
 	/**
 	 * 
 	 * 사용자가 작성한 글을 DB에 저장하는 메서드
-	 * 
 	 * @author 송용준
-	 * @param recruitPostVO
-	 *            : 사용자가 작성한 글의 정보를 저장한 객체
-	 * @param recruitDay
-	 *            : 사용자가 작성한 글의 모집요일을 저장한 배열 객체
+	 * @param recruitPostVO 사용자가 작성한 글의 정보를 저장한 객체
+	 * @param recruitDay 사용자가 작성한 글의 모집요일을 저장한 배열 객체
 	 * @return 작성완료된 글의 상세보기 페이지로 이동
 	 */
 	@RequestMapping("/createRecruitPost")
@@ -224,7 +170,6 @@ public class RecruitController {
 		HttpSession session=request.getSession();
 		recruitPostVO.setMemberVO((MemberVO)session.getAttribute("memberVO"));
 		recruitService.createRecruitPost(recruitPostVO, recruitDay);
-
 		// 모집글 상세보기로 이동
 		return "redirect:/recruit/findDetailRecruitPostInfoByRecruitNo?recruitNo="+recruitPostVO.getRecruitPostNo();
 	}

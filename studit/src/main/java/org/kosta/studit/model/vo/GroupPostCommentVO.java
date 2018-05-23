@@ -5,19 +5,19 @@ public class GroupPostCommentVO {
 	private String content;
 	private String regdate;
 	private GroupPostVO groupPostVO; //FK
-	private MemberVO memberVO;//FK
+	private GroupMemberVO groupMemberVO;//FK
 	public GroupPostCommentVO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	public GroupPostCommentVO(int groupCommentNo, String content, String regdate, GroupPostVO groupPostVO,
-			MemberVO memberVO) {
+			GroupMemberVO groupMemberVO) {
 		super();
 		this.groupCommentNo = groupCommentNo;
 		this.content = content;
 		this.regdate = regdate;
 		this.groupPostVO = groupPostVO;
-		this.memberVO = memberVO;
+		this.groupMemberVO = groupMemberVO;
 	}
 	public int getGroupCommentNo() {
 		return groupCommentNo;
@@ -43,18 +43,17 @@ public class GroupPostCommentVO {
 	public void setGroupPostVO(GroupPostVO groupPostVO) {
 		this.groupPostVO = groupPostVO;
 	}
-	public MemberVO getMemberVO() {
-		return memberVO;
+	public GroupMemberVO getGroupMemberVO() {
+		return groupMemberVO;
 	}
-	public void setMemberVO(MemberVO memberVO) {
-		this.memberVO = memberVO;
+	public void setGroupMemberVO(GroupMemberVO groupMemberVO) {
+		this.groupMemberVO = groupMemberVO;
 	}
 	@Override
 	public String toString() {
 		return "GroupPostCommentVO [groupCommentNo=" + groupCommentNo + ", content=" + content + ", regdate=" + regdate
-				+ ", groupPostVO=" + groupPostVO + ", memberVO=" + memberVO + "]";
+				+ ", groupPostVO=" + groupPostVO + ", groupMemberVO=" + groupMemberVO + "]";
 	}
-	
 	
 	
 }

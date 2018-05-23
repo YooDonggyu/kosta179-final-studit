@@ -241,7 +241,7 @@ public class MemberController {
 		HttpSession session=request.getSession(false);
 		MemberVO mvo=(MemberVO) session.getAttribute("memberVO");
 		int nowPage =0;
-		if(request.getParameter("nowPage") != null) {
+		if(request.getParameter("nowPage") != null && request.getParameter("nowPage") != "") {
 			nowPage = Integer.parseInt(request.getParameter("nowPage"));
 		}
 		//스터디 현황조회

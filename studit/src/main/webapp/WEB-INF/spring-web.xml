@@ -73,7 +73,7 @@
 		<mvc:exclude-mapping path="/member/login"/>
 		<mvc:exclude-mapping path="/member/registerMember"/>
 		<mvc:exclude-mapping path="/recruit/getRecruitPostList" />
-		<mvc:exclude-mapping path="/recruit/findRecruitPostByCategoryAndKeyword" />
+		<mvc:exclude-mapping path="/ajax/findRecruitPostByCategoryAndKeyword" />
 		<bean class="org.kosta.studit.controller.SessionCheckInterceptor"/>
 	</mvc:interceptor>
 </mvc:interceptors>

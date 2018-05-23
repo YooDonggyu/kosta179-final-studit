@@ -84,4 +84,10 @@ public class StudyRoomDAOImpl implements StudyRoomDAO {
 	   public void registerStudyRoomFunction(Map<String, Object> map) {
 		   template.insert("studyroom.registerStudyRoomFunction", map);
 	   }
+	
+	@Override
+	public void registerStudyRoomCondition(StudyRoomConditionVO studyRoomConditionVO) {
+		template.insert("studyroom.registerStudyRoomCondition", studyRoomConditionVO);
+		
+	}
 }

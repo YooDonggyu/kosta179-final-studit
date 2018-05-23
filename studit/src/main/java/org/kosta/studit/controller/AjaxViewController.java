@@ -19,6 +19,7 @@ import org.kosta.studit.model.service.RecruitService;
 import org.kosta.studit.model.service.StudyRoomService;
 import org.kosta.studit.model.vo.CompanyVO;
 import org.kosta.studit.model.vo.MemberVO;
+import org.kosta.studit.model.vo.RecruitPostListVO;
 import org.kosta.studit.model.vo.SmallCategoryVO;
 import org.kosta.studit.model.vo.StudyConditionListVO;
 import org.kosta.studit.model.vo.StudyRoomConditionListVO;
@@ -52,10 +53,8 @@ public class AjaxViewController {
 
 	/**
 	 * 아아디 중복확인을 위한 메서드. 사용자가 입력한 Email을 실시간으로 중복확인 한다.
-	 * 
 	 * @author 송용준,변태섭
-	 * @param 사용자가
-	 *            입력한 Email
+	 * @param 사용자가 입력한 Email
 	 * @return 중복인 경우 false, 중복이 아닌 경우 true
 	 */
 	@RequestMapping("/findCheckByEmail")
@@ -71,14 +70,10 @@ public class AjaxViewController {
 	/**
 	 * 
 	 * 비밀번호 검증 메서드 사용자가 입력한 현재 비밀번호를 DB에 저장된 정보와 비교하여 검증하여 결과값을 반환
-	 * 
 	 * @author 김유란
-	 * @param HttpServletRequest
-	 *            파라미터를 받아오기 위해 호출
-	 * @exception EmailNotFoundException
-	 *                아이디가 없을 때 발생하는 예외
-	 * @exception PasswordIncorrectException
-	 *                비밀번호가 틀릴 때 발생하는 예외
+	 * @param HttpServletRequest 파라미터를 받아오기 위해 호출
+	 * @exception EmailNotFoundException 아이디가 없을 때 발생하는 예외
+	 * @exception PasswordIncorrectException  비밀번호가 틀릴 때 발생하는 예외
 	 * @return boolean 파라미터로 받아온 비밀번호 입력값의 DB 일치 여부에 따라 true/false 반환
 	 */
 	@RequestMapping(method = RequestMethod.POST, value = "/checkPassword")
@@ -97,10 +92,8 @@ public class AjaxViewController {
 	/**
 	 * 
 	 * 소분류 목록을 불러오는 메서드 사용자가 선택한 대분류 번호를 전달받아 소분류 목록을 즉시 로드하기 위해
-	 * 
 	 * @author 김유란
-	 * @param bigCategoryNo
-	 *            사용자가 선택한 대분류 번호
+	 * @param bigCategoryNo  사용자가 선택한 대분류 번호
 	 * @return List<SmallCategoryVO> 소분류 번호와 이름 정보를 담은 VO 리스트
 	 */
 	@RequestMapping(method = RequestMethod.POST, value = "/getSmallCategoryList")
@@ -115,10 +108,6 @@ public class AjaxViewController {
 	 * @param recruitNo 댓글을 가지고 있는 모집 게시글 번호
 	 * @param comment 입력할 댓글
 	 * @return true 정상 작동하면 true
-	 * 
-	 * @param recruitNo
-	 * @param comment
-	 * @return
 	 */
 	@RequestMapping(value = "/registerComment", method = RequestMethod.POST)
 	@ResponseBody
@@ -139,7 +128,6 @@ public class AjaxViewController {
 	 * @param nowPage 현재 페이지
 	 * @return StudyRoomConditionListVO 페이징한 결과(list)와 페이징 객체가 담겨있는 객체
 	 */
-
 	@RequestMapping("/findStudyRoomConditionByNowPage")
 	@ResponseBody
 	public StudyRoomConditionListVO findStudyRoomConditionByNowPage(int nowPage, HttpServletRequest request){
@@ -189,7 +177,7 @@ public class AjaxViewController {
 	/**
 	 * 스터디 현황 조회를 위한 페이징.
 	 * 해당 사용자에 따른 전체 수를 구한 뒤 페이징처리를 한다.
-	 * @author 유동규, 변태섭
+	 * @author 변태섭, 유동규
 	 * @param nowPage 현재 페이지
 	 * @return StudyConditionListVO 페이징한 결과(list)와 페이징 객체가 담겨있는 객체
 	 */
@@ -201,6 +189,7 @@ public class AjaxViewController {
 	
 	/**
 	 * 댓글 삭제하기
+	 * @author 유동규
 	 * @param commentNo 삭제할 댓글 번호
 	 */
 	@RequestMapping(value="/deleteCommentByCommentNo", method=RequestMethod.POST)
@@ -211,6 +200,7 @@ public class AjaxViewController {
 	
 	/**
 	 * 댓글 수정하기
+	 * @author 유동규
 	 * @param commentNo 수정할 댓글번호
 	 * @param content 수정할 내용
 	 */
@@ -232,6 +222,24 @@ public class AjaxViewController {
 		map.put("thirdAddr", addr3);
 		List<CompanyVO> comList=companyService.findCompanyListByAddress(map);
 		return comList;
+	}
+	/**
+	 * 소분류, 대분류, 키워드에 따른 페이징 AJAX
+	 * nowPage를 받아 소분류, 대분류, 키워드를 같이 넘겨 페이징 결과 받기
+	 * @author 유동규
+	 * @param bigCategoryNo 대분류
+	 * @param smallCategoryNo 소분류
+	 * @param keyword 검색조건(제목, 지역)
+	 * @return RecruitPostListVO pagingBean과 List<RecruitPostVO>가 담긴 객체 반환
+	 */
+	@RequestMapping("/findRecruitPostByCategoryAndKeyword")
+	@ResponseBody
+	public RecruitPostListVO findRecruitPostByCategoryAndKeyword(String bigCategoryNo, String smallCategoryNo, String keyword, HttpServletRequest request) {
+		int nowPage = 1;
+		if(request.getParameter("nowPage") != null && request.getParameter("nowPage") != "") {
+			nowPage = Integer.parseInt(request.getParameter("nowPage"));
+		}
+		return recruitService.findRecruitPostByCategoryOrKeyword(bigCategoryNo, smallCategoryNo, keyword, nowPage);
 	}
 	
 	@RequestMapping("/findCompanyListByAddressAndKeywordAndHashTagAjax")

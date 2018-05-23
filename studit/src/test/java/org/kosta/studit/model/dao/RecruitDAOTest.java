@@ -125,29 +125,6 @@ public class RecruitDAOTest {
 		}
 	}
 
-	/**
-	 * 전체 모집글 수 불러오기 TEST.
-	 * 
-	 * @author 김유란
-	 */
-	// @Test
-	public void getTotalRecruitPostCount() {
-		System.out.println(recruitDAO.getTotalRecruitPostCount());
-	}
-
-	/**
-	 * 전체 모집글 목록 불러오기 TEST.
-	 * 
-	 * @author 김유란
-	 */
-	// @Test
-	public void getRecruitPostList() {
-		PagingBean pagingBean = new PagingBean(23);
-		List<RecruitPostVO> list = recruitDAO.getRecruitPostList(pagingBean);
-		for (int i = 0; i < list.size(); i++) {
-			System.out.println(list.get(i));
-		}
-	}
 
 	/**
 	 * 모집글 검색 결과 수 불러오기 TEST.
@@ -163,30 +140,9 @@ public class RecruitDAOTest {
 		Map<String, Object> map = new HashMap<>();
 		map.put("keyword", "강남");
 		map.put("category", null);
-		System.out.println(recruitDAO.findRecruitPostCountByCategoryAndKeyword(map));
+		//System.out.println(recruitDAO.findRecruitPostCountByCategoryAndKeyword(map));
 	}
 
-	/**
-	 * 모집글 검색 결과 목록 불러오기 TEST.
-	 * 
-	 * @author 김유란
-	 */
-	// @Test
-	public void findRecruitPostByCategoryAndKeyword() {
-		List<String> categorylist = new ArrayList<>();
-		categorylist.add("1");
-		categorylist.add("2");
-		categorylist.add("3");
-		Map<String, Object> map = new HashMap<>();
-		map.put("keyword", "강남");
-		map.put("category", null);
-		map.put("pagingBean", new PagingBean(30, 1));
-		// pagingBean
-		List<RecruitPostVO> postList = recruitDAO.findRecruitPostByCategoryAndKeyword(map);
-		for (int i = 0; i < postList.size(); i++) {
-			System.out.println(postList.get(i));
-		}
-	}
 
 	/**
 	 * 모집 게시글 번호를 이용하여 게시글 내용과 카테고리 내용 검색 TEST
@@ -364,4 +320,52 @@ public class RecruitDAOTest {
 			 */
 		}
 	}
+	
+	//@Test
+	public void findRecruitPostByKeywordAndCategory() {
+		List<Integer> list = new ArrayList<>();
+		//list.add(1);
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("smallCategoryNo", list);
+		//System.out.println(recruitDAO.findRecruitPostByKeywordAndCategory(map));
+	}
+	
+	//@Test
+	public void findRecruitPostCountByCategoryOrKeyword() {
+		Map<String, Object> map = new HashMap<>();
+		List<Integer> list = new ArrayList<>();
+		list.add(1);
+		map.put("bigCategoryNo", 1);
+		map.put("smallCategoryNo", list);
+		map.put("keyword", "지역수정");
+		System.out.println(recruitDAO.findRecruitPostCountByCategoryOrKeyword(map));
+	}
+	
+	//@Test
+	public void findRecruitPostByPagingBean() {
+		Map<String, Object> map = new HashMap<>();
+		List<Integer> list = new ArrayList<>();
+/*		list.add(1);
+		list.add(2);
+		list.add(3);*/
+		//map.put("bigCategoryNo", 1);
+		map.put("smallCategoryNo", list);
+		String keyword = "";
+		map.put("keyword", keyword);
+		
+		int totalCnt = recruitDAO.findRecruitPostCountByCategoryOrKeyword(map);
+		System.out.println("totalCnt=="+totalCnt);
+		PagingBean pb = new PagingBean(totalCnt, 1);
+		Map<String, Object> dataMap = new HashMap<>();
+		dataMap.put("pb", pb);
+		dataMap.put("dataMap", map);
+		List<RecruitPostVO> rrList =recruitDAO.findRecruitPostByPagingBeanAndData(dataMap);
+		for(int i =0; i<rrList.size(); i++) {
+			System.out.println(rrList.get(i));
+		}
+	}
+	
+	
+	
 }

@@ -2,18 +2,23 @@ package org.kosta.studit.controller;
 
 import org.kosta.studit.model.dao.StudyRoomDAO;
 import org.kosta.studit.model.service.CompanyService;
+import org.kosta.studit.model.service.StudyRoomService;
+import org.kosta.studit.model.vo.StudyRoomConditionVO;
 import org.kosta.studit.model.vo.StudyRoomVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 @RequestMapping("/studyroom")
 public class StudyRoomController {
-	
+	@Autowired
+	private StudyRoomService studyRoomService;
 	@Autowired
 	private StudyRoomDAO studyRoomDAO;
+	
 	@Autowired
 	private CompanyService companyService;
 	
@@ -33,4 +38,15 @@ public class StudyRoomController {
 		return "studyroom/create_studyRoom_reservation.tiles";
 	}
 	
+	/**
+	 * 스터디 룸 신청
+	 * @author 유동규, 이승수
+	 * @param studyRoomConditionVO
+	 * @return
+	 */
+	@RequestMapping(value="registerStudyRoomCondition", method=RequestMethod.POST)
+	public String registerStudyRoom(StudyRoomConditionVO studyRoomConditionVO) {
+		studyRoomDAO.registerStudyRoomCondition(studyRoomConditionVO);
+		return "redirect:/studyroom/register_studyroom_ok";
+	}
 }

@@ -48,20 +48,6 @@
         </div>
       </section>
     
-     <%--  <section id="features" class="section">
-        <div class="container">
-          <div class="row text-center-mobile"> 
-            <div class="col-md-6">
-              <div class="icon"><i class="pe-7s-diamond"></i></div>
-              <h2>First great feature</h2>
-              <p>Effects present letters inquiry no an removed or friends. Desire behind latter me though in. Supposing shameless am he engrossed up additions. My possible peculiar together to. Desire so better am cannot he up before points. Remember mistaken opinions it pleasure of debating. Court front maids forty if aware their at. Chicken use are pressed removed.  </p>
-            </div>
-            <div class="col-md-6">
-              <p><img alt="" src="${pageContext.request.contextPath }/resources/assets/img/features1.png" class="img-responsive"></p>
-            </div>
-          </div>
-        </div>
-      </section> --%>
 
 <section id="features" class="section">
 	<div class="container">
