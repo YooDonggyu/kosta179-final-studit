@@ -15,6 +15,10 @@
 	width: 100%;
 }
 
+.srfunction{
+	text-align: left;
+}
+
 .noresize {
   resize: none; /* 사용자 임의 변경 불가 */
 }
@@ -415,6 +419,48 @@
                   </div>
                   <div class="col-sm-1">
                   원/시간
+              </div>
+          </div>
+          
+           <div class="form-group">
+              <label for="" class="col-sm-3 control-label">제공 기능</label>
+              <div class="col-sm-8 srfunction">
+              	<table style="width: 100%;">
+              		<tbody>
+              			<tr>
+              				<td>
+              					<input type="checkbox" id="function1" name="studyRoomFunction" value="에어컨">
+		              			<label for="function1" class=" control-label">에어컨</label>
+              				</td>
+              				<td>
+              					<input type="checkbox" id="function2" name="studyRoomFunction" value="주소지 등록">
+		              			<label for="function2" class=" control-label">주소지 등록</label>
+              				</td>
+              				<td>
+              					<input type="checkbox" id="function3" name="studyRoomFunction" value="카페 및 레스토랑">
+		              			<label for="function3" class="control-label">카페 및 레스토랑</label>
+              				</td>
+              				<td>
+              					<input type="checkbox" id="function4" name="studyRoomFunction" value="케이터링">
+		              			<label for="function4" class="control-label">케이터링</label>
+              				</td>
+              			</tr>
+              			<tr>
+              				<td>
+              					<input type="checkbox" id="function5" name="studyRoomFunction" value="복사/인쇄기">
+		              			<label for="function5" class="control-label">복사/인쇄기</label>
+		              		</td>
+              				<td>
+              					<input type="checkbox" id="function6" name="studyRoomFunction" value="팩스">
+		              			<label for="function6" class="control-label">팩스</label>
+              				</td>
+              				<td>
+              					<input type="checkbox" id="function7" name="studyRoomFunction" value="반려동물 동반가능">
+		              			<label for="function7" class="control-label">반려동물 동반가능</label>
+              				</td>
+              			</tr>
+              		</tbody>
+              	</table>
               </div>
           </div>
           

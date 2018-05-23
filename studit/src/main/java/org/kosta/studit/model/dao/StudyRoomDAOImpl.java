@@ -73,4 +73,15 @@ public class StudyRoomDAOImpl implements StudyRoomDAO {
 	   public void registerStudyRoomPicPath(Map<String, Object> map) {
 		   template.insert("studyroom.registerStudyRoomPicPath", map);
 	   }
+	   
+	   /**
+	    * 스터디룸 등록 시 이용 기능들을 등록하는 메서드
+	    * 
+	    * @author 변태섭
+	    * @param Map 스터디룸 번호와 기능명을 담은 객체
+ 	    */
+	   @Override
+	   public void registerStudyRoomFunction(Map<String, Object> map) {
+		   template.insert("studyroom.registerStudyRoomFunction", map);
+	   }
 }

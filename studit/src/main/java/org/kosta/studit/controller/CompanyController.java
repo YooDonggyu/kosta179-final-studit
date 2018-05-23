@@ -118,9 +118,10 @@ public class CompanyController {
 	 * @param hashtag String으로 받은 해시태그
 	 * @param companyPicFile 업체 사진 경로
 	 * @param studyRoomPicFile 스터디룸 사진 경로
+	 * @param studyRoomFunction[] 스터디룸 제공 기능 배열
 	 */
 	@RequestMapping(value="/registerCompany", method=RequestMethod.POST)
-	public String registerCompany(HttpServletRequest request, StudyRoomVO studyRoomVO, String day, String hashtag, MultipartFile[] companyPicFile, MultipartFile[] studyRoomPicFile) {
+	public String registerCompany(HttpServletRequest request, StudyRoomVO studyRoomVO, String day, String hashtag, MultipartFile[] companyPicFile, MultipartFile[] studyRoomPicFile, String[] studyRoomFunction) {
 		HttpSession session= request.getSession(false);
 		MemberVO memberVO=(MemberVO) session.getAttribute("memberVO");
 		studyRoomVO.getCompanyVO().setMemberVO(memberVO);
@@ -177,7 +178,7 @@ public class CompanyController {
 		
 		CompanyVO companyVO = studyRoomVO.getCompanyVO();
 		companyService.registerCompany(companyVO, day, hashtag, companyPicFileList);
-		studyroomService.registerStudyRoom(studyRoomVO, studyRoomPicFileList);
+		studyroomService.registerStudyRoom(studyRoomVO, studyRoomPicFileList, studyRoomFunction);
 		return "redirect:/company/registerCompanyOkView";
 	}
 	

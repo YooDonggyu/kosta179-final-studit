@@ -20,4 +20,6 @@ public interface StudyRoomDAO {
 
 	void registerStudyRoomPicPath(Map<String, Object> map);
 
+	void registerStudyRoomFunction(Map<String, Object> map);
+
 }

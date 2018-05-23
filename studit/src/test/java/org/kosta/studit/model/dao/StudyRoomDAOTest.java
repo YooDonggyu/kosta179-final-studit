@@ -3,6 +3,7 @@ package org.kosta.studit.model.dao;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kosta.studit.model.PagingBean;
 import org.kosta.studit.model.vo.CompanyVO;
@@ -78,5 +79,18 @@ public class StudyRoomDAOTest {
 		   map.put("studyRoomPicPath", "C:/직박구리/");
 		   map.put("studyRoomNo", 1);
 		   studyroomDAO.registerStudyRoomPicPath(map);
+	   }
+	   
+	   /**
+	    * 스터디룸 기능을 등록하는 테스트
+	    * 
+	    * @author 변태섭
+	    */
+	   @Test
+	   public void registerStudyRoomFunction() {
+		   Map<String, Object> map = new HashMap<String, Object>();
+		   map.put("studyRoomFunction", "프린트");
+		   map.put("studyRoomNo", 2);
+		   studyroomDAO.registerStudyRoomFunction(map);
 	   }
 }

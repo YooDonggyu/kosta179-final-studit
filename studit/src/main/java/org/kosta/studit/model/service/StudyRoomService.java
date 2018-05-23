@@ -9,6 +9,6 @@ public interface StudyRoomService {
 
 	StudyRoomConditionListVO findStudyRoomConditionListVOByEmail(String memberEmail, int nowPage);
 
-void registerStudyRoom(StudyRoomVO studyRoomVO, List<String> studyRoomPicFileList);
+void registerStudyRoom(StudyRoomVO studyRoomVO, List<String> studyRoomPicFileList, String[] studyRoomFunction);
 
 }
