@@ -96,7 +96,7 @@ public class CompanyController {
 	 */
 	@RequestMapping("/companyView")
 	public String companyView() {
-		return "company/companyView.tiles";
+		return "company/company_view.tiles";
 	}
 	
 	/**

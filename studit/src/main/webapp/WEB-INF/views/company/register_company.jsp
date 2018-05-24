@@ -72,6 +72,14 @@
 	// 작성: 변태섭
 	// 기능: 업체 등록 체크
 	// 로직: 사업자등록번호 체크, 연락처 체크, 영업정보 체크, Submit 시 모든 조건 체크
+	
+	var addrFlag = false;
+	var telFlag = false;
+	var licenseFlag = false;
+	var companyNameFlag = false;
+	var urlFlag = false;
+	var introFlag = false;
+	
 	$(document).ready(function(){
 		$("#license").keyup(function(){
 			$("#licenseCheck").html($(this).val());
@@ -102,7 +110,6 @@
 		
 		// 선택 요일 데이터 받기
 		var $daysBtn = $('#days .btn');
-		var $days = "";
 		$daysBtn.on('click',function(){
 			var $this = $(this);
 			var $span = $this.parents().children('span');
@@ -111,7 +118,6 @@
 			$("#day").val($span.attr('class'));
 			console.log($("#day").val());
 		});//on
-		
 		
 		// 해시태그 입력
 		$("#hashtag").on('keyup',function(){
@@ -168,8 +174,10 @@
 			$(this).val($(this).val().trim());
 			if(isNaN($(this).val())||$(this).val()==""){
 				$("#checkTelView").html("연락처가 잘못되었습니다.").css("color","red");
+				telFlag = false;
 			}else{
 				$("#checkTelView").html("OK").css("color","blue");
+				telFlag = true;
 			}
 		});// keyup
 		
@@ -179,8 +187,10 @@
 			$this.val($this.val().trim());
 			if(isNaN($this.val())||$this.val()==""){
 				$("#checkLicenseView").html("잘못된 입력입니다.").css("color","red");
+				licenseFlag = false;
 			}else if($this.val().length<10){
 				$("#checkLicenseView").html("사업자 등록번호 10자리를 입력해주세요.").css("color","red");
+				licenseFlag = false;
 			}else{
 				var licenseArray= ($this.val()+'').match(/\d{1}/g);
 				
@@ -193,8 +203,8 @@
 				// 각 8번배열의 값을 곱한 후 10으로 나누고 내림하여 기존 합에 더합니다.
 				// 다시 10의 나머지를 구한후 그 값을 10에서 빼면 이것이 검증번호 이며 기존 검증번호와 비교하면됩니다.
 				if(10 - ((sum + Math.floor(key[8] * Number(licenseArray[8]) / 10)) % 10) == Number(licenseArray[9])){
-					$("#checkLicenseView").html("OK").css("color","blue");
-					/* $.ajax({
+					//$("#checkLicenseView").html("OK").css("color","blue");
+					$.ajax({
 						type:"get",
 						dateType:"json",
 						url:"${pageContext.request.contextPath}/ajax/findCheckByLicense",
@@ -203,13 +213,16 @@
 						console.log("data: "+data);
 							if(data==true){
 								$("#checkLicenseView").html("OK").css("color","blue");
+								licenseFlag = true;
 							}else{
 								$("#checkLicenseView").html("이미 등록된 사업자 입니다.").css("color","red");
+								licenseFlag = false;
 							}
 						}//callback
-					});//ajax */
+					});//ajax
 				}else{
 					$("#checkLicenseView").html("잘못된 사업자 등록 번호 입니다.").css("color","red");
+					licenseFlag = false;
 				}
 			}
 		});// key up
@@ -226,21 +239,105 @@
 			console.log("addDetail: "+$("#addrDetail").val());
 			addr = $("#sample6_address").val()+" "+$("#addrDetail").val();
 			console.log("addr: "+addr);
-			var addr3='';
+			var addr4='';
 			for(var i=0; i<addr.split(' ').length; i++){
-				if(i==0||i==1){
+				if(i<2){
 					$('#addr'+(i+1)).val(addr.split(' ')[i]);
+				}else if(i==2){
+					if(addr.split(' ')[i].substring(addr.split(' ')[i].length-1) == '구' ){
+						$('#addr'+(i+1)).val(addr.split(' ')[i]);					
+					}else{
+						$('#addr'+(i+1)).val('-');
+						addr4 = addr.split(' ')[i];
+					}
 				}else{
-					addr3+=addr.split(' ')[i]+' ';
+					addr4+=addr.split(' ')[i]+' ';
 				}
 			}
-			$('#addr3').val(addr3);
-			console.log($('#addr1').val()+', '+$('#addr2').val()+', '+$('#addr3').val());
+			$('#addr4').val(addr4);
+			console.log($('#addr1').val()+', '+$('#addr2').val()+', '+$('#addr3').val()+', '+$('#addr4').val());
+			addrFlag = true;
 			};
-		});
+		}); //keyup
+		
+		//상호명 체크
+		$('#companyName').on('keyup',function(){
+			if($(this).val().trim()==''){
+				console.log($(this).val().trim());
+				companyNameFlag = false;
+				console.log('cnFlag: '+companyNameFlag);
+			}else{
+				console.log($(this).val().trim());
+				companyNameFlag = true;
+				console.log('cnFlag: '+companyNameFlag);
+			}
+		});//on
+		
+		//url 체크
+		$('#url').on('keyup',function(){
+			if($(this).val().trim()==''){
+				console.log($(this).val().trim());
+				urlFlag = false;
+				console.log('urlFlag: '+urlFlag);
+			}else{
+				console.log($(this).val().trim());
+				urlFlag = true;
+				console.log('urlFlag: '+urlFlag);
+			}
+		});//on
+		
+		//intro 체크
+		$('#intro').on('keyup',function(){
+			if($(this).val().trim()==''){
+				console.log($(this).val().trim());
+				introFlag = false;
+				console.log('introFlag: '+introFlag);
+			}else{
+				console.log($(this).val().trim());
+				introFlag = true;
+				console.log('introFlag: '+introFlag);
+			}
+		});//on
 	});//ready
-	
-	
+
+	// submit Btn
+	function registerFlag(){
+		var checkBox = $('[name=checkAccept]').is(':checked');
+		console.log("checkBox: "+checkBox);
+		if(!companyNameFlag){
+			alert("상호명을 확인해주세요.");
+			return false;
+		}else if(!addrFlag){
+			alert("상세주소를 확인해주세요.");
+			return false;
+		}else if(!telFlag){
+			alert("전화번호를 확인해주세요.");
+			return false;
+		}else if(!licenseFlag){
+			alert("사업자 등록 번호를 확인해주세요.");
+			return false;
+		}else if(!urlFlag){
+			alert("업체 url을 확인해주세요.");
+			return false;
+		}else if($("#day").val()==''){
+			alert("영업요일을 선택해주세요.");
+			return false;
+		}else if($("#timeSelect2").val()==''){
+			alert("영업 시간을 확인해주세요.");
+			return false;
+		}else if(!introFlag){
+			alert("업체 소개를 확인해주세요.");
+			return false;
+		}else if($("#hashtag").val()==''){
+			alert("해시태그를 등록해주세요.");
+			return false;
+		}else if(!checkBox){
+			alert("약관 동의에 체크를 해주세요.");
+			return false;
+		}else{
+			return true;
+		}
+	}
 	
 </script>
 
@@ -252,23 +349,23 @@
   <h2>STUD-IT 업체 등록</h2>
   <p>Step1 ~ Step3 까지 내용을 다 채운 뒤 등록을 누르면, 관리자가 확인 후 승인해드립니다.</p>
   <ul class="nav nav-tabs">
-    <li class="active"><a data-toggle="tab" href="#step1">Step1</a></li>
-    <li><a data-toggle="tab" href="#step2">Step 2</a></li>
-    <li><a data-toggle="tab" href="#step3">Step 3</a></li>
+    <li class="active"><a class="step" data-toggle="tab" href="#step1">Step1</a></li>
+    <li><a data-toggle="tab" class="step" href="#step2">Step 2</a></li>
+    <li><a data-toggle="tab" class="step" href="#step3">Step 3</a></li>
   </ul>
 
   <div class="tab-content">
     <div id="step1" class="tab-pane fade in active"><br><br>
     	 <div class="form-group">
          	<label for="companyName" class="col-sm-3 control-label">상호명</label>
-            	 <div class="col-sm-9">	
+            	 <div class="col-sm-6">	
                 	 <input type="text" id="companyName" name="companyVO.name" placeholder="Company Name" required="required" class="form-control" autofocus><br>
                  </div>
          </div>
                 
          <div class="form-group">
                     <label for="addrSerchBtn" class="col-sm-3 control-label">주소</label>
-                    <div class="col-sm-9">
+                    <div class="col-sm-6">
                        <!--  <input type="text" id="sample6_postcode" placeholder="우편번호"> -->
 						<input type="button" name="addrSerchBtn" id="addrSerchBtn" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"  class="control-label btn btn-default">
 						<input type="text" id="sample6_address" readonly="readonly"   placeholder="주소" class="form-control"><br>
@@ -287,16 +384,16 @@
                 
           <div class="form-group">
          		<label for="tel" class="col-sm-3 control-label" >전화번호</label>
-                	 <div class="col-sm-9">
-                        <input type="text" id="tel" name="companyVO.tel" maxlength="11" placeholder="021234567" class="form-control"><br>
+                	 <div class="col-sm-6">
+                        <input type="text" id="tel" name="companyVO.tel" maxlength="11" required="required" placeholder="021234567" class="form-control"><br>
                       <div id="checkTelView"></div>
                  </div>
           </div>
                 
           <div class="form-group">
           	 <label for="license" class="col-sm-3 control-label">사업자등록번호</label>
-            	 <div class="col-sm-9">	
-                	 <input type="text" id="license" name="companyVO.license" maxlength="10" placeholder="사업자 등록번호 10자리" class="form-control" autofocus><br>
+            	 <div class="col-sm-6">	
+                	 <input type="text" id="license" name="companyVO.license" maxlength="10" required="required" placeholder="사업자 등록번호 10자리" class="form-control" autofocus><br>
                  <div id="checkLicenseView"></div>
          </div>
    	 </div>
@@ -305,12 +402,12 @@
     		<div class="form-group">
             		<label for="url" class="col-sm-3 control-label">업체 URL</label>
                     <div class="col-sm-9">	
-                        <input type="text" id="url" name="companyVO.url" placeholder="http://www.stud-it.com" class="form-control" autofocus><br>
+                        <input type="text" id="url" name="companyVO.url" placeholder="http://www.stud-it.com" required="required" class="form-control" autofocus><br>
                     </div>
             	</div>
             	
             	<div class="form-group">
-            		<label for="" class="col-sm-3 control-label">영업일</label>
+            		<label for="" class="col-sm-3 control-label">영업요일</label>
                     <div class="col-sm-9">	
                     	<div id="days" class="btn-group" role="group" aria-label="...">
 							<input type="button" class="btn btn-default" value="월" >
@@ -375,7 +472,7 @@
             	<div class="form-group text-right">
             		<label for="intro" class="col-sm-3 control-label">업체 소개</label><span id="max-intro">0/980</span><br>
                     <div class="col-sm-9">	
-                    	<textarea id="intro" name="companyVO.intro" class="noresize" rows="20" cols="100" maxlength="980" placeholder="업체에 대해 소개해주세요. (ex_분위기, 특별한 점 등)"></textarea>
+                    	<textarea id="intro" name="companyVO.intro" class="noresize" rows="20" cols="100" required="required" maxlength="980" placeholder="업체에 대해 소개해주세요. (ex_분위기, 특별한 점 등)"></textarea>
                     </div>
             	</div>
             	
@@ -404,18 +501,18 @@
     	 <div class="form-group">
 	          	 <label for="studyRoomName" class="col-sm-3 control-label">스터디룸 명</label>
 	             <div class="col-sm-9">
-	                 <input type="text" id="studyRoomName" name="name" placeholder="무궁화, 나팔꽃" class = "form-control">
+	                 <input type="text" id="studyRoomName" name="name" required="required" placeholder="무궁화, 나팔꽃" class = "form-control">
 	             </div>
 	         </div>
                 
           <div class="form-group">
               <label for="capacity" class="col-sm-3 control-label">수용 인원</label>
               <div class="col-sm-2">
-                  <input type="number" id="capacity" name="capacity" placeholder="6" class = "form-control">
+                  <input type="number" id="capacity" name="capacity" required="required" placeholder="6" class = "form-control">
               </div>
               <label for="price" class="col-sm-2 control-label">이용 가격</label>
               <div class="col-sm-2">
-                  <input type="number" id="price" name="price" placeholder="시간당 가격" class = "form-control">
+                  <input type="number" id="price" name="price" required="required" placeholder="시간당 가격" class = "form-control">
                   </div>
                   <div class="col-sm-1">
                   원/시간
@@ -467,7 +564,7 @@
           <div class="form-group">
               <label for="content" class="col-sm-3 control-label">내용</label>
               <div class="col-sm-8">
-                  <textarea id="content" name="content" class="noresize" rows="6" cols="60" maxlength="179" placeholder="스터디룸에 대해 소개해주세요. (ex_이용인원, 목적 등)"></textarea>
+                  <textarea id="content" name="content" class="noresize" rows="6" cols="60" maxlength="179" required="required" placeholder="스터디룸에 대해 소개해주세요. (ex_이용인원, 목적 등)"></textarea>
               </div>
           </div>
           
@@ -480,8 +577,18 @@
           </div>
           
           <div class="form-group">
+                    <div class="col-sm-9 col-sm-offset-3">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="checkAccept" id="checkAccept">I accept <a href="#">terms</a>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+          
+          <div class="form-group">
           	 <div class="col-sm-5 col-sm-offset-3">
-                        <button type="submit" class="btn btn-primary btn-block" onsubmit="return true">등록하기</button>
+                        <button type="submit" class="btn btn-primary btn-block" onclick="return registerFlag()">등록하기</button>
              </div>
           </div>
     </div>

@@ -1000,8 +1000,8 @@ STYLE SWITCHER FOR DEMO
 .nav-tabs > li.active > a:focus {
   color: #555555;
   background-color: #ffffff;
-  border: 1px solid #dddddd;
 }
+  /* border: 1px solid #dddddd; */
 .nav-pills > li > a {
   border-radius: 0;
 }

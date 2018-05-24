@@ -194,6 +194,18 @@ public class CompanyDAOImpl implements CompanyDAO {
 	   public void registerCompanyPicPath(Map<String, Object> map) {
 		   template.insert("company.registerCompanyPicPath", map);
 	   }
+	   
+	   /**
+	    * 사업자 등록 번호 중복 체크를 위해 Count를 받아오는 메서드
+	    * 
+	    * @author 변태섭
+	    * @param license 입력된 사업자 등록 번호
+	    * @return 입력된 사업자 등록번호로 조회되는 데이터의 개수
+	    */
+	   @Override
+	   public int findCountCompanyByLicense(String license) {
+		   return template.selectOne("company.findCountCompanyByLicense", license);
+	   }
 }
 
 

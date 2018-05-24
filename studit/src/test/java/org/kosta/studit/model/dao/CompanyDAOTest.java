@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kosta.studit.model.vo.CompanyVO;
 import org.kosta.studit.model.vo.MemberVO;
@@ -175,5 +176,16 @@ public class CompanyDAOTest {
 		   map.put("companyPicPath", "C:/업체사진");
 		   map.put("companyNo", 2);
 		   companyDAO.registerCompanyPicPath(map);
+	   }
+	   
+	   /**
+	    * 사업자등록번호 중복 유무를 체크하는 테스트
+	    * 
+	    * @author 변태섭
+	    */
+	  // @Test
+	   public void findCountCompanyByLicenseTest() {
+		   String license = "1234567891";
+		  System.out.println(companyDAO.findCountCompanyByLicense(license));
 	   }
 }

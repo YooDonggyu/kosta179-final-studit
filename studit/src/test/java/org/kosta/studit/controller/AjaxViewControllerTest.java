@@ -44,7 +44,7 @@ public class AjaxViewControllerTest {
 	          .andExpect(content().contentType("application/json;charset=UTF-8")) 
 	          .andExpect(status().isOk());
 	       
-	       // email이 중복이 아닌 경우 true returnX
+	       // email이 중복이 아닌 경우 true return
 	       mock.perform(get("/ajax/findCheckByEmail")
 	             .param("memberEmail", "bts@a.com"))
 	       .andDo(print())
@@ -71,8 +71,22 @@ public class AjaxViewControllerTest {
 			          .andDo(print())
 			          //.andExpect(content().contentType("application/json;charset=UTF-8")) 
 			          .andExpect(status().isOk());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		   } catch (Exception e) {
+			   e.printStackTrace();
+		   }
 	   }
+	   
+	   /**
+	    * 업체 등록 시 사업자 등록 번호 입력 시 실시간으로 중복 체크 하는 메서드
+	    * 
+	    * @author 변태섭
+	    */
+	   //@Test
+	    public void findCheckByLicenseTest() throws Exception{
+	       mock.perform(get("/ajax/findCheckByLicense")
+	             .param("license", "1234567891"))
+	          .andDo(print())
+	          .andExpect(content().contentType("application/json;charset=UTF-8")) 
+	          .andExpect(status().isOk());
+	    }
 }

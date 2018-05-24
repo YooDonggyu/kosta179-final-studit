@@ -220,6 +220,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    		insert into com_pic(com_pic_no, path, company_no) 
    		values (com_pic_no_seq.nextval, #{companyPicPath},#{companyNo})
    </insert>
+   
+   <!-- 
+   		사업자 등록 번호 중복 체크를 위해 Count를 받아오는 쿼리
+   		
+   		@author 변태섭
+    -->
+   <select id="findCountCompanyByLicense" parameterType="string" resultType="int">
+   		select count(*) from company where license = #{value}
+   </select>
 </mapper>
  
  

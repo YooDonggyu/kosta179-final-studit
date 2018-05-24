@@ -40,4 +40,6 @@ public interface CompanyDAO {
 	void registerCompany(CompanyVO companyVO);
 
 	void registerCompanyPicPath(Map<String, Object> map);
+
+	int findCountCompanyByLicense(String license);
 }

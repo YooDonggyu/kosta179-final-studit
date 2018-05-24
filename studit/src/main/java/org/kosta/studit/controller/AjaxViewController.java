@@ -270,5 +270,22 @@ public class AjaxViewController {
 		return comList;
 	}
 	
+	/**
+	 *업체 등록 시 사업자등록번호 중복확인을 위한 메서드. 
+	 *사용자가 입력한 사업자 등록번호를 실시간으로 중복확인 한다.
+	 * 
+	 * @author 변태섭
+	 * @param 입력된 사업자 등록 번호
+	 * @return 중복인 경우 false, 중복이 아닌 경우 true
+	 */
+	@RequestMapping("/findCheckByLicense")
+	@ResponseBody
+	public boolean findCheckByLicense(String license) {
+		if (companyDAO.findCountCompanyByLicense(license) == 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 	
 }
