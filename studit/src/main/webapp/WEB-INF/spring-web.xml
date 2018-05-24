@@ -70,10 +70,11 @@
 		<mvc:exclude-mapping path="/resources/**"/>
 		<mvc:exclude-mapping path="/ajax/findCheckByEmail"/>
 		<mvc:exclude-mapping path="/ajax/getSmallCategoryList"/>
+		<mvc:exclude-mapping path="/ajax/findRecruitPostByCategoryAndKeyword" />
 		<mvc:exclude-mapping path="/member/login"/>
 		<mvc:exclude-mapping path="/member/registerMember"/>
 		<mvc:exclude-mapping path="/recruit/getRecruitPostList" />
-		<mvc:exclude-mapping path="/ajax/findRecruitPostByCategoryAndKeyword" />
+		<mvc:exclude-mapping path="/company/findCompanyView" />
 		<bean class="org.kosta.studit.controller.SessionCheckInterceptor"/>
 	</mvc:interceptor>
 </mvc:interceptors>

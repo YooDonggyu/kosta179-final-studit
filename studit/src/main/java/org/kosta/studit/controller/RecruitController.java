@@ -165,8 +165,8 @@ public class RecruitController {
 	 * @return 작성완료된 글의 상세보기 페이지로 이동
 	 */
 	@RequestMapping("/createRecruitPost")
-	public String createRecruitPost(RecruitPostVO recruitPostVO, String Days, HttpServletRequest request) {
-		String[] recruitDay = Days.split(",");
+	public String createRecruitPost(RecruitPostVO recruitPostVO, String days, HttpServletRequest request) {
+		String[] recruitDay = days.split(",");
 		HttpSession session=request.getSession();
 		recruitPostVO.setMemberVO((MemberVO)session.getAttribute("memberVO"));
 		recruitService.createRecruitPost(recruitPostVO, recruitDay);

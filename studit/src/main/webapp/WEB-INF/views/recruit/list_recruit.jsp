@@ -46,7 +46,7 @@
 
 <section id="features" class="section">
 	<div class="container">
-		 <button class="btn btn-transparent" style="float: right;" onclick=""><b>새 스터디 모집하기</b></button><br><br><br>
+		 <button class="btn btn-transparent" style="float: right;" id="createRecruitPost"><b>새 스터디 모집하기</b></button><br><br><br>
 	  	<table class="table table-hover">
 			<thead>
 				<tr>

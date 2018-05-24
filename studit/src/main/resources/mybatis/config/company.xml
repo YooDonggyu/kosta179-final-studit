@@ -32,7 +32,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="findWaitReservationByEmail" resultType="string">
 		select count(sc.state)
 		from studyroom_condition sc, studyroom sr, company com
-		where sc.state='대기중' and sc.studyroom_no=sr.studyroom_no
+		where sc.state='예약대기' and sc.studyroom_no=sr.studyroom_no
 		and sr.company_no=com.company_no and com.member_email=#{value}
 	</select>
 	
@@ -134,8 +134,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       @return studyRoomConditionVO
     -->
 	<update id="updatStudyRoomCondition" parameterType="studyRoomConditionVO">
-		update studyroom_condition set use_date=to_date(#{useDate}, 'YYYY-MM-DD'), start_time=#{startTime}, end_time=#{endTime}, 
-		state=#{state}
+		update studyroom_condition 
+		set use_date=to_date(#{useDate}, 'YYYY-MM-DD'), start_time=#{startTime}, end_time=#{endTime}, state=#{state}
 		where studyroom_condition_no=#{studyRoomConditionNo} 
 	</update>
 	
@@ -206,7 +206,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    		insert into company(company_no, name, addr1, addr2, addr3, addr4, latitude, longitude, tel, license, regdate, profile_path, 
    						  intro, state, open, close, holiday, hit, url, member_email) 
 		values (#{companyNo}, #{name}, #{addr1}, #{addr2}, #{addr3}, #{addr4}, 	#{latitude}, #{longitude}, #{tel}, #{license}, 
-					sysdate, #{profilePath}, #{intro}, '대기', #{open}, #{close}, #{holiday}, 0, #{url}, #{memberVO.memberEmail}
+					sysdate, #{profilePath}, #{intro}, '예약대기', #{open}, #{close}, #{holiday}, 0, #{url}, #{memberVO.memberEmail}
 					)
    </insert>
    

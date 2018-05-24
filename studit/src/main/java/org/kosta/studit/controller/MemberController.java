@@ -265,9 +265,8 @@ public class MemberController {
 		HttpSession session = request.getSession(false);
 		MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
 		HashMap<String, Object> map = memberService.deleteMemberView(memberVO.getMemberEmail());
-
 		request.setAttribute("deleteMemberInfo", map);
-		return "member/delete_Member_View.tiles";
+		return "member/delete_member.tiles";
 	}
 
 	/**

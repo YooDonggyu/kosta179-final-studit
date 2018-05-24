@@ -58,25 +58,25 @@
 		<!--<input type="text" name=""  value="${recruitInfo.day} ">
 		 <a class="btn btn-primary">월</a> -->
 		 <label class="checkbox-inline">
-			<input type="checkbox" name="day" value="월요일" >월요일
+			<input type="checkbox" name="day" value="월" >월요일
 		</label>
 		<label class="checkbox-inline">
-			<input type="checkbox" name="day" value="화요일">화요일
+			<input type="checkbox" name="day" value="화">화요일
 		</label>
 		<label class="checkbox-inline">
-			<input type="checkbox" name="day" value="수요일">수요일
+			<input type="checkbox" name="day" value="수">수요일
 		</label>
 		<label class="checkbox-inline">
-			<input type="checkbox" name="day" value="목요일">목요일
+			<input type="checkbox" name="day" value="목">목요일
 		</label>
 		<label class="checkbox-inline">
-			<input type="checkbox" name="day" value="금요일">금요일
+			<input type="checkbox" name="day" value="금">금요일
 		</label>
 		<label class="checkbox-inline">
-			<input type="checkbox" name="day" value="토요일">토요일
+			<input type="checkbox" name="day" value="토">토요일
 		</label>
 		<label class="checkbox-inline">
-			<input type="checkbox" name="day" value="일요일">일요일
+			<input type="checkbox" name="day" value="일">일요일
 		</label>
 		<br><br>
 		<input type="submit" class="btn btn-primary" value="수정" >

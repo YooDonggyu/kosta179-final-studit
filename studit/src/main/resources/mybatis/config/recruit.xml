@@ -212,7 +212,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    <select id="findDayByRecruitNo" resultType="string">
   		select  day
 		from recruit_day
-		where recruit_post_no = 1
+		where recruit_post_no = #{value}
    </select>
    <!-- 
    		모집 게시글 번호에 따른 댓글을 반환
@@ -247,7 +247,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    <select id="findRecruitWriterByRecruitNo" resultType="string">
    		select r.member_email
    		from member m, recruit_post r
-   		where m.member_email = r.member_email and r.recruit_post_no = ${value}
+   		where m.member_email = r.member_email and r.recruit_post_no = #{value}
    </select>
    
    <!--

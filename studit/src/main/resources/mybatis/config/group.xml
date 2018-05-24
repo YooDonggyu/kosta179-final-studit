@@ -25,9 +25,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="findMyLeadGroupHasMemberByEmail" parameterType="string" resultType="map">
 		select a.sg_no, sg.name
 		from (
-			select sm1.sg_no as sg_no, count(sm2.email) as cnt
+			select sm1.sg_no as sg_no, count(sm2.member_email) as cnt
 			from sg_member sm1, sg_member sm2 
-			where sm1.email=#{value} 
+			where sm1.member_email=#{value} 
 					and sm1.position='팀장' 
 				  	and sm1.sg_no = sm2.sg_no
 			group by sm1.sg_no
@@ -54,7 +54,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		@param map key : studyGroupNo 맴버를 추가할 스터디 그룹 넘버
 	 -->
 	<insert id="registerStudyGroupMember" parameterType="map">
-		insert into sg_member(sg_member_no, email, position, state, sg_no)
+		insert into sg_member(sg_member_no, member_email, position, state, sg_no)
 		values(sg_member_seq.nextVal, #{memberEmail}, #{groupPosition}, 'show',#{studyGroupNo}) 
 	</insert>
 	

@@ -42,13 +42,13 @@
 			<option value="0">소분류</option>
 		</select><br>
 		<!-- 요일 선택 -->
-		<input type="checkbox" name="Days" value="월">월
-		<input type="checkbox" name="Days" value="화">화
-		<input type="checkbox" name="Days" value="수">수
-		<input type="checkbox" name="Days" value="목">목
-		<input type="checkbox" name="Days" value="금">금
-		<input type="checkbox" name="Days" value="토">토
-		<input type="checkbox" name="Days" value="일">일
+		<input type="checkbox" name="days" value="월">월요일
+		<input type="checkbox" name="days" value="화">화요일
+		<input type="checkbox" name="days" value="수">수요일
+		<input type="checkbox" name="days" value="목">목요일
+		<input type="checkbox" name="days" value="금">금요일
+		<input type="checkbox" name="days" value="토">토요일
+		<input type="checkbox" name="days" value="일">일요일
 		<pre><textarea style="resize:none;" placeholder="내용을 입력하세요!" id="content" name="content"></textarea></pre><br>
 		<input type="submit" value="작성">
 	</form>
