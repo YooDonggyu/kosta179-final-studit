@@ -12,7 +12,7 @@ CREATE TABLE member
     password_hint varchar2(100) not null, 
     password_answer varchar2(100) not null, 
     pic_path varchar2(300) default 'default.png' 
-)
+);
 select * from member
 commit
 insert into member(member_email,password,name,addr,phone,regdate,password_hint,password_answer) 
@@ -68,7 +68,7 @@ CREATE TABLE member_position
 	name varchar2(100)  not null ,
 	member_email varchar2(100)  not null,
 	constraint fk_member_email foreign key(member_email) references member(member_email)
-)
+);
 drop sequence member_position_no_seq;
 create sequence member_position_no_seq nocache;
 

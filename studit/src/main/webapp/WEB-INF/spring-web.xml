@@ -71,6 +71,11 @@
 		<mvc:exclude-mapping path="/ajax/findCheckByEmail"/>
 		<mvc:exclude-mapping path="/ajax/getSmallCategoryList"/>
 		<mvc:exclude-mapping path="/ajax/findRecruitPostByCategoryAndKeyword" />
+		<mvc:exclude-mapping path="/ajax/findCompanyListByAddressAjax" />
+		<mvc:exclude-mapping path="/ajax/findSecondAddressListByFirstAddressName" />
+		<mvc:exclude-mapping path="/ajax/findThirdAddressListBySecondAddressName" />
+		<mvc:exclude-mapping path="/ajax/findCompanyListByAddressAndKeywordAndHashTagAjax" />
+		<mvc:exclude-mapping path="/ajax/findThirdAddressListBySecondAddressName" />
 		<mvc:exclude-mapping path="/member/login"/>
 		<mvc:exclude-mapping path="/member/registerMember"/>
 		<mvc:exclude-mapping path="/recruit/getRecruitPostList" />

@@ -13,14 +13,14 @@
             </div>
             <div id="navigation" class="collapse navbar-collapse navbar-right">
             
-              <ul class="nav navbar-nav headerUl" >
-		            <li class="active"><a  href="${pageContext.request.contextPath}/">HOME</a></li>
-		            <li><a href="${pageContext.request.contextPath}/recruit/getRecruitPostList">STUDY</a></li>
-		            <li><a href="${pageContext.request.contextPath}/company/findCompanyView">STUDY-ROOM</a></li>
-		            <li><a href="${pageContext.request.contextPath}/company/companyView">PLACE</a></li>
+              <ul class="nav navbar-nav " >
+		            <li class="headerUl"><a  href="${pageContext.request.contextPath}/">HOME</a></li>
+		            <li class="headerUl"><a href="${pageContext.request.contextPath}/recruit/getRecruitPostList?pageNo=1">STUDY</a></li>
+		            <li class="headerUl"><a href="${pageContext.request.contextPath}/company/findCompanyView">STUDY-ROOM</a></li>
+		            <li class="headerUl"><a href="${pageContext.request.contextPath}/company/companyView">PLACE</a></li>
 		            <%-- <li><a href="${pageContext.request.contextPath}/company/findStudyRoomConditionByCompanyNo/">PLACE</a></li> --%>
 		            <%-- <li><a href="${pageContext.request.contextPath}/member/getMyPage?nowPage=1"></a></li> --%>
-		            <li><a href="${pageContext.request.contextPath}/member/deleteMemberView">HIDE</a></li>
+		            <li class="headerUl"><a href="${pageContext.request.contextPath}/member/deleteMemberView">HIDE</a></li>
 	          	</ul>
             
               <ul class="nav navbar-nav navbar-right">
@@ -50,6 +50,8 @@
           </div>
         </div>
         
+
+
 
     <jsp:include page="../member/login_modal.jsp" />
  <jsp:include page="../member/check_member.jsp" />

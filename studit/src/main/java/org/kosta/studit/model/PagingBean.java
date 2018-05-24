@@ -13,7 +13,15 @@ public class PagingBean {
 	 /**
 	  * database에 저장된 총게시물수
 	  */
-	 public int totalPostCount;
+	private int totalPostCount;
+	 
+	public int getTotalPostCount() {
+		return totalPostCount;
+	}
+
+	public void setTotalPostCount(int totalPostCount) {
+		this.totalPostCount = totalPostCount;
+	}
 
 	public PagingBean() {
 	 }

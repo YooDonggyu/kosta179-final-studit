@@ -58,6 +58,7 @@
 
     <!-- daum 우편번호, kakao map API -->
     <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+
     
 </head>
 
@@ -77,20 +78,8 @@
 	<div id="footer">
 		<tiles:insertAttribute name="footer"/>
 	</div>
+	
 </body>
-
-<!-- 
-	header 클릭하면 css 바뀌는건데 안먹는 이유를 모르겠음
- -->
-<script type="text/javascript">
-$(document).ready(function() {
-	$('.headerUl').on('click', 'li', function() {
-	    $('.headerUl li.active').removeClass('active');
-	    $(this).addClass('active');
-	});
-})
-</script>
-
 
 </html>
 

@@ -36,7 +36,6 @@ company_no
 , tel
 , license
 , regdate
-, profile_path
 , intro
 , state
 , open
@@ -54,14 +53,11 @@ values(company_no_seq.nextval
 , 3
 ,'031-8017-3537'
 ,'222-18-56167'
-,sysdate
-
 ,'★ 분당 서현역 스터디모임 전문공간 MOiM 입니다! (예약문의: 031-8017-3537) MOiM 스터디룸을 찾아주셔서 감사합니다. MOiM은 공간이 필요하신 모든 연령대, 어떠한 모임이든 환영합니다.'
 ,'대기'
 , '09:00'
 ,'22:00'
 ,'영업'
-,'http://www.moimstudy.com/'
 ,'f@f.com'
 );
 
@@ -77,7 +73,6 @@ company_no
 , tel
 , license
 , regdate
-, profile_path
 , intro
 , state
 , open
@@ -96,7 +91,6 @@ values(company_no_seq.nextval
 ,'031-8017-3537'
 ,'222-18-56167'
 ,sysdate
-
 ,'★ 분당 서현역 스터디모임 전문공간 CLARA 입니다! CLARA은 공간이 필요하신 모든 연령대, 어떠한 모임이든 환영합니다.'
 ,'승인'
 , '09:00'
@@ -117,7 +111,6 @@ company_no
 , tel
 , license
 , regdate
-, profile_path
 , intro
 , state
 , open
@@ -136,13 +129,11 @@ values(company_no_seq.nextval
 ,'031-8017-3537'
 ,'222-18-56167'
 ,sysdate
-
 ,'★ IU와 함께하는 스터디공간 IU 입니다! 문의는 서정우 강사님께 하시면 되겠습니다.'
 ,'승인'
 , '09:00'
 ,'22:00'
 ,'영업'
-,'http://www.iustudy.com/'
 ,'h@h.com'
 );
 
@@ -158,7 +149,6 @@ company_no
 , tel
 , license
 , regdate
-, profile_path
 , intro
 , state
 , open
@@ -177,13 +167,11 @@ values(company_no_seq.nextval
 ,'031-8017-3537'
 ,'222-18-56167'
 ,sysdate
-
 ,'★ REDVELVET와 함께하는 스터디공간 REDVELVET 입니다! 찾아주셔서 감사합니다.'
 ,'승인'
 , '09:00'
 ,'22:00'
 ,'영업'
-,'http://www.iustudy.com/'
 ,'f@f.com'
 );
 
@@ -199,7 +187,6 @@ company_no
 , tel
 , license
 , regdate
-, profile_path
 , intro
 , state
 , open
@@ -218,13 +205,11 @@ values(company_no_seq.nextval
 ,'031-8017-3537'
 ,'222-18-56167'
 ,sysdate
-
 ,'★ 소녀시대와 함께하는 스터디공간 소녀시대 입니다! 오늘은 소녀시대! 감사합니다.'
 ,'승인'
 , '09:00'
 ,'22:00'
 ,'영업'
-,'http://www.iustudy.com/'
 ,'g@g.com'
 );
 
@@ -240,7 +225,6 @@ company_no
 , tel
 , license
 , regdate
-, profile_path
 , intro
 , state
 , open
@@ -259,13 +243,11 @@ values(company_no_seq.nextval
 ,'031-8017-3537'
 ,'222-18-56167'
 ,sysdate
-
 ,'★ EXO 함께하는 스터디공간 EXO 입니다! 문의는 조선화군에게 하시면 됩니다.'
 ,'승인'
 , '09:00'
 ,'22:00'
 ,'영업'
-,'http://www.iustudy.com/'
 ,'h@h.com'
 );
 
@@ -281,7 +263,6 @@ company_no
 , tel
 , license
 , regdate
-, profile_path
 , intro
 , state
 , open
@@ -300,13 +281,11 @@ values(company_no_seq.nextval
 ,'031-8017-3537'
 ,'222-18-56167'
 ,sysdate
-
 ,'★ 방탄소년단 함께하는 스터디공간 방탄소년단 입니다! 문의는 변태섭군에게 하시면 됩니다.'
 ,'승인'
 , '09:00'
 ,'22:00'
 ,'영업'
-,'http://www.iustudy.com/'
 ,'f@f.com'
 );
 
@@ -322,7 +301,6 @@ company_no
 , tel
 , license
 , regdate
-, profile_path
 , intro
 , state
 , open
@@ -341,13 +319,11 @@ values(company_no_seq.nextval
 ,'031-8017-3537'
 ,'222-18-56167'
 ,sysdate
-
 ,'★ 여자친구가 있으신 분만 오실 수 있는 스터디공간 여자친구 입니다! 솔로지옥 커플천국.'
 ,'승인'
 , '09:00'
 ,'22:00'
 ,'영업'
-,'http://www.iustudy.com/'
 ,'g@g.com'
 );
 
@@ -363,7 +339,6 @@ company_no
 , tel
 , license
 , regdate
-, profile_path
 , intro
 , state
 , open
@@ -382,13 +357,11 @@ values(company_no_seq.nextval
 ,'031-8017-3537'
 ,'222-18-56167'
 ,sysdate
-
 ,'★ 시낭송 위주의 스터디가 주인 스터디공간 시를 잊은 그대에게 입니다! 문의는 호유란님께.'
 ,'승인'
 , '09:00'
 ,'22:00'
 ,'영업'
-,'http://www.iustudy.com/'
 ,'h@h.com'
 );
 

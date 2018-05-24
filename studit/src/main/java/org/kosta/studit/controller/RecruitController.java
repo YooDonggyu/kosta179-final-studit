@@ -62,7 +62,7 @@ public class RecruitController {
 	 */
 	@RequestMapping("/getRecruitPostList")
 	public String getRecruitPostList(Model model, String pageNo) {
-		RecruitPostListVO rplVO = recruitService.findRecruitPostByCategoryOrKeyword("", "", "", 1);
+		RecruitPostListVO rplVO = recruitService.findRecruitPostByCategoryOrKeyword("", "", "", Integer.parseInt(pageNo));
 		model.addAttribute("recruitPostListVO", rplVO);
 		model.addAttribute("bigCategoryList", recruitDAO.getBigCategoryList());
 		return "recruit/list_recruit.tiles";

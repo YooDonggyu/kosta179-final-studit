@@ -39,7 +39,7 @@ public class SessionCheckInterceptor extends HandlerInterceptorAdapter{
 		if(session!=null&&session.getAttribute("memberVO")!=null) {
 			return true;
 		}else {
-			response.sendRedirect(" /studit/loginNeed");
+			response.sendRedirect("/studit/loginNeed");
 			return false;
 			
 		}

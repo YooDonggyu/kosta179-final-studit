@@ -32,7 +32,7 @@
  							</div>
  						</td>
  						<td>
-							<input id="keyword" name="keyword" type="text" placeholder="강남역, 종로, 주말" class="form-control">
+							<input id="keyword" name="keyword" type="text" placeholder="제목, 지역을 검색하세요" class="form-control">
 						</td>
 						<td>
 							<input type="button" value="검색" class="btn btn-primary" id="recruitSrchBtn" onclick="return categoryCheck(1)"> 
@@ -46,7 +46,10 @@
 
 <section id="features" class="section">
 	<div class="container">
-		 <button class="btn btn-transparent" style="float: right;" id="createRecruitPost"><b>새 스터디 모집하기</b></button><br><br><br>
+		<div style="float: left" id="resultData">
+			${recruitPostListVO.pagingBean.totalPostCount}건이 검색되었습니다.
+		</div>
+		<button class="btn btn-transparent" style="float: right;" id="createRecruitPost"><b>새 스터디 모집하기</b></button><br><br><br>
 	  	<table class="table table-hover">
 			<thead>
 				<tr>
@@ -70,7 +73,7 @@
 						<td>${post.regdate}</td>
 						<td>${post.hit}</td>
 					</tr>
-				</c:forEach>  
+				</c:forEach>
 			</tbody>
 		</table>
 	</div>
@@ -88,7 +91,7 @@
 					<c:otherwise>
 						<li class="disabled"><a href="#" >${i}</a></li>
 					</c:otherwise>
-				</c:choose> 
+				</c:choose>
 			</c:forEach>
 			<c:if test="${pb.nextPageGroup}">	
 				<li><a href="${pageContext.request.contextPath}/recruit/getRecruitPostList?pageNo=${pb.endPageOfPageGroup+1}">&raquo;</a></li>
@@ -122,7 +125,7 @@
 						$.each(data, function(index, item) {
 							result+= "<li>"
 											+"<a href='#' class='dropdown-item'>"
-											+"<input type='checkbox' name='category' value="+item.smallCategoryNo+">"
+											+"<input type='checkbox' name='category' data-citem="+item.name+" value="+item.smallCategoryNo+">"
 											+item.name
 											+"</a>"
 											"</li>";
@@ -143,6 +146,7 @@
 	//기능: 카테고리와 키워드를 이용해 페이징처리
 	//로직: 소, 대 카테고리 값과 키워드 값을 읽어 컨트롤러로 전송
 	//			페이징처리된 결과를 화면에 뿌려준다.
+	//			검색된 내용을 테이블 위에 뿌려준다
 	function categoryCheck(i) {
 		var nowPage = i;
 		var bigCategory = $("#bigCategory option:selected").val();
@@ -179,22 +183,43 @@
 				var pagingData = data.pagingBean;
 				//페이징처리할 곳 초기화
 				$("#divData").empty();
-				var data = 0;
+				var pData = 0;
 				//이전 그룹이 있으면 버튼 생성
 				 if(pagingData.previousPageGroup){
-					 data = parseInt(pagingData.startPageOfPageGroup)-1;
-					$("#divData").append("<li><a href=\"javascript:void(0);\" onclick=\"return categoryCheck("+data+")\">&laquo;</a></li>");
+					 pData = parseInt(pagingData.startPageOfPageGroup)-1;
+					$("#divData").append("<li><a href=\"javascript:void(0);\" onclick=\"return categoryCheck("+pData+")\">&laquo;</a></li>");
 				}
 				//페이지 그룹 수 만큼 번호 버튼 생성
 				 for(var i =pagingData.startPageOfPageGroup; i<=pagingData.endPageOfPageGroup; i++){
-					 data = i;
-					 $("#divData").append("<li><a href=\"javascript:void(0);\" onclick=\"return categoryCheck("+data+")\">"+data+"</a></li> ");
+					 pData = i;
+					 $("#divData").append("<li><a href=\"javascript:void(0);\" onclick=\"return categoryCheck("+pData+")\">"+pData+"</a></li> ");
 				 }
 				//다음 그룹이 있으면 버튼 생성
 				if(pagingData.nextPageGroup){
-					data = parseInt(pagingData.endPageOfPageGroup)+1;
-					$("#divData").append("<li><a href=\"javascript:void(0);\" onclick=\"return categoryCheck("+data+")\" >&raquo;</a></li>");
+					pData = parseInt(pagingData.endPageOfPageGroup)+1;
+					$("#divData").append("<li><a href=\"javascript:void(0);\" onclick=\"return categoryCheck("+pData+")\" >&raquo;</a></li>");
 				}
+				
+				//검색한 키워드를 테이블 상단에 뿌려주기 위한 작업
+				$("#resultData").empty();
+				if(bigCategory > 0){
+					$("#resultData").append("\""+$("#bigCategory option:selected").text()+"\"");
+					$("#resultData").append("    ");
+				}
+				if(smallCategory.length >0){
+					$("input[name='category']:checked").each(function(i){
+						$("#resultData").append("\""+$(this).data("citem")+"\"")
+					});
+					$("#resultData").append("    ");
+				}
+				if(keyword != "" && keyword != null){
+					$("#resultData").append("\""+keyword+"\"");
+				}
+				
+				 if(data.recruitPostList.length >0){
+					$("#resultData").append(data.pagingBean.totalPostCount+"건이 검색되었습니다.");
+				} 
+				
 			}//success
 		})//ajax
 	}//categoryCheck
@@ -207,6 +232,7 @@
 		location.href=
 			"${pageContext.request.contextPath }/recruit/findDetailRecruitPostInfoByRecruitNo?recruitNo="+recruitNo;
 	}
+	 	
 </script>
 
     
