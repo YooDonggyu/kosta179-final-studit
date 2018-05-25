@@ -28,41 +28,75 @@
 
 </head>
 <body>
-	<form method="post" action="createRecruitPost" >
-		<input type="text" placeholder="제목을 입력하세요" id="title" name="title"><br>
-		희망인원 &nbsp; <input type="number" id="capacity" name="capacity">명<br>
-		희망지역 &nbsp; <input type="text" id="location" name="location"><br>
-		<select id="big_category">
-			<option value="0">대분류</option>
-			<c:forEach items="${requestScope.cList }" var="cList">
-				<option value="${cList.bigCategoryNo }">${cList.name }</option>
-			</c:forEach>
-		</select> &nbsp;
-		<select id="small_category" name="smallCategoryVO.smallCategoryNo">
-			<option value="0">소분류</option>
-		</select><br>
-		<!-- 요일 선택 -->
-		<input type="checkbox" name="days" value="월">월요일
-		<input type="checkbox" name="days" value="화">화요일
-		<input type="checkbox" name="days" value="수">수요일
-		<input type="checkbox" name="days" value="목">목요일
-		<input type="checkbox" name="days" value="금">금요일
-		<input type="checkbox" name="days" value="토">토요일
-		<input type="checkbox" name="days" value="일">일요일
-		<pre><textarea style="resize:none;" placeholder="내용을 입력하세요!" id="content" name="content"></textarea></pre><br>
-		<input type="submit" value="작성">
-	</form>
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+<div class="col-sm-3" ></div>
+	<div class="col-sm-6">
+            <form method="post" action="${pageContext.request.contextPath }/recruit/createRecruitPost" class="form-horizontal" role="form">
+                <div style="padding-top: 30px; padding-bottom: 20px;"><h3>모집글 작성</h3></div>
+                <div class="form-group">
+                    <label for="title" class="col-sm-3 control-label">제목</label>
+                    <div class="col-sm-9">	
+                        <input type="text" id="title" name="title" placeholder="제목을 입력하세요" class="form-control" autofocus>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="capacity" class="col-sm-3 control-label">희망인원</label>
+                    <div class="col-sm-9">
+                        <input type="number" id="capacity"  name= "capacity" class="form-control">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="location" class="col-sm-3 control-label">희망지역</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="location"  name="location" class="form-control">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="category" class="col-sm-3 control-label">카테고리</label>
+                    <div class="col-sm-9">
+                        <select id="big_category">
+							<option value="0">대분류</option>
+							<c:forEach items="${requestScope.cList }" var="cList">
+								<option value="${cList.bigCategoryNo }">${cList.name }</option>
+							</c:forEach>
+						</select>
+					
+						<select id="small_category" name="smallCategoryVO.smallCategoryNo">
+						<option value="0">소분류</option>
+						</select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="days" class="col-sm-3 control-label">모집요일</label>
+                    <div class="col-sm-9">
+                    	<input type="checkbox" name="days" value="월"> 월
+						<input type="checkbox" name="days" value="화"> 화
+						<input type="checkbox" name="days" value="수"> 수
+						<input type="checkbox" name="days" value="목"> 목
+						<input type="checkbox" name="days" value="금"> 금
+						<input type="checkbox" name="days" value="토"> 토
+						<input type="checkbox" name="days" value="일"> 일
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="content" class="col-sm-3 control-label" >내용</label>
+                    <div class="col-sm-9">
+                        <pre><textarea style="resize:none; width: 700px; height: 250px;" placeholder="내용을 입력하세요!" id="content" name="content"></textarea></pre>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <div class="col-sm-9 col-sm-offset-3">
+                        <input type="submit" value="작성">
+                    </div>
+                </div>
+            </form> <!-- /form -->
+        </div> <!-- ./container -->
+        <div class="col - sm- 3" ></div>
+			
+

@@ -245,7 +245,7 @@
   <div class="container clearfix">
     <div class="row services">
       <div class="col-md-12">
-        <h4 class="services-heading">Integrations</h4>
+        <h4 class="services-heading">LookUp</h4>
         <div class="row photo">
         	<div id="studyroomList">
          	<c:forEach items="${allCompanyList }" var="clist">
@@ -269,4 +269,3 @@
     </div>
   </div>
 </section>
-

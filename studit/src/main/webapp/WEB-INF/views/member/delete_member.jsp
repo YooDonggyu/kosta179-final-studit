@@ -28,12 +28,25 @@
 	<c:set var="isCompany" value="${requestScope.deleteMemberInfo.isCompany }" />
 	<c:set var="waitReservation" value="${requestScope.deleteMemberInfo.waitReservation }" />
 	
-	<table>
+<section class="signup-section text-center no-padding-bottom">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<h3>회원탈퇴</h3>
+				<p class="lead text-gray-light">회원 탈퇴를 위해서는 아래의 조건에 충족해야 합니다.</p>
+			</div>   
+		</div> 
+	</div>
+</section>
+
+<section id="features" class="section">
+	<div class="container">
+	<table class="table table-hover">
 		<thead>
 			<tr>
-				<th>검사영역</th>
-				<th>세부사항</th>
-				<th>가능여부</th>
+				<th style="text-align: center">검사영역</th>
+				<th style="text-align: center">세부사항</th>
+				<th style="text-align: center">가능여부</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -103,30 +116,40 @@
 					</c:otherwise>
 				</c:choose>
 			</tr>
-			<c:if test="${isCompany }">
-				<tr>
-					<td>업체</td>
-					<c:choose>
-						<c:when test="${waitReservation>0}">
-							<td>
-								처리해야할 예약건수가 ${waitReservation }건 있습니다.
-							</td>
-							<td id="companyFlag">
-								탈퇴불가
-							</td>
-						</c:when>
-						<c:otherwise>
-							<td>
-								-
-							</td>
-							<td id="companyFlag">
-								탈퇴가능
-							</td>
-						</c:otherwise>
-					</c:choose>
-				</tr>
-			</c:if>
+			<c:choose>
+				<c:when test="${isCompany }">
+					<tr>
+						<td>업체</td>
+						<c:choose>
+							<c:when test="${waitReservation>0}">
+								<td>
+									처리해야할 예약건수가 ${waitReservation }건 있습니다.
+								</td>
+								<td id="companyFlag">
+									탈퇴불가
+								</td>
+							</c:when>
+							<c:otherwise>
+								<td>
+									-
+								</td>
+								<td id="companyFlag">
+									탈퇴가능
+								</td>
+							</c:otherwise>
+						</c:choose>
+					</tr>
+				</c:when>
+				<c:otherwise>
+					<tr>
+						<td>업체</td>
+						<td>업체가 아닙니다.</td>
+						<td>탈퇴가능</td>
+					</tr>
+				</c:otherwise>
+			</c:choose>
 		</tbody>
 	</table>
-	<br><hr><br>
-	<input type="button" value="회원탈퇴" id="deleteMemberBtn" onclick="deleteMemeber(${sessionScope.memberVO.memberEmail})">
+	<input type="button" value="회원탈퇴" style="margin-bottom: 40px;"  id="deleteMemberBtn" onclick="deleteMemeber(${sessionScope.memberVO.memberEmail})">
+</div>
+</section>
