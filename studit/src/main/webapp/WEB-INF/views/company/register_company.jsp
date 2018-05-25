@@ -347,7 +347,7 @@
 
 <section>
 <div class="col-sm-2" ></div>
-	<div class="col-sm-6">
+	<div class="col-sm-6" style="padding-left:0px;">
             <form action="${pageContext.request.contextPath }/company/registerCompany" method="post" class="form-horizontal" role="form" enctype="multipart/form-data">
   <div class="container">
   <h2>STUD-IT 업체 등록</h2>
@@ -371,7 +371,7 @@
                     <label for="addrSerchBtn" class="col-sm-3 control-label formCategory">주소</label>
                     <div class="col-sm-6">
                        <!--  <input type="text" id="sample6_postcode" placeholder="우편번호"> -->
-						<input type="button" name="addrSerchBtn" id="addrSerchBtn" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"  class="control-label btn btn-default">
+						<input type="button" name="addrSerchBtn" id="addrSerchBtn" onclick="sample6_execDaumPostcode()" value="주소 찾기"  class="col-sm-12 control-label btn btn-default" style="text-align:center;">
 						<input type="text" id="sample6_address" readonly="readonly"   placeholder="기본 주소" class="form-control"><br>
 						<input type="text" id="addrDetail" placeholder="상세 주소" class="form-control" required="required">
 						<input type="hidden" id="addr" name="addr">
@@ -597,13 +597,27 @@
           <!-- Modal -->
 				<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 				  <div class="modal-dialog" role="document">
-				    <div class="modal-content" style="border-radius: 5px;">
+				    <div class="modal-content" style="border-radius: 5px; width: 750px;">
 				      <div class="modal-header">
 				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				        <h4 class="modal-title" id="myModalLabel">STUD-IT 업체 및 스터디룸 정보 활용 방침</h4>
 				      </div>
-				      <div class="modal-body">
-				        아기다리 고기다리 던방학
+				      <div class="modal-body text-left">
+				        <br>
+				     &emsp;고객님이 입력한 업체 및 스터디룸 정보는 ‘정보통신망 이용촉진 및 정보보호 등에 관한 법률에 따라<br>
+				     &emsp;STUD-IT이 수집, 활용 및 취급 위탁 시 본인의 동의를 얻어야 하는 정보입니다. 입력하신 개인정보는<br>
+				     &emsp;아래의 목적 이외의 다른 용도로는 활용되지 않습니다.<br><br>
+				        <ul>
+						    <li>
+						    	1. 개인정보의 수집 및 이용목적 - 회사는 수집한 개인정보를 다음의 목적을 위해 이용합니다.
+							    <ul>
+								    <li>가. 컨텐츠 서비스 제공</li>
+								    <li>나. 상품 설명 및 상담</li>
+								    <li>다. 사생활 침해</li>
+								    <li>라. 고객 혜택 지속제공 (제휴상품/서비스 제공) 등</li>
+							    </ul>
+						    </li>
+  						</ul>	<br>
 				      </div>
 				      <div class="modal-footer">
 				        <button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
