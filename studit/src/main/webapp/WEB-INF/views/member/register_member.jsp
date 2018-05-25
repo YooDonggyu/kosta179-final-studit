@@ -3,9 +3,17 @@
 <style>
 .formCategory{
 	font-weight: bold;
+} 
+#picDiv{
+	width: 150px;
+ 	/* margin-top: 50px;  */
 }
+#picDiv img{
+	max-width: 100%;
+} 
 </style>
 <script>
+
 		// 작성: 변태섭
 		// 기능: 우편번호 API Sciprt
     function sample6_execDaumPostcode() {
@@ -51,6 +59,7 @@
     }
 </script>
 <script>
+
 		// 작성: 변태섭
 		// 기능: 회원가입 체크
 		// 로직: 주소입력체크, 이메일 형식 및 중복 체크, 비밀번호 일치 여부 체크, 연락처 체크, Submit 시 모든 조건 체크
@@ -62,6 +71,31 @@
 		var addrFlag="";
 		
 	$(document).ready(function(){
+		
+		var selFile;
+		//작성: 김유란
+		//기능: 사진파일 선택시 미리 보여주기
+		$("#picFileForm").on("change", function(e){
+			var files = e.target.files;
+			var filesArr = Array.prototype.slice.call(files);
+			
+			filesArr.forEach(function(f) {
+				if(!f.type.match("image.*")){
+					alert("이미지 파일을 선택하세요.");
+					return false;
+				}
+				
+				selFile = f;
+				
+				var reader = new FileReader();
+				reader.onload = function(e){
+					$("#picView").attr("src", e.target.result);
+				}
+				reader.readAsDataURL(f);
+			})//each
+		})//on
+
+		
 		// 주소 입력 체크
 		// 기본 주소 + 상세주소를 hidden에 담아 controller로 전달할 때 사용
 		$("#addrDetail").keyup(function(){
@@ -150,6 +184,7 @@
 			return true;
 		}
 	}
+	
 </script>
 	<section>
                 <h2>STUD-IT 회원가입</h2><br><br>
@@ -223,9 +258,12 @@
                 
                 <div class="form-group">
                     <label for="picFile" class="col-sm-2 control-label formCategory">프로필 사진</label>
-                    <div class="col-sm-9">
-                        <input type="file" id="picFile" name="picFile" class="form-control">
+                    <div class="col-sm-5" id="picFile">
+                        <input type="file" name="picFile" id="picFileForm" class="form-control">
                     </div>
+                   <div class="col-sm-4" id="picDiv">
+                    	<img id="picView">
+					</div>
                 </div>
                 
                 <div class="form-group">

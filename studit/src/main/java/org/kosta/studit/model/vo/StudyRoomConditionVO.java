@@ -13,6 +13,8 @@ public class StudyRoomConditionVO {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	
 	public StudyRoomConditionVO(int studyRoomConditionNo, String useDate, String regDate, String startTime,
 			String endTime, String state, MemberVO memberVO, StudyRoomVO studyRoomVO) {
 		super();

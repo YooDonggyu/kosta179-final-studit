@@ -32,7 +32,7 @@ public class StudyRoomController {
 	 */
 	@RequestMapping("/createStudyRoomReservation")
 	public String createStudyRoomReservationView(String studyRoomNo, Model model) {
-		StudyRoomVO studyRoomVO =  studyRoomDAO.findStudyRoomInfoByStudyRoomNo("2");
+		StudyRoomVO studyRoomVO =  studyRoomDAO.findStudyRoomInfoByStudyRoomNo("1");
 		model.addAttribute("studyRoomVO", studyRoomVO);
 		model.addAttribute("businessDay", companyService.findBusinessDayByCompanyNo(studyRoomVO.getCompanyVO().getCompanyNo()));
 		return "studyroom/create_studyRoom_reservation.tiles";

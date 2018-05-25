@@ -135,7 +135,8 @@ public class MemberController {
 		memberVO.setPassword(checkPassword);
 		try {
 			memberService.login(memberVO);
-		} catch (EmailNotFoundException | PasswordIncorrectException | IsNotMemberException mailException) {
+		} catch (EmailNotFoundException | PasswordIncorrectException | IsNotMemberException e) {
+			request.setAttribute("msg", e.getMessage());
 			return "member/login_fail";
 		}
 		return "redirect:/member/updateMemberView";

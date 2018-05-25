@@ -5,6 +5,13 @@
 .formCategory{
 	font-weight: bold;
 }	
+#picDiv{
+	width: 150px;
+ 	/* margin-top: 50px;  */
+}
+#picDiv img{
+	max-width: 100%;
+} 
 </style>
 <script>
     function execDaumPostcode() {
@@ -48,17 +55,62 @@
             }
         }).open();
     }
+    
+    $(document).ready(function() {
+	var selFile;
+	//작성: 김유란
+	//기능: 사진파일 선택시 미리 보여주기	
+		$("#picFile").on("change", function(e){
+			var files = e.target.files;
+			var filesArr = Array.prototype.slice.call(files);
+			
+			filesArr.forEach(function(f) {
+				if(!f.type.match("image.*")){
+					alert("이미지 파일을 선택하세요.");
+					return false;
+				}
+				
+				selFile = f;
+				
+				var reader = new FileReader();
+				reader.onload = function(e){
+					$("#picView").attr("src", e.target.result);
+				}
+				reader.readAsDataURL(f);
+			})//each
+		})//on
+		
+		$("#submitBtn").click(function(){
+			 if($("#name").val()==""){
+				 alert("이름을 입력하세요.");
+				 return false;
+			 }else if($("#addr").val()==""){
+				 alert("주소를 입력하세요.");
+				 return false;
+			 }else if($("#phone").val()==""){
+				 alert("전화번호를 입력하세요.");
+				 return false;
+			 }else if($("#passwordHint").val()==""){
+				 alert("비밀번호 힌트를 입력하세요.");
+				 return false;
+			 }else if($("#passwordAnswer").val()==""){
+				 alert("비밀번호 답변을 입력하세요.");
+				return false;
+			} 
+			$("#updateForm").submit();
+		})//click
+	})//ready
 </script>
 
 <div class="col-sm-3"></div>
 <div class="col-sm-6">
 	<form class="form-horizontal" role="form" method="post" action="${pageContext.request.contextPath }/member/updateMember"
-		enctype="multipart/form-data">
+		enctype="multipart/form-data" id="updateForm">
 		<br>
 		<h2>회원정보 수정</h2>
 		<br>
 		<div class="form-group">
-			<label for="firstName" class="col-sm-3 control-label formCategory">이메일</label>
+			<label for="memberEmail" class="col-sm-3 control-label">이메일</label>
 			<div class="col-sm-9">
 				<input type="email" id="memberEmail" name="memberEmail"
 					class="form-control" readonly="readonly" value="${rMemberVO.memberEmail}">
@@ -67,7 +119,7 @@
 		</div>
 
 		<div class="form-group">
-			<label for="birthDate" class="col-sm-3 control-label formCategory">이름</label>
+			<label for="name" class="col-sm-3 control-label">이름</label>
 			<div class="col-sm-9">
 				<input type="text" id="name" name="name" value="${rMemberVO.name}"
 					class="form-control">
@@ -75,7 +127,7 @@
 		</div>
 
 		<div class="form-group">
-			<label for="birthDate" class="col-sm-3 control-label formCategory">주소</label>
+			<label for="addr" class="col-sm-3 control-label">주소</label>
 			<div class="col-sm-9">
 				  <input type="button" onclick="execDaumPostcode()" value="주소 찾기" class="form-control" >
 				<input type="text" id="addr" name="addr"
@@ -84,7 +136,7 @@
 		</div>
 
 		<div class="form-group">
-			<label for="birthDate" class="col-sm-3 control-label formCategory">전화번호</label>
+			<label for="phone" class="col-sm-3 control-label">전화번호</label>
 			<div class="col-sm-9">
 				<input type="text" id="phone" name="phone" value="${rMemberVO.phone}"
 					class="form-control">
@@ -92,7 +144,7 @@
 		</div>
 
 		<div class="form-group">
-			<label for="birthDate" class="col-sm-3 control-label formCategory">비밀번호 힌트</label>
+			<label for="passwordHint" class="col-sm-3 control-label">비밀번호 힌트</label>
 			<div class="col-sm-9">
 				<input type="text" id="passwordHint" name="passwordHint"
 					value="${rMemberVO.passwordHint}" class="form-control">
@@ -100,7 +152,7 @@
 		</div>
 
 		<div class="form-group">
-			<label for="birthDate" class="col-sm-3 control-label formCategory">비밀번호 정답</label>
+			<label for="passwordAnswer" class="col-sm-3 control-label">비밀번호 정답</label>
 			<div class="col-sm-9">
 				<input type="text" id="passwordAnswer" name="passwordAnswer"
 					value="${rMemberVO.passwordAnswer}" class="form-control">
@@ -112,15 +164,15 @@
 			<div class="col-sm-5">
 				<input type="file" id="picFile" name="picFile" class="form-control" value="${rMemberVO.picPath}">
 			</div>
-			<div class="col-sm-4">
-				<img src="${pageContext.request.contextPath}/resources/upload/${rMemberVO.picPath}"
+			<div class="col-sm-4" id="picDiv">
+				<img id="picView" src="${pageContext.request.contextPath}/resources/upload/${rMemberVO.picPath}"
 					width="100px">
 			</div>
 		</div>
 
 		<div class="form-group">
 			<div class="col-sm-9 col-sm-offset-3">
-				<button type="submit" class="btn btn-primary btn-block">수정</button>
+				<button type="button" id="submitBtn" class="btn btn-primary btn-block">수정</button>
 			</div>
 		</div>
 	</form>

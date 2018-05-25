@@ -124,14 +124,14 @@ create table search_keyword(
 	hit number default 0
 )
 
-drop table big_category
+drop table big_category  cascade constraint;
 --대분류
 CREATE TABLE big_category
 (
 	big_category_no number primary key ,
 	name varchar2(100) not null 
 )
-drop sequence big_category_no_seq nocache;
+drop sequence big_category_no_seq;
 create sequence big_category_no_seq nocache;
 
 insert into big_category(big_category_no,name) values(big_category_no_seq.nextval,'취업');
@@ -148,7 +148,7 @@ CREATE TABLE small_category
 	big_category_no number not null ,
 	constraint fk_big_category_no foreign key(big_category_no) references big_category(big_category_no)
 );
-drop table small_category
+drop table small_category cascade constraint;
 drop sequence small_category_no_seq
 create sequence small_category_no_seq nocache;
 

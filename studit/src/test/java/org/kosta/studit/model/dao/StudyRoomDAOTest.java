@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kosta.studit.model.PagingBean;
 import org.kosta.studit.model.vo.CompanyVO;
+import org.kosta.studit.model.vo.StudyRoomConditionVO;
 import org.kosta.studit.model.vo.StudyRoomVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -92,5 +93,15 @@ public class StudyRoomDAOTest {
 		   map.put("studyRoomFunction", "프린트");
 		   map.put("studyRoomNo", 2);
 		   studyroomDAO.registerStudyRoomFunction(map);
+	   }
+	   
+	   @Test
+	   public void findStudyRoomConditionByStudyRoomNoAndDate() {
+		   StudyRoomConditionVO studyRoomConditionVO = new StudyRoomConditionVO();
+		   StudyRoomVO studyRoomVO = new StudyRoomVO();
+		   studyRoomVO.setStudyRoomNo(1);
+		   studyRoomConditionVO.setStudyRoomVO(studyRoomVO);
+		   studyRoomConditionVO.setUseDate("2018-05-30");
+		   System.out.println(studyroomDAO.findStudyRoomConditionByStudyRoomNoAndDate(studyRoomConditionVO));
 	   }
 }

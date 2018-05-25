@@ -25,6 +25,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="companyVO.companyNo" column="company_no"/>
 		<result property="companyVO.name" column="c_name"/>
 		<result property="companyVO.holiday" column="holiday"/>
+		<result property="companyVO.open" column="open"/>
+		<result property="companyVO.close" column="close"/>
 	</resultMap>
 	<!-- resultMap	End -->
 	
@@ -72,8 +74,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       where sc.member_email=#{value} and sc.state='예약대기'
    </select>
    
+   
+   <!-- 
+      	스터디룸 번호로 스터디룸 정보 조회
+     	@author 김유란
+     	@param studyRoomNo 스터디룸 번호
+     	@return studyRoomVO 
+    -->
    <select id="findStudyRoomInfoByStudyRoomNo" resultMap="studyRoomRM">
-		select  c.company_no, c.name as c_name, c.holiday, s.studyroom_no, s.name, s.capacity, s.price
+		select  c.company_no, c.name as c_name, c.holiday, c.open, c.close, s.studyroom_no, s.name, s.capacity, s.price
 		from company c, studyroom s
 		where c.company_no=s.company_no and s.studyroom_no=#{value}
 	</select>
@@ -132,6 +141,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		)
 	</insert>
 
+
+	<select id="findStudyRoomConditionByStudyRoomNoAndDate" parameterType="studyRoomConditionVO" resultType="studyRoomConditionVO">
+	select start_time, end_time from studyroom_condition 
+	where studyroom_no=#{studyRoomVO.studyRoomNo} and use_date=#{useDate} 
+	</select>
 
 </mapper>
  

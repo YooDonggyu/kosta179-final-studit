@@ -71,4 +71,13 @@ public class StudyRoomServiceImpl implements StudyRoomService {
 			studyroomDAO.registerStudyRoomFunction(studyRoomMap);
 		}
 	}
+
+	@Override
+	public List<StudyRoomConditionVO> findStudyRoomConditionByStudyRoomNoAndDate(String selectedDate, String studyRoomNo) {
+		StudyRoomConditionVO studyRoomConditionVO = new StudyRoomConditionVO();
+		studyRoomConditionVO.setStudyRoomVO(new StudyRoomVO(1));
+		studyRoomConditionVO.setUseDate(selectedDate);
+		return studyroomDAO.findStudyRoomConditionByStudyRoomNoAndDate(studyRoomConditionVO);
+	}
+	
 }

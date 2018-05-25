@@ -47,6 +47,7 @@ public class StudyRoomDAOImpl implements StudyRoomDAO {
 		   return template.selectList("studyroom.findStudyConditionByEmail", map);
 	   }
 	   
+	   
 	   @Override
 	   public StudyRoomVO findStudyRoomInfoByStudyRoomNo(String studyRoomNo) {
 		   return template.selectOne("studyroom.findStudyRoomInfoByStudyRoomNo", studyRoomNo);
@@ -90,4 +91,10 @@ public class StudyRoomDAOImpl implements StudyRoomDAO {
 		template.insert("studyroom.registerStudyRoomCondition", studyRoomConditionVO);
 		
 	}
+
+	   @Override
+	   public List<StudyRoomConditionVO> findStudyRoomConditionByStudyRoomNoAndDate(StudyRoomConditionVO studyRoomConditionVO) {
+		   return template.selectList("studyroom.findStudyRoomConditionByStudyRoomNoAndDate", studyRoomConditionVO);
+	   }
+
 }

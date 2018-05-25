@@ -12,7 +12,6 @@ import org.kosta.studit.exception.PasswordIncorrectException;
 import org.kosta.studit.model.dao.CompanyDAO;
 import org.kosta.studit.model.dao.MemberDAO;
 import org.kosta.studit.model.dao.RecruitDAO;
-import org.kosta.studit.model.dao.StudyRoomDAO;
 import org.kosta.studit.model.service.CompanyService;
 import org.kosta.studit.model.service.MemberService;
 import org.kosta.studit.model.service.RecruitService;
@@ -23,6 +22,7 @@ import org.kosta.studit.model.vo.RecruitPostListVO;
 import org.kosta.studit.model.vo.SmallCategoryVO;
 import org.kosta.studit.model.vo.StudyConditionListVO;
 import org.kosta.studit.model.vo.StudyRoomConditionListVO;
+import org.kosta.studit.model.vo.StudyRoomConditionVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,8 +39,6 @@ public class AjaxViewController {
 	private MemberService memberService;
 	@Autowired
 	private RecruitDAO recruitDAO;
-	@Autowired
-	private StudyRoomDAO studyroomDAO;
 	@Autowired
 	private CompanyDAO companyDAO;
 	@Autowired
@@ -91,7 +89,9 @@ public class AjaxViewController {
 
 	/**
 	 * 
-	 * 소분류 목록을 불러오는 메서드 사용자가 선택한 대분류 번호를 전달받아 소분류 목록을 즉시 로드하기 위해
+	 * 소분류 목록을 불러오는 메서드 
+	 * 사용자가 선택한 대분류 번호를 전달받아 소분류 목록을 즉시 로드
+	 * 
 	 * @author 김유란
 	 * @param bigCategoryNo  사용자가 선택한 대분류 번호
 	 * @return List<SmallCategoryVO> 소분류 번호와 이름 정보를 담은 VO 리스트
@@ -242,6 +242,7 @@ public class AjaxViewController {
 		return recruitService.findRecruitPostByCategoryOrKeyword(bigCategoryNo, smallCategoryNo, keyword, nowPage);
 	}
 	
+
 	@RequestMapping("/findCompanyListByAddressAndKeywordAndHashTagAjax")
 	@ResponseBody
 	public List<CompanyVO> findCompanyListByAddressAndKeywordAndHashTag(String addr1, String addr2, String addr3, String keywordORhashtag){
@@ -288,4 +289,12 @@ public class AjaxViewController {
 		}
 	}
 	
+
+	@RequestMapping(value="/findStudyRoomConditionByStudyRoomNoAndDate", method=RequestMethod.POST)
+	@ResponseBody
+	public List<StudyRoomConditionVO> findStudyRoomConditionByStudyRoomNoAndDate(String selectedDate, String studyRoomNo) {
+		return studyroomService.findStudyRoomConditionByStudyRoomNoAndDate(selectedDate, studyRoomNo);
+	}
+	
+
 }

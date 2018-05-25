@@ -1,4 +1,5 @@
 ﻿--업체
+drop table company cascade constraint
 CREATE TABLE company(
 	company_no number primary key,
 	name varchar2(100) not null,
@@ -23,6 +24,9 @@ CREATE TABLE company(
 	constraint fk4_member_email foreign key(member_email) references member(member_email)
 );
 create sequence company_no_seq nocache;
+
+drop sequence company_no_seq
+insert into member_position values( member_position_no_seq.nextval, '업체', 'd@d.com');
 
 insert into company(
 company_no
@@ -53,10 +57,11 @@ values(company_no_seq.nextval
 , 3
 ,'031-8017-3537'
 ,'222-18-56167'
+,sysdate
 ,'★ 분당 서현역 스터디모임 전문공간 MOiM 입니다! (예약문의: 031-8017-3537) MOiM 스터디룸을 찾아주셔서 감사합니다. MOiM은 공간이 필요하신 모든 연령대, 어떠한 모임이든 환영합니다.'
 ,'대기'
-, '09:00'
-,'22:00'
+, '09'
+,'22'
 ,'영업'
 ,'f@f.com'
 );
@@ -93,8 +98,8 @@ values(company_no_seq.nextval
 ,sysdate
 ,'★ 분당 서현역 스터디모임 전문공간 CLARA 입니다! CLARA은 공간이 필요하신 모든 연령대, 어떠한 모임이든 환영합니다.'
 ,'승인'
-, '09:00'
-,'22:00'
+, '09'
+,'22'
 ,'영업'
 ,'g@g.com'
 );
@@ -131,8 +136,8 @@ values(company_no_seq.nextval
 ,sysdate
 ,'★ IU와 함께하는 스터디공간 IU 입니다! 문의는 서정우 강사님께 하시면 되겠습니다.'
 ,'승인'
-, '09:00'
-,'22:00'
+, '09'
+,'22'
 ,'영업'
 ,'h@h.com'
 );
@@ -169,8 +174,8 @@ values(company_no_seq.nextval
 ,sysdate
 ,'★ REDVELVET와 함께하는 스터디공간 REDVELVET 입니다! 찾아주셔서 감사합니다.'
 ,'승인'
-, '09:00'
-,'22:00'
+, '09'
+,'22'
 ,'영업'
 ,'f@f.com'
 );
@@ -207,8 +212,8 @@ values(company_no_seq.nextval
 ,sysdate
 ,'★ 소녀시대와 함께하는 스터디공간 소녀시대 입니다! 오늘은 소녀시대! 감사합니다.'
 ,'승인'
-, '09:00'
-,'22:00'
+, '09'
+,'22'
 ,'영업'
 ,'g@g.com'
 );
@@ -245,8 +250,8 @@ values(company_no_seq.nextval
 ,sysdate
 ,'★ EXO 함께하는 스터디공간 EXO 입니다! 문의는 조선화군에게 하시면 됩니다.'
 ,'승인'
-, '09:00'
-,'22:00'
+, '10'
+,'22'
 ,'영업'
 ,'h@h.com'
 );
@@ -283,8 +288,8 @@ values(company_no_seq.nextval
 ,sysdate
 ,'★ 방탄소년단 함께하는 스터디공간 방탄소년단 입니다! 문의는 변태섭군에게 하시면 됩니다.'
 ,'승인'
-, '09:00'
-,'22:00'
+, '09'
+,'22'
 ,'영업'
 ,'f@f.com'
 );
@@ -321,8 +326,8 @@ values(company_no_seq.nextval
 ,sysdate
 ,'★ 여자친구가 있으신 분만 오실 수 있는 스터디공간 여자친구 입니다! 솔로지옥 커플천국.'
 ,'승인'
-, '09:00'
-,'22:00'
+, '09'
+,'22'
 ,'영업'
 ,'g@g.com'
 );
@@ -359,11 +364,13 @@ values(company_no_seq.nextval
 ,sysdate
 ,'★ 시낭송 위주의 스터디가 주인 스터디공간 시를 잊은 그대에게 입니다! 문의는 호유란님께.'
 ,'승인'
-, '09:00'
-,'22:00'
+, '09'
+,'22'
 ,'영업'
 ,'h@h.com'
 );
+
+update company set open='09', close='22'
 
 --공지사항
 CREATE TABLE com_announcement
@@ -439,6 +446,9 @@ create sequence com_business_day_seq nocache;
 
 insert into com_business_day(com_day_no, day, company_no) values(com_business_day_seq.nextval, '월', 1);
 insert into com_business_day(com_day_no, day, company_no) values(com_business_day_seq.nextval, '수', 1);
+insert into com_business_day(com_day_no, day, company_no) values(com_business_day_seq.nextval, '화', 1);
+insert into com_business_day(com_day_no, day, company_no) values(com_business_day_seq.nextval, '목', 1);
+insert into com_business_day(com_day_no, day, company_no) values(com_business_day_seq.nextval, '금', 1);
 
 select c.name, d.day 
 from com_business_day d, company c
@@ -532,6 +542,7 @@ from studyroom s, studyroom_pic p
 where s.studyroom_no=p.studyroom_no
 
 --나의 스터디룸 신청 현황
+ drop table studyroom_condition cascade constraint
 create table studyroom_condition (
 	studyroom_condition_no number primary key,
 	member_email varchar2(100) not null,
@@ -544,56 +555,72 @@ create table studyroom_condition (
 	constraint fk3_studyroom_no foreign key(studyroom_no) references studyroom(studyroom_no),
 	constraint fk5_member_email foreign key(member_email) references member(member_email)
 )
-
+drop  sequence studyroom_condition_seq
 create sequence studyroom_condition_seq nocache;
 
 insert into studyroom_condition(studyroom_condition_no, member_email, regdate, studyroom_no, start_time, end_time, state, use_date) 
 values(studyroom_condition_seq.nextval, 'a@a.com', sysdate, 1, '14:00','16:00', '예약대기', to_date('2018-05-30','YYYY-MM-DD'));
+
 insert into studyroom_condition(studyroom_condition_no, member_email, regdate, studyroom_no, start_time, end_time, state, use_date) 
 values(studyroom_condition_seq.nextval, 'b@b.com', sysdate, 1, '11:00','12:00', '예약완료', to_date('2018-05-31','YYYY-MM-DD'));
+
 insert into studyroom_condition(studyroom_condition_no, member_email, regdate, studyroom_no, start_time, end_time, state, use_date) 
 values(studyroom_condition_seq.nextval, 'b@b.com', sysdate, 1, '09:00','10:00', '예약완료', to_date('2018-10-31','YYYY-MM-DD'));
+
 insert into studyroom_condition(studyroom_condition_no, member_email, regdate, studyroom_no, start_time, end_time, state, use_date) 
 values(studyroom_condition_seq.nextval, 'c@c.com', sysdate, 1, '11:00','14:00', '예약완료', to_date('2018-09-03','YYYY-MM-DD'));
+
 insert into studyroom_condition(studyroom_condition_no, member_email, regdate, studyroom_no, start_time, end_time, state, use_date) 
 values(studyroom_condition_seq.nextval, 'a@a.com', sysdate, 1, '17:00','18:00', '예약불가', to_date('2018-12-02','YYYY-MM-DD'));
+
 insert into studyroom_condition(studyroom_condition_no, member_email, regdate, studyroom_no, start_time, end_time, state, use_date) 
 values(studyroom_condition_seq.nextval, 'c@c.com', sysdate, 1, '14:00','18:00', '예약대기', to_date('2019-03-13','YYYY-MM-DD'));
 insert into studyroom_condition(studyroom_condition_no, member_email, regdate, studyroom_no, start_time, end_time, state, use_date) 
 values(studyroom_condition_seq.nextval, 'a@a.com', sysdate, 1, '18:00','19:00', '예약불가', to_date('2019-04-20','YYYY-MM-DD'));
+
 insert into studyroom_condition(studyroom_condition_no, member_email, regdate, studyroom_no, start_time, end_time, state, use_date) 
 values(studyroom_condition_seq.nextval, 'b@b.com', sysdate, 1, '11:00','12:00', '예약완료', to_date('2018-09-09','YYYY-MM-DD'));
+
 insert into studyroom_condition(studyroom_condition_no, member_email, regdate, studyroom_no, start_time, end_time, state, use_date) 
 values(studyroom_condition_seq.nextval, 'a@a.com', sysdate, 1, '15:00','16:00', '예약대기', to_date('2018-12-31','YYYY-MM-DD'));
 
 insert into studyroom_condition(studyroom_condition_no, member_email, regdate, studyroom_no, start_time, end_time, state, use_date) 
 values(studyroom_condition_seq.nextval, 'a@a.com', sysdate, 1, '12:00','13:00', '예약불가', to_date('2018-11-12','YYYY-MM-DD'));
+
 insert into studyroom_condition(studyroom_condition_no, member_email, regdate, studyroom_no, start_time, end_time, state, use_date) 
 values(studyroom_condition_seq.nextval, 'c@c.com', sysdate, 1, '08:00','10:00', '예약대기', to_date('2019-06-13','YYYY-MM-DD'));
+
 insert into studyroom_condition(studyroom_condition_no, member_email, regdate, studyroom_no, start_time, end_time, state, use_date) 
 values(studyroom_condition_seq.nextval, 'a@a.com', sysdate, 1, '15:00','16:00', '예약불가', to_date('2019-09-20','YYYY-MM-DD'));
+
 insert into studyroom_condition(studyroom_condition_no, member_email, regdate, studyroom_no, start_time, end_time, state, use_date) 
 values(studyroom_condition_seq.nextval, 'b@b.com', sysdate, 1, '12:00','12:00', '예약완료', to_date('2018-10-09','YYYY-MM-DD'));
+
 insert into studyroom_condition(studyroom_condition_no, member_email, regdate, studyroom_no, start_time, end_time, state, use_date) 
 values(studyroom_condition_seq.nextval, 'a@a.com', sysdate, 1, '13:00','14:00', '예약대기', to_date('2018-11-30','YYYY-MM-DD'));
 
+
 insert into studyroom_condition(studyroom_condition_no, member_email, regdate, studyroom_no, start_time, end_time, state, use_date) 
 values(studyroom_condition_seq.nextval, 'a@a.com', sysdate, 1, '12:00','13:00', '예약불가', to_date('2018-11-12','YYYY-MM-DD'));
+
 insert into studyroom_condition(studyroom_condition_no, member_email, regdate, studyroom_no, start_time, end_time, state, use_date) 
 values(studyroom_condition_seq.nextval, 'c@c.com', sysdate, 1, '08:00','10:00', '예약대기', to_date('2019-06-13','YYYY-MM-DD'));
+
 insert into studyroom_condition(studyroom_condition_no, member_email, regdate, studyroom_no, start_time, end_time, state, use_date) 
 values(studyroom_condition_seq.nextval, 'a@a.com', sysdate, 1, '15:00','16:00', '예약불가', to_date('2019-09-20','YYYY-MM-DD'));
+
 insert into studyroom_condition(studyroom_condition_no, member_email, regdate, studyroom_no, start_time, end_time, state, use_date) 
 values(studyroom_condition_seq.nextval, 'b@b.com', sysdate, 1, '12:00','12:00', '예약완료', to_date('2018-10-09','YYYY-MM-DD'));
+
 insert into studyroom_condition(studyroom_condition_no, member_email, regdate, studyroom_no, start_time, end_time, state, use_date) 
 values(studyroom_condition_seq.nextval, 'a@a.com', sysdate, 1, '13:00','14:00', '예약대기', to_date('2018-11-30','YYYY-MM-DD'));
+
 
 insert into studyroom_condition(studyroom_condition_no, member_email, regdate, studyroom_no, start_time, end_time, state, use_date) 
 values(studyroom_condition_seq.nextval, 'a@a.com', sysdate, 1, '13:00','14:00', '예약대기', to_date('2018-11-30','YYYY-MM-DD'));
 
 commit
 
-
 select s.name, sc.member_email, sc.use_date, sc.start_time, sc.end_time, sc.state
 from studyroom s, studyroom_condition sc
-where s.studyroom_no=sc.studyroom_no
+where s.studyroom_no=sc.studyroom_no and s.studyroom_no=1

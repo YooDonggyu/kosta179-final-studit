@@ -52,7 +52,6 @@ $(document).ready(function() {
 
 		getConditionListByDate(today);
 		
-		
 	    $('#calendar').fullCalendar({
 
 	      schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',	

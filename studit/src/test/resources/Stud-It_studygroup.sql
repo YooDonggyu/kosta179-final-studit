@@ -6,6 +6,7 @@ create table study_group (
 	constraint fk4_recruit_post_no foreign key(recruit_post_no) references recruit_post(recruit_post_no)
 )
 
+
 create sequence study_group_seq nocache;
 select * from study_group
 
