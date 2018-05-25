@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-	<script>
+<style>
+.formCategory{
+	font-weight: bold;
+}
+</style>
+<script>
 		// 작성: 변태섭
 		// 기능: 우편번호 API Sciprt
     function sample6_execDaumPostcode() {
@@ -146,12 +151,13 @@
 		}
 	}
 </script>
+	<section>
+                <h2>STUD-IT 회원가입</h2><br><br>
 	<div class="col-sm-3" ></div>
 	<div class="col-sm-6">
             <form action="${pageContext.request.contextPath }/member/registerMember" method="post" class="form-horizontal" role="form" enctype="multipart/form-data">
-                <h2>STUD-IT 회원가입</h2>
                 <div class="form-group">
-                    <label for="memberEmail" class="col-sm-3 control-label">이메일</label>
+                    <label for="memberEmail" class="col-sm-2 control-label formCategory">이메일</label>
                     <div class="col-sm-9">	
                         <input type="email" id="memberEmail" name="memberEmail" placeholder="E-mail" class="form-control" autofocus><br>
                         <!-- <span class="help-block">Last Name, First Name, eg.: Smith, Harry</span> -->
@@ -160,14 +166,14 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="password" class="col-sm-3 control-label">비밀번호</label>
+                    <label for="password" class="col-sm-2 control-label formCategory">비밀번호</label>
                     <div class="col-sm-9">
                         <input type="password" id="password"  name= "password" placeholder="password" class="form-control">
                     </div>
                 </div>
                 
                 <div class="form-group">
-                    <label for="passwordCheck" class="col-sm-3 control-label">비밀번호 확인</label>
+                    <label for="passwordCheck" class="col-sm-2 control-label formCategory">비밀번호 확인</label>
                     <div class="col-sm-9">
                         <input type="password" id="passwordCheck"  name="passwordCheck" placeholder="retype password" class="form-control"><br>
                         <div id="checkPasswordView"></div>
@@ -175,26 +181,26 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="name" class="col-sm-3 control-label">이름</label>
+                    <label for="name" class="col-sm-2 control-label formCategory">이름</label>
                     <div class="col-sm-9">
                         <input type="text" id="name" name="name" placeholder="홍길동" class="form-control" required="required">
                     </div>
                 </div>
                 
                 <div class="form-group">
-                    <label for="addrSerchBtn" class="col-sm-3 control-label">주소</label>
+                    <label for="addrSerchBtn" class="col-sm-2 control-label formCategory">주소</label>
                     <div class="col-sm-9">
                        <!--  <input type="text" id="sample6_postcode" placeholder="우편번호"> -->
 						<input type="button" name="addrSerchBtn" id="addrSerchBtn" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"  class="control-label btn btn-default">
-						<input type="text" id="sample6_address" readonly="readonly"   placeholder="주소" class="form-control"><br>
-						<input type="text" id="addrDetail" placeholder="상세주소" class="form-control" required="required">
+						<input type="text" id="sample6_address" readonly="readonly"   placeholder="기본 주소" class="form-control"><br>
+						<input type="text" id="addrDetail" placeholder="상세 주소" class="form-control" required="required">
 						<input type="hidden" id="addr" name="addr">
                        <!--  <input type="text" id="addr" name="addr" placeholder="검색 후 상세주소를 입력하세요" class="form-control"> -->
                     </div>
                 </div>
                 
                 <div class="form-group">
-                    <label for="phone" class="col-sm-3 control-label" >전화번호</label>
+                    <label for="phone" class="col-sm-2 control-label formCategory" >전화번호</label>
                     <div class="col-sm-9">
                         <input type="text" id="phone" name="phone" maxlength="11" placeholder="01012345678" class="form-control"><br>
                         <div id="checkPhoneView"></div>
@@ -202,41 +208,60 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="passwordHint" class="col-sm-3 control-label">비밀번호 힌트</label>
+                    <label for="passwordHint" class="col-sm-2 control-label formCategory">비밀번호 힌트</label>
                     <div class="col-sm-9">
                         <input type="text" id="passwordHint" name="passwordHint" placeholder="자주 가는 곳은?" class="form-control" required="required">
                     </div>
                 </div>
                 
                 <div class="form-group">
-                    <label for="passwordAnswer" class="col-sm-3 control-label">비밀번호 정답</label>
+                    <label for="passwordAnswer" class="col-sm-2 control-label formCategory">비밀번호 정답</label>
                     <div class="col-sm-9">
                         <input type="text" id="passwordAnswer" name="passwordAnswer" placeholder="studit" class="form-control" required="required">
                     </div>
                 </div>
                 
                 <div class="form-group">
-                    <label for="picFile" class="col-sm-3 control-label">프로필 사진</label>
+                    <label for="picFile" class="col-sm-2 control-label formCategory">프로필 사진</label>
                     <div class="col-sm-9">
                         <input type="file" id="picFile" name="picFile" class="form-control">
                     </div>
                 </div>
                 
                 <div class="form-group">
-                    <div class="col-sm-9 col-sm-offset-3">
+                    <div class="col-sm-9 col-sm-offset-2">
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" name="checkAccept" id="checkAccept">I accept <a href="#">terms</a>
+                                <input type="checkbox" name="checkAccept" id="checkAccept">개인정보 활용 방침에 동의합니다.  <a data-toggle="modal" data-target="#myModal">내용 보기</a>
                             </label>
                         </div>
                     </div>
                 </div> <!-- /.form-group -->
                 
+				<!-- Modal -->
+				<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content" style="border-radius: 5px;">
+				      <div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				        <h4 class="modal-title" id="myModalLabel">STUD-IT 개인정보 활용 방침</h4>
+				      </div>
+				      <div class="modal-body">
+				        심심할 때 장난전화 하겠음.
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+                
                 <div class="form-group">
-                    <div class="col-sm-9 col-sm-offset-3">
-                        <button type="submit" class="btn btn-primary btn-block" onclick="return registerFlag()">Register</button>
+                    <div class="col-sm-9 col-sm-offset-2">
+                        <button type="submit" class="btn btn-primary btn-block" onclick="return registerFlag()">가입하기</button>
                     </div>
                 </div>
             </form> <!-- /form -->
         </div> <!-- ./container -->
         <div class="col - sm- 3" ></div>
+        </section>

@@ -7,6 +7,10 @@
 	color: rgb(255, 255, 255);
 }
 
+.formCategory{
+	font-weight: bold;
+}
+
 .tag{
 	border-radius: 40%;
 }
@@ -357,19 +361,19 @@
   <div class="tab-content">
     <div id="step1" class="tab-pane fade in active"><br><br>
     	 <div class="form-group">
-         	<label for="companyName" class="col-sm-3 control-label">상호명</label>
+         	<label for="companyName" class="col-sm-3 control-label formCategory">상호명</label>
             	 <div class="col-sm-6">	
                 	 <input type="text" id="companyName" name="companyVO.name" placeholder="Company Name" required="required" class="form-control" autofocus><br>
                  </div>
          </div>
                 
          <div class="form-group">
-                    <label for="addrSerchBtn" class="col-sm-3 control-label">주소</label>
+                    <label for="addrSerchBtn" class="col-sm-3 control-label formCategory">주소</label>
                     <div class="col-sm-6">
                        <!--  <input type="text" id="sample6_postcode" placeholder="우편번호"> -->
 						<input type="button" name="addrSerchBtn" id="addrSerchBtn" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"  class="control-label btn btn-default">
-						<input type="text" id="sample6_address" readonly="readonly"   placeholder="주소" class="form-control"><br>
-						<input type="text" id="addrDetail" placeholder="상세주소" class="form-control" required="required">
+						<input type="text" id="sample6_address" readonly="readonly"   placeholder="기본 주소" class="form-control"><br>
+						<input type="text" id="addrDetail" placeholder="상세 주소" class="form-control" required="required">
 						<input type="hidden" id="addr" name="addr">
 						<input type="hidden" id="addr1" name="companyVO.addr1">
 						<input type="hidden" id="addr2" name="companyVO.addr2">
@@ -383,7 +387,7 @@
                 </div>
                 
           <div class="form-group">
-         		<label for="tel" class="col-sm-3 control-label" >전화번호</label>
+         		<label for="tel" class="col-sm-3 control-label formCategory" >전화번호</label>
                 	 <div class="col-sm-6">
                         <input type="text" id="tel" name="companyVO.tel" maxlength="11" required="required" placeholder="021234567" class="form-control"><br>
                       <div id="checkTelView"></div>
@@ -391,7 +395,7 @@
           </div>
                 
           <div class="form-group">
-          	 <label for="license" class="col-sm-3 control-label">사업자등록번호</label>
+          	 <label for="license" class="col-sm-3 control-label formCategory">사업자등록번호</label>
             	 <div class="col-sm-6">	
                 	 <input type="text" id="license" name="companyVO.license" maxlength="10" required="required" placeholder="사업자 등록번호 10자리" class="form-control" autofocus><br>
                  <div id="checkLicenseView"></div>
@@ -400,15 +404,15 @@
    </div><!-- step1 --> 
     <div id="step2" class="tab-pane fade"><br><br>
     		<div class="form-group">
-            		<label for="url" class="col-sm-3 control-label">업체 URL</label>
-                    <div class="col-sm-9">	
+            		<label for="url" class="col-sm-3 control-label formCategory">업체 URL</label>
+                    <div class="col-sm-6">	
                         <input type="text" id="url" name="companyVO.url" placeholder="http://www.stud-it.com" required="required" class="form-control" autofocus><br>
                     </div>
             	</div>
             	
             	<div class="form-group">
-            		<label for="" class="col-sm-3 control-label">영업요일</label>
-                    <div class="col-sm-9">	
+            		<label for="" class="col-sm-3 control-label formCategory">영업요일</label>
+                    <div class="col-sm-6">	
                     	<div id="days" class="btn-group" role="group" aria-label="...">
 							<input type="button" class="btn btn-default" value="월" >
 					        <input type="button" class="btn btn-default" value="화" >
@@ -424,8 +428,8 @@
             	</div>
             	
             	<div class="form-group">
-            		<label for="" class="col-sm-3 control-label">영업 시간</label>
-                    <div class="col-sm-9">
+            		<label for="" class="col-sm-3 control-label formCategory">영업 시간</label>
+                    <div class="col-sm-6">
                     	시작 시간
                     	 <select id="timeSelect1" name="companyVO.open">
        							<option value="00"> 00 </option>
@@ -462,34 +466,37 @@
             	</div>
             	
             	<div class="form-group">
-            		<label for="" class="col-sm-3 control-label">공휴일 영업 유무</label>
-                    <div class="col-sm-9">	
+            		<label for="" class="col-sm-3 control-label formCategory">공휴일 영업 유무</label>
+                    <div class="col-sm-6">	
 						<label><input type='radio' name='companyVO.holiday' value='정상 영업' checked='checked'/>정상 영업</label>&emsp;&emsp;
 						<label><input type='radio' id="test" name='companyVO.holiday' value='휴무' />휴무</label>
                     </div>
             	</div>
             	
             	<div class="form-group text-right">
-            		<label for="intro" class="col-sm-3 control-label">업체 소개</label><span id="max-intro">0/980</span><br>
-                    <div class="col-sm-9">	
-                    	<textarea id="intro" name="companyVO.intro" class="noresize" rows="20" cols="100" required="required" maxlength="980" placeholder="업체에 대해 소개해주세요. (ex_분위기, 특별한 점 등)"></textarea>
+            		<label for="intro" class="col-sm-3 control-label formCategory">업체 소개</label>
+            		<div class="col-sm-6">
+                    	<span id="max-intro">0/980</span>
+                    </div><br>
+                    <div class="col-sm-6 text-left">	
+                    	<textarea id="intro" name="companyVO.intro" class="noresize" rows="20" cols="67" required="required" maxlength="980" placeholder="업체에 대해 소개해주세요. (ex_분위기, 특별한 점 등)"></textarea>
                     </div>
             	</div>
             	
             	<div class="form-group">
-                    <label for="picFile" class="col-sm-3 control-label">업체 사진</label>
-                    <div class="col-sm-8 picDiv">
+                    <label for="picFile" class="col-sm-3 control-label formCategory">업체 사진</label>
+                    <div class="col-sm-6 picDiv">
                         <input type="file" id="picFile" name="companyPicFile" placeholder="대표 사진" class = "form-control picFile">
                     </div>
                     <div class="col-sm-1"><input type="button" id="fileBtn" value="추가" class = "btn btn-default"></div>
                 </div>
                 
                 <div class="form-group">
-                    <label for="hashtag" class="col-sm-3 control-label">해시태그</label>
+                    <label for="hashtag" class="col-sm-3 control-label formCategory">해시태그</label>
                     <div class="col-sm-4">
                         <input type="text" id="hashtag" name="hashtag" placeholder="독서, 로맨틱, 성공적 (최대 3가지)" class="form-control"><br>
                         </div>
-                         <div class="col-sm-5">
+                         <div class="col-sm-5 text-left">
                         <span id="tag-ex"></span>
                     </div>
                 </div>
@@ -499,41 +506,42 @@
     	<h3>스터디룸 등록</h3><br><br>
     	
     	 <div class="form-group">
-	          	 <label for="studyRoomName" class="col-sm-3 control-label">스터디룸 명</label>
-	             <div class="col-sm-9">
+	          	 <label for="studyRoomName" class="col-sm-3 control-label formCategory">스터디룸 명</label>
+	             <div class="col-sm-6">
 	                 <input type="text" id="studyRoomName" name="name" required="required" placeholder="무궁화, 나팔꽃" class = "form-control">
 	             </div>
 	         </div>
                 
           <div class="form-group">
-              <label for="capacity" class="col-sm-3 control-label">수용 인원</label>
-              <div class="col-sm-2">
-                  <input type="number" id="capacity" name="capacity" required="required" placeholder="6" class = "form-control">
-              </div>
-              <label for="price" class="col-sm-2 control-label">이용 가격</label>
-              <div class="col-sm-2">
-                  <input type="number" id="price" name="price" required="required" placeholder="시간당 가격" class = "form-control">
-                  </div>
-                  <div class="col-sm-1">
-                  원/시간
+              <label for="capacity" class="col-sm-3 control-label formCategory">수용 인원</label>
+              <div class="capacityPriceForm text-left">
+              		<div class="col-sm-1">
+                		  <input type="number" min="1" id="capacity" name="capacity" required="required" placeholder="6" class = "form-control">
+              		</div>
+              		<label for="" class="col-sm-1 control-label" style="text-align:left; padding-left:0px;">명</label>
+              		<label for="price" class="col-sm-2 control-label formCategory">이용 가격</label>
+              		<div class="col-sm-2">
+                  		  <input type="number" id="price" name="price" required="required" placeholder="시간당 가격" class = "form-control">
+                  	</div>
+                 	<label for="" class="col-sm-1 control-label" style="text-align:left; padding-left:0px;">원/시간</label>
               </div>
           </div>
           
            <div class="form-group">
-              <label for="" class="col-sm-3 control-label">제공 기능</label>
+              <label for="" class="col-sm-3 control-label formCategory">제공 기능</label>
               <div class="col-sm-8 srfunction">
               	<table style="width: 100%;">
               		<tbody>
               			<tr>
-              				<td>
+              				<td style="width: 145px;">
               					<input type="checkbox" id="function1" name="studyRoomFunction" value="에어컨">
 		              			<label for="function1" class=" control-label">에어컨</label>
               				</td>
-              				<td>
+              				<td style="width: 145px;">
               					<input type="checkbox" id="function2" name="studyRoomFunction" value="주소지 등록">
 		              			<label for="function2" class=" control-label">주소지 등록</label>
               				</td>
-              				<td>
+              				<td style="width: 180px;">
               					<input type="checkbox" id="function3" name="studyRoomFunction" value="카페 및 레스토랑">
 		              			<label for="function3" class="control-label">카페 및 레스토랑</label>
               				</td>
@@ -562,32 +570,50 @@
           </div>
           
           <div class="form-group">
-              <label for="content" class="col-sm-3 control-label">내용</label>
-              <div class="col-sm-8">
-                  <textarea id="content" name="content" class="noresize" rows="6" cols="60" maxlength="179" required="required" placeholder="스터디룸에 대해 소개해주세요. (ex_이용인원, 목적 등)"></textarea>
+              <label for="content" class="col-sm-3 control-label formCategory">스터디룸 소개</label>
+              <div class="col-sm-6 text-left">
+                  <textarea id="content" name="content" class="noresize" rows="6" cols="67" maxlength="179" required="required" placeholder="스터디룸에 대해 소개해주세요. (ex_이용인원, 목적 등)"></textarea>
               </div>
           </div>
           
           <div class="form-group">
-              <label for="studyRoomPicFile" class="col-sm-3 control-label">스터디룸 사진</label>
-              <div class="col-sm-8 studyRoomPicDiv">
+              <label for="studyRoomPicFile" class="col-sm-3 control-label formCategory">스터디룸 사진</label>
+              <div class="col-sm-6 studyRoomPicDiv">
                   <input type="file" id="studyRoomPicFile" name="studyRoomPicFile" placeholder="대표 사진" class = "form-control studyRoomPicFile">
               </div>
-               <div class="col-sm-1"><input type="button" id="studyRoomFileBtn" value="추가" class = "btn btn-default"></div>
+               <div class="col-sm-1" style="padding-left:0px;"><input type="button" id="studyRoomFileBtn" value="추가" class = "btn btn-default" ></div>
           </div>
           
           <div class="form-group">
-                    <div class="col-sm-9 col-sm-offset-3">
+                    <div class="col-sm-6 col-sm-offset-3">
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" name="checkAccept" id="checkAccept">I accept <a href="#">terms</a>
+                                <input type="checkbox" name="checkAccept" id="checkAccept">업체 및 스터디룸 정보 활용 방침에 동의합니다. <a data-toggle="modal" data-target="#myModal">내용 보기</a>
                             </label>
                         </div>
                     </div>
                 </div>
           
+          <!-- Modal -->
+				<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content" style="border-radius: 5px;">
+				      <div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				        <h4 class="modal-title" id="myModalLabel">STUD-IT 업체 및 스터디룸 정보 활용 방침</h4>
+				      </div>
+				      <div class="modal-body">
+				        아기다리 고기다리 던방학
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+          
           <div class="form-group">
-          	 <div class="col-sm-5 col-sm-offset-3">
+          	 <div class="col-sm-6 col-sm-offset-3">
                         <button type="submit" class="btn btn-primary btn-block" onclick="return registerFlag()">등록하기</button>
              </div>
           </div>
