@@ -54,7 +54,6 @@ public interface RecruitDAO {
 
 	void registerRecruitDay(Map<String, Object> map);
 
-	void updateDeleteStudyConditionByRecruitNo(int recruitNo);
 
 	void registerCommentByRecruitNo(Map<String, Object> map);
 
@@ -70,5 +69,10 @@ public interface RecruitDAO {
 
 
 	List<RecruitPostVO> findRecruitPostByPagingBeanAndData(Map<String, Object> dataMap);
+
+	public void updateDeleteRecruitPostByRecruitNo(int recruitNo);
+
+
+	void updateDeleteStudyConditionByRecruitNo(int recruitNo);
 
 }

@@ -320,12 +320,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		모집중인 게시글 삭제할 때 상태를 변경.(모집중 -> 삭제)
 		@author 유동규
 	 -->
-	<update id="updateDeleteStudyConditionByRecruitNo">
+	<update id="updateDeleteRecruitPostByRecruitNo">
 		update recruit_post
 		set condition = '삭제'
 		where recruit_post_no = #{value}
 	</update>
 	
+	<update id="updateDeleteStudyConditionByRecruitNo">
+		update study_condition
+		set state = '삭제'
+		where recruit_post_no = #{value} 
+	</update>
 	
 	<!-- 
 		모집 게시글에 따른 댓글 등록

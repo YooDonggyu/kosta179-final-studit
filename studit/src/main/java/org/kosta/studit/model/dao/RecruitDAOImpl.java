@@ -214,6 +214,10 @@ public class RecruitDAOImpl implements RecruitDAO {
 	 * @param recruitNo 모집 게시글 번호
 	 */
 	@Override
+	public void updateDeleteRecruitPostByRecruitNo(int recruitNo) {
+		template.update("recruit.updateDeleteRecruitPostByRecruitNo", recruitNo);
+	}
+	@Override
 	public void updateDeleteStudyConditionByRecruitNo(int recruitNo) {
 		template.update("recruit.updateDeleteStudyConditionByRecruitNo", recruitNo);
 	}

@@ -55,6 +55,9 @@ th{
 						<c:when test="${'진행중' eq list.state}">
 							<td><input type="button" value="${list.state }" class="btn btn-warning stateBtn"></td>
 						</c:when>
+						<c:when test="${'삭제' eq list.state}">
+							<td><input type="button" value="${list.state }" class="btn btn-danger stateBtn"></td>
+						</c:when>
 					</c:choose>
 				</tr>
 			</c:forEach>
@@ -92,7 +95,20 @@ th{
 					<td>${srlist.startTime }</td>
 					<td>${srlist.endTime }</td>
 					<td>${srlist.regDate }</td>
-					<td><input type="button" value="${srlist.state }" class="btn btn-secondary"></td>
+					<c:choose>
+						<c:when test="${'예약대기' eq srlist.state}">
+							<td><input type="button" value="${srlist.state }" class="btn btn-default stateBtn"></td>
+						</c:when>
+						<c:when test="${'예약완료' eq srlist.state}">
+							<td><input type="button" value="${srlist.state }" class="btn btn-sucess stateBtn"></td>
+						</c:when>
+						<c:when test="${'예약불가' eq list.state}">
+							<td><input type="button" value="${srlist.state }" class="btn btn-danger stateBtn"></td>
+						</c:when>
+						<c:when test="${'예약취소' eq list.state}">
+							<td><input type="button" value="${srlist.state }" class="btn btn-warning stateBtn"></td>
+						</c:when>
+					</c:choose>
 				</tr>
 			</c:forEach>
 		</tbody>
