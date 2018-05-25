@@ -140,6 +140,10 @@
 			location.href="${pageContext.request.contextPath}/recruit/createRecruitPostView";
 		});
 		
+		$("#keyword").keypress(function(e){
+			if(e.which == 13)
+				$("#recruitSrchBtn").click();
+		});
 	})//ready
 	
 	//작성: 유동규
