@@ -13,7 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="findMyLeadStudyGroupCountByEmail" parameterType="string" resultType="int">
 		select count(sg.sg_no)
 		from recruit_post rp, study_group sg, sg_member sm
-		where rp.member_email=#{value} and rp.recruit_post_no=sg.recruit_post_no and sg.sg_no=sm.sg_no and sm.position='팀장'
+		where rp.member_email=#{value} and rp.recruit_post_no=sg.recruit_post_no and sg.sg_no=sm.sg_no and sm.position='팀장' and sm.member_email=#{value}
 	</select>
 	
 	<!-- 

@@ -30,10 +30,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 @return string 승인대기중인 예약건수 
 	-->
 	<select id="findWaitReservationByEmail" resultType="string">
-		select count(sc.state)
-		from studyroom_condition sc, studyroom sr, company com
-		where sc.state='예약대기' and sc.studyroom_no=sr.studyroom_no
-		and sr.company_no=com.company_no and com.member_email=#{value}
+		select count(*)
+		from (
+				select s.studyroom_no
+				from company c, studyroom s
+				where c.company_no = s.company_no
+				and c.member_email = #{value}
+			)st,studyroom_condition sc
+		where sc.studyroom_no = st.studyroom_no and sc.state='예약대기' 
 	</select>
 	
 	<!-- 
