@@ -100,7 +100,7 @@
 		// 기본 주소 + 상세주소를 hidden에 담아 controller로 전달할 때 사용
 		$("#addrDetail").keyup(function(){
 			if($("#sample6_address").val()==""){
-				alert("먼저 [우편번호 찾기]를 진행해주세요.");
+				alert("먼저 [주소 찾기]를 진행해주세요.");
 				$("#addrDetail").val("").focus();
 				addrFlag="";
 			}else{

@@ -130,8 +130,7 @@
 			<label for="addr" class="col-sm-3 control-label">주소</label>
 			<div class="col-sm-9">
 				  <input type="button" onclick="execDaumPostcode()" value="주소 찾기" class="form-control" >
-				<input type="text" id="addr" name="addr"
-					value="${rMemberVO.addr}" class="form-control">
+				<input type="text" id="addr" name="addr" value="${rMemberVO.addr}" class="form-control">
 			</div>
 		</div>
 

@@ -26,7 +26,12 @@
 .noresize {
   resize: none; /* 사용자 임의 변경 불가 */
 }
+
+.map{
+	display: view;
+}
 </style>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7089f989ad92f0b98ff8257f8cc869ef&libraries=services"></script>
 <script>
 		// 작성: 변태섭
 		// 기능: 우편번호 API Sciprt
@@ -72,6 +77,7 @@
         }).open();
     }
 </script>
+
 <script>
 	// 작성: 변태섭
 	// 기능: 업체 등록 체크
@@ -235,13 +241,13 @@
 		// 기본 주소 + 상세주소를 hidden에 담아 controller로 전달할 때 사용
 		var addr = '';
 		$("#addrDetail").keyup(function(){
-			if($("#sample6_address").val()==""){
-				alert("먼저 [우편번호 찾기]를 진행해주세요.");
+			if($("#sample5_address").val()==""){
+				alert("먼저 [주소 찾기]를 진행해주세요.");
 				$("#addrDetail").val("").focus();
 			}else{
-			console.log("addr1: "+$("#sample6_address").val());
+			console.log("addr1: "+$("#sample5_address").val());
 			console.log("addDetail: "+$("#addrDetail").val());
-			addr = $("#sample6_address").val()+" "+$("#addrDetail").val();
+			addr = $("#sample5_address").val()+" "+$("#addrDetail").val();
 			console.log("addr: "+addr);
 			var addr4='';
 			for(var i=0; i<addr.split(' ').length; i++){
@@ -302,6 +308,12 @@
 				console.log('introFlag: '+introFlag);
 			}
 		});//on
+		
+		$('#sample6_address').on('change',function(){
+		/* 	console.log($('#map').attr('map')); */
+		console.log('change');
+			mapAddr = $(this).val();
+		});
 	});//ready
 
 	// submit Btn
@@ -371,14 +383,15 @@
                     <label for="addrSerchBtn" class="col-sm-3 control-label formCategory">주소</label>
                     <div class="col-sm-6">
                        <!--  <input type="text" id="sample6_postcode" placeholder="우편번호"> -->
-						<input type="button" name="addrSerchBtn" id="addrSerchBtn" onclick="sample6_execDaumPostcode()" value="주소 찾기"  class="col-sm-12 control-label btn btn-default" style="text-align:center;">
-						<input type="text" id="sample6_address" readonly="readonly"   placeholder="기본 주소" class="form-control"><br>
+						<input type="button" name="addrSerchBtn" id="addrSerchBtn" onclick="sample5_execDaumPostcode()" value="주소 찾기"  class="col-sm-12 control-label btn btn-default" style="text-align:center;">
+						<input type="text" id="sample5_address" readonly="readonly"   placeholder="기본 주소" class="form-control"><br>
 						<input type="text" id="addrDetail" placeholder="상세 주소" class="form-control" required="required">
 						<input type="hidden" id="addr" name="addr">
 						<input type="hidden" id="addr1" name="companyVO.addr1">
 						<input type="hidden" id="addr2" name="companyVO.addr2">
 						<input type="hidden" id="addr3" name="companyVO.addr3">
 						<input type="hidden" id="addr4" name="companyVO.addr4" value="임시">
+						<div id="map" style="height:300px;margin-top:10px;display:none"></div>
 						
 						<!-- map 위도, 경도 임시 -->
 						<input type="hidden" name="companyVO.latitude" value="10">
@@ -638,3 +651,67 @@
         </div> <!-- /container -->
      <div class="col - sm- 3" ></div>  
 </section>
+<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7089f989ad92f0b98ff8257f8cc869ef&libraries=services"></script>
+<script>
+    var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+        mapOption = {
+            center: new daum.maps.LatLng(37.537187, 127.005476), // 지도의 중심좌표
+            level: 5 // 지도의 확대 레벨
+        };
+
+    //지도를 미리 생성
+    var map = new daum.maps.Map(mapContainer, mapOption);
+    //주소-좌표 변환 객체를 생성
+    var geocoder = new daum.maps.services.Geocoder();
+    //마커를 미리 생성
+    var marker = new daum.maps.Marker({
+        position: new daum.maps.LatLng(37.537187, 127.005476),
+        map: map
+    });
+
+    function sample5_execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var fullAddr = data.address; // 최종 주소 변수
+                var extraAddr = ''; // 조합형 주소 변수
+
+                // 기본 주소가 도로명 타입일때 조합한다.
+                if(data.addressType === 'R'){
+                    //법정동명이 있을 경우 추가한다.
+                    if(data.bname !== ''){
+                        extraAddr += data.bname;
+                    }
+                    // 건물명이 있을 경우 추가한다.
+                    if(data.buildingName !== ''){
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+                    // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
+                    fullAddr += (extraAddr !== '' ? ' ('+ extraAddr +')' : '');
+                }
+
+                // 주소 정보를 해당 필드에 넣는다.
+                document.getElementById("sample5_address").value = fullAddr;
+                // 주소로 상세 정보를 검색
+                geocoder.addressSearch(data.address, function(results, status) {
+                    // 정상적으로 검색이 완료됐으면
+                    if (status === daum.maps.services.Status.OK) {
+
+                        var result = results[0]; //첫번째 결과의 값을 활용
+
+                        // 해당 주소에 대한 좌표를 받아서
+                        var coords = new daum.maps.LatLng(result.y, result.x);
+                        // 지도를 보여준다.
+                        mapContainer.style.display = "block";
+                        map.relayout();
+                        // 지도 중심을 변경한다.
+                        map.setCenter(coords);
+                        // 마커를 결과값으로 받은 위치로 옮긴다.
+                        marker.setPosition(coords)
+                    }
+                });
+            }
+        }).open();
+    }
+</script>

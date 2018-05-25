@@ -12,7 +12,7 @@ $(function () {
     sliders();
     menuSliding();
     utils();
-    map();
+   // map();
     demo();
 
 });
