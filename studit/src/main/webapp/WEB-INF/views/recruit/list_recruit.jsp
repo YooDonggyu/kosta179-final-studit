@@ -3,7 +3,10 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 
 
-<section class="signup-section text-center no-padding-bottom">
+<section class="signup-section text-center" >
+<!-- style="background-image: url('${pageContext.request.contextPath}/resources/assets/img/recruit-main.png');  background-position: center; background-repeat:no-repeat; background-size: 100% 100%;" -->
+
+
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
@@ -98,6 +101,9 @@
 			</c:if>
 		</ul>	 		
 	</div> 	
+	
+	
+	<input type="hidden" id="hiddenNowPage" value="${recruitPostListVO.pagingBean.nowPage}">
 </section>
 
 <script>
@@ -204,6 +210,9 @@
 					$("#divData").append("<li><a href=\"javascript:void(0);\" onclick=\"return categoryCheck("+pData+")\" >&raquo;</a></li>");
 				}
 				
+				//nowPage 설정
+				$("#hiddenNowPage").val(pagingData.nowPage);
+				
 				//검색한 키워드를 테이블 상단에 뿌려주기 위한 작업
 				$("#resultData").empty();
 				if(bigCategory > 0){
@@ -233,8 +242,9 @@
 	//기능: 상세글 보기로 이동
 	//로직: 테이블의 특정 행을 클릭하면 글번호가 전송되어 해당 글의 상세페이지로 이동한다. 
 	function findDetailRecruitPostInfoByRecruitNo(recruitNo) {
-		location.href=
-			"${pageContext.request.contextPath }/recruit/findDetailRecruitPostInfoByRecruitNo?recruitNo="+recruitNo;
+		var nowPage= $("#hiddenNowPage").val();
+		 location.href=
+			"${pageContext.request.contextPath }/recruit/findDetailRecruitPostInfoByRecruitNo?recruitNo="+recruitNo+"&nowPage="+nowPage ; 
 	}
 	 	
 </script>

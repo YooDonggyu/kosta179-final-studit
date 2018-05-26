@@ -103,8 +103,9 @@ public class MemberController {
 			// String path =
 			// request.getSession(false).getServletContext().getRealPath("upload"); 개발 완료 후
 			// 적용
-			String path = "D:/KOSTA/workspace/resources/upload/"; //변태섭 경로
+//			String path = "D:/KOSTA/workspace/resources/upload/"; //변태섭 경로
 			//String path = "C:/java-kosta/framework-workspace2/resources/upload/";
+			String path ="C:/java-kosta/project/Final/kosta179-final-studit/studit/src/main/webapp/resources/upload";//동규
 			try {
 				picFile.transferTo(new File(path, fileName));// 지정 경로에 실제 파일 저장
 				memberVO.setPicPath(fileName);
@@ -182,7 +183,8 @@ public class MemberController {
 			// String path =
 			// request.getSession(false).getServletContext().getRealPath("upload"); 개발 완료 후
 			// 적용
-			String path = "C:/java-kosta/framework-workspace2/resources/upload";
+			/*String path = "C:/java-kosta/framework-workspace2/resources/upload";*/
+			String path ="C:/java-kosta/project/Final/kosta179-final-studit/studit/src/main/webapp/resources/upload";
 			try {
 				picFile.transferTo(new File(path, fileName));// 지정 경로에 실제 파일 저장
 				memberVO.setPicPath(fileName);

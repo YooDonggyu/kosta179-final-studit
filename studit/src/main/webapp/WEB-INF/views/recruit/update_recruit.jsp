@@ -3,9 +3,124 @@
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
     
     
-    <section>
+    <section style="height: 750px;">
+    
+    
+	<div class="col-sm-2"></div>
+	<div class="col-sm-8">
+	
+
 	<form class="updateRecruitForm" action="${pageContext.request.contextPath}/recruit/updateRecruitPostInfoByRecruitNo" 
-	method="post" onsubmit="return checkSubmit()">
+		method="post" onsubmit="return checkSubmit()">
+			<input type="hidden" name="recruitPostNo"  value="${recruitInfo.detail.recruitPostNo}">
+			<div class="form-group">
+				<div class="col-sm-12">
+					<h3>수정</h3>
+				</div>
+			</div><!-- title from-group -->
+			<div class="form-group" >
+				<label for="title" class="col-sm-3 control-label">카테고리</label>
+				<div class="col-sm-4">
+					<select name="smallCategoryVO.bigCategoryVO.bigCategoryNo" id="bigCategory" class="form-control">
+			 		<option value="">대분류</option> 
+					<c:forEach	items="${bigCategoryList}" var="bc">
+						<c:choose>
+							<c:when test="${recruitInfo.detail.smallCategoryVO.bigCategoryVO.name == bc.name}">
+								<option value="${bc.bigCategoryNo}" selected="selected">${bc.name}</option>
+							</c:when>
+							<c:otherwise>
+								<option value="${bc.bigCategoryNo}">${bc.name}</option> 
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
+					</select><!-- 대분류 --> 
+				</div><!-- 대분류 col -->
+				<div class="col-sm-3">
+					<select name="smallCategoryVO.smallCategoryNo" id="smallCategory" class="form-control">
+		 			<option value="">소분류</option> 
+						<c:forEach	items="${smallCategoryList}" var="sc">
+							<c:choose>
+								<c:when test="${recruitInfo.detail.smallCategoryVO.name == sc.name}">
+									<option value="${sc.smallCategoryNo}" selected="selected">${sc.name}</option>
+								</c:when>
+								<c:otherwise>
+									<option value="${sc.smallCategoryNo}" >${sc.name}</option> 
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+				</select><!-- 소분류 --> 
+				</div><!-- 소분류 col -->
+			</div><!-- 카테고리 form-group -->
+			<br>
+			<div class="form-group">
+				<label for="title" class="col-sm-3">제목</label>
+				<div class="col-sm-7">
+                        <input type="text" name="title" id="title" class="form-control" value="${recruitInfo.detail.title}">
+                    </div>
+			</div><!-- title from-group -->
+			<div class="form-group">
+				<label for="title" class="col-sm-3">내용</label>
+				<div class="col-sm-7">
+                         <textarea style="width: 100%; height: 300px;" name="content" id="content"  class="form-control" >${recruitInfo.detail.content}</textarea>
+                    </div>
+			</div><!-- content from-group -->
+			<div class="form-group">
+				<label for="title" class="col-sm-3">지역</label>
+				<div class="col-sm-7">
+                         <input type="text" name="location"  id="location" class="form-control"  value="${recruitInfo.detail.location }">
+                    </div>
+			</div><!-- location from-group -->
+			<div class="form-group">
+				<label for="title" class="col-sm-3">희망인원</label>
+				<div class="col-sm-7">
+                        <input type="text" name="capacity"  id="capacity" class="form-control" value="${recruitInfo.detail.capacity}">
+                    </div>
+			</div><!-- capacity from-group -->
+			
+			<div class="form-group">
+                    <label for="day" class="col-sm-3 control-label">모집요일</label>
+                    <div class="col-sm-7">
+						<label class="checkbox-inline">
+							<input type="checkbox" name="day" value="월" >월
+						</label>
+						<label class="checkbox-inline">
+							<input type="checkbox" name="day" value="화">화
+						</label>
+						<label class="checkbox-inline">
+							<input type="checkbox" name="day" value="수">수
+						</label>
+						<label class="checkbox-inline">
+							<input type="checkbox" name="day" value="목">목
+						</label>
+						<label class="checkbox-inline">
+							<input type="checkbox" name="day" value="금">금
+						</label>
+						<label class="checkbox-inline">
+							<input type="checkbox" name="day" value="토">토
+						</label>
+						<label class="checkbox-inline">
+							<input type="checkbox" name="day" value="일">일
+						</label>
+                    </div>
+                </div>
+				
+			<div class="form-group">
+				<div class="col-sm-3"></div>
+				<div class="col-sm-7">
+					<div class="col-sm-5"><input type="submit" class="btn btn-primary" value="수정" ></div>
+					<div class="col-sm-5"><a href="${pageContext.request.contextPath}/recruit/findDetailRecruitPostInfoByRecruitNo?recruitNo=${recruitInfo.detail.recruitPostNo}" class="btn btn-primary" id="updateCancelBtn">취소</a></div>
+				</div>
+			</div>			
+	</form><!-- form -->
+	</div><!-- col-8 -->
+	<div class="col-sm-2"></div>
+	
+	
+	<%-- 
+	
+	
+	
+	
 	  <!-- Category -->
 	  <select name="smallCategoryVO.bigCategoryVO.bigCategoryNo" id="bigCategory" class="form-control">
  		<option value="">대분류</option> 
@@ -51,8 +166,8 @@
 		<!-- memberName -->
 		name : <input type="text" readonly="readonly"value="${recruitInfo.detail.memberVO.name } ">
 		<br><br>
-	<%-- </form>
-	<form class="updateRecruitForm" action="${pageContext.request.contextPath}/recruit/updateRecruitPostInfoByRecruitNo" method="post"> --%>
+	</form>
+	<form class="updateRecruitForm" action="${pageContext.request.contextPath}/recruit/updateRecruitPostInfoByRecruitNo" method="post">
 		<!-- day -->
 		[수정] day : 
 		<!--<input type="text" name=""  value="${recruitInfo.day} ">
@@ -76,12 +191,12 @@
 			<input type="checkbox" name="day" value="토">토
 		</label>
 		<label class="checkbox-inline">
-			<input type="checkbox" name="day" value="일">일요일
+			<input type="checkbox" name="day" value="일">일
 		</label>
 		<br><br>
 		<input type="submit" class="btn btn-primary" value="수정" >
 		<a href="${pageContext.request.contextPath}/recruit/findDetailRecruitPostInfoByRecruitNo?recruitNo=${recruitInfo.detail.recruitPostNo}" class="btn btn-primary" id="updateCancelBtn">취소</a>
-		</form>
+		</form> --%>
     
     </section>
     
@@ -160,6 +275,8 @@
 			alert("희망인원을 입력하세요");
 			return false;
 		}
+		
+		
 	}
 </script>
     

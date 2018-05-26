@@ -95,7 +95,8 @@ th{
 					<td>${srlist.startTime }</td>
 					<td>${srlist.endTime }</td>
 					<td>${srlist.regDate }</td>
-					<c:choose>
+					<td><input type="button" value="${srlist.state }" class="btn btn-secondary"></td>
+<%-- 					<c:choose>
 						<c:when test="${'예약대기' eq srlist.state}">
 							<td><input type="button" value="${srlist.state }" class="btn btn-default stateBtn"></td>
 						</c:when>
@@ -108,7 +109,7 @@ th{
 						<c:when test="${'예약취소' eq list.state}">
 							<td><input type="button" value="${srlist.state }" class="btn btn-warning stateBtn"></td>
 						</c:when>
-					</c:choose>
+					</c:choose> --%>
 				</tr>
 			</c:forEach>
 		</tbody>
@@ -129,6 +130,7 @@ th{
 	$(document).ready(function(){
 		var roomPageNo = 1;
 		var recruitPageNo = 1;
+		
 		$("#roompbBtn").click(function(){
 			roomPageNo += 1;
 			$.ajax({

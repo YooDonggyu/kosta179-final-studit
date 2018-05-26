@@ -135,7 +135,8 @@ public class CompanyController {
 			     //String path = request.getSession(false).getServletContext().getRealPath("upload"); 개발 완료 후 적용
 			     
 			     //태섭 경로
-			     String path = "D:/KOSTA/workspace/resources/upload/company/";
+			     /*String path = "D:/KOSTA/workspace/resources/upload/company/";*/
+			     String path ="C:/java-kosta/project/Final/kosta179-final-studit/studit/src/main/webapp/resources/upload";
 			     try {
 			    	companyPicFile[i].transferTo(new File(path, fileName));//지정 경로에 실제 파일 저장
 			    	if(i==0) {
@@ -158,7 +159,7 @@ public class CompanyController {
 				     //String path = request.getSession(false).getServletContext().getRealPath("upload"); 개발 완료 후 적용
 				     
 				     //태섭 경로
-				     String path = "D:/KOSTA/workspace/resources/upload/studyroom/";
+				     String path ="C:/java-kosta/project/Final/kosta179-final-studit/studit/src/main/webapp/resources/upload";
 				     try {
 				    	 studyRoomPicFile[i].transferTo(new File(path, fileName));//지정 경로에 실제 파일 저장
 				    	 studyRoomPicFileList.add(fileName);

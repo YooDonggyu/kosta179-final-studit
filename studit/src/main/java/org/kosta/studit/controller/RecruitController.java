@@ -89,8 +89,13 @@ public class RecruitController {
 			hitList.add(recruitNo);
 		}
 		// 값 가져오기
+		int nowPage = 1;
+		if(request.getParameter("nowPage") != null) {
+			nowPage = Integer.parseInt(request.getParameter("nowPage"));
+		}
 		Map<String, Object> map = recruitService.findRecruitPostDetailByRecruitNo(sessionEmail, recruitNo);
 		model.addAttribute("recruitInfo", map);
+		model.addAttribute("nowPage", nowPage);
 		return "recruit/detail_recruit.tiles";
 	}
 
@@ -126,6 +131,8 @@ public class RecruitController {
 		for (int i = 0; i < day.split(",").length; i++) {
 			days.add(day.split(",")[i]);
 		}
+		System.out.println(day);
+		System.out.println(days);
 		// 카테고리, 상세정보, 요일 UPDATE
 		recruitService.updateRecruitPostInfoByRecruitNo(recruitPostVO, days);
 		return "redirect:/recruit/findDetailRecruitPostInfoByRecruitNo?recruitNo=" + recruitPostVO.getRecruitPostNo();
