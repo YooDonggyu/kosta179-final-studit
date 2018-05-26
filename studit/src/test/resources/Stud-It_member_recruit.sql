@@ -6,55 +6,42 @@ CREATE TABLE member
     member_email varchar2(100) primary key, 
     password varchar2(100) not null, 
     name varchar2(100) not null, 
-    addr varchar2(100) not null, 
+    primary_addr varchar2(100) not null,
+    detail_addr varchar2(100) not null,
     phone varchar2(100) not null, 
     regdate DATE not null, 
     password_hint varchar2(100) not null, 
     password_answer varchar2(100) not null, 
     pic_path varchar2(300) default 'default.png' 
 );
+create sequence member_email_seq;
 select * from member
 commit
-insert into member(member_email,password,name,addr,phone,regdate,password_hint,password_answer) 
-values('a@a.com','1','아이유','판교','010-1234-5678',sysdate,'내 나이는?','25');
-insert into member(member_email,password,name,addr,phone,regdate,password_hint,password_answer) 
-values('b@b.com','2','가','서울','010-2143-1566',sysdate,'1?','2');
-insert into member(member_email,password,name,addr,phone,regdate,password_hint,password_answer) 
-values('c@c.com','3','나','대전','010-1684-8832',sysdate,'2?','3');
-insert into member(member_email,password,name,addr,phone,regdate,password_hint,password_answer) 
-values('d@d.com','4','다','대구','010-9562-8465',sysdate,'3?','4');
-insert into member(member_email,password,name,addr,phone,regdate,password_hint,password_answer) 
-values('tico99@naver.com','1234','admin','유스페이스','010-5648-8978',sysdate,'코스타','179기');
-insert into member(member_email,password,name,addr,phone,regdate,password_hint,password_answer) 
-values('e@e.com','5','라','부산','010-7837-7867',sysdate,'4?','5');
-insert into member(member_email,password,name,addr,phone,regdate,password_hint,password_answer) 
-values('f@f.com','6','마','구미','010-4534-2783',sysdate,'5?','6');
-insert into member(member_email,password,name,addr,phone,regdate,password_hint,password_answer) 
-values('g@g.com','7','바','제천','010-4545-7383',sysdate,'6?','7');
-insert into member(member_email,password,name,addr,phone,regdate,password_hint,password_answer) 
-values('h@h.com','8','사','울릉도','010-7507-7867',sysdate,'7?','8');
-insert into member(member_email,password,name,addr,phone,regdate,password_hint,password_answer) 
-values('i@i.com','9','아','제주','010-8385-1357',sysdate,'8?','9');
-insert into member(member_email,password,name,addr,phone,regdate,password_hint,password_answer) 
-values('a@b.com','1','자','성남','010-45342-7837',sysdate,'ㄱ?','ㄱ');
-insert into member(member_email,password,name,addr,phone,regdate,password_hint,password_answer) 
-values('b@c.com','1','차','용인','010-7867-7375',sysdate,'ㄱ?','ㄱ');
-insert into member(member_email,password,name,addr,phone,regdate,password_hint,password_answer) 
-values('c@d.com','1','카','강남','010-8335-3435',sysdate,'ㄱ?','ㄱ');
-insert into member(member_email,password,name,addr,phone,regdate,password_hint,password_answer) 
-values('d@e.com','1','타','강동','010-7384-9654',sysdate,'ㄱ?','ㄱ');
-insert into member(member_email,password,name,addr,phone,regdate,password_hint,password_answer) 
-values('e@f.com','1','파','논현','010-1537-7566',sysdate,'ㄱ?','ㄱ');
-insert into member(member_email,password,name,addr,phone,regdate,password_hint,password_answer) 
-values('f@g.com','1','하','파주','010-4312-8746',sysdate,'ㄱ?','ㄱ');
-insert into member(member_email,password,name,addr,phone,regdate,password_hint,password_answer) 
-values('g@h.com','1','갸','이효리','010-5377-3123',sysdate,'ㄱ?','ㄱ');
-insert into member(member_email,password,name,addr,phone,regdate,password_hint,password_answer) 
-values('h@i.com','1','거','포천','010-7837-7378',sysdate,'ㄱ?','ㄱ');
-insert into member(member_email,password,name,addr,phone,regdate,password_hint,password_answer) 
-values('i@j.com','1','겨','덕소','010-2772-4533',sysdate,'ㄱ?','ㄱ');
-insert into member(member_email,password,name,addr,phone,regdate,password_hint,password_answer) 
-values('j@k.com','1','고','삼패','010-4532-4537',sysdate,'ㄱ?','ㄱ');
+insert into member(member_email,password,name,primary_addr,detail_addr,phone,regdate,password_hint,password_answer) 
+values('a@a.com','1','아이유','경기도 판교','1호','010-1234-5678',sysdate,'내 나이는?','25');
+insert into member(member_email,password,name,primary_addr,detail_addr,phone,regdate,password_hint,password_answer) 
+values('b@b.com','1','아삼유','충청북도 청주시','2호','010-1234-5678',sysdate,'내 나이는?','25');
+insert into member(member_email,password,name,primary_addr,detail_addr,phone,regdate,password_hint,password_answer) 
+values('c@c.com','1','아사유','대전광역시','3호','010-1234-5678',sysdate,'내 나이는?','25');
+insert into member(member_email,password,name,primary_addr,detail_addr,phone,regdate,password_hint,password_answer) 
+values('d@d.com','1','아오유','대구','4호','010-1234-5678',sysdate,'내 나이는?','25');
+insert into member(member_email,password,name,primary_addr,detail_addr,phone,regdate,password_hint,password_answer) 
+values('e@e.com','1','아이육','부산','5호','010-1234-5678',sysdate,'내 나이는?','25');
+insert into member(member_email,password,name,primary_addr,detail_addr,phone,regdate,password_hint,password_answer) 
+values('f@f.com','1','아이칠','찍고','6호','010-1234-5678',sysdate,'내 나이는?','25');
+insert into member(member_email,password,name,primary_addr,detail_addr,phone,regdate,password_hint,password_answer) 
+values('g@g.com','1','아이팔','서울','7호','010-1234-5678',sysdate,'내 나이는?','25');
+insert into member(member_email,password,name,primary_addr,detail_addr,phone,regdate,password_hint,password_answer) 
+values('h@h.com','1','아이구','신갈','8호','010-1234-5678',sysdate,'내 나이는?','25');
+insert into member(member_email,password,name,primary_addr,detail_addr,phone,regdate,password_hint,password_answer) 
+values('i@i.com','1','아이십','수원','9호','010-1234-5678',sysdate,'내 나이는?','25');
+insert into member(member_email,password,name,primary_addr,detail_addr,phone,regdate,password_hint,password_answer) 
+values('j@j.com','1','유동규','오이도','10','010-1234-5678',sysdate,'내 나이는?','25');
+insert into member(member_email,password,name,primary_addr,detail_addr,phone,regdate,password_hint,password_answer) 
+values('k@k.com','1','김유란','고양','11호','010-1234-5678',sysdate,'내 나이는?','25');
+insert into member(member_email,password,name,primary_addr,detail_addr,phone,regdate,password_hint,password_answer) 
+values('l@l.com','1','null승수','찾을 수 없습니다.','12호','010-1234-5678',sysdate,'내 나이는?','25');
+
 
 select *from member
 select *
@@ -65,7 +52,7 @@ drop table member_position
 CREATE TABLE member_position
 (
 	member_position_no number  primary key ,
-	name varchar2(100)  not null ,
+	name varchar2(100)  default '회원',
 	member_email varchar2(100)  not null,
 	constraint fk_member_email foreign key(member_email) references member(member_email)
 );

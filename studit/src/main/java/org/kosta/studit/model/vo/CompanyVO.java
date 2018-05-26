@@ -7,8 +7,8 @@ public class CompanyVO {
 	private String addr2;
 	private String addr3;
 	private String addr4;
-	private double latitude;
-	private double longitude;
+	private String primaryAddr;
+	private String detailAddr;
 	private String tel;
 	private String license;
 	private String regdate;
@@ -45,7 +45,7 @@ public class CompanyVO {
 	}
 
 	public CompanyVO(int companyNo, String name, String addr1, String addr2, String addr3, String addr4,
-			double latitude, double longitude, String tel, String license, String regdate, String url, String open,
+			String primaryAddr, String detailAddr, String tel, String license, String regdate, String url, String open,
 			String close, String holiday, String intro, String profilePath, String state, int hit, MemberVO memberVO) {
 		super();
 		this.companyNo = companyNo;
@@ -54,8 +54,8 @@ public class CompanyVO {
 		this.addr2 = addr2;
 		this.addr3 = addr3;
 		this.addr4 = addr4;
-		this.latitude = latitude;
-		this.longitude = longitude;
+		this.primaryAddr = primaryAddr;
+		this.detailAddr = detailAddr;
 		this.tel = tel;
 		this.license = license;
 		this.regdate = regdate;
@@ -118,20 +118,20 @@ public class CompanyVO {
 		this.addr4 = addr4;
 	}
 
-	public double getLatitude() {
-		return latitude;
+	public String getPrimaryAddr() {
+		return primaryAddr;
 	}
 
-	public void setLatitude(double latitude) {
-		this.latitude = latitude;
+	public void setPrimaryAddr(String primaryAddr) {
+		this.primaryAddr = primaryAddr;
 	}
 
-	public double getLongitude() {
-		return longitude;
+	public String getDetailAddr() {
+		return detailAddr;
 	}
 
-	public void setLongitude(double longitude) {
-		this.longitude = longitude;
+	public void setDetailAddr(String detailAddr) {
+		this.detailAddr = detailAddr;
 	}
 
 	public String getTel() {
@@ -233,9 +233,9 @@ public class CompanyVO {
 	@Override
 	public String toString() {
 		return "CompanyVO [companyNo=" + companyNo + ", name=" + name + ", addr1=" + addr1 + ", addr2=" + addr2
-				+ ", addr3=" + addr3 + ", addr4=" + addr4 + ", latitude=" + latitude + ", longitude=" + longitude
-				+ ", tel=" + tel + ", license=" + license + ", regdate=" + regdate + ", url=" + url + ", open=" + open
-				+ ", close=" + close + ", holiday=" + holiday + ", intro=" + intro + ", profilePath=" + profilePath
-				+ ", state=" + state + ", hit=" + hit + ", memberVO=" + memberVO + "]";
+				+ ", addr3=" + addr3 + ", addr4=" + addr4 + ", primaryAddr=" + primaryAddr + ", detailAddr="
+				+ detailAddr + ", tel=" + tel + ", license=" + license + ", regdate=" + regdate + ", url=" + url
+				+ ", open=" + open + ", close=" + close + ", holiday=" + holiday + ", intro=" + intro + ", profilePath="
+				+ profilePath + ", state=" + state + ", hit=" + hit + ", memberVO=" + memberVO + "]";
 	}
 }

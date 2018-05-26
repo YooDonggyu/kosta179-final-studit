@@ -39,7 +39,8 @@ public class MemberDAOTest {
 	      MemberVO mvo = new MemberVO();
 	      mvo.setMemberEmail("insertTest4@a.com");
 	      mvo.setPassword("12345678");
-	      mvo.setAddr("충청북도 청주시 서원구 개신동");
+	      mvo.setPrimaryAddr("충청북도 청주시 서원구 개신동");
+	      mvo.setDetailAddr("1층");
 	      mvo.setPhone("01012341234");
 	      mvo.setName("이름4");
 	      mvo.setPasswordHint("비밀번호 힌트!");
@@ -61,7 +62,7 @@ public class MemberDAOTest {
 	//@Test
 	public void updateMember() {
 		System.out.println("수정전 : "+memberDAO.findMemberByEmail("a@a.com"));
-		memberDAO.updateMember(new MemberVO("a@a.com", "11", "유스페이스", "1234", "1", "아이유유", "질문?", "답?", "path"));
+		memberDAO.updateMember(new MemberVO("a@a.com", "11", "유스페이스", "8층", "1234", "1", "아이유유", "질문?", "답?", "path"));
 		System.out.println("수정 후 : "+memberDAO.findMemberByEmail("a@a.com"));
 	}
 	

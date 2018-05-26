@@ -1,5 +1,3 @@
- 
-
 drop table company cascade constraints;
 drop sequence company_no_seq;
 

@@ -152,8 +152,8 @@ public class CompanyDAOTest {
 		   companyVO.setAddr3("강남대로321");
 		   companyVO.setAddr4("대우디오빌 416호");
 		   companyVO.setIntro("업체 소개");
-		   companyVO.setLatitude(20);
-		   companyVO.setLongitude(15);
+		   companyVO.setPrimaryAddr("판교");
+		   companyVO.setDetailAddr("1호");
 		   companyVO.setUrl("adasdad.com");
 		   companyVO.setTel("021234567");
 		   companyVO.setProfilePath("C:/임시");

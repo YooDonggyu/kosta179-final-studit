@@ -104,10 +104,6 @@
 				$("#addrDetail").val("").focus();
 				addrFlag="";
 			}else{
-			console.log("addr1: "+$("#sample6_address").val());
-			console.log("addDetail: "+$("#addrDetail").val());
-			$("#addr").val($("#sample6_address").val()+" "+$("#addrDetail").val());
-			console.log("addr: "+$("#addr").val());
 			addrFlag=true;
 			}
 		});
@@ -227,10 +223,8 @@
                     <div class="col-sm-9">
                        <!--  <input type="text" id="sample6_postcode" placeholder="우편번호"> -->
 						<input type="button" name="addrSerchBtn" id="addrSerchBtn" onclick="sample6_execDaumPostcode()" value="주소 찾기"  class="col-sm-12 control-label btn btn-default" style="text-align:center;">
-						<input type="text" id="sample6_address" readonly="readonly"   placeholder="기본 주소" class="form-control"><br>
-						<input type="text" id="addrDetail" placeholder="상세 주소" class="form-control" required="required">
-						<input type="hidden" id="addr" name="addr">
-                       <!--  <input type="text" id="addr" name="addr" placeholder="검색 후 상세주소를 입력하세요" class="form-control"> -->
+						<input type="text" id="sample6_address" name="primaryAddr" readonly="readonly"   placeholder="기본 주소" class="form-control"><br>
+						<input type="text" id="addrDetail" name="detailAddr" placeholder="상세 주소" class="form-control" required="required">
                     </div>
                 </div>
                 

@@ -49,7 +49,7 @@ public class MemberServiceTest {
 		} catch (EmailNotFoundException | PasswordIncorrectException | IsNotMemberException e) {
 			e.printStackTrace();
 		}
-		System.out.println(memberService.updateMember(new MemberVO("a@a.com", "11", "유스페이스", "1234", "1", "설현", "질문?", "답?", "path")));
+		System.out.println(memberService.updateMember(new MemberVO("a@a.com", "11", "유스페이스", "8층","1234", "1", "설현", "질문?", "답?", "path")));
 	}
 	
 	
@@ -60,7 +60,8 @@ public class MemberServiceTest {
 	//@Test
 	public void registerMemberPosition() {
 		MemberVO memberVO = new MemberVO();
-		memberVO.setAddr("주소");
+		memberVO.setPrimaryAddr("기본주소");
+		memberVO.setDetailAddr("상세주소");
 		memberVO.setMemberEmail("email@c.com");
 		memberVO.setName("이름");
 		memberVO.setPassword("1234");

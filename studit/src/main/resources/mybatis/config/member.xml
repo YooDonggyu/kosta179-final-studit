@@ -12,7 +12,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		@return memberVO 해당 이메일에 대해 값이 있으면 객체를 반환. 없으면 null
 	 -->
 	<select id="findMemberByEmail" resultType="memberVO">
-		select member_email,password, addr, phone, regdate, name, password_hint,password_answer,pic_path 
+		select member_email,password, primary_addr, detail_addr, phone, regdate, name, password_hint,password_answer,pic_path 
 		from member 
 		where member_email = #{value}
 	</select>
@@ -23,8 +23,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     	@param memberVO
      -->
 	<insert id="registerMember" parameterType="memberVO">
-		insert into member(member_email,password,name,addr,phone,regdate,password_hint,password_answer,pic_path)
-		values(#{memberEmail},#{password},#{name},#{addr},#{phone},sysdate,#{passwordHint},#{passwordAnswer},#{picPath})
+		insert into member(member_email,password,name,primary_addr, detail_addr,phone,regdate,password_hint,password_answer,pic_path)
+		values(#{memberEmail},#{password},#{name},#{primaryAddr},#{detailAddr},#{phone},sysdate,#{passwordHint},#{passwordAnswer},#{picPath})
 	</insert>
 	
 	<!-- 
@@ -34,7 +34,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 -->
 	<update id="updateMember" parameterType="memberVO">
 		update member 
-		set name=#{name}, addr=#{addr}, phone=#{phone},password_hint=#{passwordHint}, password_answer=#{passwordAnswer},pic_path=#{picPath} 
+		set name=#{name}, primary_addr=#{primaryAddr}, detail_addr=#{detailAddr}, phone=#{phone},password_hint=#{passwordHint}, password_answer=#{passwordAnswer},pic_path=#{picPath} 
 		where member_email=#{memberEmail}
 	</update>
 	

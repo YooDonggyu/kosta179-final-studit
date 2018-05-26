@@ -100,7 +100,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       @return companyVO 
     -->
    <select id="findCompanyByMemberEmail" resultMap="companyMap">
-   	select c.company_no, c.name, c.addr1, c.addr2, c.addr3, c.addr4, c.latitude, c.longitude, 
+   	select c.company_no, c.name, c.addr1, c.addr2, c.addr3, c.addr4, c.primary_addr, c.detail_addr, 
 	c.tel, c.license, c.regdate, c.profile_path, c.intro, c.state, c.open, c.close, c.holiday, c.url, m.member_email
 	from company c, member m
 	where c.member_email=#{value} and c.member_email=m.member_email 
@@ -207,9 +207,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 					select
 					company_no_seq.nextval from dual
 		</selectKey>
-   		insert into company(company_no, name, addr1, addr2, addr3, addr4, latitude, longitude, tel, license, regdate, profile_path, 
+   		insert into company(company_no, name, addr1, addr2, addr3, addr4, primary_addr, detail_addr, tel, license, regdate, profile_path, 
    						  intro, state, open, close, holiday, hit, url, member_email) 
-		values (#{companyNo}, #{name}, #{addr1}, #{addr2}, #{addr3}, #{addr4}, 	#{latitude}, #{longitude}, #{tel}, #{license}, 
+		values (#{companyNo}, #{name}, #{addr1}, #{addr2}, #{addr3}, #{addr4}, 	#{primaryAddr}, #{detailAddr}, #{tel}, #{license}, 
 					sysdate, #{profilePath}, #{intro}, '예약대기', #{open}, #{close}, #{holiday}, 0, #{url}, #{memberVO.memberEmail}
 					)
    </insert>

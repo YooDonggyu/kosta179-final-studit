@@ -7,8 +7,8 @@ CREATE TABLE company(
 	addr2 varchar2(50) not null,
 	addr3 varchar2(50) not null,
 	addr4 varchar2(100) not null,
-	latitude number not null,
-	longitude number not null,
+	primary_addr varchar2(100) not null,
+	detail_addr varchar2(100) not null,
 	tel varchar2(100) not null,
 	license varchar2(100) not null,
 	regdate date not null,
@@ -25,6 +25,7 @@ CREATE TABLE company(
 );
 create sequence company_no_seq nocache;
 
+create member_position
 drop sequence company_no_seq
 insert into member_position values( member_position_no_seq.nextval, '업체', 'd@d.com');
 
@@ -550,7 +551,7 @@ create table studyroom_condition (
 	studyroom_no number not null,
 	start_time varchar2(100) not null,
 	end_time varchar2(100) not null,
-	state varchar2(100) not null,
+	state varchar2(100) default '예약대기',
 	use_date date not null,
 	constraint fk3_studyroom_no foreign key(studyroom_no) references studyroom(studyroom_no),
 	constraint fk5_member_email foreign key(member_email) references member(member_email)
