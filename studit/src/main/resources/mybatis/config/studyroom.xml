@@ -130,7 +130,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		@author 유동규
 		@param StudyRoomConditionVO 등록할 정보가 담긴 객체
 	 -->
-	<insert id="registerStudyRoomCondition">
+	<insert id="createStudyRoomCondition">
 		insert into studyroom_condition(
 			studyroom_condition_no, use_date, start_time
 			, end_time, state, regdate, member_email, studyroom_no

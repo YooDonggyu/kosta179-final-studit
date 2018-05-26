@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kosta.studit.model.PagingBean;
 import org.kosta.studit.model.vo.CompanyVO;
+import org.kosta.studit.model.vo.MemberVO;
 import org.kosta.studit.model.vo.StudyRoomConditionVO;
 import org.kosta.studit.model.vo.StudyRoomVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,6 +96,11 @@ public class StudyRoomDAOTest {
 		   studyroomDAO.registerStudyRoomFunction(map);
 	   }
 	   
+	   /**
+	    * 스터디룸 예약정보 불러오기 테스트
+	    * 
+	    * @author 김유란
+	    */
 	   @Test
 	   public void findStudyRoomConditionByStudyRoomNoAndDate() {
 		   StudyRoomConditionVO studyRoomConditionVO = new StudyRoomConditionVO();
@@ -102,6 +108,26 @@ public class StudyRoomDAOTest {
 		   studyRoomVO.setStudyRoomNo(1);
 		   studyRoomConditionVO.setStudyRoomVO(studyRoomVO);
 		   studyRoomConditionVO.setUseDate("2018-05-30");
+		   System.out.println(studyroomDAO.findStudyRoomConditionByStudyRoomNoAndDate(studyRoomConditionVO));
+	   }
+	   
+	   /**
+	    * 스터디룸 예약 테스트
+	    * 
+	    * @author 김유란
+	    */
+	   @Test
+	   public void createStudyRoomConditionTest() {
+		   StudyRoomConditionVO studyRoomConditionVO = new StudyRoomConditionVO();
+		   StudyRoomVO studyRoomVO = new StudyRoomVO();
+		   studyRoomVO.setStudyRoomNo(1);
+		   studyRoomConditionVO.setStudyRoomVO(studyRoomVO);
+		   studyRoomConditionVO.setUseDate("2018-05-30");
+		   studyRoomConditionVO.setStartTime("17");
+		   studyRoomConditionVO.setEndTime("20");
+		   studyRoomConditionVO.setMemberVO(new MemberVO("a@a.com",null));
+		   System.out.println(studyroomDAO.findStudyRoomConditionByStudyRoomNoAndDate(studyRoomConditionVO));
+		   studyroomDAO.createStudyRoomCondition(studyRoomConditionVO);
 		   System.out.println(studyroomDAO.findStudyRoomConditionByStudyRoomNoAndDate(studyRoomConditionVO));
 	   }
 }

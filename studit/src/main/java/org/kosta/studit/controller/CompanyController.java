@@ -136,7 +136,8 @@ public class CompanyController {
 			     
 			     //태섭 경로
 			     /*String path = "D:/KOSTA/workspace/resources/upload/company/";*/
-			     String path ="C:/java-kosta/project/Final/kosta179-final-studit/studit/src/main/webapp/resources/upload";
+			     //String path ="C:/java-kosta/project/Final/kosta179-final-studit/studit/src/main/webapp/resources/upload";
+			     String path = "C:/java-kosta/framework-workspace2/resources/upload";
 			     try {
 			    	companyPicFile[i].transferTo(new File(path, fileName));//지정 경로에 실제 파일 저장
 			    	if(i==0) {

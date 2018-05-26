@@ -87,8 +87,8 @@ public class StudyRoomDAOImpl implements StudyRoomDAO {
 	   }
 	
 	@Override
-	public void registerStudyRoomCondition(StudyRoomConditionVO studyRoomConditionVO) {
-		template.insert("studyroom.registerStudyRoomCondition", studyRoomConditionVO);
+	public void createStudyRoomCondition(StudyRoomConditionVO studyRoomConditionVO) {
+		template.insert("studyroom.createStudyRoomCondition", studyRoomConditionVO);
 		
 	}
 

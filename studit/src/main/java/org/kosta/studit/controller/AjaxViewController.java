@@ -290,6 +290,15 @@ public class AjaxViewController {
 	}
 	
 
+	/**
+	 *예약현황 정보를 불러오는 메서드
+	 *사용자가 선택한 스터디룸과 날짜에 해당하는 예약 현황 정보를 조회하여 전송한다.
+	 * 
+	 * @author 김유란
+	 * @param selectedDate 사용자가 선택한 날짜
+	 * @param studyRoomNo 사용자가 선택한 스터디룸의 번호
+	 * @return StudyRoomConditionVO 예약 현황 정보를 담은 VO 리스트
+	 */
 	@RequestMapping(value="/findStudyRoomConditionByStudyRoomNoAndDate", method=RequestMethod.POST)
 	@ResponseBody
 	public List<StudyRoomConditionVO> findStudyRoomConditionByStudyRoomNoAndDate(String selectedDate, String studyRoomNo) {

@@ -22,7 +22,7 @@ public interface StudyRoomDAO {
 
 	void registerStudyRoomFunction(Map<String, Object> map);
 
-	void registerStudyRoomCondition(StudyRoomConditionVO studyRoomConditionVO);
+	void createStudyRoomCondition(StudyRoomConditionVO studyRoomConditionVO);
 
 	List<StudyRoomConditionVO> findStudyRoomConditionByStudyRoomNoAndDate(StudyRoomConditionVO studyRoomConditionVO);
 
