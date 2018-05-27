@@ -72,6 +72,14 @@ public class StudyRoomServiceImpl implements StudyRoomService {
 		}
 	}
 
+	/**
+	 * 스터디룸 번호와 날짜로 예약현황 정보 불러오는 메서드
+	 * 
+	 * @author 김유란
+	 * @param selectedDate 예약현황 조회를 원하는 날짜
+	 * @param studyRoomNo 예약현황 조회를 원하는 스터디룸 번호
+	 * @param List<StudyRoomConditionVO> 스터디룸 예약현황 정보를 담은 VO리스트
+	 */
 	@Override
 	public List<StudyRoomConditionVO> findStudyRoomConditionByStudyRoomNoAndDate(String selectedDate, String studyRoomNo) {
 		StudyRoomConditionVO studyRoomConditionVO = new StudyRoomConditionVO();

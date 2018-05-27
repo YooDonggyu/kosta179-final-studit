@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.kosta.studit.model.vo.GroupMemberVO;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -65,5 +66,17 @@ public class GroupDAOImpl implements GroupDAO {
 	@Override
 	public int findStudyGroupNoByRecruitPostNo(int recruitPostNo) {
 		return template.selectOne("group.findStudyGroupNoByRecruitPostNo", recruitPostNo);
+	}
+	
+	
+	/**
+	 * 회원이 속한 스터디 그룹 전체 조회
+	 * @author 김유란
+	 * @param memberEmail 회원 이메일
+	 * @return List<GroupMemberVO> 스터디그룹 정보를 담은 VO 리스트
+	 */
+	@Override
+	public List<GroupMemberVO> findStudyGroupByMemberEmail(String memberEmail) {
+		return template.selectList("group.findStudyGroupByMemberEmail", memberEmail);
 	}
 }

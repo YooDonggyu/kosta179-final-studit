@@ -25,16 +25,16 @@ public class StudyRoomDAOTest {
 	    * 신청한 스터디룸 중 승인대기중인 스터디룸 수를 확인.
 	    * @author 송용준
 	    */
-	   //@Test
+	   @Test
 	   public void findWaitStudyRoomByEmailTest() {
 	      System.out.println(studyroomDAO.findWaitStudyRoomByEmail("a@a.com"));
 	   }
 	   
 	   /**
-	    * 스터디룸 신천형황 정보 가져오기
+	    * 스터디룸 신청현황 정보 가져오기
 	    * @author 유동규
 	    */
-	   //@Test
+	   @Test
 	   public void findStudyConditionByEmailTest() {
 		   //1. 전체 현황 수로 pagingBean 생성
 		   //2. pb와 email을 map으로 담아 전송
@@ -46,7 +46,12 @@ public class StudyRoomDAOTest {
 		   System.out.println(studyroomDAO.findStudyConditionByEmail(map));
 	   }
 	   
-	   //@Test
+	   /**
+	    * 스터디룸 정보 조회 테스트
+	    * 
+	    * @author 김유란
+	    */
+	   @Test
 	   public void findStudyRoomInfoByStudyRoomNoTest() {
 		   System.out.println(studyroomDAO.findStudyRoomInfoByStudyRoomNo("1"));
 	   }
@@ -56,7 +61,7 @@ public class StudyRoomDAOTest {
 	    * 
 	    * @author 변태섭
 	    */
-	   //@Test
+	   @Test
 	   public void registerStudyRoomTest() {
 		   StudyRoomVO studyRoomVO = new StudyRoomVO();
 		   studyRoomVO.setName("MOIM");
@@ -75,7 +80,7 @@ public class StudyRoomDAOTest {
 	    * 
 	    * @author 변태섭
 	    */
-	   //@Test
+	   @Test
 	   public void registerStudyRoomPicPathTest() {
 		   Map<String, Object> map = new HashMap<String, Object>();
 		   map.put("studyRoomPicPath", "C:/직박구리/");
@@ -89,7 +94,7 @@ public class StudyRoomDAOTest {
 	    * @author 변태섭
 	    */
 	   @Test
-	   public void registerStudyRoomFunction() {
+	   public void registerStudyRoomFunctionTest() {
 		   Map<String, Object> map = new HashMap<String, Object>();
 		   map.put("studyRoomFunction", "프린트");
 		   map.put("studyRoomNo", 2);

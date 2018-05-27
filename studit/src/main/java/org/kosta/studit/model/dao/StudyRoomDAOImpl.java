@@ -47,7 +47,12 @@ public class StudyRoomDAOImpl implements StudyRoomDAO {
 		   return template.selectList("studyroom.findStudyConditionByEmail", map);
 	   }
 	   
-	   
+	   /**
+	    * 스터디룸 번호로 스터디 룸 정보 조회
+	    * @author 김유란
+	    * @param studyRoomNo 스터디룸 번호
+	    * @return studyRoomVO 스터디룸 정보를 담은 VO
+	    */
 	   @Override
 	   public StudyRoomVO findStudyRoomInfoByStudyRoomNo(String studyRoomNo) {
 		   return template.selectOne("studyroom.findStudyRoomInfoByStudyRoomNo", studyRoomNo);
@@ -86,15 +91,28 @@ public class StudyRoomDAOImpl implements StudyRoomDAO {
 		   template.insert("studyroom.registerStudyRoomFunction", map);
 	   }
 	
-	@Override
-	public void createStudyRoomCondition(StudyRoomConditionVO studyRoomConditionVO) {
-		template.insert("studyroom.createStudyRoomCondition", studyRoomConditionVO);
-		
-	}
-
+	   /**
+	    * 스터디룸 번호와 날짜로 예약현황 조회
+	    * @author 김유란
+	    * @param studyRoomConditionVO 스터디룸 번호와 사용일자 정보를 담은 VO
+	    * @return List<studyRoomConditionVO> 스터디룸 예약 정보를 담은 VO 리스트
+	    */
 	   @Override
 	   public List<StudyRoomConditionVO> findStudyRoomConditionByStudyRoomNoAndDate(StudyRoomConditionVO studyRoomConditionVO) {
 		   return template.selectList("studyroom.findStudyRoomConditionByStudyRoomNoAndDate", studyRoomConditionVO);
 	   }
+	   
+	   /**
+	    * 스터디룸 예약 메서드
+	    * @author 김유란
+	    * @param studyRoomConditionVO 스터디룸 예약 정보 담은 VO
+	    */
+		@Override
+		public void createStudyRoomCondition(StudyRoomConditionVO studyRoomConditionVO) {
+			template.insert("studyroom.createStudyRoomCondition", studyRoomConditionVO);
+			
+		}
+
+  
 
 }

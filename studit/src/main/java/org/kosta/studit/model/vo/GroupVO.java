@@ -5,6 +5,12 @@ public class GroupVO {
 	private String name;
 	private RecruitPostVO recruitPostVO;
 	
+	
+	
+	public GroupVO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 	public GroupVO(int groupNo, String name, RecruitPostVO recruitPostVO) {
 		super();
 		this.groupNo = groupNo;

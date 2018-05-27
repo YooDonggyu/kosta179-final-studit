@@ -13,6 +13,10 @@ public class StudyRoomServiceTest {
 	@Autowired
 	private StudyRoomService studyRoomService;
 	
+	/**
+	 * 스터디룸 예약현황 정보 조회 테스트
+	 * @author 김유란
+	 */
 	@Test
 	public void findStudyRoomConditionByStudyRoomNoAndDateTest() {
 		System.out.println(studyRoomService.findStudyRoomConditionByStudyRoomNoAndDate("2018-05-31", "1"));

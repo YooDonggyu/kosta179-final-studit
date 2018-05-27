@@ -45,7 +45,6 @@ public class StudyRoomController {
 	 */
 	@RequestMapping(value="/createStudyRoomCondition", method=RequestMethod.POST)
 	public String createStudyRoom(StudyRoomConditionVO studyRoomConditionVO) {
-		System.out.println(studyRoomConditionVO);
 		studyRoomDAO.createStudyRoomCondition(studyRoomConditionVO);
 		return "redirect:/studyroom/createStudyRoomConditionResult";
 	}

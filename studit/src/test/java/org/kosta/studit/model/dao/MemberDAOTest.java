@@ -35,7 +35,7 @@ public class MemberDAOTest {
 	    * @param 변태섭
 	    */
 	   //@Test
-	   public void registerMember() {
+	   public void registerMemberTest() {
 	      MemberVO mvo = new MemberVO();
 	      mvo.setMemberEmail("insertTest4@a.com");
 	      mvo.setPassword("12345678");
@@ -60,7 +60,7 @@ public class MemberDAOTest {
 	 * @author 이승수
 	 */
 	//@Test
-	public void updateMember() {
+	public void updateMemberTest() {
 		System.out.println("수정전 : "+memberDAO.findMemberByEmail("a@a.com"));
 		memberDAO.updateMember(new MemberVO("a@a.com", "11", "유스페이스", "8층", "1234", "1", "아이유유", "질문?", "답?", "path"));
 		System.out.println("수정 후 : "+memberDAO.findMemberByEmail("a@a.com"));
@@ -78,12 +78,21 @@ public class MemberDAOTest {
 	}
 	
 	/**
+	 * 회원이 탈퇴상태인지 확인
+	 * @author 유동규
+	 */
+	@Test
+	public void isMemberTest() {
+		System.out.println(memberDAO.isMember("a@a.com"));
+	}
+	
+	/**
 	 * 회원 직책을 추가할 때 사용 하는 메서드
 	 * @author 변태섭
 	 * @param Map 회원 Email, 직책 담아서 전달
 	 */
 	//@Test
-	public void registerMemberPosition() {
+	public void registerMemberPositionTest() {
 		//HashMap<String, String> map = new HashMap<String,String>();
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("memberEmail", "a@a.com");
@@ -92,12 +101,5 @@ public class MemberDAOTest {
 		memberDAO.registerMemberPosition(map);
 		//System.out.println(memberDAO.findMemberByEmail("a@a.com"));
 	}
-	/**
-	 * 회원이 탈퇴상태인지 확인
-	 * @author 유동규
-	 */
-	@Test
-	public void isMemberTest() {
-		System.out.println(memberDAO.isMember("a@a.com"));
-	}
+	
 }

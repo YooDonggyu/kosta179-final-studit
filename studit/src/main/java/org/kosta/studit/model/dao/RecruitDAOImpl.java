@@ -117,6 +117,14 @@ public class RecruitDAOImpl implements RecruitDAO {
 		return template.selectList("recruit.findSmallCategoryListByBigCategoryNo", bigCategoryNo);
 	}
 	
+	/**
+	 * 카테고리 혹은 키워드로 총 게시글 수 구하기
+	 * @author 김유란, 유동규 
+	 */
+	@Override
+	public int findRecruitPostCountByCategoryOrKeyword(Map<String, Object> map) {
+		return template.selectOne("recruit.findRecruitPostCountByCategoryOrKeyword", map);
+	}
 	
 	   /**
 	    * 모집 게시글 번호에 따른 모집 게시글 내용과 카테고리(소, 대)를 검색 
@@ -271,14 +279,7 @@ public class RecruitDAOImpl implements RecruitDAO {
 		template.insert("recruit.registerRecruitDay", map);
 	}
 	
-	/**
-	 * 카테고리 혹은 키워드로 총 게시글 수 구하기
-	 * @author 김유란, 유동규 
-	 */
-	@Override
-	public int findRecruitPostCountByCategoryOrKeyword(Map<String, Object> map) {
-		return template.selectOne("recruit.findRecruitPostCountByCategoryOrKeyword", map);
-	}
+
 	
 	/**
 	 * pagingBean과 검색조건을 통한 페이징 검색

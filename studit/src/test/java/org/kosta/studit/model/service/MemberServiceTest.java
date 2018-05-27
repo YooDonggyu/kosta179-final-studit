@@ -43,7 +43,7 @@ public class MemberServiceTest {
 	 * @author 김유란,이승수
 	 */
 	//@Test
-	public void updateMember() {
+	public void updateMemberTest() {
 		try {
 			System.out.println(memberService.login(new MemberVO("a@a.com", "1")));
 		} catch (EmailNotFoundException | PasswordIncorrectException | IsNotMemberException e) {
@@ -58,7 +58,7 @@ public class MemberServiceTest {
 	 * @author 변태섭
 	 */
 	//@Test
-	public void registerMemberPosition() {
+	public void registerMemberTest() {
 		MemberVO memberVO = new MemberVO();
 		memberVO.setPrimaryAddr("기본주소");
 		memberVO.setDetailAddr("상세주소");
@@ -72,12 +72,13 @@ public class MemberServiceTest {
 		System.out.println(memberVO);
 		memberService.registerMember(memberVO);
 	}
+	
 		/**
 	    * 회원탈퇴 시 필요한 조건 확인
 	    * @author 송용준
 	    */
 	   @Test
-	   public void deleteMemberView() {
+	   public void deleteMemberViewTest() {
 	      HashMap<String,Object> map=memberService.deleteMemberView("a@a.com");
 	      System.out.println("##회원털퇴를 위한 조건##");
 	      System.out.println("신청중인 스터디룸의 수 : "+map.get("waitStudyRoomCount"));

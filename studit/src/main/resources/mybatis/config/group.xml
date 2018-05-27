@@ -4,6 +4,12 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="group">
+	<resultMap type="groupMemberVO" id="groupMemberRM">
+		<result property="groupVO.groupNo" column="sg_no"/>
+		<result property="groupVO.name" column="name"/>
+		<result property="groupMemberNo" column="sg_member_no"/>
+		<result property="email" column="member_email"/>
+	</resultMap>
 	<!-- 
 		본인이 팀장인 스터디 그룹의 개수 조회
 		@author 송용준
@@ -70,36 +76,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where recruit_post_no=#{value}
 	</select>
 	
+	<!-- 
+		회원이 속해있는 스터디 그룹을 모두 조회
+		@author 김유란
+		@param memberEmail 회원 이메일
+		@return GroupVO
+	 -->
+	<select id="findStudyGroupByMemberEmail" resultMap="groupMemberRM">
+	select sgm.sg_member_no, sgm.sg_no, sgm.position, sgm.member_email, sgm.state, sg.name 
+	from sg_member sgm, study_group sg 
+	where sgm.sg_no=sg.sg_no and sgm.member_email=#{value} 
+	</select>
+	
 </mapper>
  
  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

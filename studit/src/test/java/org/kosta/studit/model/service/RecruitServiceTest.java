@@ -7,8 +7,6 @@ import java.util.Map;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.kosta.studit.model.PagingBean;
-import org.kosta.studit.model.dao.RecruitDAO;
 import org.kosta.studit.model.vo.RecruitPostVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -19,12 +17,23 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class RecruitServiceTest {
 	@Autowired
 	private RecruitService recruitService;
-	@Autowired
-	private RecruitDAO recruitDAO;
 
-	//@Test
-	public void registerRecruiteTest() {
+	/**
+	 * 스터디를 신청 테스트
+	 * @author 이승수
+	 */
+	@Test
+	public void registerRecruitStudyTest() {
 		recruitService.registerRecruitStudy(2, "j@k.com", "자기소개냐??");
+	}
+	
+	/**
+	 * 스터디신청시 이미 거절상태일때 다시 미승인 상태로 바꿔주는 메서드 테스트
+	 * @author 이승수
+	 */
+	@Test
+	public void updateRecruitStudyTest() {
+		recruitService.updateRecruitStudy(2, "b@b.com", "다시 신청합니다");
 	}
 
 

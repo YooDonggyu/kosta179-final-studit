@@ -26,10 +26,55 @@ public class CompanyDAOTest {
 	    * @author 송용준
 	    */
 	   //@Test
-	   public void findWaitReservationByEmail() {
+	   public void findWaitReservationByEmailTest() {
 	      System.out.println(companyDAO.findWaitReservationByEmail("d@d.com"));
 	   }
 	   
+		/**
+		 * select box에 제공할 모든 업체의 addr1 값을 불러온다
+		 * @author 송용준
+		 */
+		@Test
+		public void readFirstAddrTest() {
+			System.out.println(companyDAO.readFirstAddr());
+		}
+		
+		/**
+		 * 모든 업체 정보 불러오기
+		 * @author 송용준
+		 */
+		@Test
+		public void readAllCompanyTest() {
+			System.out.println(companyDAO.readAllCompany());
+		}
+	   
+		/**
+		 * 등록이 승인된 모든 업체의 해쉬태그 정보를 불러온다
+		 * @author 송용준
+		 */
+		@Test
+		public void readAllHashTagTest() {
+			System.out.println(companyDAO.readAllHashTag());
+		}
+		
+		/**
+		 * 스터디룸(업체) 검색 뷰에서 선택된 addr1에 대응되는 addr2를 조회.
+		 * @author 송용준
+		 */
+		@Test
+		public void findSecondAddressListByFirstAddressNameTest() {
+			System.out.println(companyDAO.findSecondAddressListByFirstAddressName("서울시"));
+		}
+		
+		/**
+		 * 스터디룸(업체) 검색 뷰에서 선택된 addr2에 대응되는 addr3를 조회.
+		 * @author 송용준
+		 */
+		@Test
+		public void findThirdAddressListBySecondAddressName() {
+			System.out.println(companyDAO.findThirdAddressListBySecondAddressName("강남구"));
+		}
+		
 	   /**
 	    * 회원 이메일로 업체 정보 조회 테스트
 	    * @author 김유란

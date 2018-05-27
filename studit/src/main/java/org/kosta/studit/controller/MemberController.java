@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.kosta.studit.exception.EmailNotFoundException;
 import org.kosta.studit.exception.IsNotMemberException;
 import org.kosta.studit.exception.PasswordIncorrectException;
+import org.kosta.studit.model.dao.GroupDAO;
 import org.kosta.studit.model.dao.MemberDAO;
 import org.kosta.studit.model.service.MemberService;
 import org.kosta.studit.model.service.RecruitService;
@@ -34,6 +35,8 @@ public class MemberController {
 	private RecruitService recruitService;
 	@Autowired
 	private StudyRoomService studyroomService;
+	@Autowired
+	private GroupDAO groupDAO;
 
 	/**
 	 * 사용자 로그인을 위한 메서드. 가장 먼저 아이디 확인한 후 비밀번호 일치여부를 확인한다.
@@ -130,7 +133,7 @@ public class MemberController {
 	 *            세션을 호출
 	 * @return String
 	 */
-	@RequestMapping(value = "/check_member", method = RequestMethod.POST)
+	@RequestMapping(value = "/checkMember", method = RequestMethod.POST)
 	public String checkMember(String checkPassword, HttpServletRequest request) {
 		MemberVO memberVO = (MemberVO) request.getSession(false).getAttribute("memberVO");
 		memberVO.setPassword(checkPassword);
@@ -231,9 +234,9 @@ public class MemberController {
 	}
 
 	/**
-	 * 스터디 현황 조회, 스터디 룸 현황 조회를 위한 페이징.
+	 * 스터디 현황 조회, 스터디 룸 현황 조회를 위한 페이징+진행중인 스터디 정보 
 	 * 해당 사용자에 따른 전체 수를 구한 뒤 페이징처리를 한다.
-	 * @author 변태섭, 유동규
+	 * @author 변태섭, 유동규, 김유란
 	 * @param HttpServletRequest Session에 있는 memberEmail을 사용한다.
 	 * @param Model 받아온 list 객체를 담아 전달한다.
 	 * @param String 페이지 번호
@@ -251,6 +254,8 @@ public class MemberController {
 		model.addAttribute("studyConditionList", recruitService.findStudyConditionByMemberEmail(mvo.getMemberEmail(), nowPage));
 		//스터디 룸 현황조회
 		model.addAttribute("srcListVO", studyroomService.findStudyRoomConditionListVOByEmail(mvo.getMemberEmail(), nowPage));
+		//진행중인 스터디 조회
+		model.addAttribute("groupList", groupDAO.findStudyGroupByMemberEmail(mvo.getMemberEmail()));
 		return "member/mypage.tiles";
 	}
 

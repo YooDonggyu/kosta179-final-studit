@@ -14,7 +14,7 @@
 			</div>
 			<!-- Modal Body -->
 			<div class="modal-body">
-			    <form role="form" action="${pageContext.request.contextPath }/member/check_member" method="post"  id="checkMemberForm" autocomplete="off">
+			    <form role="form" action="${pageContext.request.contextPath }/member/checkMember" method="post"  id="checkMemberForm" autocomplete="off">
 	                <div class="form-group">
 	                    <label for="key" class="sr-only">비밀번호</label>
 	                    <input type="password" name="checkPassword" id="checkPassword" class="form-control" placeholder="Password">

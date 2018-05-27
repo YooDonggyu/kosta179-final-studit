@@ -33,7 +33,7 @@
 			    <form role="form" action="${pageContext.request.contextPath }/recruit/registerRcruitStudy" method="post"  id="recruitForm" autocomplete="off">
 	                <div class="form-group">
 	                    <label for="context" class="sr-only">자기소개</label>
-	                    <input type="text" name="context" id="context" class="form-control" placeholder="자기소개">
+	                    <input type="text" name="context" id="context" class="form-control" placeholder="자기소개" required="required">
 	                    <input type="hidden" name="memberEmail" id="memberEmail" value="${memberVO.memberEmail}">
 	                    <input type="hidden" name="recruitPostNo" id="recruitPostNo" value="${recruitInfo.detail.recruitPostNo}">
 	                </div>
