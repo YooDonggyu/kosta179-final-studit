@@ -85,7 +85,6 @@ $(document).ready(function() {
 	      },
         	selectConstraint: "businessHours", //영업일이 아니면 클릭할 수 없도록 제약
             select: function(start, end, jsEvent, view) {
-            	alert(start);
               if (start.isAfter(moment())) {//영업일이지만 오늘보다 과거인 날은 클릭 가능한 대신 조건문으로 제약
                 	getTimeTable(start.format('YYYY-MM-DD'));//날짜 바뀔 때마다 시간선택표 새로 불러오기
               } else {

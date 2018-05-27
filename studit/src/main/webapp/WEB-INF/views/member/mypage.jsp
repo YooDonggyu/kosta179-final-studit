@@ -26,6 +26,7 @@ th{
 .MultiCarousel .MultiCarousel-inner { transition: 1s ease all; float: left; }
 .MultiCarousel .MultiCarousel-inner .item { float: left;}
 .MultiCarousel .MultiCarousel-inner .item > div { text-align: center; padding:10px; margin:10px; background:#f1f1f1; color:#666;}
+.MultiCarousel .MultiCarousel-inner .item > div:hover { background: white;}
 .MultiCarousel .leftLst, .MultiCarousel .rightLst { position:absolute; border-radius:50%;top:calc(50% - 20px); }
 .MultiCarousel .leftLst { left:0; }
 .MultiCarousel .rightLst { right:0; }   
@@ -46,7 +47,7 @@ th{
                 </div>
             <c:forEach items="${groupList}" var="g">
               <div class="item" style=" cursor: pointer;" onclick="location.href='#'">
-                    <div class="pad15">
+                    <div class="pad15 my">
                     	<br>
                     	<p class="lead">${g.groupVO.name}</p>
 						<c:if test="${g.position eq '팀장'}">
