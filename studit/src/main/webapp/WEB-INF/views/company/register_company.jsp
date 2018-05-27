@@ -31,7 +31,7 @@
 	display: view;
 }
 </style>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7089f989ad92f0b98ff8257f8cc869ef&libraries=services"></script>
+
 <script>
 		// 작성: 변태섭
 		// 기능: 우편번호 API Sciprt
@@ -692,20 +692,11 @@
                 // 주소로 상세 정보를 검색
                 geocoder.addressSearch(data.address, function(results, status) {
                     // 정상적으로 검색이 완료됐으면
-                    if (status === daum.maps.services.Status.OK) {
-
-                        var result = results[0]; //첫번째 결과의 값을 활용
-
-                        // 해당 주소에 대한 좌표를 받아서
-                        var coords = new daum.maps.LatLng(result.y, result.x);
-                        // 지도를 보여준다.
-                        mapContainer.style.display = "block";
-                        map.relayout();
-                        // 지도 중심을 변경한다.
                         map.setCenter(coords);
                         // 마커를 결과값으로 받은 위치로 옮긴다.
-                        marker.setPosition(coords)
+                        marker.setPosition(coords);
                     }
+                	}
                 });
             }
         }).open();

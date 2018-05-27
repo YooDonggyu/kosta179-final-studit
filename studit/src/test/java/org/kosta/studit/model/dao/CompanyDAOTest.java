@@ -233,4 +233,36 @@ public class CompanyDAOTest {
 		   String license = "1234567891";
 		  System.out.println(companyDAO.findCountCompanyByLicense(license));
 	   }
+	   
+	   
+	   /**
+	    * 업체번호에 따른 업체 정보 반환
+	    * @author 유동규
+	    */
+	   //@Test
+	   public void findCompanyByCompanyNoTest() {
+		   System.out.println(companyDAO.findCompanyByCompanyNo(1));
+	   }
+	   
+	   /**
+	    * 업체번호에 따른 업체 사진 정보 반환
+	    * @author 유동규
+	    */
+	   //@Test
+	   public void findComPicByCompanyNoTest() {
+		   System.out.println(companyDAO.findComPicByCompanyNo(1));
+	   }
+	   
+	   /**
+	    * 업체번호에 따른 업체 해시태그 정보 반환
+	    * @author 유동규
+	    */
+	   //@Test
+	   public void findHashTagByCompanyNoTest() {
+		   System.out.println(companyDAO.findHashTagByCompanyNo(1));
+	   }
+	   
+	   
+	   
+	   
 }

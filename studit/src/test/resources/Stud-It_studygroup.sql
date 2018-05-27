@@ -4,7 +4,7 @@ create table study_group (
 	name varchar2(100) not null,
 	recruit_post_no number not null,
 	constraint fk4_recruit_post_no foreign key(recruit_post_no) references recruit_post(recruit_post_no)
-)
+);
 
 
 create sequence study_group_seq nocache;
@@ -44,12 +44,39 @@ create table sg_member(
 	state varchar2(100) default 'false',
 	constraint fk_sg_no foreign key(sg_no) references study_group(sg_no),
 	constraint fk22_member_email foreign key(member_email) references member(member_email)
-) 
+);
 
 
 select*from sg_member
 create sequence sg_member_seq nocache;
 
+<<<<<<< HEAD
+=======
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 1, 'a@a.com', '팀장');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 2, 'b@b.com', '팀장');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 3, 'a@a.com', '팀장');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 4, 'b@b.com', '팀장');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 5, 'c@c.com', '팀장');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 6, 'd@d.com', '팀장');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 7, 'c@c.com', '팀장');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 8, 'd@d.com', '팀장');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 9, 'e@e.com', '팀장');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 10, 'f@f.com', '팀장');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 11, 'e@e.com', '팀장');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 12, 'f@f.com', '팀장');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 13, 'g@g.com', '팀장');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 14, 'h@h.com', '팀장');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 15, 'g@g.com', '팀장');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 16, 'h@h.com', '팀장');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 17, 'i@i.com', '팀장');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 18, 'j@j.com', '팀장');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 19, 'i@i.com', '팀장');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 20, 'l@l.com', '팀장');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 3, 'f@g.com', '팀원');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 3, 'b@b.com', '팀원');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 3, 'g@g.com', '팀원');
+
+>>>>>>> stash
 select sg.name, m.name, sgm.position
 from study_group sg, sg_member sgm, member m
 where sg.sg_no=sgm.sg_no and sgm.email=m.member_email
@@ -64,7 +91,7 @@ create table sg_schedule(
 	content varchar2(100) not null,
 	constraint fk2_sg_no foreign key(sg_no) references study_group(sg_no),
 	constraint fk21_sg_member_no foreign key(sg_member_no) references sg_member(sg_member_no)
-)
+);
 drop table sg_schedule
 drop sequence sg_schedule_seq
 create sequence sg_schedule_seq nocache;
@@ -86,7 +113,7 @@ create table sg_post(
 	sg_member_no number not null,
 	constraint fk33_sg_no foreign key(sg_no) references study_group(sg_no),
 	constraint fk33_sg_member_no foreign key(sg_member_no) references sg_member(sg_member_no)
-)
+);
 select * from SG_POST
 
 
@@ -104,12 +131,12 @@ create table sg_post_comment(
 	regdate date not null,
 	constraint fk_sg_post_no foreign key(sg_post_no) references sg_post(sg_post_no),
 	constraint fk12_sg_member_no foreign key(sg_member_no) references sg_member(sg_member_no)
-)
+);
 drop sequence sg_post_comment_seq;
 create sequence sg_post_comment_seq nocache;
 
 insert into sg_post_comment(sg_comment_no, content, sg_post_no, sg_member_no, regdate)
-values (sg_post_comment_seq.nextval, '첫 모임', 2, 2, sysdate);
+values (sg_post_comment_seq.nextval, '첫 모임', 1, 2, sysdate);
 
 select p.title, c.content
 from sg_post p, sg_post_comment c
@@ -124,4 +151,6 @@ create table sg_post_pic (
 );
 
 create sequence sg_post_pic_seq nocache;
-insert into sg_post_pic(sg_post_pic_no, sg_post_no) values(sg_post_pic_seq.nextval, 2);
+insert into sg_post_pic(sg_post_pic_no, sg_post_no) values(sg_post_pic_seq.nextval, 1);
+
+commit

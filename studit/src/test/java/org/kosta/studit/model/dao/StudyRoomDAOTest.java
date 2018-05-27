@@ -34,11 +34,10 @@ public class StudyRoomDAOTest {
 	    * 스터디룸 신청현황 정보 가져오기
 	    * @author 유동규
 	    */
-	   @Test
-	   public void findStudyConditionByEmailTest() {
+	   //@Test
+	   public void findStudyRoomConditionByEmailTest() {
 		   //1. 전체 현황 수로 pagingBean 생성
 		   //2. pb와 email을 map으로 담아 전송
-		   
 		   PagingBean pb = new PagingBean(studyroomDAO.findTotalStudyRoomConditionByEmail("a@a.com"));
 		   Map<String, Object> map = new HashMap<>();
 		   map.put("pagingBean", pb);
@@ -93,8 +92,8 @@ public class StudyRoomDAOTest {
 	    * 
 	    * @author 변태섭
 	    */
-	   @Test
 	   public void registerStudyRoomFunctionTest() {
+		   //@Test
 		   Map<String, Object> map = new HashMap<String, Object>();
 		   map.put("studyRoomFunction", "프린트");
 		   map.put("studyRoomNo", 2);
@@ -106,7 +105,7 @@ public class StudyRoomDAOTest {
 	    * 
 	    * @author 김유란
 	    */
-	   @Test
+	   //@Test
 	   public void findStudyRoomConditionByStudyRoomNoAndDate() {
 		   StudyRoomConditionVO studyRoomConditionVO = new StudyRoomConditionVO();
 		   StudyRoomVO studyRoomVO = new StudyRoomVO();
@@ -118,7 +117,6 @@ public class StudyRoomDAOTest {
 	   
 	   /**
 	    * 스터디룸 예약 테스트
-	    * 
 	    * @author 김유란
 	    */
 	   @Test
@@ -135,4 +133,34 @@ public class StudyRoomDAOTest {
 		   studyroomDAO.createStudyRoomCondition(studyRoomConditionVO);
 		   System.out.println(studyroomDAO.findStudyRoomConditionByStudyRoomNoAndDate(studyRoomConditionVO));
 	   }
+	   
+	   
+	   /**
+	    * 업체 번호에 따른 스터디 룸들의 정보 반환
+	    * @author 유동규
+	    */
+	   //@Test
+	   public void findStudyRoomInfoByCompanyNoTest() {
+		   System.out.println(studyroomDAO.findStudyRoomInfoByCompanyNo(1));
+	   }
+	   
+	   /**
+	    * 업체 번호에 따른 스터디 룸들의 사진 정보 반환
+	    * @author 유동규
+	    */
+	   //@Test
+	   public void findStudyRoomPicByCompanyNoTest() {
+		   System.out.println(studyroomDAO.findStudyRoomPicByCompanyNo(1));
+	   }
+	   
+	   /**
+	    * 업체 번호에 따른 스터디 룸들의 기능 정보 반환
+	    * @author 유동규
+	    */
+	   //@Test
+	   public void findstudyroomFunctionByCompanyNoTest() {
+		   System.out.println(studyroomDAO.findstudyroomFunctionByCompanyNo(1));
+	   }
+	   
+	   
 }

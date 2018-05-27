@@ -21,6 +21,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="capacity" property="studyRoomVO.capacity"/>
 		<!-- <result column="studyroom_condition_no" property="studyRoomConditionNo"/> -->
 	</resultMap>
+	
+	<resultMap type="companyVO" id="comMap" extends="companyMap">
+		<result column="memberName" property="memberVO.name"/>
+	</resultMap>
 	<!--*** resultMap ***-->
 	
 	<!-- 
@@ -107,7 +111,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    </select>
   
    <!-- 
-            업체 번호로 스터디룸 정보 조회
+	  업체 번호로 스터디룸 정보 조회
       @author 김유란
       @param companyNo 업체 식별 번호
       @return studyRoomVO
@@ -132,10 +136,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    
 
 	<!-- 
-             스터디룸 예약 현황  수정
-      @author 김유란
-      @param studyRoomConditionNo 스터디룸 예약 식별 번호
-      @return studyRoomConditionVO
+		스터디룸 예약 현황  수정
+		@author 김유란
+		@param studyRoomConditionNo 스터디룸 예약 식별 번호
+		@return studyRoomConditionVO
     -->
 	<update id="updatStudyRoomCondition" parameterType="studyRoomConditionVO">
 		update studyroom_condition 
@@ -175,7 +179,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
    <!-- 
 		업체 등록 시 등록되는 해시태그들을 insert하는 쿼리
-		
 		@author 변태섭
 		@param map 입력된 해시태그와 해당 업체 번호
     -->
@@ -187,7 +190,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    
    <!-- 
    		업체 등록 시 등록되는 영업 요일을 insert하는 쿼리
-   		
    		@author 변태섭
    		@param map 입력된 요일과 해당 업체 번호
     -->
@@ -216,7 +218,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    
    <!-- 
    		업체 등록 시 업로드 된 사진들의 경로를 테이블에 insert하는 쿼리
-   
    		@author 변태섭
    		@parma Map 사진들의 경로와 업체 번호를 담은 객체
     -->
@@ -227,12 +228,50 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    
    <!-- 
    		사업자 등록 번호 중복 체크를 위해 Count를 받아오는 쿼리
-   		
    		@author 변태섭
     -->
    <select id="findCountCompanyByLicense" parameterType="string" resultType="int">
    		select count(*) from company where license = #{value}
    </select>
+   
+   
+   
+   
+   
+   
+   <!-- 
+   		업체 번호에 따른 업체 정보 반환
+   		@author 유동규
+    -->
+   <select id="findCompanyByCompanyNo" resultMap="comMap">
+		select c.company_no, c.name, c.addr1, c.addr2, c.addr3, c.addr4, c.primary_addr, c.detail_addr, c.tel, c.license
+				, to_char(c.regdate, 'YYYY-MM-DD') as regdate, c.profile_path, c.intro, c.state, c.open, c.close
+				, c.holiday, c.hit, c.url, m.member_email, m.name as memberName
+		from company c, member m
+		where company_no = #{value} and c.member_email = m.member_email  
+   </select>
+   
+   <!--
+   		업체 번호에 따른 업체 사진 경로 반환
+   		@author 유동규
+    -->
+    <select id="findComPicByCompanyNo" resultType="map">
+    	select com_pic_no, path, company_no
+    	from com_pic
+    	where company_no = #{value}
+    </select>
+	
+	
+	<!-- 
+		업체 번호에 따른 해시태그 가져오기
+		@author 유동규
+	 -->
+	 <select id="findHashTagByCompanyNo" resultType="map">
+	 	select hashtag_no, content, company_no
+	 	from hashtag
+    	where company_no = #{value}
+	 </select>
+   
 </mapper>
  
  
@@ -245,21 +284,3 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  
  
  
- 
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.kosta.studit.model.dao.CompanyDAO;
 import org.kosta.studit.model.dao.MemberDAO;
+import org.kosta.studit.model.dao.StudyRoomDAO;
 import org.kosta.studit.model.vo.CompanyVO;
 import org.kosta.studit.model.vo.StudyRoomConditionVO;
 import org.kosta.studit.model.vo.StudyRoomVO;
@@ -23,6 +24,8 @@ public class CompanyServiceImpl implements CompanyService {
 	private CompanyDAO companyDAO;
 	@Autowired
 	private MemberDAO memberDAO;
+	@Autowired
+	private StudyRoomDAO studyRoomDAO;
 	
 	/**
 	 * 
@@ -255,4 +258,40 @@ public class CompanyServiceImpl implements CompanyService {
 			memberDAO.registerMemberPosition(memberPositionMap);
 		}
 	}
+	
+	
+	
+	@Override
+	public Map<String, Object> findDetailCompanyInfoByCompanyNo(int companyNo) {
+		//회사정보
+		CompanyVO companyVO = companyDAO.findCompanyByCompanyNo(companyNo);
+		//회사사진
+		List<Map<String, Object>> comPicList = companyDAO.findComPicByCompanyNo(companyNo);
+		//회사영업일
+		List<String> comDayList = companyDAO.findBusinessDayByCompanyNo(companyNo);
+		//회사해시태그
+		List<Map<String, Object>> comHashTagList = companyDAO.findHashTagByCompanyNo(companyNo);
+		//스터디룸 정보
+		List<StudyRoomVO> studyList = studyRoomDAO.findStudyRoomInfoByCompanyNo(companyNo);
+		//스터디룸기능정보
+		List<Map<String,Object>> studyFunctionList =  studyRoomDAO.findstudyroomFunctionByCompanyNo(companyNo);
+		//스터디룸사진
+		List<Map<String, Object>> studyPicList = studyRoomDAO.findStudyRoomPicByCompanyNo(companyNo);
+		
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		dataMap.put("companyVO", companyVO);
+		dataMap.put("comPicList", comPicList);
+		dataMap.put("comDayList", comDayList);
+		dataMap.put("comHashTagList", comHashTagList);
+		dataMap.put("studyList", studyList);
+		dataMap.put("studyFunctionList", studyFunctionList);
+		dataMap.put("stduyPicList", studyPicList);
+		
+		return dataMap;
+	}
+	
+	
+	
+	
+	
 }

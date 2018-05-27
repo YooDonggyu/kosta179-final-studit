@@ -28,6 +28,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/assets/css/simpletextrotator.css">
     <!-- Custom stylesheet - for your changes-->
     <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/assets/css/custom.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/blog.css">
     <!-- fullCalendar -->
     <link href='${pageContext.request.contextPath}/resources/fullcalendar-scheduler/lib/fullcalendar.min.css' rel='stylesheet' />
 	<link href='${pageContext.request.contextPath}/resources/fullcalendar-scheduler/lib/fullcalendar.print.min.css' rel='stylesheet' media='print' />
@@ -58,7 +59,7 @@
 
     <!-- daum 우편번호, kakao map API -->
     <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7089f989ad92f0b98ff8257f8cc869ef&libraries=services"></script>
     
 </head>
 

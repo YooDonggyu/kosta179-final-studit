@@ -206,6 +206,41 @@ public class CompanyDAOImpl implements CompanyDAO {
 	   public int findCountCompanyByLicense(String license) {
 		   return template.selectOne("company.findCountCompanyByLicense", license);
 	   }
+	   
+	   
+	   /**
+	    * 업체 번호에 따른 업체 정보 반환
+	    * @author 유동규
+	    * @param companyNo 업체 번호
+	    * @return companyVO 업체 정보가 담긴 객체
+	    */
+	   @Override
+	   public CompanyVO findCompanyByCompanyNo(int companyNo) {
+		   return template.selectOne("company.findCompanyByCompanyNo", companyNo);
+	   }
+	   /**
+	    * 업체 번호에 따른 업체 사진 반환
+	    * @author 유동규
+	    * @param companyNo 업체 번호
+	    * @return List<Map<String, Object>> 업체 사진 정보가 담긴 list
+	    */
+	   @Override
+	   public List<Map<String, Object>> findComPicByCompanyNo(int companyNo){
+		   return template.selectList("company.findComPicByCompanyNo", companyNo);
+	   }
+	   
+	   /**
+	    * 업체 번호에 따른 해시태그 반환
+	    * @author 유동규
+	    * @param companyNo 업체 번호
+	    * @return List<Map<String, Object>> 업체 사진 해시태그가 담긴 list
+	    */
+	   @Override
+	   public List<Map<String, Object>> findHashTagByCompanyNo(int companyNo){
+		   return template.selectList("company.findHashTagByCompanyNo", companyNo);
+	   }
+	   
+	   
 }
 
 

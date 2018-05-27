@@ -1,4 +1,4 @@
-﻿--업체
+--업체
 drop table company cascade constraint
 CREATE TABLE company(
 	company_no number primary key,
@@ -25,7 +25,7 @@ CREATE TABLE company(
 );
 create sequence company_no_seq nocache;
 
-create member_position
+
 drop sequence company_no_seq
 insert into member_position values( member_position_no_seq.nextval, '업체', 'd@d.com');
 
@@ -36,8 +36,8 @@ company_no
 , addr2
 , addr3
 , addr4
-, latitude
-, longitude
+, primary_addr
+, detail_addr
 , tel
 , license
 , regdate
@@ -54,8 +54,8 @@ values(company_no_seq.nextval
 ,'성남시'
 ,'분당구'
 ,'분당로53번길 12 서현나산플라자'
-, 3
-, 3
+, '경기도 성남시 분당구'
+, '분당로53번길 12 서현나산플라자'
 ,'031-8017-3537'
 ,'222-18-56167'
 ,sysdate
@@ -74,8 +74,8 @@ company_no
 , addr2
 , addr3
 , addr4
-, latitude
-, longitude
+, primary_addr
+, detail_addr
 , tel
 , license
 , regdate
@@ -92,8 +92,8 @@ values(company_no_seq.nextval
 ,'성남시'
 ,'분당구'
 ,'분당로53번길 12 서현나산플라자'
-, 3
-, 3
+, '경기도 성남시 분당구'
+, '분당로53번길 12 서현나산플라자'
 ,'031-8017-3537'
 ,'222-18-56167'
 ,sysdate
@@ -112,8 +112,8 @@ company_no
 , addr2
 , addr3
 , addr4
-, latitude
-, longitude
+, primary_addr
+, detail_addr
 , tel
 , license
 , regdate
@@ -130,8 +130,8 @@ values(company_no_seq.nextval
 ,'성남시'
 ,'분당구'
 ,'분당로53번길 12 서현나산플라자'
-, 3
-, 3
+, '경기도 성남시 분당구'
+, '분당로53번길 12 서현나산플라자'
 ,'031-8017-3537'
 ,'222-18-56167'
 ,sysdate
@@ -150,8 +150,8 @@ company_no
 , addr2
 , addr3
 , addr4
-, latitude
-, longitude
+, primary_addr
+, detail_addr
 , tel
 , license
 , regdate
@@ -168,8 +168,8 @@ values(company_no_seq.nextval
 ,'성남시'
 ,'수정구'
 ,'분당로53번길 12 서현나산플라자'
-, 3
-, 3
+, '경기도 성남시 수정구'
+, '분당로53번길 12 서현나산플라자'
 ,'031-8017-3537'
 ,'222-18-56167'
 ,sysdate
@@ -188,8 +188,8 @@ company_no
 , addr2
 , addr3
 , addr4
-, latitude
-, longitude
+, primary_addr
+, detail_addr
 , tel
 , license
 , regdate
@@ -206,8 +206,8 @@ values(company_no_seq.nextval
 ,'성남시'
 ,'수정구'
 ,'분당로53번길 12 서현나산플라자'
-, 3
-, 3
+, '경기도 성남시 수정구'
+, '분당로53번길 12 서현나산플라자'
 ,'031-8017-3537'
 ,'222-18-56167'
 ,sysdate
@@ -226,8 +226,8 @@ company_no
 , addr2
 , addr3
 , addr4
-, latitude
-, longitude
+, primary_addr
+, detail_addr
 , tel
 , license
 , regdate
@@ -244,8 +244,8 @@ values(company_no_seq.nextval
 ,'성남시'
 ,'중원구'
 ,'분당로53번길 12 서현나산플라자'
-, 3
-, 3
+, '경기도 성남시 중원구'
+, '분당로53번길 12 서현나산플라자'
 ,'031-8017-3537'
 ,'222-18-56167'
 ,sysdate
@@ -264,8 +264,8 @@ company_no
 , addr2
 , addr3
 , addr4
-, latitude
-, longitude
+, primary_addr
+, detail_addr
 , tel
 , license
 , regdate
@@ -282,8 +282,8 @@ values(company_no_seq.nextval
 ,'강남구'
 ,'논현동'
 ,'분당로53번길 12 서현나산플라자'
-, 3
-, 3
+, '서울특별시 강남구 논현동'
+, '분당로53번길 12 서현나산플라자'
 ,'031-8017-3537'
 ,'222-18-56167'
 ,sysdate
@@ -302,8 +302,8 @@ company_no
 , addr2
 , addr3
 , addr4
-, latitude
-, longitude
+, primary_addr
+, detail_addr
 , tel
 , license
 , regdate
@@ -320,8 +320,8 @@ values(company_no_seq.nextval
 ,'강남구'
 ,'자곡동'
 ,'분당로53번길 12 서현나산플라자'
-, 3
-, 3
+, '서울특별시 강남구 자곡동'
+, '분당로53번길 12 서현나산플라자'
 ,'031-8017-3537'
 ,'222-18-56167'
 ,sysdate
@@ -340,8 +340,8 @@ company_no
 , addr2
 , addr3
 , addr4
-, latitude
-, longitude
+, primary_addr
+, detail_addr
 , tel
 , license
 , regdate
@@ -358,8 +358,8 @@ values(company_no_seq.nextval
 ,'구로구'
 ,'신도림동'
 ,'분당로53번길 12 서현나산플라자'
-, 3
-, 3
+, '서울특별시 구로구 신도림동'
+, '분당로53번길 12 서현나산플라자'
 ,'031-8017-3537'
 ,'222-18-56167'
 ,sysdate
@@ -462,7 +462,7 @@ create table hashtag (
 	content varchar2(100) not null,
 	company_no number not null,
 	constraint fk5_company_no foreign key(company_no) references company(company_no)
-)
+);
 
 create sequence hashtag_seq nocache;
 insert into hashtag(hashtag_no, content, company_no) values(hashtag_seq.nextval, '#화이트보드', 1);
@@ -493,7 +493,7 @@ create table studyroom(
 	content clob not null,
 	company_no number not null,
 	constraint fk6_company_no foreign key(company_no) references company(company_no)
-)
+);
 
 create sequence studyroom_seq nocache;
 
@@ -516,7 +516,7 @@ create table studyroom_function(
 	name varchar2(100) not null,
 	studyroom_no number not null,
 	constraint fk_studyroom_no foreign key(studyroom_no) references studyroom(studyroom_no)
-)
+);
 
 create sequence studyroom_function_seq nocache;
 
@@ -533,10 +533,10 @@ create table studyroom_pic(
 	path varchar2(100) default 'default.png',
 	studyroom_no number not null,
 	constraint fk2_studyroom_no foreign key(studyroom_no) references studyroom(studyroom_no)
-)
+);
 
 create sequence studyroom_pic_seq nocache;
-insert into studyroom_pic(studyroom_pic_no, studyroom_no) values(studyroom_pic_seq.nextval, 2)
+insert into studyroom_pic(studyroom_pic_no, studyroom_no) values(studyroom_pic_seq.nextval, 2);
 
 select s.name, p.path
 from studyroom s, studyroom_pic p
@@ -555,7 +555,7 @@ create table studyroom_condition (
 	use_date date not null,
 	constraint fk3_studyroom_no foreign key(studyroom_no) references studyroom(studyroom_no),
 	constraint fk5_member_email foreign key(member_email) references member(member_email)
-)
+);
 drop  sequence studyroom_condition_seq
 create sequence studyroom_condition_seq nocache;
 

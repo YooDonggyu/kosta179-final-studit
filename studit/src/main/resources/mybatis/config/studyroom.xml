@@ -28,6 +28,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="companyVO.open" column="open"/>
 		<result property="companyVO.close" column="close"/>
 	</resultMap>
+	
+	
 	<!-- resultMap	End -->
 	
 	<!-- 
@@ -143,10 +145,49 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 	<select id="findStudyRoomConditionByStudyRoomNoAndDate" parameterType="studyRoomConditionVO" resultType="studyRoomConditionVO">
-	select start_time, end_time from studyroom_condition 
-	where studyroom_no=#{studyRoomVO.studyRoomNo} and use_date=#{useDate} 
+		select start_time, end_time from studyroom_condition 
+		where studyroom_no=#{studyRoomVO.studyRoomNo} and use_date=#{useDate} 
 	</select>
 
+	<!-- 
+		업체 번호에 따른 스터디 룸 반환
+		@author 유동규
+	 -->
+	<select id="findStudyRoomInfoByCompanyNo" resultMap="studyRoomRM">
+		select studyroom_no, name, capacity, price, content, company_no 
+		from studyroom
+		where company_no = #{value}
+	</select>
+	
+	<!-- 
+		업체 번호에 따른 스터디 룸들에 관한 사진 반환
+		@author 유동규
+	 -->
+	 <select id="findStudyRoomPicByCompanyNo" resultType="map">
+	 	select studyroom_pic_no, path, studyroom_no
+	 	from studyroom_pic
+	 	where studyroom_no in (
+	 		select s.studyroom_no
+	 		from studyroom s, company c
+	 		where s.company_no = c.company_no
+	 	)
+	 </select>
+	
+	<!-- 
+		업체 번호에 해당하는 스터디 룸들이 갖는 기능 반환
+		@author 유동규
+	 -->
+	 <select id="findstudyroomFunctionByCompanyNo" resultType="map">
+	 	select function_no, name, studyroom_no
+	 	from studyroom_function
+	 	where studyroom_no in (
+	 		select s.studyroom_no
+	 		from studyroom s, company c
+	 		where s.company_no = c.company_no
+	 	)
+	 </select>
+	 
+		
 </mapper>
  
  

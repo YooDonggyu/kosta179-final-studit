@@ -21,7 +21,7 @@
 						studyroom+="<c:forEach items='${allCompanyList }' var='clist'>";
 						studyroom+="<div class='hidden'>${pageContext.request.contextPath }/resources/upload/업체1.JPG</div>";
 						studyroom+="<div class='col-sm-4'><div class='box box-services'><div>";
-						studyroom+="<img src='${pageContext.request.contextPath }/resources/upload/업체1.JPG' style='width: 300px; height: 200px'>";
+						studyroom+="<img src='${pageContext.request.contextPath }/resources/upload/업체1.JPG' style='width: 300px; height: 200px' >";
 						studyroom+="</div><div><h4 cl ass='heading'>${clist.name }</h4></div>";
 						studyroom+="<div id='showAddress' style='font-size: 14px; color: #AB8888; font-weight: bold;'>${clist.addr1 } ${clist.addr2 } ${clist.addr3 }</div>";
 						studyroom+="<p>${clist.intro }</p></div></div></c:forEach>";
@@ -29,7 +29,7 @@
 						$.each(result, function(index, item){
 							studyroom+="<div class='hidden'>${pageContext.request.contextPath }/resources/upload/업체1.JPG</div>";
 							studyroom+="<div class='col-sm-4'><div class='box box-services'><div>";
-							studyroom+="<img src='${pageContext.request.contextPath }/resources/upload/업체1.JPG' style='width: 300px; height: 200px'>";
+							studyroom+="<img src='${pageContext.request.contextPath }/resources/upload/업체1.JPG' style='width: 300px; height: 200px' onclick=\"return goDetail("+item.companyNO+")\">";
 							studyroom+="</div><div><h4 class='heading'>";
 							studyroom+=item.name;
 							studyroom+="</h4></div><div id='showAddress' style='font-size: 14px; color: #AB8888; font-weight: bold;'>";
@@ -84,7 +84,7 @@
 						$.each(result, function(index, item){
 							studyroom+="<div class='hidden'>${pageContext.request.contextPath }/resources/upload/업체1.JPG</div>";
 							studyroom+="<div class='col-sm-4'><div class='box box-services'><div>";
-							studyroom+="<img src='${pageContext.request.contextPath }/resources/upload/업체1.JPG' style='width: 300px; height: 200px'>";
+							studyroom+="<img src='${pageContext.request.contextPath }/resources/upload/업체1.JPG' style='width: 300px; height: 200px' onclick=\"return goDetail("+item.companyNO+")\">";
 							studyroom+="</div><div><h4 class='heading'>";
 							studyroom+=item.name;
 							studyroom+="</h4></div><div id='showAddress' style='font-size: 14px; color: #AB8888; font-weight: bold;'>";
@@ -138,7 +138,7 @@
 						$.each(result, function(index, item){
 							studyroom+="<div class='hidden'>${pageContext.request.contextPath }/resources/upload/업체1.JPG</div>";
 							studyroom+="<div class='col-sm-4'><div class='box box-services'><div>";
-							studyroom+="<img src='${pageContext.request.contextPath }/resources/upload/업체1.JPG' style='width: 300px; height: 200px'>";
+							studyroom+="<img src='${pageContext.request.contextPath }/resources/upload/업체1.JPG' style='width: 300px; height: 200px' onclick=\"return goDetail("+item.companyNO+")\">";
 							studyroom+="</div><div><h4 class='heading'>";
 							studyroom+=item.name;
 							studyroom+="</h4></div><div id='showAddress' style='font-size: 14px; color: #AB8888; font-weight: bold;'>";
@@ -171,7 +171,7 @@
 						$.each(result, function(index, item){
 							studyroom+="<div class='hidden'>${pageContext.request.contextPath }/resources/upload/업체1.JPG</div>";
 							studyroom+="<div class='col-sm-4'><div class='box box-services'><div>";
-							studyroom+="<img src='${pageContext.request.contextPath }/resources/upload/업체1.JPG' style='width: 300px; height: 200px'>";
+							studyroom+="<img src='${pageContext.request.contextPath }/resources/upload/업체1.JPG' style='width: 300px; height: 200px' onclick=\"return goDetail("+item.companyNO+")\">";
 							studyroom+="</div><div><h4 class='heading'>";
 							studyroom+=item.name;
 							studyroom+="</h4></div><div id='showAddress' style='font-size: 14px; color: #AB8888; font-weight: bold;'>";
@@ -195,6 +195,12 @@
 				$("#searchBtn").click();
 		});
 	});
+	
+	function goDetail(comNo){
+		location.href="${pageContext.request.contextPath }/company/findDetailCompanyInfoByCompanyNo?companyNo="+comNo;
+	}
+	
+	
 </script>
 <section class="signup-section text-center no-padding-bottom">
 	<div class="container">
@@ -250,10 +256,10 @@
         	<div id="studyroomList">
          	<c:forEach items="${allCompanyList }" var="clist">
          		<div class="hidden">${pageContext.request.contextPath }/resources/upload/업체1.JPG</div>
-            <div class="col-sm-4">
+            <div class="col-sm-4 ">
               <div class="box box-services">
                 <div>
-                	<img src="${pageContext.request.contextPath }/resources/upload/업체1.JPG" style="width: 300px; height: 200px">
+                	<img src="${pageContext.request.contextPath }/resources/upload/업체1.JPG" style="width: 300px; height: 200px" onclick="return goDetail(${clist.companyNo})">
                 </div>
                 <div>
                 	<h4 class="heading">${clist.name }</h4>

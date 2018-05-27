@@ -28,4 +28,6 @@ public interface CompanyService {
 	
 	void registerCompany(CompanyVO companyVO, String day, String hashtag, List<String> companyPicFileList);
 
+	Map<String, Object> findDetailCompanyInfoByCompanyNo(int companyNo);
+
 }

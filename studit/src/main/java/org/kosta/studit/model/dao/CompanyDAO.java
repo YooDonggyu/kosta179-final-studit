@@ -42,4 +42,10 @@ public interface CompanyDAO {
 	void registerCompanyPicPath(Map<String, Object> map);
 
 	int findCountCompanyByLicense(String license);
+
+	CompanyVO findCompanyByCompanyNo(int companyNo);
+
+	List<Map<String, Object>> findComPicByCompanyNo(int companyNo);
+
+	List<Map<String, Object>> findHashTagByCompanyNo(int companyNo);
 }

@@ -26,5 +26,12 @@ public interface StudyRoomDAO {
 
 	List<StudyRoomConditionVO> findStudyRoomConditionByStudyRoomNoAndDate(StudyRoomConditionVO studyRoomConditionVO);
 
+	List<StudyRoomVO> findStudyRoomInfoByCompanyNo(int companyNo);
+
+	List<Map<String, Object>> findStudyRoomPicByCompanyNo(int companyNo);
+
+	List<Map<String, Object>> findstudyroomFunctionByCompanyNo(int companyNo);
+
+
 
 }

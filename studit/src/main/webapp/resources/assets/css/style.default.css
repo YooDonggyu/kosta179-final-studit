@@ -1761,10 +1761,10 @@ abbr[data-original-title] {
   border-bottom: 1px dotted #999999;
 }
 blockquote {
-  padding: 12px 24px;
+  padding: 0px 24px;
   margin: 0 0 24px;
   font-size: 16px;
-  border-left: 5px solid #ff7473;
+  border-left: 5px solid #FFBC9B;
 }
 blockquote footer,
 blockquote small,

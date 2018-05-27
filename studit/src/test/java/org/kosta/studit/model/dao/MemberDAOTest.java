@@ -25,7 +25,6 @@ public class MemberDAOTest {
 	   public void findMemberByEmailTest() {
 	      //아이디가 있는지 검사
 	      System.out.println(memberDAO.findMemberByEmail("a@a.com"));
-	      
 	      //아이디가 없을 경우
 	      System.out.println(memberDAO.findMemberByEmail("bts@a.com"));
 	   }

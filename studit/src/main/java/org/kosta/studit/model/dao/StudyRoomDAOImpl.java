@@ -71,7 +71,6 @@ public class StudyRoomDAOImpl implements StudyRoomDAO {
 	   
 	   /**
 	    * 스터디룸 등록 시 업로드 된 사진들의 경로를 등록하는 메서드
-	    * 
 	    * @author 변태섭
 	    * @param Map 사진의 경로와 해당 스터디룸 번호를 담은 객체
 	    */
@@ -82,7 +81,6 @@ public class StudyRoomDAOImpl implements StudyRoomDAO {
 	   
 	   /**
 	    * 스터디룸 등록 시 이용 기능들을 등록하는 메서드
-	    * 
 	    * @author 변태섭
 	    * @param Map 스터디룸 번호와 기능명을 담은 객체
  	    */
@@ -90,13 +88,13 @@ public class StudyRoomDAOImpl implements StudyRoomDAO {
 	   public void registerStudyRoomFunction(Map<String, Object> map) {
 		   template.insert("studyroom.registerStudyRoomFunction", map);
 	   }
-	
-	   /**
-	    * 스터디룸 번호와 날짜로 예약현황 조회
-	    * @author 김유란
-	    * @param studyRoomConditionVO 스터디룸 번호와 사용일자 정보를 담은 VO
-	    * @return List<studyRoomConditionVO> 스터디룸 예약 정보를 담은 VO 리스트
-	    */
+
+		/**
+		 * 스터디룸 번호와 날짜로 예약현황 조회
+		 * @author 김유란
+		 * @param studyRoomConditionVO 스터디룸 번호와 사용일자 정보를 담은 VO
+		 * @return List<studyRoomConditionVO> 스터디룸 예약 정보를 담은 VO 리스트
+		 */
 	   @Override
 	   public List<StudyRoomConditionVO> findStudyRoomConditionByStudyRoomNoAndDate(StudyRoomConditionVO studyRoomConditionVO) {
 		   return template.selectList("studyroom.findStudyRoomConditionByStudyRoomNoAndDate", studyRoomConditionVO);
@@ -113,6 +111,35 @@ public class StudyRoomDAOImpl implements StudyRoomDAO {
 			
 		}
 
-  
+	  /**
+	    * 업체 번호에 따른 스터디룸 정보 반환
+	    * @author 유동규
+	    * @param companyNo 업체번호
+	    * @return List<StudyRoomVO> 스터디룸 정보가 담긴 객체 list
+	    */
+	   @Override
+	   public List<StudyRoomVO>findStudyRoomInfoByCompanyNo(int companyNo){
+		   return template.selectList("studyroom.findStudyRoomInfoByCompanyNo", companyNo);
+	   }
+	   /**
+	    * 업체 번호에 따른 스터디룸 사진 정보 반환
+	    * @author 유동규
+	    * @param companyNo 업체번호
+	    * @return List<Map<String, Object>> 스터디룸 사진 정보가 담긴 map list
+	    */
+	   @Override
+	   public List<Map<String, Object>> findStudyRoomPicByCompanyNo(int companyNo){
+		   return template.selectList("studyroom.findStudyRoomPicByCompanyNo", companyNo);
+	   }
+	   /**
+	    * 업체 번호에 따른 스터디룸 기능 정보 반환
+	    * @author 유동규
+	    * @param companyNo 업체번호
+	    * @return List<Map<String, Object>> 스터디룸 기능 정보가 담긴 map list
+	    */
+	   @Override
+	   public List<Map<String, Object>> findstudyroomFunctionByCompanyNo(int companyNo){
+		   return template.selectList("studyroom.findstudyroomFunctionByCompanyNo", companyNo);
+	   }
 
 }

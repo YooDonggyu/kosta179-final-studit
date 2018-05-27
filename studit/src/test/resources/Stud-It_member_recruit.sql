@@ -14,7 +14,7 @@ CREATE TABLE member
     password_answer varchar2(100) not null, 
     pic_path varchar2(300) default 'default.png' 
 );
-create sequence member_email_seq;
+ 
 select * from member
 commit
 insert into member(member_email,password,name,primary_addr,detail_addr,phone,regdate,password_hint,password_answer) 
@@ -41,6 +41,23 @@ insert into member(member_email,password,name,primary_addr,detail_addr,phone,reg
 values('k@k.com','1','김유란','고양','11호','010-1234-5678',sysdate,'내 나이는?','25');
 insert into member(member_email,password,name,primary_addr,detail_addr,phone,regdate,password_hint,password_answer) 
 values('l@l.com','1','null승수','찾을 수 없습니다.','12호','010-1234-5678',sysdate,'내 나이는?','25');
+insert into member(member_email,password,name,primary_addr,detail_addr,phone,regdate,password_hint,password_answer) 
+values('tico99@naver.com','1','갓정우','천상계','101호','010-1234-5678',sysdate,'짐의 나이는?','25');
+insert into member(member_email,password,name,primary_addr,detail_addr,phone,regdate,password_hint,password_answer) 
+values('d@e.com','1','아이십','수원','9호','010-1234-5678',sysdate,'내 나이는?','25');
+insert into member(member_email,password,name,primary_addr,detail_addr,phone,regdate,password_hint,password_answer) 
+values('e@f.com','1','아이십','수원','9호','010-1234-5678',sysdate,'내 나이는?','25');
+insert into member(member_email,password,name,primary_addr,detail_addr,phone,regdate,password_hint,password_answer) 
+values('f@g.com','1','아이십','수원','9호','010-1234-5678',sysdate,'내 나이는?','25');
+insert into member(member_email,password,name,primary_addr,detail_addr,phone,regdate,password_hint,password_answer) 
+values('g@h.com','1','아이십','수원','9호','010-1234-5678',sysdate,'내 나이는?','25');
+insert into member(member_email,password,name,primary_addr,detail_addr,phone,regdate,password_hint,password_answer) 
+values('h@i.com','1','아이십','수원','9호','010-1234-5678',sysdate,'내 나이는?','25');
+insert into member(member_email,password,name,primary_addr,detail_addr,phone,regdate,password_hint,password_answer) 
+values('i@j.com','1','아이십','수원','9호','010-1234-5678',sysdate,'내 나이는?','25');
+insert into member(member_email,password,name,primary_addr,detail_addr,phone,regdate,password_hint,password_answer) 
+values('j@k.com','1','아이십','수원','9호','010-1234-5678',sysdate,'내 나이는?','25');
+
 
 
 select *from member
@@ -80,11 +97,11 @@ values(member_position_no_seq.nextval,'업체','h@h.com');
 insert into MEMBER_POSITION(member_position_no,name,member_email) 
 values(member_position_no_seq.nextval,'탈퇴','i@i.com');
 insert into MEMBER_POSITION(member_position_no,name,member_email) 
-values(member_position_no_seq.nextval,'회원','a@b.com');
+values(member_position_no_seq.nextval,'회원','j@j.com');
 insert into MEMBER_POSITION(member_position_no,name,member_email) 
-values(member_position_no_seq.nextval,'회원','b@c.com');
+values(member_position_no_seq.nextval,'회원','k@k.com');
 insert into MEMBER_POSITION(member_position_no,name,member_email) 
-values(member_position_no_seq.nextval,'회원','c@d.com');
+values(member_position_no_seq.nextval,'탈퇴','l@l.com');
 insert into MEMBER_POSITION(member_position_no,name,member_email) 
 values(member_position_no_seq.nextval,'회원','d@e.com');
 insert into MEMBER_POSITION(member_position_no,name,member_email) 
@@ -109,7 +126,7 @@ select *from member_position
 create table search_keyword(
 	keyword varchar2(100) primary key,
 	hit number default 0
-)
+);
 
 drop table big_category  cascade constraint;
 --대분류
@@ -117,7 +134,7 @@ CREATE TABLE big_category
 (
 	big_category_no number primary key ,
 	name varchar2(100) not null 
-)
+);
 drop sequence big_category_no_seq;
 create sequence big_category_no_seq nocache;
 
@@ -233,15 +250,15 @@ values(recruit_post_no_seq.nextval,'헬로 베트남','또이 무언 응언 안�
 insert into recruit_post (recruit_post_no,title,content,regdate,condition,capacity,member_email,small_category_no,location) 
 values(recruit_post_no_seq.nextval,'러시아어 하실분','러시아어 잘해여? 스파시바',sysdate,'모집중',4,'i@i.com',9,'신촌');
 insert into recruit_post (recruit_post_no,title,content,regdate,condition,capacity,member_email,small_category_no,location) 
-values(recruit_post_no_seq.nextval,'Java 같이하실분','자바를 자바라 자바라? 자블래?',sysdate,'모집완료',5,'a@b.com',10,'판교');
+values(recruit_post_no_seq.nextval,'Java 같이하실분','자바를 자바라 자바라? 자블래?',sysdate,'모집완료',5,'j@j.com',10,'판교');
 insert into recruit_post (recruit_post_no,title,content,regdate,condition,capacity,member_email,small_category_no,location) 
 values(recruit_post_no_seq.nextval,'C 같이 공부하실분','c를 공부를 어쩌구저쩌구 시간은 언제구 어쩌구 저쩌구',sysdate,'모집중',4,'i@i.com',11,'홍대');
 insert into recruit_post (recruit_post_no,title,content,regdate,condition,capacity,member_email,small_category_no,location) 
-values(recruit_post_no_seq.nextval,'안드로이드 프로그래밍 스터디','아이폰 쓰시는 분만',sysdate,'모집중',4,'a@b.com',12,'신촌');
+values(recruit_post_no_seq.nextval,'안드로이드 프로그래밍 스터디','아이폰 쓰시는 분만',sysdate,'모집중',4,'k@k.com',12,'신촌');
 insert into recruit_post (recruit_post_no,title,content,regdate,condition,capacity,member_email,small_category_no,location) 
-values(recruit_post_no_seq.nextval,'파이썬하실분들 구해요','파이썬~!',sysdate,'모집중',3,'b@c.com',13,'종로');
+values(recruit_post_no_seq.nextval,'파이썬하실분들 구해요','파이썬~!',sysdate,'모집중',3,'b@b.com',13,'종로');
 insert into recruit_post (recruit_post_no,title,content,regdate,condition,capacity,member_email,small_category_no,location) 
-values(recruit_post_no_seq.nextval,'프론트엔드 공부해 보실분들구해요','프론트프론트해',sysdate,'모집중',3,'b@c.com',14,'판교');
+values(recruit_post_no_seq.nextval,'프론트엔드 공부해 보실분들구해요','프론트프론트해',sysdate,'모집중',3,'l@l.com',14,'판교');
 insert into recruit_post (recruit_post_no,title,content,regdate,condition,capacity,member_email,small_category_no,location) 
 values(recruit_post_no_seq.nextval,'모여서 시 낭송 하실분들구해요','시를 낭송하시면서 내면의 평화를 찾으세요',sysdate,'모집중',5,'g@g.com',15,'분당');
 
@@ -275,7 +292,7 @@ insert into recruit_post (recruit_post_no,title,content,regdate,condition,capaci
 values(recruit_post_no_seq.nextval,'모여서 시 낭송 하실분들구해요','시를 낭송하시면서 내면의 평화를 찾으세요',sysdate,'모집중',5,'g@g.com',14,'분당');
 insert into recruit_post (recruit_post_no,title,content,regdate,condition,capacity,member_email,small_category_no,location) 
 values(recruit_post_no_seq.nextval,'모여서 시 낭송 하실분들구해요','시를 낭송하시면서 내면의 평화를 찾으세요',sysdate,'모집중',5,'g@g.com',15,'판교');
-
+ 
 commit
 
 --모집  선택

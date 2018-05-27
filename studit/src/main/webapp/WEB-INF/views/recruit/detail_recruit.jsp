@@ -66,8 +66,8 @@
 					<button type="button" class="btn btn-default">조회수 : ${recruitInfo.detail.hit} </button>
 				</div>
 			</div>
-	    	<div class="well ">
-	    		<p class="lead">${recruitInfo.detail.content}</p>
+	    	<div >
+	    		<pre >${recruitInfo.detail.content}</pre>
 	    	</div>
     		<input type="hidden" id="hiddenRecruitNo" value="${recruitInfo.detail.recruitPostNo}">
     	</div><!-- row -->
