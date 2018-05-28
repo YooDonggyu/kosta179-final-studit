@@ -35,6 +35,23 @@ insert into study_group (sg_no, name, recruit_post_no) values (study_group_seq.n
 insert into study_group (sg_no, name, recruit_post_no) values (study_group_seq.nextval, '시낭송', 23);
 
 
+insert into study_group (sg_no, name, recruit_post_no) values (study_group_seq.nextval, '24', 24);
+insert into study_group (sg_no, name, recruit_post_no) values (study_group_seq.nextval, '25', 25);
+insert into study_group (sg_no, name, recruit_post_no) values (study_group_seq.nextval, '26', 26);
+insert into study_group (sg_no, name, recruit_post_no) values (study_group_seq.nextval, '27', 27);
+insert into study_group (sg_no, name, recruit_post_no) values (study_group_seq.nextval, '28', 28);
+insert into study_group (sg_no, name, recruit_post_no) values (study_group_seq.nextval, '29', 29);
+insert into study_group (sg_no, name, recruit_post_no) values (study_group_seq.nextval, '30', 30);
+insert into study_group (sg_no, name, recruit_post_no) values (study_group_seq.nextval, '31', 31);
+insert into study_group (sg_no, name, recruit_post_no) values (study_group_seq.nextval, '32', 32);
+insert into study_group (sg_no, name, recruit_post_no) values (study_group_seq.nextval, '33', 33);
+insert into study_group (sg_no, name, recruit_post_no) values (study_group_seq.nextval, '34', 34);
+insert into study_group (sg_no, name, recruit_post_no) values (study_group_seq.nextval, '35', 35);
+insert into study_group (sg_no, name, recruit_post_no) values (study_group_seq.nextval, '36', 36);
+insert into study_group (sg_no, name, recruit_post_no) values (study_group_seq.nextval, '37', 37);
+insert into study_group (sg_no, name, recruit_post_no) values (study_group_seq.nextval, '38', 38);
+
+
 --모집 완료된 스터디 구성원
 create table sg_member(
 	sg_member_no number primary key,
@@ -49,7 +66,6 @@ create table sg_member(
 
 select*from sg_member
 create sequence sg_member_seq nocache;
-
 
 insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 1, 'a@a.com', '팀장');
 insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 2, 'b@b.com', '팀장');
@@ -70,11 +86,29 @@ insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_me
 insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 17, 'i@i.com', '팀장');
 insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 18, 'j@j.com', '팀장');
 insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 19, 'i@i.com', '팀장');
-insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 20, 'l@l.com', '팀장');
-insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 3, 'f@g.com', '팀원');
-insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 3, 'b@b.com', '팀원');
-insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 3, 'g@g.com', '팀원');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 20, 'k@k.com', '팀장');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 21, 'j@j.com', '팀장');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 22, 'l@l.com', '팀장');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 23, 'g@g.com', '팀장');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 24, 'g@g.com', '팀장');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 25, 'g@g.com', '팀장');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 26, 'g@g.com', '팀장');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 27, 'g@g.com', '팀장');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 28, 'g@g.com', '팀장');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 29, 'g@g.com', '팀장');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 30, 'g@g.com', '팀장');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 31, 'g@g.com', '팀장');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 32, 'g@g.com', '팀장');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 33, 'g@g.com', '팀장');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 34, 'g@g.com', '팀장');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 35, 'g@g.com', '팀장');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 36, 'g@g.com', '팀장');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 37, 'g@g.com', '팀장');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 38, 'g@g.com', '팀장');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 1, 'e@e.com', '팀원');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 1, 'h@h.com', '팀원');
 
+commit
 
 select sg.name, m.name, sgm.position
 from study_group sg, sg_member sgm, member m
@@ -95,7 +129,7 @@ drop table sg_schedule
 drop sequence sg_schedule_seq
 create sequence sg_schedule_seq nocache;
 insert into sg_schedule(sg_schedule_no, sg_no, start_date, end_date, content, sg_member_no) 
-values(sg_schedule_seq.nextval, 1, to_date('2018-05-30','YYYY-MM-DD'), to_date('2018-05-31','YYYY-MM-DD'), '면접 대비', 2);
+values(sg_schedule_seq.nextval, 1, to_date('2018-06-04','YYYY-MM-DD'), to_date('2018-05-31','YYYY-MM-DD'), '면접 대비', 2);
 
 select sg.name, s.start_date, s.end_date, s.content
 from study_group sg, sg_schedule s

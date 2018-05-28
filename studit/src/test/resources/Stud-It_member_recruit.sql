@@ -471,5 +471,5 @@ values(study_condition_no_seq.nextval, sysdate, '승인', '열심히 할게요 !
 insert into study_condition(study_condition_no, regdate, state, self_appeal, member_email, recruit_post_no)
 values(study_condition_no_seq.nextval, sysdate, '미승인', '열심히 할게요 ! ', 'g@g.com', 1); --def
 
-
+commit
 

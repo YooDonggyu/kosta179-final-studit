@@ -4,6 +4,7 @@ drop sequence company_no_seq;
 drop table com_announcement cascade constraints;
 drop sequence anc_no_seq;
 
+
 drop table com_pic cascade constraints;
 drop sequence com_pic_no_seq;
 

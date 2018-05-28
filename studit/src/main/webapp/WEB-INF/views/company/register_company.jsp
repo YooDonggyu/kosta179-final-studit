@@ -695,9 +695,7 @@
                         map.setCenter(coords);
                         // 마커를 결과값으로 받은 위치로 옮긴다.
                         marker.setPosition(coords);
-                    }
-                	}
-                });
+                	})
             }
         }).open();
     }
