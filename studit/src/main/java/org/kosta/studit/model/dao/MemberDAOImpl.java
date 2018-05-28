@@ -132,4 +132,25 @@ public class MemberDAOImpl implements MemberDAO {
 	   public int findCountMemberPositionByMemberPositionAndMemberEmail(Map<String, String> map) {
 		   return template.selectOne("member.findCountMemberPositionByMemberPositionAndMemberEmail", map);
 	   }
+	   
+	   /**
+	    * 비밀번호 찾기 기능을 위해 임시번호를 DB에 업데이트 함
+	    * 
+	    * @author 송용준
+	    * @param Map<String, String> map 비밀번호를 찾고자하는 회원의 이메일과 임시로 발급할 비밀번호를 가진 객체
+	    */
+		@Override
+		public void updatePasswordForFindPassword(Map<String, String> map) {
+			template.update("member.updatePasswordForFindPassword", map);
+		}
+
+	@Override
+	public String findPasswordHint(String memberEmail) {
+		return template.selectOne("member.findPasswordHint",memberEmail);
+	}
+
+	@Override
+	public String findPasswordAnswer(String memberEmail) {
+		return template.selectOne("member.findPasswordAnswer",memberEmail);
+	}
 }

@@ -1,6 +1,7 @@
 package org.kosta.studit.model.service;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import org.kosta.studit.exception.EmailNotFoundException;
 import org.kosta.studit.exception.IsNotMemberException;
@@ -18,4 +19,6 @@ public interface MemberService {
 	HashMap<String, Object> deleteMemberView(String memberEmail);
 	
 	void deleteMember(String memberEmail);
+
+	Map<String, String> checkPasswordHintAndAnswer(String memberEmail);
 }

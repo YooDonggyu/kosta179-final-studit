@@ -25,4 +25,10 @@ public interface MemberDAO {
 
 	int findCountMemberPositionByMemberPositionAndMemberEmail(Map<String, String> map);
 
+	void updatePasswordForFindPassword(Map<String, String> map);
+
+	String findPasswordHint(String memberEmail);
+
+	String findPasswordAnswer(String memberEmail);
+
 }

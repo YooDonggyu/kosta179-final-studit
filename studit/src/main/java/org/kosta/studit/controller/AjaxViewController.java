@@ -213,6 +213,12 @@ public class AjaxViewController {
 		recruitDAO.updateCommentByCommentNo(map);
 	}
 	
+	/**
+	 * 입력된 주소에 따른 업체 리스트 반환
+	 * @author 송용준
+	 * @param addr1, addr2, addr3 입력된 주소값
+	 * @param List<CompanyVO> 입력된 주소값을 가지고 있는 업체 리스트
+	 */
 	@RequestMapping("/findCompanyListByAddressAjax")
 	@ResponseBody
 	public List<CompanyVO> findCompanyListByAddress(String addr1, String addr2, String addr3){
@@ -242,7 +248,13 @@ public class AjaxViewController {
 		return recruitService.findRecruitPostByCategoryOrKeyword(bigCategoryNo, smallCategoryNo, keyword, nowPage);
 	}
 	
-
+	/**
+	 * 입력된 주소값과 키워드에 따른 업체리스트 반환
+	 * @author 송용준
+	 * @param addr1, addr2, addr3 입력된 주소값
+	 * @param keywordORhashtag 입력된 키워드
+	 * @param List<CompanyVO> 검색조건에 맞는 업체 리스트
+	 */
 	@RequestMapping("/findCompanyListByAddressAndKeywordAndHashTagAjax")
 	@ResponseBody
 	public List<CompanyVO> findCompanyListByAddressAndKeywordAndHashTag(String addr1, String addr2, String addr3, String keywordORhashtag){

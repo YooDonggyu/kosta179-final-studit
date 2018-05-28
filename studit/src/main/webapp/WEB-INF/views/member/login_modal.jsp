@@ -29,7 +29,7 @@
         <div class="modal-footer">
           <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"> Cancel</button>
           <p>Not a member? <a href="#">Sign Up</a></p>
-          <p>Forgot <a href="#">Password?</a></p>
+          <p>Forgot <a href="${pageContext.request.contextPath }/member/findPasswordView">Password?</a></p>
         </div>
       </div>
 		

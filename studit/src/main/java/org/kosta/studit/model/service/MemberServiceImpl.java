@@ -135,4 +135,17 @@ public class MemberServiceImpl implements MemberService {
 		memberDAO.deleteMember(memberEmail);
 	}
 
+	@Override
+	public Map<String, String> checkPasswordHintAndAnswer(String memberEmail) {
+		Map<String, String> map=new HashMap<>();
+		String passwordHint=memberDAO.findPasswordHint(memberEmail);
+		String passwordAnswer=memberDAO.findPasswordAnswer(memberEmail);
+		map.put("passwordHint", passwordHint);
+		map.put("passwordAnswer", passwordAnswer);
+		map.put("memberEmail", memberEmail);
+		
+		return map;
+		
+	}
+
 }

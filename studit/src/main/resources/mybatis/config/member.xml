@@ -104,6 +104,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		set name='탈퇴'
 		where member_email=#{value}
 	</update>
+	
+	<update id="updatePasswordForFindPassword" parameterType="map">
+		update member
+		set password=#{newPassword}
+		where member_email=#{memberEmail}
+	</update>
+	
+	<select id="findPasswordHint" parameterType="string" resultType="string">
+		select password_hint
+		from member
+		where member_email=#{value}
+	</select>
+	
+	<select id="findPasswordAnswer" parameterType="string" resultType="string">
+		select password_answer
+		from member
+		where member_email=#{value}
+	</select>
 </mapper>
  
  

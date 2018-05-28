@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -271,5 +272,60 @@ public class MemberController {
 
 		return "home.tiles";
 	}
+	
+	/**
+	 * 
+	 * 비밀번호 확인을 위해 이메일을 입력받는 뷰
+	 * @author 송용준
+	 * @return 이메일을 입력을 위한 뷰
+	 */
+	@RequestMapping("/findPasswordView")
+	public String findPasswordView() {
 
+		return "member/find_password_view.tiles";
+	}
+	
+	/**
+	 * 
+	 * 비밀번호 힌트와 답변을 확인
+	 * @author 송용준
+	 * @return 비밀번호 힌트와 답변을 비교하는 뷰
+	 */
+	@RequestMapping("/checkPasswordHintAndAnswer")
+	public String checkPasswordHintAndAnswer(String memberEmail, Model model) {
+		if(memberDAO.isMember(memberEmail)) {
+			Map<String, String> map=memberService.checkPasswordHintAndAnswer(memberEmail);
+			model.addAttribute("checkInfo", map);
+			
+			return "member/check_passwordhint_answer.tiles";
+		}else {
+			return "member/find_password_fail.tiles";
+		}
+	}
+	
+	
+	/**
+	 * 
+	 * 비밀번호 확인을 위해 이메일을 입력받는 뷰
+	 * @author 송용준
+	 * @return 이메일을 입력을 위한 뷰
+	 */
+	@RequestMapping("/findPassword")
+	public String findPassword(String memberEmail, HttpServletRequest request) {
+		Map<String, String> map=new HashMap<>();
+		String newPassword = "";
+		for (int i = 0; i < 8; i++) {
+			char lowerStr = (char) (Math.random() * 26 + 97);
+			if (i % 2 == 0) {
+				newPassword += (int) (Math.random() * 10);
+			} else {
+				newPassword += lowerStr;
+			}
+		}
+		map.put("memberEmail", memberEmail);
+		map.put("newPassword", newPassword);
+		memberDAO.updatePasswordForFindPassword(map);
+		request.setAttribute("memberInfo", map);
+		return "member/create_newpassword.tiles";
+	}
 }
