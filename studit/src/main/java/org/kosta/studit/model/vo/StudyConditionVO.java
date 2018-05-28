@@ -1,6 +1,7 @@
 package org.kosta.studit.model.vo;
 
 public class StudyConditionVO {
+	
 	private int studyConditionNo;
 	private String regdate;
 	private String state;

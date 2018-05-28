@@ -29,6 +29,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import net.minidev.json.JSONArray;
+
 @Controller
 @RequestMapping("/ajax")
 public class AjaxViewController {
@@ -344,6 +346,23 @@ public class AjaxViewController {
 	public void deleteStudyConditionByStudyConditionNo(String memberEmail, String studyConditionNo) {
 		System.out.println(memberEmail+" "+studyConditionNo);
 			recruitService.deleteStudyConditionByStudyConditionNo(memberEmail, studyConditionNo);
+	}
+	
+	/**
+	    * 선택된 월 정보를 이용해 스터디룸 예약정보를 조회하는 메서드
+	    * 캘린더의 월이 변경될 때마다 호출
+	    * 
+	    * @author 김유란
+	    * @param studyRoomNo 스터디룸 번호
+	    * @param startDate 선택된 월의 첫날
+	    * @param endDate 선택된 월의 마지막날
+	    * @return 조회된 예약현황 정보를 담은 VO 리스트
+	    */
+	@RequestMapping("/findStudyRoomConditionByStudyRoomNoAndMonth")
+	@ResponseBody
+	public JSONArray findStudyRoomConditionByStudyRoomNoAndMonth(String companyNo, String startDate, String endDate){
+		System.out.println(startDate);
+		return companyService.findStudyRoomConditionByCompanyNoAndMonth(companyNo, startDate, endDate);
 	}
 
 }

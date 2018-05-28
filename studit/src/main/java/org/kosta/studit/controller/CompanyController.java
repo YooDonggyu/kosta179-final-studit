@@ -57,7 +57,7 @@ public class CompanyController {
 		return "company/find_Company_View.tiles";
 	}
 	
-	/**
+	/**ajax로 변경
 	 * 업체의 스터디룸 예약현황 뷰를 호출하는 메서드
 	 * 업체회원이 보유한 스터디룸의 예약현황 정보 조회를 위해 
 	 * 영업일, 스터디룸 정보, 각 스터디룸별 예약현황 데이터를 가져와 뷰로 전송한다.
@@ -67,11 +67,10 @@ public class CompanyController {
 	 * @return 업체 스터디룸 예약현황 관리 뷰로 이동(tiles)
 	 */
 	@RequestMapping("/findStudyRoomConditionByCompanyNo")
-	public String findStudyRoomConditionByCompanyNo(HttpServletRequest request) {
-		MemberVO memberVO = (MemberVO) request.getSession(false).getAttribute("memberVO");
-		request.setAttribute("businessHour", companyService.findBusinessDayByMemberEmail(memberVO.getMemberEmail()));
-		request.setAttribute("studyRoomResource", companyService.findStudyRoomByMemberEmail(memberVO.getMemberEmail()));
-		request.setAttribute("studyRoomCondition", companyService.findStudyRoomConditionByMemberEmail(memberVO.getMemberEmail()));
+	public String findStudyRoomConditionByCompanyNo(Model model, String companyNo) {
+		model.addAttribute("businessHour", companyService.findBusinessDayByCompanyNo(1));
+		model.addAttribute("studyRoomResource", companyService.findStudyRoomByCompanyNo(1));
+		model.addAttribute("conditionCount", companyDAO.findStudyRoomConditionCountByMonth("1"));
 		return "company/find_studyRoom_condition.tiles";
 	}
 	

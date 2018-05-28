@@ -25,8 +25,6 @@ public interface CompanyDAO {
 
 	void updatStudyRoomCondition(StudyRoomConditionVO studyRoomConditionVO);
 
-	List<StudyRoomConditionVO> findStudyRoomConditionByStudyRoomNo(int studyRoomNo);
-
 	List<StudyRoomVO> findStudyRoomByCompanyNo(int companyNo);
 
 	CompanyVO findCompanyByMemberEmail(String memberEmail);
@@ -48,4 +46,8 @@ public interface CompanyDAO {
 	List<Map<String, Object>> findComPicByCompanyNo(int companyNo);
 
 	List<Map<String, Object>> findHashTagByCompanyNo(int companyNo);
+
+	List<StudyRoomConditionVO> findStudyRoomConditionByCompanyNoAndMonth(Map<String, String> map);
+
+	List<Map<String, String>> findStudyRoomConditionCountByMonth(String companyNo);
 }

@@ -1,9 +1,14 @@
 package org.kosta.studit.model.vo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class StudyRoomConditionVO {
+	@JsonProperty("id")	
 	private int studyRoomConditionNo;
+	@JsonProperty	
 	private String useDate;
 	private String regDate;
+	@JsonProperty	
 	private String startTime;
 	private String endTime;
 	private String state;

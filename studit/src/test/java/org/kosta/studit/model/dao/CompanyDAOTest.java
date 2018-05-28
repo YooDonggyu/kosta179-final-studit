@@ -88,18 +88,22 @@ public class CompanyDAOTest {
 	    * 업체 번호로 등록된 스터디룸 조회 테스트
 	    * @author 김유란
 	    */
-	   //@Test
+	   @Test
 	   public void findStudyRoomByCompanyNo() {
-		   System.out.println(companyDAO.findStudyRoomByCompanyNo(3));
+		   System.out.println(companyDAO.findStudyRoomByCompanyNo(1));
 	   }
 	   
 	   /**
 	    * 스터디룸 번호로 예약현황 조회
 	    * @author 김유란
 	    */
-	   //@Test
-	   public void findStudyRoomConditionByStudyRoomNo() {
-		   System.out.println(companyDAO.findStudyRoomConditionByStudyRoomNo(4));
+	   @Test
+	   public void findStudyRoomConditionByStudyRoomNoAndMonthTest() {
+		   Map<String,String> map=new HashMap<>();
+		   map.put("companyNo", "1");
+		   map.put("startDate", "2018-05-01");
+		   map.put("endDate", "2018-05-31");
+		   System.out.println(companyDAO.findStudyRoomConditionByCompanyNoAndMonth(map));
 	   }
 	   
 	   /**
@@ -262,7 +266,14 @@ public class CompanyDAOTest {
 		   System.out.println(companyDAO.findHashTagByCompanyNo(1));
 	   }
 	   
-	   
+	   /**
+	    * 스터디룸 예약 월별 통계 조회 테스트
+	    * @author 김유란
+	    */
+	   @Test
+	   public void findStudyRoomConditionCountByMonthTest() {
+		   System.out.println(companyDAO.findStudyRoomConditionCountByMonth("1"));
+	   }
 	   
 	   
 }

@@ -147,7 +147,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="findStudyRoomConditionByStudyRoomNoAndDate" parameterType="studyRoomConditionVO" resultType="studyRoomConditionVO">
 		select start_time, end_time from studyroom_condition 
-		where studyroom_no=#{studyRoomVO.studyRoomNo} and use_date=#{useDate} 
+		where studyroom_no=#{studyRoomVO.studyRoomNo} and use_date=#{useDate} and state!='예약취소'
 	</select>
 
 	<!-- 

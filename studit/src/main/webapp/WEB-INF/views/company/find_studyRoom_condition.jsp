@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
-
+ <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <style>
 
   .calendarView {
@@ -27,15 +26,18 @@
 <div class="col-sm-12">
 		<div id="calendar"></div>
 		<div id="selectState" style="float: left; margin-top:50px; padding:50px; max-width: 500px">
-			<span class="badge badge-primary" style="background-color: #379392;" onclick="getConditionListByState('예약완료')">예약완료</span>
-			<span class="badge badge-primary" style="background-color: #f7d83d" onclick="getConditionListByState('예약대기')">예약대기</span>
-			<span class="badge badge-primary" style="background-color: #8c8c8a" onclick="getConditionListByState('예약불가')">예약불가</span>
-			<br>
-			<br>
-			<table class="table table-hover" style="max-width: 500px;">
-				<thead id="head">
-				</thead>
-				<tbody id="todayList">
+			<h2 id="companyName"></h2>
+			<table>
+				<thead>
+					<tr>
+						<th></th>
+						<th><span class="badge badge-primary" style="background-color: #379392; font-size: 15px">예약완료</span></th>
+						<th><span class="badge badge-primary" style="background-color: #f7d83d; font-size: 15px">예약대기</span></th>
+						<th><span class="badge badge-primary" style="background-color: #8c8c8a; font-size: 15px">예약불가</span></th>
+						<th><span class="badge badge-primary" style="background-color: #000000; font-size: 15px">예약취소</span></th>
+					</tr>
+					</thead>
+				<tbody>
 				</tbody>
 			</table>
 		</div>
@@ -43,15 +45,13 @@
 </div>
 
 <script>
-	var day = new Date();
-	var today = day.toLocaleDateString();
+	var today = moment().format("YYYY-MM-DD");
 	var studyRoomResource = ${studyRoomResource};
-	var studyRoomCondition = ${studyRoomCondition};
 	var businessHour = ${businessHour};
-$(document).ready(function() {
+	var studyRoomCondition;
 
-		getConditionListByDate(today);
-		
+$(document).ready(function() {
+	$("#companyName").text(studyRoomResource[0].companyName);
 	    $('#calendar').fullCalendar({
 
 	      schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',	
@@ -67,30 +67,29 @@ $(document).ready(function() {
 	    	  // days of week. an array of zero-based day of week integers (0=Sunday)
 	    	  dow: businessHour.dow, // Monday - Thursday
 
-	    	  start:studyRoomResource[0].open, // a start time 
-	    	  end: studyRoomResource[0].close, // an end time 
+	    	  start:studyRoomResource[0].open+":00", // a start time 
+	    	  end: studyRoomResource[0].close+":00", // an end time 
 	    	},
 	      header: {
 	        left: 'prev,next today',
 	        center: 'title',
 	        right: 'month'
 	      },
-
 	      resources: studyRoomResource,
-	      eventSources:[
-	    	  {
-	    		  googleCalendarApiKey: "AIzaSyB8sRKhOUgN1A2R-FLcxmWkQYAgVnguO4M",
-	    		  googleCalendarId: "ko.south_korea#holiday@group.v.calendar.google.com"
-	              , className : "koHolidays"
-	              , color : "#ff7473"
-	              , textColor : "#FFFFFF"
-	              , selectable: false
-	    	  },
-	    	  {
-	    		  events:studyRoomCondition,
-	    		  color:"#f7d83d"
-	    	  }
-	      ],    
+	      events: function(start, end, timezone, callback){
+	    	  var startDate = moment(start).format("YYYY-MM-DD");
+	    	  var endDate = moment(end).format("YYYY-MM-DD");
+	    		 $.ajax({
+	    				type:"post",
+	    				url:"${pageContext.request.contextPath}/ajax/findStudyRoomConditionByStudyRoomNoAndMonth",
+	    				dataType:"json",
+	    				data:"companyNo="+studyRoomResource[0].companyNo+"&startDate="+startDate+"&endDate="+endDate,
+	    				success:function(data){
+	    					studyRoomCondition = data;
+	    						callback(data)		
+	    				}//success	
+	    			})//ajax
+	      },
 	      eventRender: function (event, element, view) {
 	    	  if(event.state!=null){
 	              if (event.state=='예약완료') {
@@ -99,6 +98,9 @@ $(document).ready(function() {
 	              }else if(event.state=='예약불가'){
 	            	  		element.css("border-color", "#8c8c8a");
 	                 	    element.css("background-color", "#8c8c8a");
+	              }else{
+	            	 		 element.css("border-color", "#f7d83d");
+               	   			 element.css("background-color", "#f7d83d");
 	              }
 	              element.attr('data-toggle', 'modal');
 	              element.attr('data-target', '#updateRoomConditionModal');
@@ -115,40 +117,15 @@ $(document).ready(function() {
 	    	  }
         	},
 	      select: function(start, end, jsEvent, view, resource) {
-	        console.log(
-	          'select',
-	          start.format(),
-	          end.format(),
-	          resource ? resource.id : '(no resource)'
-	        );
 	      },
 	      dayClick: function(date, jsEvent, view, resource) {
-	    	  
-	    	  getConditionListByDate(date.format());
 	    	 	    	
 	    	  if(Object.keys(studyRoomResource).length<7){
 	    		  $('#calendar').fullCalendar('changeView', 'agendaDay', date.format());
 	    	  }else{
 	    		  $('#calendar').fullCalendar('changeView', 'timelineDay', date.format()); 
 	    	  }
-	    	  
-	        console.log(
-	          'dayClick',
-	          date.format(),
-	          resource ? resource.id : '(no resource)'
-	        );
-	      },//dayClick
-	      eventDragStop: function(event, jsEvent, ui, view) {
-	    	  	alert('event.start: ' + event.start);
-		  },
-		  eventResize: function( event, delta, revertFunc, jsEvent, ui, view ) { 
-			    alert(event.start);
-		  },
-		  eventClick: function( event, jsEvent, view ) { 
-			  /* if (confirm('이 예약을 수정할까요?')) {
-		            
-		          } */
-		  }
+	      }//dayClick
 	    });//fullCalendar
 	      
 
@@ -158,16 +135,15 @@ $(document).ready(function() {
     	  }else{
     		  $('#calendar').fullCalendar('changeView', 'timelineDay',$(this).text());
     	  }
-	});
-	   
+	});	   
 
 })//ready
 
 
-//작성: 김유란
+/* //작성: 김유란
 //기능: 날짜에 따른 현황 목록 보여주기
 //로직: 캘린더의 특정일 cell을 클릭하면 날짜값을 매개변수로 넘겨 전체 데이터 중에 날짜가 일치하는 항목만 테이블에 출력한다.
-function getConditionListByDate(date){
+ function getConditionListByDate(date){
 	var conditionData = "<tr>"+
 		"<th style='text-align: center'>"+"예약자"+"</th>"
 		+"<th style='text-align: center'>"+"스터디룸"+"</th>"
@@ -188,35 +164,7 @@ function getConditionListByDate(date){
 			}//if
 		})//each
 		$("#todayList").html(conditionData);
-}//getConditionListByDate
-
-//작성: 김유란
-//기능: 예약 상태에 따른 현황 목록 보여주기
-//로직: 우측 상단의 특정 상태 라벨을 클릭하면 상태값을 매개변수로 넘겨 전체 데이터 중에 상태가 일치하는 항목만 테이블에 출력한다.
-function getConditionListByState(state){
-	var conditionData = "<tr>"+
-	"<th style='text-align: center'>"+"예약자"+"</th>"
-	+"<th style='text-align: center'>"+"스터디룸"+"</th>"
-	+"<th style='text-align: center'>"+"예약일"+"</th>"
-	+"<th style='text-align: center'>"+"시작"+"</th>"
-	+"<th style='text-align: center'>"+"끝"+"</th>"
-	+"<th style='text-align: center'>"+"상태"+"</th>"
-	+"</tr>";
-
-		$.each(studyRoomCondition, function(index, item) {
-			if(item.state==state){
-			conditionData+="<tr>"
-							+"<td>"+item.title+"</td>"
-							+"<td>"+item.resourceName+"</td>"
-							+"<td id='selectedDate'><a href='#'>"+item.start.split('T')[0]+"</a></td>"
-							+"<td>"+item.start.split('T')[1]+"</td>"
-							+"<td>"+item.end.split('T')[1]+"</td>"
-							+"<td>"+item.state+"</td>"
-							"</tr>";
-			}//if
-		})//each
-		$("#todayList").html(conditionData);
-}//getConditionListByState
+}//getConditionListByDate */
 
 
 </script>

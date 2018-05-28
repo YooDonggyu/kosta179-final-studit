@@ -129,8 +129,8 @@ public class CompanyDAOImpl implements CompanyDAO {
 	    * @return List<StudyRoomConditionVO> 스터디룸 예약정보 객체를 담은 리스트
 	    */
 	   @Override
-	   public List<StudyRoomConditionVO> findStudyRoomConditionByStudyRoomNo(int studyRoomNo){
-		   return template.selectList("company.findStudyRoomConditionByStudyRoomNo", studyRoomNo);
+	   public List<StudyRoomConditionVO> findStudyRoomConditionByCompanyNoAndMonth(Map<String,String> map){
+		   return template.selectList("company.findStudyRoomConditionByCompanyNoAndMonth", map);
 	   }
 	   
 
@@ -245,7 +245,17 @@ public class CompanyDAOImpl implements CompanyDAO {
 	   public List<Map<String, Object>> findHashTagByCompanyNo(int companyNo){
 		   return template.selectList("company.findHashTagByCompanyNo", companyNo);
 	   }
-	   
+
+	   /**
+	    * 월별 스터디룸 예약 통계 조회
+	    * @author 김유란
+	    * @param companyNo 업체 식별 번호
+	    * @return List<Map<String,String>> 스터디룸 예약 통계 정보를 담은 list(m, count) 
+	    */
+	   @Override
+	   public List<Map<String, String>> findStudyRoomConditionCountByMonth(String companyNo){
+		   return template.selectList("company.findStudyRoomConditionCountByMonth",companyNo);
+	   }
 	   
 }
 

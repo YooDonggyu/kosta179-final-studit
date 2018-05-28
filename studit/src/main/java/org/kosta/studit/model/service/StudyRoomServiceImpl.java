@@ -104,4 +104,5 @@ public class StudyRoomServiceImpl implements StudyRoomService {
 		studyroomDAO.updateStudyRoomConditionByMember(studyRoomConditionVO);
 	}
 	
+	
 }

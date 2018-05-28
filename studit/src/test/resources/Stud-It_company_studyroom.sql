@@ -506,6 +506,8 @@ select c.name, s.name, s.capacity, s.price, s.content, c.addr1
 from studyroom s, company c
 where s.company_no=c.company_no
 
+
+
 select count(*) 
 from studyroom s, company c
 where s.company_no=c.company_no
@@ -624,5 +626,14 @@ commit
 
 select sc.studyroom_condition_no, s.name, sc.member_email, sc.use_date, sc.start_time, sc.end_time, sc.state
 from studyroom s, studyroom_condition sc
-where s.studyroom_no=sc.studyroom_no and s.studyroom_no=1
+where s.studyroom_no=sc.studyroom_no and use_date between to_date('2018-05-01', 'YYYY-MM-DD') and to_date('2018-05-31', 'YYYY-MM-DD')
+
+select to_char(use_date, 'YYYY-MM') m, count(*) count, state 
+from (select s.studyroom_no, sc.use_date, sc.state
+from studyroom s, company c, studyroom_condition sc
+where s.company_no=c.company_no and s.studyroom_no=sc.studyroom_no 
+and c.company_no=1)
+group by to_char(use_date, 'YYYY-MM'), state 
+
+select * from STUDYROOM_CONDITION;
 

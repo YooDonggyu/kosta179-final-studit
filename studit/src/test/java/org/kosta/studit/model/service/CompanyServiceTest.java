@@ -18,9 +18,9 @@ public class CompanyServiceTest {
 	 * 업체 회원이 보유한 스터디룸 정보 조회 테스트
 	 * @author 김유란
 	 */
-	//@Test
+	@Test
 	public void findStudyRoomByMemberEmailTest() {
-		System.out.println(companyService.findStudyRoomByMemberEmail("d@d.com"));
+		System.out.println(companyService.findStudyRoomByCompanyNo(1));
 		
 	}
 	
@@ -28,9 +28,9 @@ public class CompanyServiceTest {
 	 * 업체 회원이 보유한 스터디룸 예약 현황 정보 조회 테스트
 	 * @author 김유란
 	 */
-	//@Test
-	public void findStudyRoomConditionByMemberEmailTest() {
-		System.out.println(companyService.findStudyRoomConditionByMemberEmail("d@d.com"));
+	@Test
+	public void findStudyRoomConditionByCompanyNoAndMonthTest() {
+		System.out.println(companyService.findStudyRoomConditionByCompanyNoAndMonth("1", "2018-05-01", "2018-05-31"));
 		
 	}
 	
@@ -40,11 +40,12 @@ public class CompanyServiceTest {
 	 */
 	//@Test
 	public void findBusinessDayByCompanyNoTest() {
-		System.out.println(companyService.findBusinessDayByMemberEmail("d@d.com"));
+		System.out.println(companyService.findBusinessDayByCompanyNo(1));
 	}
 	
 	@Test
 	public void findDetailCompanyInfoByCompanyNoTest() {
 		System.out.println(companyService.findDetailCompanyInfoByCompanyNo(1));
 	}
+	
 }

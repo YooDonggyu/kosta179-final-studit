@@ -57,7 +57,7 @@ public class StudyRoomController {
 	 */
 	@RequestMapping("/createStudyRoomConditionResult")
 	public String createStudyRoomConditionResult() {
-		return "studyroom/create_studyroom_ok";
+		return "studyroom/create_condition_ok";
 	}
 	
 }
