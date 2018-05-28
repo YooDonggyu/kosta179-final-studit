@@ -52,7 +52,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 	s.studyroom_no=sc.studyroom_no 
 			and c.company_no = s.company_no
 			and m.member_email = sc.member_email
-			and  rnum between #{pagingBean.startRowNumber} and #{pagingBean.endRowNumber}
+			and  rnum between #{pagingBean.startRowNumber} and #{pagingBean.endRowNumber} 
+			order by sc.studyroom_condition_no desc
    </select>
   
   <!-- 
@@ -187,37 +188,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 	)
 	 </select>
 	 
+	 <!-- 
+		스터디룸 신청 취소
+		@author 김유란
+	 -->
+	 <update id="updateStudyRoomConditionByMember" parameterType="studyRoomConditionVO">
+	 	update studyroom_condition set state='예약취소' 
+	 	where member_email=#{memberVO.memberEmail} and studyroom_condition_no=#{studyRoomConditionNo}
+	 </update>
 		
 </mapper>
  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

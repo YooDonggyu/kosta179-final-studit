@@ -89,6 +89,15 @@ public class RecruitServiceTest {
 		
 		System.out.println((recruitService.findRecruitPostByCategoryOrKeyword("","","", 1)).getRecruitPostList().size());
 	}
+	
+	/**
+	 * 스터디 신청 삭제 TEST
+	 * @author 김유란
+	 */
+	@Test
+	public void deleteStudyConditionByStudyConditionNoTest() {
+		recruitService.deleteStudyConditionByStudyConditionNo("b@b.com", "6");
+	}
 }
 
 

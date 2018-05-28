@@ -9,6 +9,7 @@ import org.kosta.studit.model.PagingBean;
 import org.kosta.studit.model.dao.GroupDAO;
 import org.kosta.studit.model.dao.RecruitDAO;
 import org.kosta.studit.model.vo.BigCategoryVO;
+import org.kosta.studit.model.vo.MemberVO;
 import org.kosta.studit.model.vo.RecruitPostCommentVO;
 import org.kosta.studit.model.vo.RecruitPostListVO;
 import org.kosta.studit.model.vo.RecruitPostVO;
@@ -238,5 +239,19 @@ public class RecruitServiceImpl implements RecruitService {
 		dataMap.put("dataMap", map);
 		List<RecruitPostVO> rList = recruitDAO.findRecruitPostByPagingBeanAndData(dataMap);
 		return  new RecruitPostListVO(pb, rList);
+	}
+	
+	/**
+	 * 스터디 신청 취소
+	 * 컨트롤러에서 회원이메일과 신청번호를 받아 VO에 넣고 DAO로 넘긴다. 
+	 * @author 김유란
+	 * @param studyConditionVO 취소할 신청번호와 회원 이메일 정보를 담은 VO
+	 */
+	@Override
+	public void deleteStudyConditionByStudyConditionNo(String memberEmail, String studyConditionNo) {
+		StudyConditionVO studyConditionVO = new StudyConditionVO();
+		studyConditionVO.setMemberVO(new MemberVO(memberEmail, null));
+		studyConditionVO.setStudyConditionNo(Integer.parseInt(studyConditionNo));
+		recruitDAO.deleteStudyConditionByStudyConditionNo(studyConditionVO);
 	}
 }

@@ -75,4 +75,6 @@ public interface RecruitDAO {
 
 	void updateDeleteStudyConditionByRecruitNo(int recruitNo);
 
+	void deleteStudyConditionByStudyConditionNo(StudyConditionVO studyConditionVO);
+
 }

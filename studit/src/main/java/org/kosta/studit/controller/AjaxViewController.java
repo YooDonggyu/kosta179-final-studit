@@ -305,5 +305,33 @@ public class AjaxViewController {
 		return studyroomService.findStudyRoomConditionByStudyRoomNoAndDate(selectedDate, studyRoomNo);
 	}
 	
+	/**
+	 *스터디룸 예약 취소 
+	 *스터디룸 예약상태를 '예약취소'로 변경한다.
+	 * 
+	 * @author 김유란
+	 * @param memberEmail 회원 이메일
+	 * @param studyRoomConditionNo 스터디룸 예약 번호
+	 */
+	@RequestMapping(method=RequestMethod.POST, value="/updateStudyRoomConditionByMember")
+	@ResponseBody
+	public void updateStudyRoomConditionByMember(String memberEmail, String studyRoomConditionNo) {
+		studyroomService.updateStudyRoomConditionByMember(memberEmail, studyRoomConditionNo);
+	}
+	
+	/**
+	 *스터디 신청 취소 
+	 *스터디 신청 내역을 삭제한다.
+	 * 
+	 * @author 김유란
+	 * @param memberEmail 회원 이메일
+	 * @param studyConditionNo 스터디 신청 번호
+	 */
+	@RequestMapping(method=RequestMethod.POST, value="/deleteStudyConditionByStudyConditionNo")
+	@ResponseBody
+	public void deleteStudyConditionByStudyConditionNo(String memberEmail, String studyConditionNo) {
+		System.out.println(memberEmail+" "+studyConditionNo);
+			recruitService.deleteStudyConditionByStudyConditionNo(memberEmail, studyConditionNo);
+	}
 
 }

@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.kosta.studit.model.PagingBean;
 import org.kosta.studit.model.dao.StudyRoomDAO;
+import org.kosta.studit.model.vo.MemberVO;
 import org.kosta.studit.model.vo.StudyRoomConditionListVO;
 import org.kosta.studit.model.vo.StudyRoomConditionVO;
 import org.kosta.studit.model.vo.StudyRoomVO;
@@ -86,6 +87,21 @@ public class StudyRoomServiceImpl implements StudyRoomService {
 		studyRoomConditionVO.setStudyRoomVO(new StudyRoomVO(1));
 		studyRoomConditionVO.setUseDate(selectedDate);
 		return studyroomDAO.findStudyRoomConditionByStudyRoomNoAndDate(studyRoomConditionVO);
+	}
+	
+	/**
+	 * 스터디룸 예약 취소 메서드(데이터는 유지하되 상태를 변경)
+	 * 
+	 * @author 김유란
+	 * @param memberEmail 회원 이메일
+	 * @param studyRoomConditionNo 스터디룸 예약 신청 번호
+	 */
+	@Override
+	public void updateStudyRoomConditionByMember(String memberEmail, String studyRoomConditionNo) {
+		StudyRoomConditionVO studyRoomConditionVO = new StudyRoomConditionVO();
+		studyRoomConditionVO.setMemberVO(new MemberVO(memberEmail, null));
+		studyRoomConditionVO.setStudyRoomConditionNo(Integer.parseInt(studyRoomConditionNo));
+		studyroomDAO.updateStudyRoomConditionByMember(studyRoomConditionVO);
 	}
 	
 }

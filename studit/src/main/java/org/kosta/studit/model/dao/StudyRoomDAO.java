@@ -32,6 +32,8 @@ public interface StudyRoomDAO {
 
 	List<Map<String, Object>> findstudyroomFunctionByCompanyNo(int companyNo);
 
+	void updateStudyRoomConditionByMember(StudyRoomConditionVO studyRoomConditionVO);
+
 
 
 }

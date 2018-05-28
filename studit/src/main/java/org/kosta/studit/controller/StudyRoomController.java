@@ -59,4 +59,5 @@ public class StudyRoomController {
 	public String createStudyRoomConditionResult() {
 		return "studyroom/create_studyroom_ok";
 	}
+	
 }

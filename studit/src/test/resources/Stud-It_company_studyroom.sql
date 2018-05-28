@@ -622,7 +622,7 @@ values(studyroom_condition_seq.nextval, 'a@a.com', sysdate, 1, '13','14', 'ì˜ˆì•
 
 commit
 
-select s.name, sc.member_email, sc.use_date, sc.start_time, sc.end_time, sc.state
+select sc.studyroom_condition_no, s.name, sc.member_email, sc.use_date, sc.start_time, sc.end_time, sc.state
 from studyroom s, studyroom_condition sc
 where s.studyroom_no=sc.studyroom_no and s.studyroom_no=1
 

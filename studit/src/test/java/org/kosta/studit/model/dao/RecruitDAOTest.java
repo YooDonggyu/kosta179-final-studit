@@ -84,7 +84,7 @@ public class RecruitDAOTest {
 	}
 
 	/**
-	 * 스터디 모집글 번호로 스터디 그룹에 멤버를 찾는 메소드 테스트
+	 * 스터디 모집글 번호로 스터디 그룹 멤버를 찾는 메소드 테스트
 	 * 
 	 * @author 이승수
 	 */
@@ -386,6 +386,17 @@ public class RecruitDAOTest {
 		}
 	}
 	
-	
+	/**
+	 * 스터디 신청 취소 TEST
+	 * 
+	 * @author 김유란
+	 */
+	@Test
+	public void deleteStudyConditionByStudyConditionNoTest() {
+		StudyConditionVO vo = new StudyConditionVO();
+		vo.setMemberVO(new MemberVO("b@b.com", null));
+		vo.setStudyConditionNo(35);
+		recruitDAO.deleteStudyConditionByStudyConditionNo(vo);
+	}
 	
 }

@@ -290,6 +290,16 @@ public class RecruitDAOImpl implements RecruitDAO {
 		return template.selectList("recruit.findRecruitPostByPagingBeanAndData", dataMap);
 	}
 	
+	/**
+	 * 스터디 신청 취소 
+	 * @author 김유란
+	 * @param studyConditionVO 취소할 신청번호와 회원 이메일 정보를 담은 VO
+	 */
+	@Override
+	public void deleteStudyConditionByStudyConditionNo(StudyConditionVO studyConditionVO) {
+		template.delete("recruit.deleteStudyConditionByStudyConditionNo", studyConditionVO);
+	}
+	
 }
 
 

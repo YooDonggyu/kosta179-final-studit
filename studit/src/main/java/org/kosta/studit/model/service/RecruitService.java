@@ -31,4 +31,6 @@ public interface RecruitService {
 
 	public RecruitPostListVO findRecruitPostByCategoryOrKeyword(String bigCategoryNo, String smallCategoryNo,
 			String keyword, int nowPage);
+
+	void deleteStudyConditionByStudyConditionNo(String memberEmail, String studyConditionNo);
 }

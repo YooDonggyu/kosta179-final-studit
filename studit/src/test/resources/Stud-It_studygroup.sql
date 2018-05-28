@@ -50,8 +50,7 @@ create table sg_member(
 select*from sg_member
 create sequence sg_member_seq nocache;
 
-<<<<<<< HEAD
-=======
+
 insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 1, 'a@a.com', '팀장');
 insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 2, 'b@b.com', '팀장');
 insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 3, 'a@a.com', '팀장');
@@ -76,7 +75,7 @@ insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_me
 insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 3, 'b@b.com', '팀원');
 insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 3, 'g@g.com', '팀원');
 
->>>>>>> stash
+
 select sg.name, m.name, sgm.position
 from study_group sg, sg_member sgm, member m
 where sg.sg_no=sgm.sg_no and sgm.email=m.member_email

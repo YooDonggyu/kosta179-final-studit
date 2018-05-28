@@ -141,5 +141,15 @@ public class StudyRoomDAOImpl implements StudyRoomDAO {
 	   public List<Map<String, Object>> findstudyroomFunctionByCompanyNo(int companyNo){
 		   return template.selectList("studyroom.findstudyroomFunctionByCompanyNo", companyNo);
 	   }
+	   
+	   /**
+	    * 스터디룸 신청 취소(데이터 유지하되 state를 '예약취소'로 변경)
+	    * @author 김유란
+	    * @param studyRoomConditionVO 신청번호와 회원이메일 정보를 담은 VO
+	    */
+	   @Override
+	   public void updateStudyRoomConditionByMember(StudyRoomConditionVO studyRoomConditionVO) {
+		   template.update("studyroom.updateStudyRoomConditionByMember", studyRoomConditionVO);
+	   }
 
 }

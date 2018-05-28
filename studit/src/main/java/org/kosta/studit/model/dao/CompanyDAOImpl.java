@@ -126,7 +126,7 @@ public class CompanyDAOImpl implements CompanyDAO {
 	    * 스터디룸 예약 정보를 수정하는 메서드
 	    * 
 	    * @author 김유란
-	    * @param studyRoomConditionNo 스터디룸 예약 식별 번호
+	    * @param studyRoomConditionVO 스터디룸 예약 정보 담은 VO
 	    */
 	   @Override
 	   public void updatStudyRoomCondition(StudyRoomConditionVO studyRoomConditionVO) {

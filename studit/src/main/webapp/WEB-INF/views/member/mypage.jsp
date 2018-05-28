@@ -11,10 +11,6 @@ th{
 	text-align: center;
 }
 
-.stateBtn{
-    font-size: 60%;
-    width: 100%;
-}
 .MultiCarousel {
  	float: left; 
  	overflow: hidden; 
@@ -83,42 +79,25 @@ th{
   	<table class="table table-hover">
 		<thead>
 			<tr>
-				<th>No</th>
-				<th>Category</th>
-				<th>Location</th>
-				<th>Title</th>
-				<th>Writer</th>
-				<th>regDate</th>
-				<th>Status</th>
+				<th>분류</th>
+				<th>지역</th>
+				<th>제목</th>
+				<th>팀장</th>
+				<th>신청일</th>
+				<th>상태/취소</th>
 			</tr>
 		</thead>
 		<tbody id="recruitAjaxResult">
 			<c:forEach items="${studyConditionList.list }" var="list">
 				<tr>
-					<td>${list.studyConditionNo }</td>
 					<td>${list.recruitPostVO.smallCategoryVO.name }</td>
 					<td>${list.recruitPostVO.location }</td>
-					<td>${list.recruitPostVO.title }</td>
+					<td><a href=
+			"${pageContext.request.contextPath }/recruit/findDetailRecruitPostInfoByRecruitNo?recruitNo=${list.recruitPostVO.recruitPostNo}">${list.recruitPostVO.title }</a></td>
 					<td>${list.memberVO.name }</td>
 					<td>${list.regdate}</td>
 					<!-- warning 주황, default 흰색, primary 핑크?, sucess 초록, danger 빨강, info 하늘 -->
-					<c:choose>
-						<c:when test="${'미승인' eq list.state}">
-							<td><input type="button" value="${list.state }" class="btn btn-default stateBtn"></td>
-						</c:when>
-						<c:when test="${'승인' eq list.state}">
-							<td><input type="button" value="${list.state }" class="btn btn-sucess stateBtn"></td>
-						</c:when>
-						<c:when test="${'거절' eq list.state}">
-							<td><input type="button" value="${list.state }" class="btn btn-danger stateBtn"></td>
-						</c:when>
-						<c:when test="${'진행중' eq list.state}">
-							<td><input type="button" value="${list.state }" class="btn btn-warning stateBtn"></td>
-						</c:when>
-						<c:when test="${'삭제' eq list.state}">
-							<td><input type="button" value="${list.state }" class="btn btn-danger stateBtn"></td>
-						</c:when>
-					</c:choose>
+					<td><button id="cancelBtn1" value="${list.studyConditionNo}" class="btn btn-default">${list.state}</button></td>
 				</tr>
 			</c:forEach>
 		</tbody>
@@ -141,52 +120,38 @@ th{
   	<br><br><br><br><br>
   	</c:when>
   	<c:otherwise>
-    <table class="table table-hover">
-		<thead>
-			<tr>
-				<th>companyName</th>
-				<th>studyroomName</th>
-				<th>useDate</th>
-				<th>startTime</th>
-				<th>endTime</th>
-				<th>regDate</th>
-				<th>state</th>
-			</tr>
-		</thead>
-		<tbody id="roomAjaxResult">
-			<c:forEach items="${srcListVO.list}" var="srlist">
+	    <table class="table table-hover">
+			<thead>
 				<tr>
-					<td>${srlist.studyRoomVO.companyVO.name }</td>
-					<td>${srlist.studyRoomVO.name }</td>
-					<td>${srlist.useDate }</td>
-					<td>${srlist.startTime }</td>
-					<td>${srlist.endTime }</td>
-					<td>${srlist.regDate }</td>
-					<td><input type="button" value="${srlist.state }" class="btn btn-secondary"></td>
-<%-- 					<c:choose>
-						<c:when test="${'예약대기' eq srlist.state}">
-							<td><input type="button" value="${srlist.state }" class="btn btn-default stateBtn"></td>
-						</c:when>
-						<c:when test="${'예약완료' eq srlist.state}">
-							<td><input type="button" value="${srlist.state }" class="btn btn-sucess stateBtn"></td>
-						</c:when>
-						<c:when test="${'예약불가' eq list.state}">
-							<td><input type="button" value="${srlist.state }" class="btn btn-danger stateBtn"></td>
-						</c:when>
-						<c:when test="${'예약취소' eq list.state}">
-							<td><input type="button" value="${srlist.state }" class="btn btn-warning stateBtn"></td>
-						</c:when>
-					</c:choose> --%>
+					<th>업체</th>
+					<th>스터디룸</th>
+					<th>사용일</th>
+					<th>시작</th>
+					<th>종료</th>
+					<th>신청일</th>
+					<th>상태/취소</th>
 				</tr>
-			</c:forEach>
-		</tbody>
-		<c:set var="roompb" value="${srcListVO.pagingBean}" />
-		<c:if test="${roompb.nextPage == true}">
-			<tr>
-				<td colspan="7"><input type="button" id="roompbBtn"  value="더보기"></td>
-			</tr>
-		</c:if>
-	</table>
+			</thead>
+			<tbody id="roomAjaxResult">
+				<c:forEach items="${srcListVO.list}" var="srlist">
+					<tr>
+						<td><a href="${pageContext.request.contextPath}/company/findDetailCompanyInfoByCompanyNo?companyNo=${srlist.studyRoomVO.companyVO.companyNo}">${srlist.studyRoomVO.companyVO.name }</a></td>
+						<td>${srlist.studyRoomVO.name }</td>
+						<td>${srlist.useDate }</td>
+						<td>${srlist.startTime }</td>
+						<td>${srlist.endTime }</td>
+						<td>${srlist.regDate }</td>
+						<td><button id="cancelBtn2" value="${srlist.studyRoomConditionNo }" class="btn btn-default">${srlist.state}</button></td>
+					</tr>
+				</c:forEach>
+			</tbody>
+			<c:set var="roompb" value="${srcListVO.pagingBean}" />
+			<c:if test="${roompb.nextPage == true}">
+				<tr>
+					<td colspan="7"><input type="button" id="roompbBtn"  value="더보기"></td>
+				</tr>
+			</c:if>
+		</table>
 	</c:otherwise>
   </c:choose>
   </div>
@@ -213,13 +178,13 @@ th{
 				 	$.each(data.list, function(index, item) {
 						temp += 
 							"<tr>"+
-							"<td>"+item.studyRoomVO.companyVO.name+"</td>"+
+							"<td><a href='${pageContext.request.contextPath}/company/findDetailCompanyInfoByCompanyNo?companyNo="+item.studyRoomVO.companyVO.companyNo+"'>"+item.studyRoomVO.companyVO.name+"</a></td>"+
 							"<td>"+item.studyRoomVO.name+"</td>"+
 							"<td>"+item.useDate+"</td>"+
 							"<td>"+item.startTime+"</td>"+
 							"<td>"+item.endTime+"</td>"+
 							"<td>"+item.regDate+"</td>"+
-							"<td>"+"<input type='button' value="+item.state+" class='btn btn-secondary'>"+"</td>"
+							"<td>"+"<button id='cancelBtn2' value="+item.studyRoomConditionNo+" class='btn btn-default'>"+item.state+"</button>"+"</td>"
 							+"</td>"
 					})//each 
 					$("#roomAjaxResult").append(temp);
@@ -243,13 +208,12 @@ th{
 				 	$.each(data.list, function(index, item) {
 						temp += 
 							"<tr>"+
-							"<td>"+item.studyRoomVO.companyVO.name+"</td>"+
-							"<td>"+item.studyRoomVO.name+"</td>"+
-							"<td>"+item.useDate+"</td>"+
-							"<td>"+item.startTime+"</td>"+
-							"<td>"+item.endTime+"</td>"+
-							"<td>"+item.regDate+"</td>"+
-							"<td>"+"<input type='button' value="+item.state+" class='btn btn-secondary'>"+"</td>"
+							"<td>"+item.recruitPostVO.smallCategoryVO.name +"</td>"+
+							"<td>"+item.recruitPostVO.location +"</td>"+
+							"<td><a href='${pageContext.request.contextPath }/recruit/findDetailRecruitPostInfoByRecruitNo?recruitNo="+item.recruitPostVO.recruitPostNo+"'>"+item.recruitPostVO.title+"</a></td>"+
+							"<td>"+item.memberVO.name +"</td>"+
+							"<td>"+item.regdate+"</td>"+
+							"<td>"+"<button id='cancelBtn1' value="+item.studyConditionNo+" class='btn btn-default'>"+item.state+"</button>"+"</td>"
 							+"</td>"
 					})//each 
 					$("#recruitAjaxResult").append(temp);
@@ -261,6 +225,45 @@ th{
 				}//success
 			})//ajax
 		})//click
+		
+		$(document).on("click", "#cancelBtn1",function() {
+			var email = "${memberVO.memberEmail}";
+			alert($(this).val())
+			if($(this).text()=="미승인"){
+				if(confirm("정말 취소하시겠어요?")){
+					 $.ajax({
+			    		type:"post",
+						url:"${pageContext.request.contextPath}/ajax/deleteStudyConditionByStudyConditionNo",
+						data: "studyConditionNo="+$(this).val()+"&memberEmail="+email,
+						success:function(data){
+							alert("스터디 참여 신청이 취소되었습니다.");
+							location.reload();
+						}//success
+					})//ajax
+				}
+			}else{
+				alert("승인 이후 취소는 스터디 그룹 페이지에서 할 수 있습니다.");
+			}
+		})//on(calcelBtn1)
+			
+			$(document).on("click","#cancelBtn2", function(){
+				var email = "${memberVO.memberEmail}";
+				if($(this).text()=='예약대기'){
+					if(confirm("정말 취소하시겠어요?")){
+						 $.ajax({
+				    		type:"post",
+							url:"${pageContext.request.contextPath}/ajax/updateStudyRoomConditionByMember",
+							data: "studyRoomConditionNo="+$(this).val()+"&memberEmail="+email,
+							success:function(data){
+								alert("예약신청이 취소되었습니다.");
+								location.reload();
+							}//success
+						})//ajax
+					}
+				}else{
+					alert("예약 완료 이후 상태 변경은 업체에 문의하세요.");
+				}
+		})//on(cancelBtn2)
 		
 		//carousel
 		var itemsMainDiv = ('.MultiCarousel');

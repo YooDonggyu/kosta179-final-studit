@@ -21,4 +21,13 @@ public class StudyRoomServiceTest {
 	public void findStudyRoomConditionByStudyRoomNoAndDateTest() {
 		System.out.println(studyRoomService.findStudyRoomConditionByStudyRoomNoAndDate("2018-05-31", "1"));
 	}
+	
+	/**
+	 * 스터디룸 예약 신청 취소
+	 * @author 김유란
+	 */
+	@Test
+	public void updateStudyRoomConditionByMember() {
+		studyRoomService.updateStudyRoomConditionByMember("a@a.com", "25");
+	}
 }

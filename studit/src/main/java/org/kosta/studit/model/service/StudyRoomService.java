@@ -16,4 +16,6 @@ public interface StudyRoomService {
 
 	List<StudyRoomConditionVO> findStudyRoomConditionByStudyRoomNoAndDate(String selectedDate, String studyRoomNo);
 
+	void updateStudyRoomConditionByMember(String memberEmail, String studyRoomConditionNo);
+
 }
