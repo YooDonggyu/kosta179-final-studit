@@ -15,7 +15,6 @@
 <c:set value="${com.studyPicList}" var="sPicList" scope="request" />
 <c:set value="${com.studyFunctionList}" var="sFunctionList" scope="request" />
 
-
 <div class="container-fluid ">
 	<!-- 최상단 소개 -->
 	<div class="row">
@@ -140,6 +139,8 @@
 		<!-- 지도 끝 -->
 		
 		
+		
+		
 		</div><!-- blog-post -->
 	</div><!-- row-->
 	
@@ -165,41 +166,48 @@
 				</c:choose>
 			</div><%--row --%>
 				
-			<c:if test="${sList != null && sList.size() != 0 }">
-					<c:forEach items="${sList}" var="list">
-						<div class="row sidebar-main-row " style="padding-top: 10px; padding-bottom: 10px; ">
-							<div class="col-sm-4">${list.name}</div>
-							<div class="col-sm-6">
-								<a href="" class="btn btn-default btn-xs tag">${list.price}</a>
-								<a href="" class="btn btn-default btn-xs tag">${list.capacity}명</a>
+					<c:if test="${sList != null && sList.size() != 0 }">
+						<c:forEach items="${sList}" var="list">
+							<div class="row sidebar-main-row " style="padding-top: 10px; padding-bottom: 10px; ">
+								<div class="col-sm-4">${list.name}</div>
+								<div class="col-sm-6">
+									<a href="" class="btn btn-default btn-xs tag">${list.price}</a>
+									<a href="" class="btn btn-default btn-xs tag">${list.capacity}명</a>
+								</div>
+								<div class="col-sm-2">
+									<h5><a href="javascript:void(0);" class="label label-default studit-color"  onclick="hideAndShow(${list.studyRoomNo})">더보기</a></h5>
+								</div>
 							</div>
-							<div class="col-sm-2">
-								<%-- <img src="${pageContext.request.contextPath}/resources/assets/img/arrow-down.png" style="width: 20px; height: 20px;" onclick="hideAndShow(${list.studyRoomNo})" > --%>
-								<h5><a href="javascript:void(0);" class="label label-default studit-color"  onclick="hideAndShow(${list.studyRoomNo})">더보기</a></h5>
-							</div>
-						</div>
-						<div class="row ${list.studyRoomNo} sDetail" style="display: none;">
-							<div class="list-group">
-							  <button type="button" class="list-group-item"><p class="blog-post-meta" style="font-size: 13px;">가격</p>${list.price } / 시간 </button>
-							  <button type="button" class="list-group-item"><p class="blog-post-meta" style="font-size: 13px;">최대인원 </p> ${list.capacity} 명</button>
-							  <button type="button" class="list-group-item"><p class="blog-post-meta" style="font-size: 13px;">제공</p>
-							  	<c:forEach items="${sFunctionList}" var="fList">
-							  		<c:if test="${fList.STUDYROOM_NO == list.studyRoomNo }">
-							  			${fList.NAME} &nbsp;
-							  		</c:if>
-							  	</c:forEach>
-							  </button>
-							  <button type="button" class="list-group-item"><p class="blog-post-meta" style="font-size: 13px;">설명</p>${list.content }</button>
-							  <div style="width: 100%; text-align: right;"><a href="${pageContext.request.contextPath }/studyroom/createStudyRoomConditionView?studyRoomNo=${list.studyRoomNo}" class="btn btn-sm" style=" width:100%; background-color: #FFBC9B; color:#ffffff;	">신청하기</a></div>
+							<div class="row ${list.studyRoomNo} sDetail" style="display: none;">
+								<div class="list-group">
+									<div class="col-sm-12" >
+										<c:forEach items="${sPicList}" var="pList">
+						  					<c:if test="${pList.STUDYROOM_NO == list.studyRoomNo}">
+						  						<img src="${pageContext.request.contextPath}/resources/upload/${pList.PATH}"  style="width: 100%; height: 200px;" onclick="showPicture('${pList.PATH}')">
+						  					</c:if>
+										</c:forEach>
+					  				</div>
+								</div>
+								<button type="button" class="list-group-item"><p class="blog-post-meta" style="font-size: 13px;">가격</p>${list.price } / 시간 </button>
+								<button type="button" class="list-group-item"><p class="blog-post-meta" style="font-size: 13px;">최대인원 </p> ${list.capacity} 명</button>
+								<button type="button" class="list-group-item"><p class="blog-post-meta" style="font-size: 13px;">제공</p>
+									<c:forEach items="${sFunctionList}" var="fList">
+										<c:if test="${fList.STUDYROOM_NO == list.studyRoomNo }">
+											${fList.NAME} &nbsp;
+										</c:if>
+									</c:forEach>
+								</button>
+								<button type="button" class="list-group-item"><p class="blog-post-meta" style="font-size: 13px;">설명</p>${list.content }</button>
+								<div style="width: 100%; text-align: right;"><a href="${pageContext.request.contextPath }/studyroom/createStudyRoomConditionView?studyRoomNo=${list.studyRoomNo}" class="btn btn-sm" style=" width:100%; background-color: #FFBC9B; color:#ffffff;	">신청하기</a></div>
 							</div>
 						</div>
 					</c:forEach>
-			</c:if>
+				</c:if>
+			</div>
 		</div>
+	<div class="col-sm-1"></div>
 	</div>
-<div class="col-sm-1"></div>
-</div>
-</div><!-- container -->
+	</div><!-- container -->
 
 
 
@@ -314,11 +322,10 @@
 			}, 500);
 		}).scroll();
 	
-		$('#myCarousel').carousel({
-			interval: 10000
-		})
+			$('#myCarousel').carousel({
+				interval: 10000
+			})
 	});
-
 </script>
 
 <style>

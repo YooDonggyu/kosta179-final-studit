@@ -245,7 +245,7 @@ public class CompanyServiceImpl implements CompanyService {
 		dataMap.put("comHashTagList", comHashTagList);
 		dataMap.put("studyList", studyList);
 		dataMap.put("studyFunctionList", studyFunctionList);
-		dataMap.put("stduyPicList", studyPicList);
+		dataMap.put("studyPicList", studyPicList);
 		
 		return dataMap;
 	}
