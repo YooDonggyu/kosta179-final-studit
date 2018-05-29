@@ -2,15 +2,12 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 <style>
-
 div.sc-table {
     font-size:100%;
 }
-
 th{
 	text-align: center;
 }
-
 .MultiCarousel {
  	float: left; 
  	overflow: hidden; 

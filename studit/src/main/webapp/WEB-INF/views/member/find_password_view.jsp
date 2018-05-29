@@ -1,18 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<script type="text/javascript">
-	$(document).ready(function(){
-		$("#ok").click(function(){
-			if($("#memberEmail").val()==null||$("#memberEmail").val()==""){
-				alert("이메일을 입력하세요.");
-				$("#memberEmail").focus();
-			}else{
-				location.href="${pageContext.request.contextPath}/member/checkPasswordHintAndAnswer?memberEmail="+$("#memberEmail").val();
-			}
-		});
-	});
-</script>
+
 
 <section class="signup-section text-center no-padding-bottom">
 	<div class="container">
@@ -41,3 +30,18 @@
 	</table>
 	</div>
 </section>
+
+
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#ok").click(function(){
+			if($("#memberEmail").val()==null||$("#memberEmail").val()==""){
+				alert("이메일을 입력하세요.");
+				$("#memberEmail").focus();
+			}else{
+				location.href="${pageContext.request.contextPath}/member/checkPasswordHintAndAnswer?memberEmail="+$("#memberEmail").val();
+			}
+		});
+	});
+</script>

@@ -2,27 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<script type="text/javascript">
-	$(document).ready(function(){
-		var cnt=0;
-		var answer=$("#passwordAnswer").val();
-		$("#findPasswordBtn").click(function(){
-			cnt+=1;
-			if($("#answer").val()!=answer){
-				if(cnt<3){
-					alert("답변이 틀렸습니다.");
-					$("#answer").focus();
-				}else{
-					alert("3회 틀리셨습니다. 홈으로 이동합니다.");
-					location.href="${pageContext.request.contextPath}/";
-				}
-			}else{
-				location.href="${pageContext.request.contextPath}/member/findPassword?memberEmail="+$("#email").val();
-			}
-		});
-	});
-</script>
-
 <input type="hidden" value="${checkInfo.passwordAnswer }" id="passwordAnswer">
 <input type="hidden" value="${checkInfo.memberEmail }" id="email">
 <section class="signup-section text-center no-padding-bottom">
@@ -56,3 +35,26 @@
 	</table>
 	</div>
 </section>
+
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		var cnt=0;
+		var answer=$("#passwordAnswer").val();
+		$("#findPasswordBtn").click(function(){
+			cnt+=1;
+			if($("#answer").val()!=answer){
+				if(cnt<3){
+					alert("답변이 틀렸습니다.");
+					$("#answer").focus();
+				}else{
+					alert("3회 틀리셨습니다. 홈으로 이동합니다.");
+					location.href="${pageContext.request.contextPath}/";
+				}
+			}else{
+				location.href="${pageContext.request.contextPath}/member/findPassword?memberEmail="+$("#email").val();
+			}
+		});
+	});
+</script>
+

@@ -2,25 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<script type="text/javascript">
-$(document).ready(function(){
-	$("#deleteMemberBtn").click(function(){
-		var study=$("#studyFlag").text();
-		var studyRoom=$("#studyRoomFlag").text();
-		var studyGroup=$("#studyGroupFlag").text();
-		var company=$("#companyFlag").text();
-		
-		if(study=='탈퇴가능'&&studyRoom=='탈퇴가능'&&studyGroup=='탈퇴가능'&&company=='탈퇴가능'){
-			if(confirm("정말 탈퇴하시겠습니까?")){
-				location.href="${pageContext.request.contextPath}/member/deleteMember?memberEmail="+$("#email").val();
-				alert("회원탈퇴가 완료되었습니다");
-			}
-		}else{
-			alert("탈퇴 조건을 확인하세요.");
-		}
-	});
-});
-</script>
 
 	<c:set var="waitStudyCount" value="${requestScope.deleteMemberInfo.waitStudyCount }" />
 	<c:set var="waitStudyRoomCount" value="${requestScope.deleteMemberInfo.waitStudyRoomCount }" />
@@ -146,3 +127,24 @@ $(document).ready(function(){
 	<input type="button" value="회원탈퇴" style="margin-bottom: 40px;" id="deleteMemberBtn">
 </div>
 </section>
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#deleteMemberBtn").click(function(){
+		var study=$("#studyFlag").text();
+		var studyRoom=$("#studyRoomFlag").text();
+		var studyGroup=$("#studyGroupFlag").text();
+		var company=$("#companyFlag").text();
+		
+		if(study=='탈퇴가능'&&studyRoom=='탈퇴가능'&&studyGroup=='탈퇴가능'&&company=='탈퇴가능'){
+			if(confirm("정말 탈퇴하시겠습니까?")){
+				location.href="${pageContext.request.contextPath}/member/deleteMember?memberEmail="+$("#email").val();
+				alert("회원탈퇴가 완료되었습니다");
+			}
+		}else{
+			alert("탈퇴 조건을 확인하세요.");
+		}
+	});
+});
+</script>

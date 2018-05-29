@@ -28,9 +28,14 @@
 <div class="calendarView">
 <div class="col-sm-12">
 		<div id="calendar"></div><!-- 캘린더 -->
-		<div id="time" style="float: left; margin-top:50px; padding:50px;"><!-- 예약정보를 보여주는 구역 -->
+		<div id="time" style="float: left; margin-top:50px; padding:50px;">
+		<!-- 예약정보를 보여주는 구역 -->
 			<h1>${studyRoomVO.companyVO.name} </h1><h3> ${studyRoomVO.name}</h3>
-			<h5>수용인원: ${studyRoomVO.capacity}</h5>
+			<input type="hidden" id="hiddenComName" value="${studyRoomVO.companyVO.name} ">
+			<input type="hidden" id="hiddenStudyRoomName" value="${studyRoomVO.name}">
+			<input type="hidden" id="hiddenBuyerName" value="${memberVO.name}">
+			<input type="hidden" id="hiddenBuyerEmail" value="${memberVO.memberEmail}">
+						<h5>수용인원: ${studyRoomVO.capacity}</h5>
 			<h5 id="selectedDate"></h5>
 			총<span id="totalPrice"> 0</span>원
 			<br>
@@ -44,23 +49,34 @@
 	            <input type="hidden" id="useDate" name="useDate">
 	            <input type="hidden" name="studyRoomVO.studyRoomNo" value="${studyRoomVO.studyRoomNo}">
 	            <input type="hidden" name="memberVO.memberEmail" value="${memberVO.memberEmail}">
-	           	<input type="button" class="btn btn-info" value="예약 신청하기" id="okBtn">
+	           	<!-- <input type="button" class="btn btn-info" value="예약 신청하기" id="okBtn"> -->
+	           	<input type="button" class="btn btn-info" value="예약 신청하기" onclick="requestPay()"><%-- id="okBtn"  --%>
             </form>
 		</div><!-- <div id="time"> -->
 	</div><!-- <div class="col-sm-12"> -->
 </div><!--<div class="calendarView">  -->
 
+
+
+
 <script>
+
+//결제에 사용할 변수들
+var IMP = window.IMP; 
+IMP.init("imp13613726"); 
+var comName = $("#hiddenComName").val();
+var studyRoomName = $("#hiddenStudyRoomName").val();
+var buyerEmail = $("#hiddenBuyerEmail").val();
+var buyerName = $("#hiddenBuyerName").val();
+
 
 //영업시간 정보를 변수에 담아둠
 var open = "${studyRoomVO.companyVO.open}" 
 var close="${studyRoomVO.companyVO.close}"
-
 //ajax로 전송받은 선택 날짜의 예약정보 data를 저장해 둘 변수(ajax  success 외부에서 사용할 목적) 
 var result;
 
 $(document).ready(function() {
-
 	    $('#calendar').fullCalendar({
 	      schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',	
 	      defaultView: 'month',
@@ -111,40 +127,6 @@ $(document).ready(function() {
 				}
 			  }
 	    })//on(가격정보)
-	    
-	  //작성: 김유란
-	  //기능: 예약버튼을 클릭하면 예약정보를 form에 넣어 전송하는 함수
-	    $(document).on("click", "#okBtn", function() {
-	    	var $times =  $("#times").children("#time"); 
-			var length = $times.length;
-			var arr=[];
-				 	for(var i=0; i<length; i++){
-						if($times.eq(i).hasClass('selected')){
-								arr.push($times.eq(i).val());
-							}
-				 	}//선택된 시간만 배열에 넣기(시간 순서대로) 
-				 	
-			//form에 예약정보 넣기	 	
-			$("#startTime").val(arr[0]); //배열의 첫 값(최소값)
-			$("#endTime").val(arr[arr.length-1]);//배열의 끝값(최대값)
-			$("#useDate").val($("#selectedDate").text());
-			
-			//예약시간 사이에 공백이 없는지 확인하기 위한 변수(배열길이-1=endTime-startTime)
-			var duration = parseInt(arr[arr.length-1],10)-parseInt(arr[0],10)
-			
-			if($("#useDate").val()==""){
-				alert("날짜를 선택하세요.");
-			}else if($("#startTime").val()==""){
-				alert("시간을 선택하세요.");
-			}else if(!checkAvailable($("#startTime").val(), $("#endTime").val()) || arr.length-1!=duration){
-	    		alert("연속된 시간만 선택할 수 있습니다.");
-	    	}else{
-	    		if(confirm("${studyRoomVO.name}"+" "+$("#useDate").val()+" "+$("#startTime").val()+"-"+$("#endTime").val()+"시 \n"+"예약할까요?")){
-	    			$("#reserveForm").submit();
-	    		}//모든 조건을 충족하면 예약정보를 확인하는 confirm
-	    	}
-	    });//on(예약 버튼)
-	    
 })//ready
 
 
@@ -208,4 +190,70 @@ function getTimeTable(selectedDate){
 		}//success 
 	})//ajax
 };//getTimeTable
+
+
+
+//작성 :유동규
+//기능 : 조건을 확인한 후 카카오페이 간편결제 신청
+function requestPay() {
+	if(checkToRegister() == false){
+		return false;
+	}
+    IMP.request_pay({ // param
+    	pay_method : 'card', // 'card'만 지원
+    	merchant_uid : 'merchant_' + new Date().getTime(),
+    	name : 'STUDIT',
+    	amount : $("#totalPrice").text(), 
+    	customer_uid : 'test', //customer_uid 파라메터가 있어야 빌링키 발급이 정상적으로 이뤄집니다.
+    	buyer_email: buyerEmail,
+    	buyer_name : buyerName,
+    }, function (rsp) { // callback
+    	 if (rsp.success) { 
+    		 // 결제 성공 시 DB 등록
+    		 $("#reserveForm").submit();
+    	    } else {
+    	        alert("결제에 실패하였습니다. 에러 내용: " +  rsp.error_msg);
+    	    }
+    });
+}
+
+//작성: 김유란
+//기능: 예약버튼을 클릭하면 예약정보를 form에 넣어 전송하는 함수
+function checkToRegister(){
+	var $times =  $("#times").children("#time"); 
+	var length = $times.length;
+	var arr=[];
+		 	for(var i=0; i<length; i++){
+				if($times.eq(i).hasClass('selected')){
+						arr.push($times.eq(i).val());
+					}
+		 	}//선택된 시간만 배열에 넣기(시간 순서대로) 
+		 	
+	//form에 예약정보 넣기	 	
+	$("#startTime").val(arr[0]); //배열의 첫 값(최소값)
+	$("#endTime").val(arr[arr.length-1]);//배열의 끝값(최대값)
+	$("#useDate").val($("#selectedDate").text());
+	
+	//예약시간 사이에 공백이 없는지 확인하기 위한 변수(배열길이-1=endTime-startTime)
+	var duration = parseInt(arr[arr.length-1],10)-parseInt(arr[0],10)
+	
+	if($("#useDate").val()==""){
+		alert("날짜를 선택하세요.");
+		return false;
+	}else if($("#startTime").val()==""){
+		alert("시간을 선택하세요.");
+		return false;
+	}else if(!checkAvailable($("#startTime").val(), $("#endTime").val()) || arr.length-1!=duration){
+		alert("연속된 시간만 선택할 수 있습니다.");
+		return false;
+	}else{
+		if(confirm("${studyRoomVO.name}"+" "+$("#useDate").val()+" "+$("#startTime").val()+"-"+$("#endTime").val()+"시 \n"+"결제를 진행하겠습니다!")){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+}
+
 </script>	    
