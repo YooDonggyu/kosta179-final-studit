@@ -270,7 +270,7 @@ public class MemberController {
 	public String deleteMember(String memberEmail) {
 		memberService.deleteMember(memberEmail);
 
-		return "home.tiles";
+		return "redirect:/member/logout";
 	}
 	
 	/**

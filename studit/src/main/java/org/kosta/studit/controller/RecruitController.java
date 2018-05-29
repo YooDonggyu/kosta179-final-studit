@@ -175,6 +175,8 @@ public class RecruitController {
 	@RequestMapping("/createRecruitPost")
 	public String createRecruitPost(RecruitPostVO recruitPostVO, String days, HttpServletRequest request) {
 		String[] recruitDay = days.split(",");
+		for(int i=0; i<recruitDay.length; i++)
+			System.out.println(recruitDay[i]);
 		HttpSession session=request.getSession();
 		recruitPostVO.setMemberVO((MemberVO)session.getAttribute("memberVO"));
 		recruitService.createRecruitPost(recruitPostVO, recruitDay);

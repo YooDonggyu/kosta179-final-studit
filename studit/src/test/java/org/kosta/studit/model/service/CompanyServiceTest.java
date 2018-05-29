@@ -2,6 +2,8 @@ package org.kosta.studit.model.service;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.kosta.studit.model.vo.CompanyListVO;
+import org.kosta.studit.model.vo.CompanyVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -43,9 +45,22 @@ public class CompanyServiceTest {
 		System.out.println(companyService.findBusinessDayByCompanyNo(1));
 	}
 	
-	@Test
+	//@Test
 	public void findDetailCompanyInfoByCompanyNoTest() {
 		System.out.println(companyService.findDetailCompanyInfoByCompanyNo(1));
 	}
 	
+	/**
+	 * 검색조건에 부합하는 업체 리스트 출력
+	 * @author 송용준
+	 */
+	@Test
+	public void findCompanyListByCondition() {
+		CompanyListVO clist=companyService.findCompanyListByCondition(null);
+		
+		for(CompanyVO list:clist.getList()) {
+			System.out.println(list.getName());
+		}
+		
+	}
 }

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import org.kosta.studit.model.dao.CompanyDAO;
 import org.kosta.studit.model.service.CompanyService;
 import org.kosta.studit.model.service.StudyRoomService;
+import org.kosta.studit.model.vo.CompanyListVO;
 import org.kosta.studit.model.vo.CompanyVO;
 import org.kosta.studit.model.vo.MemberVO;
 import org.kosta.studit.model.vo.StudyRoomConditionVO;
@@ -46,12 +47,13 @@ public class CompanyController {
 		//첫번째 주소 셀렉트 박스에 제공될 주소목록
 		List<String> firstAddrList=companyService.readFirstAddr();
 		//검색조건을 아무것도 선택하지 않을 경우 제공되는 모든 업체 목록
-		List<CompanyVO> allCompanyList=companyService.readAllCompany();
+		CompanyListVO allCompanyList=companyService.findCompanyListByCondition(null);
 		//DB에 저장된 모든 해쉬태그 목록 : 업체가 가진 해쉬태그를 뷰에 표시
 		List<Map<String, Object>> allHashTagList=companyService.readAllHashTag();
 		
 		request.setAttribute("firstAddrList", firstAddrList);
-		request.setAttribute("allCompanyList", allCompanyList);
+		request.setAttribute("allCompanyList", allCompanyList.getList());
+		request.setAttribute("pagingBean", allCompanyList.getPagingBean());
 		request.setAttribute("allHashTagList", allHashTagList);
 		
 		return "company/find_Company_View.tiles";

@@ -164,28 +164,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select day from com_business_day where company_no=#{value}
 	</select>
 	
-	<select id="findCompanyListByAddress" parameterType="map" resultType="companyVO">
+	<select id="findCompanyListByCondition" parameterType="map" resultType="companyVO">
 		select com.company_no, com.name, com.addr1, com.addr2, com.addr3, com.intro, com.profile_path 
 		from company com, (
-			select distinct c.company_no as company_no
-			from company c, hashtag h
-			<where>
-				 c.state='승인'
-				<if test="firstAddr != null">
-					and c.addr1=#{firstAddr}
-				</if>
-				<if test="secondAddr != null">
-					and c.addr2=#{secondAddr}
-				</if>
-				<if test="thirdAddr != null">
-					and c.addr3=#{thirdAddr}
-				</if>
-				<if test="keywordORhashtag != null">
-					and c.company_no=h.company_no and c.name || h.content like '%'||#{keywordORhashtag}||'%'
-				</if> 
-			</where>
+			select cc.company_no as company_no, row_number() over(order by cc.company_no desc) as rnum
+			from(
+				select distinct c.company_no as company_no
+				from company c, hashtag h
+				<where>
+					 c.state='승인'
+					<if test="firstAddr != null">
+						and c.addr1=#{firstAddr}
+					</if>
+					<if test="secondAddr != null">
+						and c.addr2=#{secondAddr}
+					</if>
+					<if test="thirdAddr != null">
+						and c.addr3=#{thirdAddr}
+					</if>
+					<if test="keywordORhashtag != null">
+						and c.company_no=h.company_no and c.name || h.content like '%'||#{keywordORhashtag}||'%'
+					</if> 
+				</where>
+			)cc
 		) dc
-		where com.company_no = dc.company_no 
+		where com.company_no = dc.company_no and dc.rnum between #{pagingBean.startRowNumber} and #{pagingBean.endRowNumber} 
 		order by regdate desc
 		
 	</select>
@@ -247,7 +250,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    		select count(*) from company where license = #{value}
    </select>
    
-   
+   <select id="findTotalCountOfCompany" resultType="int" parameterType="map">
+   		select count(distinct c.company_no)
+   		from company c, hashtag h
+   		<where>
+			 c.state='승인'
+			<if test="firstAddr != null">
+				and c.addr1=#{firstAddr}
+			</if>
+			<if test="secondAddr != null">
+				and c.addr2=#{secondAddr}
+			</if>
+			<if test="thirdAddr != null">
+				and c.addr3=#{thirdAddr}
+			</if>
+			<if test="keywordORhashtag != null">
+				and c.company_no=h.company_no and c.name || h.content like '%'||#{keywordORhashtag}||'%'
+			</if> 
+		</where>
+   </select>
    
    
    

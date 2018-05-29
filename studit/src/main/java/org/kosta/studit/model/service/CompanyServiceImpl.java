@@ -1,3 +1,4 @@
+
 package org.kosta.studit.model.service;
 
 import java.util.ArrayList;
@@ -5,9 +6,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.kosta.studit.model.CompanyPagingBean;
 import org.kosta.studit.model.dao.CompanyDAO;
 import org.kosta.studit.model.dao.MemberDAO;
 import org.kosta.studit.model.dao.StudyRoomDAO;
+import org.kosta.studit.model.vo.CompanyListVO;
 import org.kosta.studit.model.vo.CompanyVO;
 import org.kosta.studit.model.vo.StudyRoomConditionVO;
 import org.kosta.studit.model.vo.StudyRoomVO;
@@ -162,10 +165,60 @@ public class CompanyServiceImpl implements CompanyService {
 	
 
 	@Override
-	public List<CompanyVO> findCompanyListByAddress(Map<String, String> map) {
-		List<CompanyVO> list=companyDAO.findCompanyListByAddress(map);
+	public CompanyListVO findCompanyListByCondition(Map<String, Object> map) {
+		CompanyPagingBean pb=null;
+		List<CompanyVO> list=null;
+		//첫 로딩 시, 검색 조건 없음
+		if(map==null) {
+			pb=new CompanyPagingBean(companyDAO.findTotalCountOfCompany(null));
+			list=findCompanyList(pb);
+		}else {
+			int nowPage=0;
+			if(map.get("nowPage")!=null && map.get("nowPage")!="") {
+				nowPage=Integer.parseInt((String)map.get("nowPage"));
+			}
+			
+			if(nowPage==0) {
+				pb=new CompanyPagingBean(companyDAO.findTotalCountOfCompany(map));
+			}else {
+				pb=new CompanyPagingBean(companyDAO.findTotalCountOfCompany(map), nowPage);
+			}
+			map.put("pagingBean", pb);
+			list=findCompanyList(map);
+		}
+		
+		/*System.out.println(map.get("firstAddr"));
+		System.out.println(map.get("secondAddr"));
+		System.out.println(map.get("thirdAddr"));
+		System.out.println(map.get("keywordORhashtag"));
+		System.out.println(map.get("nowPage"));*/
+		CompanyListVO pagingList=new CompanyListVO(list, pb);
+		
+		return pagingList;
+	}
 	
-		return list;
+	/**
+	    * 스터디룸(업체) 검색 뷰에서 선택된 주소값을 기반으로 페이징 처리된 업체 리스트를 조회.
+	    * 3개의 주소값을 기반으로 페이징 처리된 업체 리스트을 List<CompanyVO> 타입으로 반환받는다.
+	    * @author 송용준
+	    * @param Map<String, String> map 3개의 주소값과 페이징 객체를 가지고 있는 객체
+	    * @return List<CompanyVO> 페이징 처리된 업체 리스트
+	    */
+	public List<CompanyVO> findCompanyList(Map<String, Object> map) {
+		return companyDAO.findCompanyListByCondition(map);
+	}
+	
+	/**
+    * 스터디룸(업체) 스터디 검색 뷰 첫 로딩 시, 페이징 처리된 모든 업체 리스트를 조회.
+    * 페이징 처리된 업체 리스트을 List<CompanyVO> 타입으로 반환받는다.
+    * @author 송용준
+    * @param CompanyPagingBean 페이징을 위한 객체
+    * @return List<CompanyVO> 페이징 처리된 모든 업체 리스트
+    */
+	public List<CompanyVO> findCompanyList(CompanyPagingBean pb) {
+		Map<String, Object> map=new HashMap<>();
+		map.put("pagingBean", pb);
+		return companyDAO.findCompanyListByCondition(map);
 	}
 
 	/**
@@ -245,10 +298,8 @@ public class CompanyServiceImpl implements CompanyService {
 		dataMap.put("comHashTagList", comHashTagList);
 		dataMap.put("studyList", studyList);
 		dataMap.put("studyFunctionList", studyFunctionList);
-		dataMap.put("studyPicList", studyPicList);
+		dataMap.put("stduyPicList", studyPicList);
 		
 		return dataMap;
 	}
-	
-
 }

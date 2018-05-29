@@ -34,7 +34,7 @@ public class CompanyDAOTest {
 		 * select box에 제공할 모든 업체의 addr1 값을 불러온다
 		 * @author 송용준
 		 */
-		@Test
+		//@Test
 		public void readFirstAddrTest() {
 			System.out.println(companyDAO.readFirstAddr());
 		}
@@ -43,7 +43,7 @@ public class CompanyDAOTest {
 		 * 모든 업체 정보 불러오기
 		 * @author 송용준
 		 */
-		@Test
+		//@Test
 		public void readAllCompanyTest() {
 			System.out.println(companyDAO.readAllCompany());
 		}
@@ -52,7 +52,7 @@ public class CompanyDAOTest {
 		 * 등록이 승인된 모든 업체의 해쉬태그 정보를 불러온다
 		 * @author 송용준
 		 */
-		@Test
+		//@Test
 		public void readAllHashTagTest() {
 			System.out.println(companyDAO.readAllHashTag());
 		}
@@ -61,7 +61,7 @@ public class CompanyDAOTest {
 		 * 스터디룸(업체) 검색 뷰에서 선택된 addr1에 대응되는 addr2를 조회.
 		 * @author 송용준
 		 */
-		@Test
+		//@Test
 		public void findSecondAddressListByFirstAddressNameTest() {
 			System.out.println(companyDAO.findSecondAddressListByFirstAddressName("서울시"));
 		}
@@ -70,7 +70,7 @@ public class CompanyDAOTest {
 		 * 스터디룸(업체) 검색 뷰에서 선택된 addr2에 대응되는 addr3를 조회.
 		 * @author 송용준
 		 */
-		@Test
+		//@Test
 		public void findThirdAddressListBySecondAddressName() {
 			System.out.println(companyDAO.findThirdAddressListBySecondAddressName("강남구"));
 		}
@@ -135,12 +135,12 @@ public class CompanyDAOTest {
 	   
 	   //@Test
 	   public void findCompanyListByAddressAndKeywordAndHashTag() {
-		   Map<String, String> map=new HashMap<>();		
+		   Map<String, Object> map=new HashMap<>();		
 			map.put("firstAddr", null);
 			map.put("secondAddr", null);
 			map.put("thirdAddr", null);
 			map.put("keywordORhashtag", "고백");
-			List<CompanyVO> list=companyDAO.findCompanyListByAddress(map);
+			List<CompanyVO> list=companyDAO.findCompanyListByCondition(map);
 			for(CompanyVO vo:list) {
 				System.out.println(vo);
 			}
@@ -273,6 +273,17 @@ public class CompanyDAOTest {
 	   @Test
 	   public void findStudyRoomConditionCountByMonthTest() {
 		   System.out.println(companyDAO.findStudyRoomConditionCountByMonth("1"));
+	   }
+	   
+	   /**
+	    * 승인된 업체의 전체 수를 출력
+	    * @author 송용준
+	    */
+	   @Test
+	   public void findTotalCountOfCompany() {
+		   //findTotalCountOfCompany() 메소드에서 매개변수는 검색 조건
+		   //검색 조건에 부합하는 업체들의 총 수를 반환
+		   System.out.println(companyDAO.findTotalCountOfCompany(null));
 	   }
 	   
 	   

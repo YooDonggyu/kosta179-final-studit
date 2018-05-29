@@ -86,15 +86,15 @@ public class CompanyDAOImpl implements CompanyDAO {
 	}
 	
 	/**
-    * 스터디룸(업체) 검색 뷰에서 선택된 주소값에 대응되는 업체 리스트를 조회.
-    * 3개의 주소값으로 조회한 업체 리스트을 List<String> 타입으로 반환받는다.
+    * 스터디룸(업체) 검색조건에 대응되는 업체 리스트를 조회.
+    * 검색조건으로 조회한 업체 리스트을 List<CompanyVO> 타입으로 반환받는다.
     * @author 송용준
-    * @param Map<String, String> map 3개의 주소값을 가지고 있는 객체
-    * @return List<CompanyVO> 주소값에 대응되는 업체 리스트
+    * @param Map<String, Object> map 검색조건을 가지고 있는 객체
+    * @return List<CompanyVO> 검색조건에 대응되는 업체 리스트
     */
 	@Override
-	public List<CompanyVO> findCompanyListByAddress(Map<String, String> map) {
-		return template.selectList("company.findCompanyListByAddress", map);
+	public List<CompanyVO> findCompanyListByCondition(Map<String, Object> map) {
+		return template.selectList("company.findCompanyListByCondition", map);
 	}
 		
 	   /**
@@ -256,6 +256,18 @@ public class CompanyDAOImpl implements CompanyDAO {
 	   public List<Map<String, String>> findStudyRoomConditionCountByMonth(String companyNo){
 		   return template.selectList("company.findStudyRoomConditionCountByMonth",companyNo);
 	   }
+	   
+	   /**
+	    * 검색조건에 부합하는 총 업체 리스트 수를 조회
+	    * @author 송용준
+	    * @param Map<String, Object> map 검색 조건을 담은 객체
+	    * @return int 업체 리스트 수  
+	    */
+		@Override
+		public int findTotalCountOfCompany(Map<String, Object> map) {
+			return template.selectOne("company.findTotalCountOfCompany", map);
+		}
+	   
 	   
 }
 

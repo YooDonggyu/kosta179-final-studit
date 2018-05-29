@@ -7,28 +7,62 @@
 }
 </style>
 <script type="text/javascript">
-	$(document).ready(function(){
-		$("#big_category").change(function(){
-			$.ajax({
-				type: "get",
-				dataType: "json",
-				url:"${pageContext.request.contextPath}/ajax/getSmallCategoryByBigCategoryAjax",
-				data:"bigCategoryNo="+$("#big_category option:selected").val(),
-				success:function(result){
-					var smallCategory="<option value='0'>소분류</option>";
-					$.each(result, function(index, item){
-						smallCategory+="<option value='";
-						smallCategory+=item.smallCategoryNo;
-						smallCategory+="'>";
-						smallCategory+=item.name;
-						smallCategory+="</option>";			
-					})
-					$("#small_category").html(smallCategory);
-				}
-			});//ajax
-		});//big_category
-	});//ready
-	
+$(document).ready(function(){
+	$("#big_category").change(function(){
+		$.ajax({
+			type: "get",
+			dataType: "json",
+			url:"${pageContext.request.contextPath}/ajax/getSmallCategoryByBigCategoryAjax",
+			data:"bigCategoryNo="+$("#big_category option:selected").val(),
+			success:function(result){
+				var smallCategory="<option value='0'>소분류</option>";
+				$.each(result, function(index, item){
+					smallCategory+="<option value='";
+					smallCategory+=item.smallCategoryNo;
+					smallCategory+="'>";
+					smallCategory+=item.name;
+					smallCategory+="</option>";			
+				})
+				$("#small_category").html(smallCategory);
+			}
+		});//ajax
+	});//big_category
+});//ready
+
+function check(){
+	if($("#title").val()==""){
+		alert("제목을 입력하세요!");
+		$("#title").focus();
+		return false;
+	}
+	if($("#capacity").val()==""){
+		alert("희망인원을 입력하세요!");
+		$("#capacity").focus();
+		return false;
+	}
+	if($("#location").val()==""){
+		alert("희망지역을 입력하세요!");
+		$("#location").focus();
+		return false;
+	}
+	if($("#big_category option:selected").val()==0){
+		alert("대분류를 선택하세요!");
+		return false;
+	}
+	if($("#small_category option:selected").val()==0){
+		alert("소분류를 선택하세요!");
+		return false;
+	}
+	if($("input[name=days]:checked").size()==0){
+		alert("요일을 선택하세요!");
+		return false;
+	}
+	if($("#content").val()==""){
+		alert("내용을 입력하세요!");
+		return false;
+	}
+	return true;
+}
 </script>
 
 </head>
@@ -36,7 +70,7 @@
 
 <div class="col-sm-3" ></div>
 	<div class="col-sm-6">
-            <form method="post" action="${pageContext.request.contextPath }/recruit/createRecruitPost" class="form-horizontal" role="form">
+            <form method="post" action="${pageContext.request.contextPath }/recruit/createRecruitPost" class="form-horizontal" role="form" onsubmit="return check()">
                 <div style="padding-top: 30px; padding-bottom: 20px;"><h3>모집글 작성</h3></div>
                 <div class="form-group">
                     <label for="title" class="col-sm-3 control-label formCategory">제목</label>

@@ -2,7 +2,6 @@ package org.kosta.studit.controller;
 
 import org.kosta.studit.model.dao.StudyRoomDAO;
 import org.kosta.studit.model.service.CompanyService;
-import org.kosta.studit.model.service.StudyRoomService;
 import org.kosta.studit.model.vo.StudyRoomConditionVO;
 import org.kosta.studit.model.vo.StudyRoomVO;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.kosta.studit.model.PagingBean;
 import org.kosta.studit.model.vo.BigCategoryVO;
 import org.kosta.studit.model.vo.GroupMemberVO;
 import org.kosta.studit.model.vo.RecruitPostCommentVO;

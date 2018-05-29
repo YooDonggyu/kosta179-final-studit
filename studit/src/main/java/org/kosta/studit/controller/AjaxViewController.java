@@ -16,7 +16,7 @@ import org.kosta.studit.model.service.CompanyService;
 import org.kosta.studit.model.service.MemberService;
 import org.kosta.studit.model.service.RecruitService;
 import org.kosta.studit.model.service.StudyRoomService;
-import org.kosta.studit.model.vo.CompanyVO;
+import org.kosta.studit.model.vo.CompanyListVO;
 import org.kosta.studit.model.vo.MemberVO;
 import org.kosta.studit.model.vo.RecruitPostListVO;
 import org.kosta.studit.model.vo.SmallCategoryVO;
@@ -137,6 +137,51 @@ public class AjaxViewController {
 	}
 	
 	/**
+	 * 입력된 주소에 따른 업체 리스트 반환
+	 * @author 송용준
+	 * @param addr1, addr2, addr3 입력된 주소값
+	 * @param keywordORhashtag, nowPage 키워드와 현재 페이지정보
+	 * @return CompanyListVO 검색 조건에 부합하는 페이징된 업체 리스트
+	 */
+	@RequestMapping("/findCompanyListByConditionAjax")
+	@ResponseBody
+	public CompanyListVO findCompanyListByCondition(String addr1, String addr2, String addr3, String keywordORhashtag, String nowPage) {
+		Map<String, Object> map=new HashMap<>();
+		if(addr1!=null) {
+			if(addr1.equals("주소1")||addr1.equals("")) {
+				map.put("firstAddr", null);
+			}else {
+				map.put("firstAddr", addr1);
+			}
+		}else {
+			map.put("firstAddr", addr1);
+		}
+		if(addr2!=null) {
+			if(addr2.equals("주소2")||addr2.equals("")) {
+				map.put("secondAddr", null);
+			}else {
+				map.put("secondAddr", addr2);
+			}
+		}else {
+			map.put("secondAddr", addr2);
+		}
+		if(addr3!=null) {
+			if(addr3.equals("주소3")||addr3.equals("")) {
+				map.put("thirdAddr", null);
+			}else {
+				map.put("thirdAddr", addr3);
+			}
+		}else {
+			map.put("thirdAddr", addr3);
+		}
+		
+		map.put("keywordORhashtag", keywordORhashtag);
+		map.put("nowPage", nowPage);
+		
+		return companyService.findCompanyListByCondition(map);
+	}
+	
+	/**
 	 * 뷰에서 선택된 대분류에 대응되는 소분류를 조회.
 	 * @author 송용준
 	 * @param bigCategoryNo 뷰에서 선택된 대분류
@@ -215,22 +260,7 @@ public class AjaxViewController {
 		recruitDAO.updateCommentByCommentNo(map);
 	}
 	
-	/**
-	 * 입력된 주소에 따른 업체 리스트 반환
-	 * @author 송용준
-	 * @param addr1, addr2, addr3 입력된 주소값
-	 * @param List<CompanyVO> 입력된 주소값을 가지고 있는 업체 리스트
-	 */
-	@RequestMapping("/findCompanyListByAddressAjax")
-	@ResponseBody
-	public List<CompanyVO> findCompanyListByAddress(String addr1, String addr2, String addr3){
-		Map<String, String> map=new HashMap<>();	
-		map.put("firstAddr", addr1);
-		map.put("secondAddr", addr2);
-		map.put("thirdAddr", addr3);
-		List<CompanyVO> comList=companyService.findCompanyListByAddress(map);
-		return comList;
-	}
+	
 	/**
 	 * 소분류, 대분류, 키워드에 따른 페이징 AJAX
 	 * nowPage를 받아 소분류, 대분류, 키워드를 같이 넘겨 페이징 결과 받기
@@ -248,41 +278,6 @@ public class AjaxViewController {
 			nowPage = Integer.parseInt(request.getParameter("nowPage"));
 		}
 		return recruitService.findRecruitPostByCategoryOrKeyword(bigCategoryNo, smallCategoryNo, keyword, nowPage);
-	}
-	
-	/**
-	 * 입력된 주소값과 키워드에 따른 업체리스트 반환
-	 * @author 송용준
-	 * @param addr1, addr2, addr3 입력된 주소값
-	 * @param keywordORhashtag 입력된 키워드
-	 * @param List<CompanyVO> 검색조건에 맞는 업체 리스트
-	 */
-	@RequestMapping("/findCompanyListByAddressAndKeywordAndHashTagAjax")
-	@ResponseBody
-	public List<CompanyVO> findCompanyListByAddressAndKeywordAndHashTag(String addr1, String addr2, String addr3, String keywordORhashtag){
-		Map<String, String> map=new HashMap<>();
-		if(addr1.equals("주소1")) {
-			map.put("firstAddr", null);
-		}else {
-			map.put("firstAddr", addr1);
-		}
-		if(addr2.equals("주소2")) {
-			map.put("secondAddr", null);
-		}else {
-			map.put("secondAddr", addr2);
-		}
-		if(addr3.equals("주소3")) {
-			map.put("thirdAddr", null);
-		}else {
-			map.put("thirdAddr", addr3);
-		}
-		map.put("keywordORhashtag", keywordORhashtag);
-		/*System.out.println(map.get("firstAddr"));
-		System.out.println(map.get("secondAddr"));
-		System.out.println(map.get("thirdAddr"));
-		System.out.println(map.get("keywordORhashtag"));*/
-		List<CompanyVO> comList=companyService.findCompanyListByAddress(map);
-		return comList;
 	}
 	
 	/**
