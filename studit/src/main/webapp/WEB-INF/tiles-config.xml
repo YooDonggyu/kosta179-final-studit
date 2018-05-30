@@ -12,6 +12,16 @@
 		<put-attribute name="right" value="/WEB-INF/views/templates/right.jsp"/>
 		<put-attribute name="footer" value="/WEB-INF/views/templates/footer.jsp"/>
 	</definition>
+	
+	<!-- Controller에서 반환하는 viewName이 test.tiles이면 tiles.view가 응답 -->
+	<definition name="test.tiles" template="/WEB-INF/views/templates/left_layout.jsp">
+		<put-attribute name="title" value="STUD-IT"/>
+		<put-attribute name="header" value="/WEB-INF/views/templates/header.jsp"/>
+		<put-attribute name="left" value="/WEB-INF/views/templates/left.jsp"/>
+		<put-attribute name="main" value="/WEB-INF/views/home.jsp"/>
+		<put-attribute name="right" value="/WEB-INF/views/templates/right.jsp"/>
+		<put-attribute name="footer" value="/WEB-INF/views/templates/footer.jsp"/>
+	</definition>
 	<!-- <definition name="main2.tiles" extends="home.tiles">
 		<put-attribute name="main" value="/WEB-INF/views/main2.jsp"/>
 	</definition> -->
@@ -34,6 +44,14 @@
 		<put-attribute name="main" value="/WEB-INF/views/{1}/{2}.jsp"/>
 	</definition>
 	
+	<!-- 
+		left 활용 tiles 정의
+	 -->
+	<definition name="*/*/*.tiles" extends="test.tiles">
+		<put-attribute name="title" value="{1}"/>
+		<put-attribute name="main" value="/WEB-INF/views/{1}/{2}.jsp"/>
+		<put-attribute name="left" value="/WEB-INF/views/{1}/{3}.jsp"/>
+	</definition>
 
 </tiles-definitions>
  

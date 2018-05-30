@@ -27,7 +27,7 @@ public interface CompanyDAO {
 
 	List<StudyRoomVO> findStudyRoomByCompanyNo(int companyNo);
 
-	CompanyVO findCompanyByMemberEmail(String memberEmail);
+	List<CompanyVO> findCompanyByMemberEmail(String memberEmail);
 	
 	List<CompanyVO> findCompanyListByCondition(Map<String, Object> map);
 	

@@ -19,6 +19,10 @@
 	width: 100%;
 }
 
+.tab-head{
+	height: 150px;
+}
+
 .srfunction{
 	text-align: left;
 }
@@ -31,7 +35,7 @@
 	display: view;
 }
 </style>
-
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7089f989ad92f0b98ff8257f8cc869ef&libraries=services"></script>
 <script>
 		// 작성: 변태섭
 		// 기능: 우편번호 API Sciprt
@@ -164,18 +168,6 @@
 			}else{
 				$('div .picDiv').append('<br><input type="file" id="picFile" name="companyPicFile" placeholder="추가 사진" class = "form-control picFile">');
 				picmax++;
-			}
-		});
-		
-		//사진 업로드 추가(스터디룸)
-		var studyRoomPicmax = 0;
-		$('#studyRoomFileBtn').on('click',function(){
-			console.log('클릭됨');
-			if(studyRoomPicmax>1){
-				alert('더 이상 추가할 수 없습니다.');
-			}else{
-				$('div .studyRoomPicDiv').append('<br><input type="file" id="studyRoomPicFile" name="studyRoomPicFile" placeholder="추가 사진" class = "form-control studyRoomPicFile">');
-				studyRoomPicmax++;
 			}
 		});
 		
@@ -314,6 +306,16 @@
 		console.log('change');
 			mapAddr = $(this).val();
 		});
+		
+		$('.step').on('click',function(){
+			console.log('tab click:'+$(this).html().substring(5));
+			var stepNo=$(this).html().substring(5);
+			if(stepNo<3){
+				$('.tab-head').html('<h2>STUD-IT 업체 등록</h2><p>Step1 ~ Step3 까지 내용을 다 채운 뒤 등록을 누르면, 관리자가 확인 후 승인해드립니다.</p>');
+			}else{
+				$('.tab-head').html('<h2>STUD-IT 스터디룸 등록</h2><p>Step3. 업체에서 보유 중인 스터디룸의 정보를 입력해주세요.<br>추가적인 스터디룸은 업체 등록 후 업체 관리에서 등록 가능합니다.</p>');
+			}
+		});
 	});//ready
 
 	// submit Btn
@@ -362,10 +364,12 @@
 	<div class="col-sm-6" style="padding-left:0px;">
             <form action="${pageContext.request.contextPath }/company/registerCompany" method="post" class="form-horizontal" role="form" enctype="multipart/form-data">
   <div class="container">
-  <h2>STUD-IT 업체 등록</h2>
-  <p>Step1 ~ Step3 까지 내용을 다 채운 뒤 등록을 누르면, 관리자가 확인 후 승인해드립니다.</p>
+	  <div class="tab-head">
+		  <h2>STUD-IT 업체 등록</h2>
+		  <p>Step1 ~ Step3 까지 내용을 다 채운 뒤 등록을 누르면, 관리자가 확인 후 승인해드립니다.</p>
+	  </div>
   <ul class="nav nav-tabs">
-    <li class="active"><a class="step" data-toggle="tab" href="#step1">Step1</a></li>
+    <li class="active"><a class="step" data-toggle="tab" href="#step1">Step 1</a></li>
     <li><a data-toggle="tab" class="step" href="#step2">Step 2</a></li>
     <li><a data-toggle="tab" class="step" href="#step3">Step 3</a></li>
   </ul>
@@ -406,7 +410,7 @@
           <div class="form-group">
           	 <label for="license" class="col-sm-3 control-label formCategory">사업자등록번호</label>
             	 <div class="col-sm-6">	
-                	 <input type="text" id="license" name="companyVO.license" maxlength="10" required="required" placeholder="사업자 등록번호 10자리" class="form-control" autofocus><br>
+                	 <input type="text" id="license" name="companyVO.license" maxlength="12" required="required" placeholder="사업자 등록번호 10자리" class="form-control" autofocus><br>
                  <div id="checkLicenseView"></div>
          </div>
    	 </div>
@@ -512,8 +516,6 @@
     </div>
     
     <div id="step3" class="tab-pane fade"><br><br>
-    	<h3>스터디룸 등록</h3><br><br>
-    	
     	 <div class="form-group">
 	          	 <label for="studyRoomName" class="col-sm-3 control-label formCategory">스터디룸 명</label>
 	             <div class="col-sm-6">
@@ -530,7 +532,7 @@
               		<label for="" class="col-sm-1 control-label" style="text-align:left; padding-left:0px;">명</label>
               		<label for="price" class="col-sm-2 control-label formCategory">이용 가격</label>
               		<div class="col-sm-2">
-                  		  <input type="number" id="price" name="price" required="required" placeholder="시간당 가격" class = "form-control">
+                  		  <input type="number" id="price" min="1" name="price" required="required" placeholder="시간당 가격" class = "form-control">
                   	</div>
                  	<label for="" class="col-sm-1 control-label" style="text-align:left; padding-left:0px;">원/시간</label>
               </div>
@@ -590,7 +592,6 @@
               <div class="col-sm-6 studyRoomPicDiv">
                   <input type="file" id="studyRoomPicFile" name="studyRoomPicFile" placeholder="대표 사진" class = "form-control studyRoomPicFile">
               </div>
-               <div class="col-sm-1" style="padding-left:0px;"><input type="button" id="studyRoomFileBtn" value="추가" class = "btn btn-default" ></div>
           </div>
           
           <div class="form-group">
@@ -618,7 +619,7 @@
 				     &emsp;아래의 목적 이외의 다른 용도로는 활용되지 않습니다.<br><br>
 				        <ul>
 						    <li>
-						    	1. 개인정보의 수집 및 이용목적 - 회사는 수집한 개인정보를 다음의 목적을 위해 이용합니다.
+						    	개인정보의 수집 및 이용목적 - 회사는 수집한 개인정보를 다음의 목적을 위해 이용합니다.
 							    <ul>
 								    <li>가. 컨텐츠 서비스 제공</li>
 								    <li>나. 상품 설명 및 상담</li>
@@ -692,10 +693,21 @@
                 // 주소로 상세 정보를 검색
                 geocoder.addressSearch(data.address, function(results, status) {
                     // 정상적으로 검색이 완료됐으면
+                    if (status === daum.maps.services.Status.OK) {
+
+                        var result = results[0]; //첫번째 결과의 값을 활용
+
+                        // 해당 주소에 대한 좌표를 받아서
+                        var coords = new daum.maps.LatLng(result.y, result.x);
+                        // 지도를 보여준다.
+                        mapContainer.style.display = "block";
+                        map.relayout();
+                        // 지도 중심을 변경한다.
                         map.setCenter(coords);
                         // 마커를 결과값으로 받은 위치로 옮긴다.
-                        marker.setPosition(coords);
-                	})
+                        marker.setPosition(coords)
+                    }
+                });
             }
         }).open();
     }

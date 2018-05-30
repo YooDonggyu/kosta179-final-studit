@@ -34,6 +34,6 @@ public interface StudyRoomDAO {
 
 	void updateStudyRoomConditionByMember(StudyRoomConditionVO studyRoomConditionVO);
 
-
+	List<StudyRoomVO> findStudyRoomListByMemberEmail(String memberEmail);
 
 }

@@ -21,9 +21,6 @@
  <section>
 <h3>Host Page</h3><br><br>
 <a href="${pageContext.request.contextPath }/company/registerCompanyView"><input type="button" value="업체 등록 하기" class="companyBtn" ></a>&emsp;&emsp;&emsp;
-<%-- <a href="${pageContext.request.contextPath }/studyroom/createStudyRoomConditionView"><input type="button" value="내 업체 관리" class="companyBtn" ></a> --%>
-<!-- <input type="button" value="내 업체 관리" class="companyBtn" > -->
-<a href="#"><input type="button" value="내 업체 관리" class="companyBtn" ></a>&emsp;&emsp;&emsp;
 </section>
 
 

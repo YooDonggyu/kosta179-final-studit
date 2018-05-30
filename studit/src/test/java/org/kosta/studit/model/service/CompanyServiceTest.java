@@ -20,7 +20,7 @@ public class CompanyServiceTest {
 	 * 업체 회원이 보유한 스터디룸 정보 조회 테스트
 	 * @author 김유란
 	 */
-	@Test
+	//@Test
 	public void findStudyRoomByMemberEmailTest() {
 		System.out.println(companyService.findStudyRoomByCompanyNo(1));
 		
@@ -30,10 +30,9 @@ public class CompanyServiceTest {
 	 * 업체 회원이 보유한 스터디룸 예약 현황 정보 조회 테스트
 	 * @author 김유란
 	 */
-	@Test
+	//@Test
 	public void findStudyRoomConditionByCompanyNoAndMonthTest() {
 		System.out.println(companyService.findStudyRoomConditionByCompanyNoAndMonth("1", "2018-05-01", "2018-05-31"));
-		
 	}
 	
 	/**
@@ -54,7 +53,7 @@ public class CompanyServiceTest {
 	 * 검색조건에 부합하는 업체 리스트 출력
 	 * @author 송용준
 	 */
-	@Test
+	//@Test
 	public void findCompanyListByCondition() {
 		CompanyListVO clist=companyService.findCompanyListByCondition(null);
 		
@@ -62,5 +61,11 @@ public class CompanyServiceTest {
 			System.out.println(list.getName());
 		}
 		
+	}
+	
+	//@Test
+	public void findStudyRoomListByCompanyNoTest() {
+		int companyNo = 2;
+		System.out.println(companyService.findStudyRoomListByCompanyNo(companyNo));
 	}
 }

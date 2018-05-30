@@ -152,4 +152,15 @@ public class StudyRoomDAOImpl implements StudyRoomDAO {
 		   template.update("studyroom.updateStudyRoomConditionByMember", studyRoomConditionVO);
 	   }
 
+	   /**
+	    * 회원 이메일로 해당 회원의 스터디룸 정보리스트를 얻어오는 메서드
+	    * 
+	    * @author 변태섭
+	    * @param memberEmail 회원 이메일
+	    * @return List<StudyRoomVO> 해당 회원이 보유한 스터디룸 리스트
+	    */
+	   @Override
+	   public List<StudyRoomVO> findStudyRoomListByMemberEmail(String memberEmail){
+		   return template.selectList("studyroom.findStudyRoomListByMemberEmail", memberEmail);
+	   }
 }

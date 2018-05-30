@@ -100,13 +100,13 @@ public class CompanyDAOImpl implements CompanyDAO {
 	   /**
 	    * 회원 이메일로 업체 정보 불러오기
 	    * 업체권한을 가진 회원인지 인증한 후 사용
-	    * @author 김유란
+	    * @author 김유란, 변태섭
 	    * @param memberEmail 회원 이메일
-	    * @return CompanyVO 업체 정보를 담은 VO
+	    * @return List<CompanyVO> 업체 정보를 담은 VO
 	    */
 	   @Override
-	   public CompanyVO findCompanyByMemberEmail(String memberEmail) {
-		   return template.selectOne("company.findCompanyByMemberEmail", memberEmail);
+	   public List<CompanyVO> findCompanyByMemberEmail(String memberEmail) {
+		   return template.selectList("company.findCompanyByMemberEmail", memberEmail);
 	   }
 	   
 	   /**
@@ -213,7 +213,6 @@ public class CompanyDAOImpl implements CompanyDAO {
 		   return template.selectOne("company.findCountCompanyByLicense", license);
 	   }
 	   
-	   
 	   /**
 	    * 업체 번호에 따른 업체 정보 반환
 	    * @author 유동규
@@ -267,8 +266,6 @@ public class CompanyDAOImpl implements CompanyDAO {
 		public int findTotalCountOfCompany(Map<String, Object> map) {
 			return template.selectOne("company.findTotalCountOfCompany", map);
 		}
-	   
-	   
 }
 
 

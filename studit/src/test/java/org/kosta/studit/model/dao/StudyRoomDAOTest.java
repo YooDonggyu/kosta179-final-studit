@@ -105,7 +105,7 @@ public class StudyRoomDAOTest {
 	    * 
 	    * @author 김유란
 	    */
-	   @Test
+	   //@Test
 	   public void findStudyRoomConditionByStudyRoomNoAndDate() {
 		   StudyRoomConditionVO studyRoomConditionVO = new StudyRoomConditionVO();
 		   StudyRoomVO studyRoomVO = new StudyRoomVO();
@@ -174,5 +174,15 @@ public class StudyRoomDAOTest {
 		   studyroomDAO.updateStudyRoomConditionByMember(studyRoomConditionVO);
 	   }
 	   
-	   
+	   /**
+	    * 회원 이메일로 해당 회원이 등록한 스터디룸 리스트를 가져오는 테스트
+	    * 
+	    * @author 변태섭
+	    */
+	  //@Test
+	   public void findStudyRoomListByMemberEmailTest() {
+		   String memberEmail = "test@a.com";
+		   System.out.println(studyroomDAO.findStudyRoomListByMemberEmail(memberEmail));
+		   System.out.println("나는 간다 -용준");
+	   }
 }

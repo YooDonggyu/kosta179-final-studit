@@ -272,8 +272,6 @@ public class CompanyServiceImpl implements CompanyService {
 		}
 	}
 	
-	
-	
 	@Override
 	public Map<String, Object> findDetailCompanyInfoByCompanyNo(int companyNo) {
 		//회사정보
@@ -301,5 +299,17 @@ public class CompanyServiceImpl implements CompanyService {
 		dataMap.put("stduyPicList", studyPicList);
 		
 		return dataMap;
+	}
+
+	/**
+	 * 업체 번호로 해당 업체의 스터디룸 리스트를 불러오는 메서드
+	 * 
+	 * @author 변태섭
+	 * @param companyNo 업체 번호
+	 * @return List<StudyRoomVO> 해당 업체가 등록한 스터디룸 정보 리스트
+	 */
+	@Override
+	public List<StudyRoomVO> findStudyRoomListByCompanyNo(int companyNo){
+		return companyDAO.findStudyRoomByCompanyNo(companyNo);
 	}
 }

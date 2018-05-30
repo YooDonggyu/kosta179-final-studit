@@ -57,20 +57,24 @@ public class StudyRoomServiceImpl implements StudyRoomService {
 	@Transactional
 	@Override
 	public void registerStudyRoom(StudyRoomVO studyRoomVO, List<String> studyRoomPicFileList, String[] studyRoomFunction) {
+		System.out.println("Service 진입");
 		studyroomDAO.registerStudyRoom(studyRoomVO);
-		
+		System.out.println("registerStudyRoom");
+		System.out.println("after studyRoomVO: "+studyRoomVO);
 		Map<String, Object> studyRoomMap = new HashMap<String, Object>();
 		studyRoomMap.put("studyRoomNo", studyRoomVO.getStudyRoomNo());
-		
+		System.out.println("studyRoomMap: "+studyRoomMap);
 		for(int i=0; i<studyRoomPicFileList.size(); i++) {
 			studyRoomMap.put("studyRoomPicPath", studyRoomPicFileList.get(i));
 			studyroomDAO.registerStudyRoomPicPath(studyRoomMap);
 		}
+		System.out.println("registerStudyRoomPic");
 		
 		for(String fun : studyRoomFunction) {
 			studyRoomMap.put("studyRoomFunction", fun);
 			studyroomDAO.registerStudyRoomFunction(studyRoomMap);
 		}
+		System.out.println("registerStudyRoomFunction");
 	}
 
 	/**

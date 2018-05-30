@@ -29,7 +29,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="companyVO.close" column="close"/>
 	</resultMap>
 	
-	
+	<resultMap type="studyRoomVO" id="findStudyRoomListByMemberEmailRM">
+		<result property="companyVO.companyNo" column="company_no"/>
+		<result property="studyRoomNo" column="studyroom_no"/>
+	</resultMap>
 	<!-- resultMap	End -->
 	
 	<!-- 
@@ -197,5 +200,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 	where member_email=#{memberVO.memberEmail} and studyroom_condition_no=#{studyRoomConditionNo}
 	 </update>
 		
+	 <!-- 
+   		회원 이메일로 해당 회원의 스터디룸들의 정보를 받아오는 쿼리
+   		
+   		@author 변태섭
+   		@param 회원 이메일
+   		@return StudyRoomVO
+    -->
+   <select id="findStudyRoomListByMemberEmail" resultMap="findStudyRoomListByMemberEmailRM">
+	  	select sr.studyroom_no, sr.name, sr.capacity, sr.price, sr.content, sr.company_no
+		from studyroom sr, member m, company c
+		where sr.company_no = c.company_no
+		and c.member_email = m.member_email
+		and m.member_email = #{value}
+   </select> 
 </mapper>
  

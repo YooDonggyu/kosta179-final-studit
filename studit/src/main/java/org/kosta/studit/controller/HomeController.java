@@ -22,7 +22,7 @@ public class HomeController {
 	
 	@RequestMapping("/loginNeed")
 	public String loginNeed() {
-		return"member/login_needed";
+		return"member/login_needed.tiles";
 	}
 	
 	

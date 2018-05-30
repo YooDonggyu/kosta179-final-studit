@@ -11,7 +11,7 @@
           <h4>Login</h4>
         </div>
         <div class="modal-body" style="padding:40px 50px;">
-			<form role="form" action="${pageContext.request.contextPath }/member/login" method="post"  id="loginForm" autocomplete="off">
+			<form role="form" action="${pageContext.request.contextPath }/member/login" method="post" autocomplete="off">
 	            <div class="form-group">
 	              <label for="usrname"> Email</label>
 	              <input type="email" class="form-control" name="loginEmail" placeholder="studit@studit.com">

@@ -3,6 +3,7 @@ package org.kosta.studit.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,7 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.kosta.studit.model.dao.CompanyDAO;
+import org.kosta.studit.model.dao.MemberDAO;
+import org.kosta.studit.model.dao.StudyRoomDAO;
 import org.kosta.studit.model.service.CompanyService;
+import org.kosta.studit.model.service.MemberService;
 import org.kosta.studit.model.service.StudyRoomService;
 import org.kosta.studit.model.vo.CompanyListVO;
 import org.kosta.studit.model.vo.CompanyVO;
@@ -34,6 +38,12 @@ public class CompanyController {
 	private CompanyService companyService;
 	@Autowired
 	private StudyRoomService studyroomService;
+	@Autowired
+	private StudyRoomDAO studyroomDAO;
+	@Autowired
+	private MemberDAO memberDAO;
+	@Autowired
+	private MemberService memberService;
 	
 	/**
 	 * 업체 검색을 위한 뷰로 이동시키는 메서드. 초기 검색 시 필요한 정보를 저장하여 업체 검색 뷰로 이동
@@ -97,7 +107,17 @@ public class CompanyController {
 	 * @author 변태섭
 	 */
 	@RequestMapping("/companyView")
-	public String companyView() {
+	public String companyView(HttpServletRequest request, Model model) {
+		HttpSession session = request.getSession(false);
+		MemberVO mvo=(MemberVO) session.getAttribute("memberVO");
+		Map<String,String> map=new HashMap<String,String>();
+		map.put("memberEmail",	mvo.getMemberEmail());
+		map.put("memberPosition", "업체");
+		if(memberDAO.findCountMemberPositionByMemberPositionAndMemberEmail(map)!=0) {
+			model.addAttribute("cvoList", companyDAO.findCompanyByMemberEmail(mvo.getMemberEmail()));
+			model.addAttribute("srvoList", studyroomDAO.findStudyRoomListByMemberEmail(mvo.getMemberEmail()));
+			return "company/update_company/hostpage_left.tiles";
+		}
 		return "company/company_view.tiles";
 	}
 	
@@ -113,6 +133,7 @@ public class CompanyController {
 	/**
 	 * 업체 및 스터디룸을 등록하는 Controller
 	 * 
+	 * @author 변태섭
 	 * @param request Session에 담긴 MemberVO.memberEmail을 활용
 	 * @param studyRoomVO 입력받은 업체, 스터디룸 정보
 	 * @param day String으로 받은 업체 영업 요일
@@ -122,7 +143,7 @@ public class CompanyController {
 	 * @param studyRoomFunction[] 스터디룸 제공 기능 배열
 	 */
 	@RequestMapping(value="/registerCompany", method=RequestMethod.POST)
-	public String registerCompany(HttpServletRequest request, StudyRoomVO studyRoomVO, String day, String hashtag, MultipartFile[] companyPicFile, MultipartFile[] studyRoomPicFile, String[] studyRoomFunction) {
+	public String registerCompany(HttpServletRequest request, StudyRoomVO studyRoomVO, String day, String hashtag, MultipartFile[] companyPicFile, MultipartFile studyRoomPicFile, String[] studyRoomFunction) {
 		HttpSession session= request.getSession(false);
 		MemberVO memberVO=(MemberVO) session.getAttribute("memberVO");
 		studyRoomVO.getCompanyVO().setMemberVO(memberVO);
@@ -135,10 +156,10 @@ public class CompanyController {
 			     String fileName = memberVO.getMemberEmail()+"_"+studyRoomVO.getCompanyVO().getName()+"_"+companyPicFile[i].getOriginalFilename();
 			     //String path = request.getSession(false).getServletContext().getRealPath("upload"); 개발 완료 후 적용
 			     
-			     //태섭 경로
-			     /*String path = "D:/KOSTA/workspace/resources/upload/company/";*/
 			     //String path ="C:/java-kosta/project/Final/kosta179-final-studit/studit/src/main/webapp/resources/upload";
-			     String path ="C:/resources/upload/";
+			     //String path ="C:/resources/upload/";
+			     String path = "D:/KOSTA/workspace/resources/upload/company/";
+			     //String path ="C:/java-kosta/project/Final/kosta179-final-studit/studit/src/main/webapp/resources/upload";
 			     try {
 			    	companyPicFile[i].transferTo(new File(path, fileName));//지정 경로에 실제 파일 저장
 			    	if(i==0) {
@@ -155,23 +176,23 @@ public class CompanyController {
 		}
 	
 		//스터디룸 사진 인코딩
-		for(int i=0; i<studyRoomPicFile.length; i++) {
-				if(studyRoomPicFile[i]!=null && !studyRoomPicFile[i].isEmpty()) {
-				     String fileName = memberVO.getMemberEmail()+"_"+studyRoomVO.getCompanyVO().getName()+"_"+studyRoomVO.getName()+"_"+studyRoomPicFile[i].getOriginalFilename();
+				if(studyRoomPicFile!=null && !studyRoomPicFile.isEmpty()) {
+				     String fileName = memberVO.getMemberEmail()+"_"+studyRoomVO.getCompanyVO().getName()+"_"+studyRoomVO.getName()+"_"+studyRoomPicFile.getOriginalFilename();
 				     //String path = request.getSession(false).getServletContext().getRealPath("upload"); 개발 완료 후 적용
 				     
-				     //태섭 경로
-				     String path ="C:/resources/upload/";
+				     //String path ="C:/resources/upload/";
+				     String path = "D:/KOSTA/workspace/resources/upload/studyroom/";
+				     
+				     //String path ="C:/java-kosta/project/Final/kosta179-final-studit/studit/src/main/webapp/resources/upload";
 				     try {
-				    	 studyRoomPicFile[i].transferTo(new File(path, fileName));//지정 경로에 실제 파일 저장
+				    	 studyRoomPicFile.transferTo(new File(path, fileName));//지정 경로에 실제 파일 저장
 				    	 studyRoomPicFileList.add(fileName);
 				     } catch (IllegalStateException | IOException e) {
 				        return "redirect:/";
 				     } 
 				  }else {//파일을 첨부하지 않았을 때
-					  studyRoomVO.getCompanyVO().setProfilePath("studyroom.png");
+					  studyRoomPicFileList.add("studyroom.png");
 				  }
-			}
 		
 		System.out.println(studyRoomVO);
 		System.out.println(day);
@@ -185,11 +206,15 @@ public class CompanyController {
 		return "redirect:registerCompanyOkView";
 	}
 	
+	/**
+	 * 업체 등록 완료 시 띄우는 script
+	 * 
+	 * @author 변태섭
+	 */
 	@RequestMapping("/registerCompanyOkView")
 	public String  registerCompanyOkView() {
 		return "/company/register_company_ok";
 	}
-	
 	
 	/**
 	 * @author 유동규
@@ -208,10 +233,38 @@ public class CompanyController {
 		return "company/detail_company.tiles";
 	}
 	
+	/**
+	 * 스터디룸을 추가하는 폼으로 이동
+	 * 
+	 * @author 변태섭
+	 * @param companyNo 스터디룸이 추가 되는 업체 번호
+	 * @param model companyNo을 받아 view로 넘겨주는 역할
+	 */
+	@RequestMapping("/registerStudyRoomForm")
+	public String registerStudyroomForm(HttpServletRequest request, String companyNo, String companyName, Model model) {
+		HttpSession session = request.getSession(false);
+		MemberVO mvo = (MemberVO) session.getAttribute("memberVO");
+		
+		model.addAttribute("cvoList", companyDAO.findCompanyByMemberEmail(mvo.getMemberEmail()));
+		model.addAttribute("srvoList", studyroomDAO.findStudyRoomListByMemberEmail(mvo.getMemberEmail()));
+		model.addAttribute("cno", companyNo);
+		model.addAttribute("cname", companyName);
+		return "company/add_studyroom/hostpage_left.tiles";
+	}
 	
-	
-	
-	
-	
-	
+	/**
+	 * 등록 된 스터디룸 정보를 조회하는 뷰
+	 * 
+	 * @author 변태섭
+	 * @param studyRoomNo 조회하는 스터디룸 번호
+	 * @param memberEmail 회원 이메일
+	 * @param model View 단에 데이터를 전달하는 객체
+	 */
+	@RequestMapping("StudyRoomInfoView")
+	public String StudyRoomInfoView(String studyRoomNo, String memberEmail, Model model) {
+		model.addAttribute("cvoList", companyDAO.findCompanyByMemberEmail(memberEmail));
+		model.addAttribute("srvoList", studyroomDAO.findStudyRoomListByMemberEmail(memberEmail));
+		model.addAttribute("srno",studyRoomNo);
+		return "company/studyroom_info_view/hostpage_left.tiles";
+	}
 }

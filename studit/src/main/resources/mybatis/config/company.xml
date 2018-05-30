@@ -235,7 +235,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    <!-- 
    		업체 등록 시 업로드 된 사진들의 경로를 테이블에 insert하는 쿼리
    		@author 변태섭
-   		@parma Map 사진들의 경로와 업체 번호를 담은 객체
+   		@param Map 사진들의 경로와 업체 번호를 담은 객체
     -->
    <insert id="registerCompanyPicPath" parameterType="map">
    		insert into com_pic(com_pic_no, path, company_no) 
@@ -245,6 +245,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    <!-- 
    		사업자 등록 번호 중복 체크를 위해 Count를 받아오는 쿼리
    		@author 변태섭
+   		@param string 입련된 사업자등록번호
+   		@return int 있으면 1, 없으면 0
     -->
    <select id="findCountCompanyByLicense" parameterType="string" resultType="int">
    		select count(*) from company where license = #{value}

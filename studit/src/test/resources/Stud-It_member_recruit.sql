@@ -248,17 +248,17 @@ values(recruit_post_no_seq.nextval,'베트남어 하쉴?','또이 뗀 라 유란
 insert into recruit_post (recruit_post_no,title,content,regdate,condition,capacity,member_email,small_category_no,location) 
 values(recruit_post_no_seq.nextval,'헬로 베트남','또이 무언 응언 안껌',sysdate,'모집중',3,'h@h.com',8,'용인');
 insert into recruit_post (recruit_post_no,title,content,regdate,condition,capacity,member_email,small_category_no,location) 
-values(recruit_post_no_seq.nextval,'러시아어 하실분','러시아어 잘해여? 스파시바',sysdate,'모집중',4,'i@i.com',9,'신촌');
+values(recruit_post_no_seq.nextval,'러시아어 하실분','러시아어 잘해여? 스파시바',sysdate,'모집중',4,'g@k.com',9,'신촌');
 insert into recruit_post (recruit_post_no,title,content,regdate,condition,capacity,member_email,small_category_no,location) 
 values(recruit_post_no_seq.nextval,'Java 같이하실분','자바를 자바라 자바라? 자블래?',sysdate,'모집완료',5,'j@j.com',10,'판교');
 insert into recruit_post (recruit_post_no,title,content,regdate,condition,capacity,member_email,small_category_no,location) 
-values(recruit_post_no_seq.nextval,'C 같이 공부하실분','c를 공부를 어쩌구저쩌구 시간은 언제구 어쩌구 저쩌구',sysdate,'모집중',4,'i@i.com',11,'홍대');
+values(recruit_post_no_seq.nextval,'C 같이 공부하실분','c를 공부를 어쩌구저쩌구 시간은 언제구 어쩌구 저쩌구',sysdate,'모집중',4,'a@a.com',11,'홍대');
 insert into recruit_post (recruit_post_no,title,content,regdate,condition,capacity,member_email,small_category_no,location) 
 values(recruit_post_no_seq.nextval,'안드로이드 프로그래밍 스터디','아이폰 쓰시는 분만',sysdate,'모집중',4,'k@k.com',12,'신촌');
 insert into recruit_post (recruit_post_no,title,content,regdate,condition,capacity,member_email,small_category_no,location) 
 values(recruit_post_no_seq.nextval,'파이썬하실분들 구해요','파이썬~!',sysdate,'모집중',3,'b@b.com',13,'종로');
 insert into recruit_post (recruit_post_no,title,content,regdate,condition,capacity,member_email,small_category_no,location) 
-values(recruit_post_no_seq.nextval,'프론트엔드 공부해 보실분들구해요','프론트프론트해',sysdate,'모집중',3,'l@l.com',14,'판교');
+values(recruit_post_no_seq.nextval,'프론트엔드 공부해 보실분들구해요','프론트프론트해',sysdate,'모집중',3,'j@k.com',14,'판교');
 insert into recruit_post (recruit_post_no,title,content,regdate,condition,capacity,member_email,small_category_no,location) 
 values(recruit_post_no_seq.nextval,'모여서 시 낭송 하실분들구해요','시를 낭송하시면서 내면의 평화를 찾으세요',sysdate,'모집중',5,'g@g.com',15,'분당');
 

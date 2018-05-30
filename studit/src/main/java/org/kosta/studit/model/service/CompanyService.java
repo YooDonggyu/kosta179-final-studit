@@ -6,6 +6,7 @@ import java.util.Map;
 import org.kosta.studit.model.CompanyPagingBean;
 import org.kosta.studit.model.vo.CompanyListVO;
 import org.kosta.studit.model.vo.CompanyVO;
+import org.kosta.studit.model.vo.StudyRoomVO;
 
 import net.minidev.json.JSONArray;
 import net.minidev.json.JSONObject;
@@ -32,7 +33,7 @@ public interface CompanyService {
 	
 	List<CompanyVO> findCompanyList(CompanyPagingBean pb);
 
-	JSONArray findStudyRoomConditionByCompanyNoAndMonth(String companyNo, String startDate,
-			String endDate);
-
+	JSONArray findStudyRoomConditionByCompanyNoAndMonth(String companyNo, String startDate, String endDate);
+	
+	List<StudyRoomVO> findStudyRoomListByCompanyNo(int companyNo);
 }
