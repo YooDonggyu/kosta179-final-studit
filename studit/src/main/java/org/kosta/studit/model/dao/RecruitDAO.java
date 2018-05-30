@@ -76,4 +76,12 @@ public interface RecruitDAO {
 
 	void deleteStudyConditionByStudyConditionNo(StudyConditionVO studyConditionVO);
 
+	void registerKeyword(String keyword);
+
+	void updateKeyword(String keyword);
+
+	String findKeyword(String keyword);
+
+	List<String> getTopFiveKeyword();
+
 }

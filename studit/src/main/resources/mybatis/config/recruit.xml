@@ -445,6 +445,41 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 	
 	
+	<!-- 
+		스터디 모집 Keyword 조회수 증가
+		- 키워드 검색 select
+		- 최초 등록이면 insert
+		- 기존에 있으면 update
+		@author 유동규
+	 -->
+	 <select id="findKeyword" resultType="string">
+	 	select keyword
+	 	from search_keyword
+	 	where keyword=#{value}
+	 </select>
+	<insert id="registerKeyword">
+		insert into search_keyword
+		values(#{keyword}, 1)
+	</insert>
+	<update id="updateKeyword">
+		update search_keyword
+		set hit = hit +1
+		where keyword = #{keyword}
+	</update>
+	
+	<!-- 
+		스터디 모집 인기검색어 불러오기
+	 -->
+	 <select id="getTopFiveKeyword" resultType="string">
+		select keyword  
+		from (
+			select keyword, rank() over(order by hit desc) as rank
+			from search_keyword
+		)
+		where rank between 1 and 5
+	 </select>
+	
+	
 </mapper>
  
  

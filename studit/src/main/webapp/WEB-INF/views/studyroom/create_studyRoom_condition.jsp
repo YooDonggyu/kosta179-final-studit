@@ -196,6 +196,7 @@ function getTimeTable(selectedDate){
 //작성 :유동규
 //기능 : 조건을 확인한 후 카카오페이 간편결제 신청
 function requestPay() {
+	//조건확인
 	if(checkToRegister() == false){
 		return false;
 	}

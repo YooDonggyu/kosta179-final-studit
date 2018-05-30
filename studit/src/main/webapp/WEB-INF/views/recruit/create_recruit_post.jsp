@@ -58,7 +58,7 @@ function check(){
 		return false;
 	}
 	if($("#content").val()==""){
-		alert("내용을 입력하세요!");
+		alert("내용을 입력하세요!"); 
 		return false;
 	}
 	return true;
@@ -82,14 +82,14 @@ function check(){
                 <div class="form-group">
                     <label for="capacity" class="col-sm-3 control-label formCategory">희망인원</label>
                     <div class="col-sm-9">
-                        <input type="number" id="capacity"  name= "capacity" class="form-control">
+                        <input type="number" id="capacity"  name= "capacity" class="form-control" min="1" max="1000">
                     </div>
                 </div>
                 
                 <div class="form-group">
                     <label for="location" class="col-sm-3 control-label formCategory">희망지역</label>
                     <div class="col-sm-9">
-                        <input type="text" id="location"  name="location" class="form-control">
+                        <input type="text" id="location"  name="location" class="form-control" placeholder="판교">
                     </div>
                 </div>
                 
@@ -125,7 +125,7 @@ function check(){
                 <div class="form-group">
                     <label for="content" class="col-sm-3 control-label formCategory" >내용</label>
                     <div class="col-sm-9">
-                        <pre><textarea style="resize:none; height: 250px;" placeholder="내용을 입력하세요!" id="content" cols="75" name="content"></textarea></pre>
+                        <pre><textarea style="width:100%; height: 250px;" placeholder="내용을 입력하세요!" id="content" name="content"></textarea></pre>
                     </div>
                 </div>
                 

@@ -300,6 +300,35 @@ public class RecruitDAOImpl implements RecruitDAO {
 		template.delete("recruit.deleteStudyConditionByStudyConditionNo", studyConditionVO);
 	}
 	
+	
+	/**
+	 * 스터디 모집 게시글 키워드 
+	 * 1. 해당 키워드가 있는지 판단 find
+	 * 2. 키워드가 없으면 새로 등록 insert
+	 * 3. 키워드가 있으면 기존 조회수 증가 update
+	 */
+	@Override
+	public String findKeyword(String keyword) {
+		return template.selectOne("recruit.findKeyword", keyword);
+	}
+	@Override
+	public void registerKeyword(String keyword) {
+		template.insert("recruit.registerKeyword", keyword);
+	}
+	@Override
+	public void updateKeyword(String keyword) {
+		template.update("recruit.updateKeyword", keyword);
+	}
+	
+	/**
+	 * 인기 조회수 TOP5 검색
+	 * @author 유동규
+	 */
+	@Override
+	public List<String> getTopFiveKeyword() {
+		return template.selectList("recruit.getTopFiveKeyword");
+	}
+	
 }
 
 

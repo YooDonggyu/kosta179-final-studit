@@ -238,6 +238,16 @@ public class RecruitServiceImpl implements RecruitService {
 		dataMap.put("pb", pb);
 		dataMap.put("dataMap", map);
 		List<RecruitPostVO> rList = recruitDAO.findRecruitPostByPagingBeanAndData(dataMap);
+		
+		//keyword가 null, "" 이 아니면 조회수 증가
+		if(keyword != null && keyword != "") {
+			if(recruitDAO.findKeyword(keyword) == null) {
+				recruitDAO.registerKeyword(keyword);
+			}else {
+				recruitDAO.updateKeyword(keyword);
+			}
+		}
+		
 		return  new RecruitPostListVO(pb, rList);
 	}
 	

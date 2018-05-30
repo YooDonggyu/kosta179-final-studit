@@ -6,13 +6,11 @@
 <head>
 
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="all,follow">
   <title><tiles:insertAttribute name="title" ignore="true" /></title> 
   	<!-- favicon -->
   	<link rel="shortcut icon" href="${pageContext.request.contextPath }/resources/assets/img/favicon.ico">
-    
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    <meta name="robots" content="all,follow">
     <!-- Meterial Icon-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"  rel="stylesheet">
     <!-- Bootstrap-->
@@ -38,8 +36,9 @@
 	<link href='${pageContext.request.contextPath}/resources/fullcalendar-scheduler/scheduler.min.css' rel='stylesheet' />
     <!-- Favicon-->
     
-    <!-- Javascript files-->
+  	<!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <!-- Javascript files-->
     <script src="${pageContext.request.contextPath }/resources/assets/js/bootstrap.min.js"> </script>
     <script src="${pageContext.request.contextPath }/resources/assets/js/jquery.cookie.js"> </script>
     <script src="${pageContext.request.contextPath }/resources/assets/js/ekko-lightbox.js"></script>
