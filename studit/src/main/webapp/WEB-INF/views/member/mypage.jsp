@@ -32,14 +32,16 @@ th{
 		<div class="MultiCarousel" data-items="1,3,4,5" data-slide="1" id="MultiCarousel"  data-interval="1000">
             <div class="MultiCarousel-inner">
             <div class="item">
-                    <div class="pad15" style="background-color: white;">
-                    	<br>
-                    	<p class="lead"><b>진행중인 스터디</b></p>
-                    	<p>신청,개설,참여중인 스터디를 모두 확인할 수 있습니다.</p>
-                    </div>
-                </div>
+              <div class="pad15" style="background-color: white;">
+              	<br>
+              	<p class="lead"><b>진행중인 스터디</b></p>
+              	<p>신청,개설,참여중인 스터디를 모두 확인할 수 있습니다.</p>
+              </div>
+            </div>
+            <form action="${pageContext.request.contextPath}/group/groupHome" method="post" id="myPageForm"> 
+            <input type="hidden" name="sgNo" id="sgNo">  
             <c:forEach items="${groupList}" var="g">
-              <div class="item" style=" cursor: pointer;" onclick="location.href='#'">
+              <div class="item" style=" cursor: pointer;" onclick="return goGroup(${g.groupNo})">
                     <div class="pad15 my">
                     	<br>
                     	<p class="lead">${g.groupVO.name}</p>
@@ -50,6 +52,7 @@ th{
                     </div>
                 </div>
             </c:forEach>
+            </form>
             </div>
             <button class="btn btn-primary leftLst"><</button>
             <button class="btn btn-primary rightLst">></button>
@@ -361,6 +364,10 @@ th{
 	        ResCarousel(ell, Parent, slide);
 	    }
 	})//ready
+	function goGroup(sgNo){
+		("#sgNo").val(sgNo);
+		("#myPageForm").submit();
+	}
 </script>
 
 

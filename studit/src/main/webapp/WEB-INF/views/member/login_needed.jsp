@@ -34,7 +34,7 @@
 					<button type="submit" class="btn btn-success btn-block"> Login</button>
 				</div><br><hr>
 				<div class="etc-login-form text-right">
-					<p>forgot your password? <a href="#">click here</a></p>
+					<p>forgot your password? <a href="${pageContext.request.contextPath }/member/findPasswordView">click here</a></p>
 					<p>new user? <a href="${pageContext.request.contextPath}/register_member">create new account</a></p>
 				</div>
 			</form>
