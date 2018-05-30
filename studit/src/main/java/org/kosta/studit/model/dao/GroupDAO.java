@@ -20,4 +20,8 @@ public interface GroupDAO {
 
 	List<GroupMemberVO> findStudyGroupByMemberEmail(String memberEmail);
 
+	String findStudyGroupNameByStudyGroupNo(String sgNo);
+
+	String findMemberPositionByMemberEmailAndStudyGroupNo(Map<String, String> map);
+
 }

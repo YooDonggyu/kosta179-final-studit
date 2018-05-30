@@ -9,6 +9,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+<!-- favicon -->
+<link rel="shortcut icon" href="${pageContext.request.contextPath }/resources/assets/img/favicon.ico">
 <!-- Bootstrap CSS-->
 <link rel="stylesheet" href="https://d19m59y37dris4.cloudfront.net/dashboard/1-1/vendor/bootstrap/css/bootstrap.min.css">
 <!-- Custom icon font-->

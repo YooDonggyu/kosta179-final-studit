@@ -41,7 +41,7 @@ th{
             <form action="${pageContext.request.contextPath}/group/groupHome" method="post" id="myPageForm"> 
             <input type="hidden" name="sgNo" id="sgNo">  
             <c:forEach items="${groupList}" var="g">
-              <div class="item" style=" cursor: pointer;" onclick="return goGroup(${g.groupNo})">
+              <div class="item" style=" cursor: pointer;" onclick="return goGroup(${g.groupVO.groupNo})">
                     <div class="pad15 my">
                     	<br>
                     	<p class="lead">${g.groupVO.name}</p>
@@ -365,8 +365,8 @@ th{
 	    }
 	})//ready
 	function goGroup(sgNo){
-		("#sgNo").val(sgNo);
-		("#myPageForm").submit();
+		$("#sgNo").val(sgNo);
+		$("#myPageForm").submit();
 	}
 </script>
 

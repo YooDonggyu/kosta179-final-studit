@@ -79,4 +79,27 @@ public class GroupDAOImpl implements GroupDAO {
 	public List<GroupMemberVO> findStudyGroupByMemberEmail(String memberEmail) {
 		return template.selectList("group.findStudyGroupByMemberEmail", memberEmail);
 	}
+	
+	/**
+	 * 스터디 그룹 이름을 조회
+	 * @author 송용준
+	 * @param sgNo 이름을 조회할 스터디 그룹 번호
+	 * @return 스터디 그룹 이름
+	 */
+	@Override
+	public String findStudyGroupNameByStudyGroupNo(String sgNo) {
+		return template.selectOne("group.findStudyGroupNameByStudyGroupNo", sgNo);
+	}
+	
+	/**
+	 * 회원이 가지고 있는 스터디 그룹 내의 직책을 조회 
+	 * @author 송용준
+	 * @param sgNo 조회할 스터디 그룹 번호
+	 * @param memberEmail 직책을 확인할 회원의 이메일
+	 * @return 회원의 직책
+	 */
+	@Override
+	public String findMemberPositionByMemberEmailAndStudyGroupNo(Map<String, String> map) {
+		return template.selectOne("group.findMemberPositionByMemberEmailAndStudyGroupNo", map);
+	}
 }

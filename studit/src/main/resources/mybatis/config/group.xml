@@ -88,6 +88,44 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	where sgm.sg_no=sg.sg_no and sgm.member_email=#{value} 
 	</select>
 	
+	<!-- 
+	  스터디 그룹 이름을 조회
+	 @author 송용준
+	 @param sgNo 이름을 조회할 스터디 그룹 번호
+	 @return 스터디 그룹 이름
+ 	-->
+	<select id="findStudyGroupNameByStudyGroupNo" parameterType="string" resultType="string">
+		select name
+		from study_group
+		where sg_no=#{value}
+	</select>
+	
+	<!-- 
+	 회원이 가지고 있는 스터디 그룹 내의 직책을 조회 
+	 @author 송용준
+	 @param sgNo 조회할 스터디 그룹 번호
+	 @param memberEmail 직책을 확인할 회원의 이메일
+	 @return 회원의 직책
+ 	-->
+	<select id="findMemberPositionByMemberEmailAndStudyGroupNo" parameterType="map" resultType="string" >
+		select sm.position
+		from sg_member sm, study_group sg
+		where sg.sg_no=#{sgNo} and sm.member_email=#{memberEmail} and sm.sg_no=sg.sg_no
+	</select>
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
  
  
