@@ -469,14 +469,35 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 
 		스터디 모집 인기검색어 불러오기
+		@author 유동규
 	 -->
-	 <select id="getTopFiveKeyword" resultType="string">
-		select keyword  
+	 <select id="getTopFiveKeyword" resultType="map">
+		select keyword, rank  
 		from (
 			select keyword, rank() over(order by hit desc) as rank
 			from search_keyword
 		)
 		where rank between 1 and 5
+	 </select>
+	
+	<!-- 
+		최신 스터디 모집 가져오기
+		@author 유동규
+	 -->
+	<select id="getTopFiveRecruitPost" resultMap="recruitPagingMap">
+		select  n.recruit_post_no
+				  , r.title, r.location
+				  , m.member_email, m.name as memberName
+				  , s.name as smallName, b.name as bigName
+		from(
+					select row_number() over(order by recruit_post_no desc) as rnum, recruit_post_no
+					from recruit_post
+				) n, recruit_post r, member m, small_category s, big_category b
+		where m.member_email = r.member_email
+				  and r.recruit_post_no = n.recruit_post_no
+				  and s.small_category_no = r.small_category_no
+				  and s.big_category_no = b.big_category_no
+				  and n.rnum between 1 and 5
 	 </select>
 	
 	

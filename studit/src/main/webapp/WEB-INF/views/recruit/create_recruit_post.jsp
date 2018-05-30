@@ -131,7 +131,8 @@ function check(){
                 
                 <div class="form-group">
                     <div class="col-sm-9 col-sm-offset-3">
-                        <input type="submit" value="작성">
+                        <input type="submit" value="작성"> &nbsp;
+                        <a href="${pageContext.request.contextPath}/recruit/getRecruitPostList?pageNo=1" class="btn" style="color: black;"><u>목록</u></a>
                     </div>
                 </div>
             </form> <!-- /form -->

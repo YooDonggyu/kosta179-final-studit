@@ -320,6 +320,49 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		and c.company_no=#{value})
 		group by to_char(use_date, 'YYYY-MM'), state 
 	 </select>
+	 
+	 
+	 
+	 <!-- 
+	 	업체의 회원 아이디 찾기(조회수 증가 판단을 위함)
+	 	@author 유동규
+	  -->
+	  <select id="findCompanyMemberEmailByCompanyNO" resultType="string">
+			select m.name
+			from company c, member m
+			where c.member_email = m.member_email
+						and c.company_no = #{value}
+	  </select>
+	 
+	 <!-- 
+	 	조회수 증가
+	 	@author 유동규
+	  -->
+	  <update id="updateCompanyHit">
+		update company
+		set hit = hit +1
+		where company_no = #{value}
+	  </update>
+	 
+	 
+ 	<!-- 
+		조회수가 가장 높은 업체 3곳 조회
+		@author 유동규
+	 -->
+	<select id="getTopThreeComapny" resultType="companyVO">
+		select c.company_no, c.name, c.primary_addr, c.detail_addr, c.intro, c.profile_path
+		  			, h.hit, h.rnum
+		from (
+					select company_no, hit
+							, rank() over(order by hit desc) as rnum
+					from company
+				)h, company c
+		where h.company_no = c.company_no
+				   and rnum between 1 and 3
+		order by rnum 
+	</select>
+	
+	
    
 </mapper>
  

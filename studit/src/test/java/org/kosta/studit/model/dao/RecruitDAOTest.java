@@ -410,7 +410,14 @@ public class RecruitDAOTest {
 		}else {
 			recruitDAO.updateKeyword(insertKeyword);
 		}
-		
+	}
+	/**
+	 * 최근 등록된 스터디 모집 게시글 5개 가져오기
+	 * @author 유동규
+	 */
+	//@Test
+	public void getTopFiveRecruitPostTest() {
+		System.out.println(recruitDAO.getTopFiveRecruitPost());
 	}
 	
 	

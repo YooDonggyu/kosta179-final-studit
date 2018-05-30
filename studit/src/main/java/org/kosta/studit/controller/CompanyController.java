@@ -221,6 +221,17 @@ public class CompanyController {
 		int companyNo = -1;
 		if(request.getParameter("companyNo") != null ) {
 			companyNo = Integer.parseInt(request.getParameter("companyNo"));
+			
+			// 1.세션 이메일과 게시글 작성자를 비교해서 작성자이면 조회수 증가 방지
+			// 2.cHitList에 포함된 게시글은 조회수 증가 방지
+			String sessionEmail = ((MemberVO) request.getSession().getAttribute("memberVO")).getMemberEmail();
+			String companyMemberEmail = companyDAO.findCompanyMemberEmailByCompanyNO(companyNo);
+			ArrayList<Integer> cHitList = (ArrayList<Integer>) request.getSession().getAttribute("cHitList");
+			if (!cHitList.contains(companyNo) && !sessionEmail.equals(companyMemberEmail)) {
+				companyDAO.updateCompanyHit(companyNo);
+				cHitList.add(companyNo);
+			}
+			
 		}
 		model.addAttribute("com", companyService.findDetailCompanyInfoByCompanyNo(companyNo));
 		

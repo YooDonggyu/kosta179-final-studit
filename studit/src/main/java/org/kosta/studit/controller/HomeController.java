@@ -1,8 +1,12 @@
 package org.kosta.studit.controller;
 
 import java.util.List;
+import java.util.Map;
 
+import org.kosta.studit.model.dao.CompanyDAO;
 import org.kosta.studit.model.dao.RecruitDAO;
+import org.kosta.studit.model.vo.CompanyVO;
+import org.kosta.studit.model.vo.RecruitPostVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +20,9 @@ public class HomeController {
 	
 	@Autowired
 	private RecruitDAO recruitDAO;
+	@Autowired
+	private CompanyDAO companyDAO;
+	
 	
 	/**
 	 * 
@@ -26,8 +33,16 @@ public class HomeController {
 	 */
 	@RequestMapping("/")
 	public String home(Model model) {
-		List<String> keywordList = recruitDAO.getTopFiveKeyword();
+		//1. 인기 검색어 TOP5 가져오기
+		List<Map<String, Object>> keywordList = recruitDAO.getTopFiveKeyword();
+		//2. 최근 등록된 스터디 모집 게시글 TOP5 가져오기
+		List<RecruitPostVO> recruitPostList = recruitDAO.getTopFiveRecruitPost();
+		//3. 조회수가 가장 높은 업체 3곳 가져오기
+		List<CompanyVO> companyList = companyDAO.getTopThreeComapny();
+		
 		model.addAttribute("keywordList", keywordList);
+		model.addAttribute("recruitPostList", recruitPostList);
+		model.addAttribute("companyList", companyList);
 		return"home.tiles";
 	}
 	

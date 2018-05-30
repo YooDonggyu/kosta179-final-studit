@@ -67,6 +67,15 @@ public class RecruitController {
 		model.addAttribute("bigCategoryList", recruitDAO.getBigCategoryList());
 		return "recruit/list_recruit.tiles";
 	}
+	
+	@RequestMapping("/findRecruitPostListByKeyword")
+	public String findRecruitPostListByKeyword(Model model,String keyword) {
+		RecruitPostListVO rplVO = recruitService.findRecruitPostByCategoryOrKeyword("", "", keyword, 1);
+		model.addAttribute("recruitPostListVO", rplVO);
+		model.addAttribute("bigCategoryList", recruitDAO.getBigCategoryList());
+		model.addAttribute("srchKeyword", keyword);
+		return "recruit/list_recruit.tiles";
+	}
 
 	/**
 	 * 모집 게시글 번호에 따른 상세보기 및 조회수 증가 및 정보, 카테고리(소, 대), 댓글, 요일을 반환 
@@ -83,10 +92,10 @@ public class RecruitController {
 		// 2.hitList에 포함된 게시글은 조회수 증가 방지
 		String sessionEmail = ((MemberVO) request.getSession().getAttribute("memberVO")).getMemberEmail();
 		String postEmail = recruitDAO.findRecruitWriterByRecruitNo(recruitNo);
-		ArrayList<Integer> hitList = (ArrayList<Integer>) request.getSession().getAttribute("hitList");
-		if (!hitList.contains(recruitNo) && !sessionEmail.equals(postEmail)) {
+		ArrayList<Integer> rHitList = (ArrayList<Integer>) request.getSession().getAttribute("rHitList");
+		if (!rHitList.contains(recruitNo) && !sessionEmail.equals(postEmail)) {
 			recruitDAO.updateRecruitPostHitByRecruitNo(recruitNo);
-			hitList.add(recruitNo);
+			rHitList.add(recruitNo);
 		}
 		// 값 가져오기
 		int nowPage = 1;

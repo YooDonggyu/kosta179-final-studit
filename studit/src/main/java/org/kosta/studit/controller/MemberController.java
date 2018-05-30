@@ -61,8 +61,10 @@ public class MemberController {
 			} else {
 				// 세션할당
 				request.getSession().setAttribute("memberVO", rMemberVO);
-				// 조회수 증가 판단을 위한 session
-				request.getSession().setAttribute("hitList", new ArrayList<>());
+				// 모집 조회수 증가 판단을 위한 session
+				request.getSession().setAttribute("rHitList", new ArrayList<>());
+				// 업체 조회수 증가 판단을 위한 session
+				request.getSession().setAttribute("cHitList", new ArrayList<>());
 			}
 		} catch (EmailNotFoundException | PasswordIncorrectException | IsNotMemberException e) {
 			model.addAttribute("msg", e.getMessage());

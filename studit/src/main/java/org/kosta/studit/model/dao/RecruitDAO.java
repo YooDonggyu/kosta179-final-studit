@@ -82,6 +82,8 @@ public interface RecruitDAO {
 
 	String findKeyword(String keyword);
 
-	List<String> getTopFiveKeyword();
+	List<Map<String, Object>> getTopFiveKeyword();
+
+	List<RecruitPostVO> getTopFiveRecruitPost();
 
 }

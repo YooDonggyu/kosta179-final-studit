@@ -52,4 +52,10 @@ public interface CompanyDAO {
 	List<Map<String, String>> findStudyRoomConditionCountByMonth(String companyNo);
 	
 	int findTotalCountOfCompany(Map<String, Object> map);
+
+	List<CompanyVO> getTopThreeComapny();
+
+	void updateCompanyHit(int companyNo);
+
+	String findCompanyMemberEmailByCompanyNO(int companyNo);
 }

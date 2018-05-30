@@ -325,10 +325,19 @@ public class RecruitDAOImpl implements RecruitDAO {
 	 * @author 유동규
 	 */
 	@Override
-	public List<String> getTopFiveKeyword() {
+	public List<Map<String, Object>> getTopFiveKeyword() {
 		return template.selectList("recruit.getTopFiveKeyword");
 	}
 	
+	
+	/**
+	 * 최근 등록된 5개 모집 글 검색(Home.jsp에서 사용)
+	 * @author 유동규
+	 */
+	@Override
+	public List<RecruitPostVO> getTopFiveRecruitPost(){
+		return template.selectList("recruit.getTopFiveRecruitPost");
+	}
 }
 
 
