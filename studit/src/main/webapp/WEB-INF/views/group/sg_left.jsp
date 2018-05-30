@@ -24,7 +24,7 @@
             		 <li> <a href="#"><i class="icon-form"></i><span>ADMIN</span></a></li>
             	</c:when>
             	<c:otherwise>
-            		 <li> <a href="#"><i class="icon-form"></i><span>GETOUT</span></a></li>
+            		 <li> <a href="#"><i class="icon-form"></i><span>LEAVE</span></a></li>
             	</c:otherwise>
             </c:choose>
             <li> <a href="${pageContext.request.contextPath}/"> <i class="icon-interface-windows"></i><span>EXIT</span></a></li>

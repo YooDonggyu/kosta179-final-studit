@@ -24,4 +24,6 @@ public interface GroupDAO {
 
 	String findMemberPositionByMemberEmailAndStudyGroupNo(Map<String, String> map);
 
+	int countMyLeadGroupHasMemberByEmailAndStudyGroupNo(Map<String, String> map);
+
 }

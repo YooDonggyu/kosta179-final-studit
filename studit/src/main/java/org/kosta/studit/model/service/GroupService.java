@@ -6,4 +6,6 @@ public interface GroupService {
 
 	String findMemberPositionByMemberEmailAndStudyGroupNo(String sgNo, String memberEmail);
 
+	int countMyLeadGroupHasMemberByEmailAndStudyGroupNo(String memberEmail, String sgNo);
+
 }

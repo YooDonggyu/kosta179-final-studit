@@ -42,6 +42,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 
+		매개변수로 받은 스터디 그룹이 본인이 팀장이고 팀원이 있는 스터디 그룹인지 확인
+		@author 송용준, 유동규
+		@param sgNo 스터디 그룹의 번호
+		@return int 팀장이고 팀원이면 1, 아니면 0 반환
+	 -->
+	<select id="countMyLeadGroupHasMemberByEmailAndStudyGroupNo" parameterType="map" resultType="int">
+		select count(a.sg_no)
+		from (
+			select sm1.sg_no as sg_no, count(sm2.member_email) as cnt
+			from sg_member sm1, sg_member sm2 
+			where sm1.member_email=#{memberEmail} 
+					and sm1.position='팀장' 
+				  	and sm1.sg_no = sm2.sg_no
+			group by sm1.sg_no
+		) a, RECRUIT_POST rp, study_group sg
+		where sg.sg_no = a.sg_no and sg.recruit_post_no = rp.recruit_post_no and a.cnt>1 and sg_no=#{sgNo}
+	</select>
+	
+	<!-- 
 		스터디 그룹 생성 : 모집글 생성 시, 동시에 생성
 		@author 송용준
 		@param map key : memberName 회원이름 (DEFAULT : 스터디 그룹 이름)

@@ -102,4 +102,9 @@ public class GroupDAOImpl implements GroupDAO {
 	public String findMemberPositionByMemberEmailAndStudyGroupNo(Map<String, String> map) {
 		return template.selectOne("group.findMemberPositionByMemberEmailAndStudyGroupNo", map);
 	}
+
+	@Override
+	public int countMyLeadGroupHasMemberByEmailAndStudyGroupNo(Map<String, String> map) {
+		return template.selectOne("group.countMyLeadGroupHasMemberByEmailAndStudyGroupNo", map);
+	}
 }

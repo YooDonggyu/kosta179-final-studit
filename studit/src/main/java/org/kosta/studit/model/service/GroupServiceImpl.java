@@ -38,4 +38,13 @@ public class GroupServiceImpl implements GroupService {
 		return groupDAO.findMemberPositionByMemberEmailAndStudyGroupNo(map);
 	}
 
+	@Override
+	public int countMyLeadGroupHasMemberByEmailAndStudyGroupNo(String memberEmail, String sgNo) {
+		Map<String, String> map=new HashMap<>();
+		map.put("memberEmail", memberEmail);
+		map.put("sgNo", sgNo);
+		
+		return groupDAO.countMyLeadGroupHasMemberByEmailAndStudyGroupNo(map);
+	}
+
 }

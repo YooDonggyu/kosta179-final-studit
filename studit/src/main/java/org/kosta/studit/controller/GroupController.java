@@ -48,8 +48,24 @@ public class GroupController {
 		return"groupHome.tiles";
 	}
 	
-	@RequestMapping("findSideBarView")
-	public String findSideBarView() {
-		return "group/sidebar";
+	@RequestMapping("leaveStudyGroup")
+	public String leaveStudyGroup(HttpServletRequest request, String sgNo) {
+		
+		HttpSession session=request.getSession(false);
+		MemberVO mv=(MemberVO)session.getAttribute("memberVO");
+		String memberEmail=mv.getMemberEmail();
+		
+		//1. 해당 스터디 그룹의 팀장이고 팀원이 있다면 팀장 위임
+		if(groupService.countMyLeadGroupHasMemberByEmailAndStudyGroupNo(memberEmail, sgNo)==1) {
+			// 팀원이 있다면 위임해야 함
+			
+			return "";
+		}
+		
+		//2. 해당 스터디 그룹의 본인 직책을 탈퇴로 변경
+		//groupService.deleteStudyMember(memberEmail,sgNo);
+		
+		return "redirect:/member/getMyPage?nowPage";
 	}
+	
 }
