@@ -36,6 +36,10 @@ public class MemberVO {
 		this.picPath = picPath;
 	}
 
+	
+	
+
+
 	public String getMemberEmail() {
 		return memberEmail;
 	}

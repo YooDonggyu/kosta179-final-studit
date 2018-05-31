@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.kosta.studit.exception.EmailNotFoundException;
@@ -52,7 +54,7 @@ public class MemberController {
 	 * @return redirect:/ 로그인 한 후 메인페이지로 이동
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(String loginEmail, String loginPassword, HttpServletRequest request, Model model) {
+	public String login(String loginEmail, String loginPassword, String rememberEmail, HttpServletRequest request, HttpServletResponse response, Model model) {
 		MemberVO rMemberVO = null;
 		try {
 			rMemberVO = memberService.login(new MemberVO(loginEmail, loginPassword));
@@ -65,6 +67,22 @@ public class MemberController {
 				request.getSession().setAttribute("rHitList", new ArrayList<>());
 				// 업체 조회수 증가 판단을 위한 session
 				request.getSession().setAttribute("cHitList", new ArrayList<>());
+				// 아이디 저장 확인(cookie)
+				if(rememberEmail != null) {
+					Cookie cookie = new Cookie("remember", loginEmail);
+					cookie.setMaxAge(7*24*60*60);
+					cookie.setPath("/");
+					response.addCookie(cookie);
+				}else {
+					Cookie[] cookies = request.getCookies();
+					for(int i =0; i<cookies.length; i++) {
+						if(cookies[i].getName().equals("remember")) {
+							cookies[i].setMaxAge(0);
+							cookies[i].setPath("/");
+							response.addCookie(cookies[i]);
+						}
+					}
+				}
 			}
 		} catch (EmailNotFoundException | PasswordIncorrectException | IsNotMemberException e) {
 			model.addAttribute("msg", e.getMessage());

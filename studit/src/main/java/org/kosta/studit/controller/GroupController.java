@@ -33,32 +33,33 @@ public class GroupController {
 	 * @param request 세션정보 획득을 위한 매개변수
 	 * @return 스터디 그룹의 메인 뷰
 	 */
-	@RequestMapping("groupHome")
+	@RequestMapping("/groupHome")
 	public String home(String sgNo, HttpServletRequest request) {
+		System.out.println("1");
 		//1. 스터디 그룹 이름
 		String groupName=groupService.findStudyGroupNameByStudyGroupNo(sgNo);
-		
+		System.out.println("2");
 		//2. 회원 이름 : Session
 		HttpSession session=request.getSession(false);
 		MemberVO mv=(MemberVO)session.getAttribute("memberVO");
 		String memberName=mv.getName();
-		
+		System.out.println("3");
 		//3. 회원 이메일 : Session
 		String memberEmail=mv.getMemberEmail();
-		
+		System.out.println("4");
 		//4. 회원 직책
 		String position=groupService.findMemberPositionByMemberEmailAndStudyGroupNo(sgNo,memberEmail);
-		
+		System.out.println("5");
 		request.setAttribute("sgNo", sgNo);
 		request.setAttribute("groupName", groupName);
 		request.setAttribute("memberName", memberName);
 		request.setAttribute("memberEmail", memberEmail);
 		request.setAttribute("position", position);
-		
+		System.out.println("6");
 		return"groupHome.tiles";
 	}
 	
-	@RequestMapping("leaveStudyGroup")
+	@RequestMapping("/leaveStudyGroup")
 	public String leaveStudyGroup(HttpServletRequest request, String sgNo) {
 		
 		HttpSession session=request.getSession(false);

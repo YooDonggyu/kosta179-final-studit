@@ -3,6 +3,9 @@ package org.kosta.studit.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+
 import org.kosta.studit.model.dao.CompanyDAO;
 import org.kosta.studit.model.dao.RecruitDAO;
 import org.kosta.studit.model.vo.CompanyVO;
@@ -10,6 +13,7 @@ import org.kosta.studit.model.vo.RecruitPostVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -43,6 +47,7 @@ public class HomeController {
 		model.addAttribute("keywordList", keywordList);
 		model.addAttribute("recruitPostList", recruitPostList);
 		model.addAttribute("companyList", companyList);
+		
 		return"home.tiles";
 	}
 	

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    
 <script type="text/javascript">
 	// 작성: 유동규
 	alert("로그인이 필요합니다.")
@@ -20,15 +22,23 @@
 					<div class="login-group">
 						<div class="form-group text-left">
 							<label for="loginEmail" >Email</label>
-							<input type="email" class="form-control" name="loginEmail" placeholder="studit@studit.com">
+							<c:choose>
+								<c:when test="${cookie.remember != null }">
+									<input type="email" class="form-control" name="loginEmail" value="${cookie.remember.value}">
+								</c:when>
+								<c:otherwise>
+									<input type="email" class="form-control" name="loginEmail" placeholder="studit@studit.com">
+								</c:otherwise>
+							</c:choose>
 						</div>
 						<div class="form-group text-left">
 							<label for="loginPassword" >Password</label><br>
 							<input type="password" class="form-control" name="loginPassword" placeholder="Enter password">
 						</div>
 						<div class="form-group login-group-checkbox">
-							<input type="checkbox" id="lg_remember" name="lg_remember">
-							<label for="lg_remember">remember</label>
+							<div class="checkbox">
+								<label><input type="checkbox" value="true" name= "rememberEmail" checked>Remember me</label>
+							</div>
 						</div>
 					</div>
 					<button type="submit" class="btn btn-success btn-block"> Login</button>
