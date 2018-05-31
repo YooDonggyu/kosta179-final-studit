@@ -21,7 +21,7 @@
                 <div class="form-group">
                     <label for="memberEmail" class="col-sm-2 control-label formCategory">이메일</label>
                     <div class="col-sm-9">	
-                        <input type="email" id="memberEmail" name="memberEmail" placeholder="E-mail" class="form-control" autofocus><br>
+                        <input type="email" id="memberEmail" name="memberEmail" placeholder="E-mail" class="form-control" maxlength="50"><br>
                         <!-- <span class="help-block">Last Name, First Name, eg.: Smith, Harry</span> -->
                         <div id="checkEmailView"></div>
                     </div>
@@ -30,14 +30,14 @@
                 <div class="form-group">
                     <label for="password" class="col-sm-2 control-label formCategory">비밀번호</label>
                     <div class="col-sm-9">
-                        <input type="password" id="password"  name= "password" placeholder="password" class="form-control">
+                        <input type="password" id="password"  name= "password" placeholder="password" class="form-control" maxlength="50">
                     </div>
                 </div>
                 
                 <div class="form-group">
                     <label for="passwordCheck" class="col-sm-2 control-label formCategory">비밀번호 확인</label>
                     <div class="col-sm-9">
-                        <input type="password" id="passwordCheck"  name="passwordCheck" placeholder="retype password" class="form-control"><br>
+                        <input type="password" id="passwordCheck"  name="passwordCheck" placeholder="retype password" class="form-control" maxlength="50"><br>
                         <div id="checkPasswordView"></div>
                     </div>
                 </div>
@@ -45,7 +45,7 @@
                 <div class="form-group">
                     <label for="name" class="col-sm-2 control-label formCategory">이름</label>
                     <div class="col-sm-9">
-                        <input type="text" id="name" name="name" placeholder="홍길동" class="form-control" required="required">
+                        <input type="text" id="name" name="name" placeholder="홍길동" class="form-control" required="required" maxlength="50">
                     </div>
                 </div>
                 
@@ -55,7 +55,7 @@
                        <!--  <input type="text" id="sample6_postcode" placeholder="우편번호"> -->
 						<input type="button" name="addrSerchBtn" id="addrSerchBtn" onclick="sample6_execDaumPostcode()" value="주소 찾기"  class="col-sm-12 control-label btn btn-default" style="text-align:center;">
 						<input type="text" id="sample6_address" name="primaryAddr" readonly="readonly"   placeholder="기본 주소" class="form-control"><br>
-						<input type="text" id="addrDetail" name="detailAddr" placeholder="상세 주소" class="form-control" required="required">
+						<input type="text" id="addrDetail" name="detailAddr" placeholder="상세 주소" class="form-control" required="required" maxlength="50">
                     </div>
                 </div>
                 
@@ -70,14 +70,14 @@
                 <div class="form-group">
                     <label for="passwordHint" class="col-sm-2 control-label formCategory">비밀번호 힌트</label>
                     <div class="col-sm-9">
-                        <input type="text" id="passwordHint" name="passwordHint" placeholder="자주 가는 곳은?" class="form-control" required="required">
+                        <input type="text" id="passwordHint" name="passwordHint" placeholder="자주 가는 곳은?" class="form-control" required="required" maxlength="50">
                     </div>
                 </div>
                 
                 <div class="form-group">
                     <label for="passwordAnswer" class="col-sm-2 control-label formCategory">비밀번호 정답</label>
                     <div class="col-sm-9">
-                        <input type="text" id="passwordAnswer" name="passwordAnswer" placeholder="studit" class="form-control" required="required">
+                        <input type="text" id="passwordAnswer" name="passwordAnswer" placeholder="studit" class="form-control" required="required" maxlength="50">
                     </div>
                 </div>
                 
@@ -166,6 +166,7 @@
 			filesArr.forEach(function(f) {
 				if(!f.type.match("image.*")){
 					alert("이미지 파일을 선택하세요.");
+					$("#picFileForm").val("");
 					return false;
 				}
 				
@@ -214,6 +215,15 @@
 						}
 					}//callback
 				});//ajax
+			}
+		});
+		
+		//비밀번호 글자수 제한
+		$("#password").keyup(function() {
+			if($("#password").val().length<8){
+				$("#checkPasswordView").html("8자 이상 입력하세요.").css("color","red");
+			}else{
+				$("#checkPasswordView").html("ok").css("color","blue");;
 			}
 		});
 		

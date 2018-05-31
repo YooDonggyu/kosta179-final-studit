@@ -371,7 +371,7 @@ values(company_no_seq.nextval
 ,'h@h.com'
 );
 
-update company set open='09', close='22'
+update company set state='승인' where company_no=1
 
 --공지사항
 CREATE TABLE com_announcement

@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -28,7 +29,7 @@
 <div class="calendarView">
 <div class="col-sm-12">
       <div id="calendar"></div><!-- 캘린더 -->
-      <div id="time" style="float: left; margin-top:50px; padding:50px;">
+      <div id="time" style="float: center; margin-top:50px; padding:50px;">
       <!-- 예약정보를 보여주는 구역 -->
          <h1>${studyRoomVO.companyVO.name} </h1><h3> ${studyRoomVO.name}</h3>
          <input type="hidden" id="hiddenComName" value="${studyRoomVO.companyVO.name} ">

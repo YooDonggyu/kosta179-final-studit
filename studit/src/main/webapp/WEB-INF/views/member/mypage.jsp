@@ -29,8 +29,8 @@ th{
 <div class="col-sm-12">
 <h3>스터디 통합 관리</h3>
 	<div class="row" style="padding-left: 150px; padding-right: 150px; margin-bottom: 100px; margin-top: 50px">
-	<a href="#" id="bookmark">즐겨찾기만 보기</a>
-	<a href="#">편집</a>
+	<a href="#" id="bookmark">즐겨찾기만 보기 </a>&nbsp;&nbsp;&nbsp;
+	<a href="#" id="edit"> 편집</a>
 		<div class="MultiCarousel" data-items="1,3,4,5" data-slide="1" id="MultiCarousel"  data-interval="1000">
             <div class="MultiCarousel-inner">
             <div class="item">
@@ -47,18 +47,22 @@ th{
             <c:when test="${g.state eq 'show'}">
                  <div class="item" style="cursor: pointer;" onclick="return goGroup(${g.groupVO.groupNo})">
                     <div class="pad15 my">
+                    <input type="checkbox" class="checkbox-inline checkBookmark" id="checkBookmark" value="${g.groupMemberNo}" style="position: relative; float: right; width: 70px">
                     	<br>
                     	<p class="lead">${g.groupVO.name}</p>
 						<c:if test="${g.position eq '팀장'}">
 							<i class="fas fa-crown fa-2x" style="color: #ffcc00"></i>
+							<i class="fas fa-star" style="color: #ffcc00"></i>
 						</c:if>
 						<br><br><br>
                     </div>
+                     
                 </div>
             </c:when>
             <c:otherwise>
                  <div class="item uncheckedItem" style="cursor: pointer;"  onclick="return goGroup(${g.groupVO.groupNo})">
                     <div class="pad15 my">
+                    <input type="checkbox" class="checkbox-inline checkBookmark" id="checkBookmark" value="${g.groupMemberNo}" style="position: relative; float: right; width: 70px">
                     	<br>
                     	<p class="lead">${g.groupVO.name}</p>
 						<c:if test="${g.position eq '팀장'}">
@@ -186,6 +190,8 @@ th{
 <script>
 	$(document).ready(function(){
 		
+		$(".checkBookmark").hide();
+		
 		var groupList = "${groupList}";
 		$("#bookmark").click(function() {
 			if($(this).text()=='전체보기'){
@@ -258,6 +264,13 @@ th{
 				}//success
 			})//ajax
 		})//click
+		
+		//즐겨찾기 편집
+		$("#edit").click(function() {
+			$(".uncheckedItem").show();
+			$(".checkBookmark").show();
+			
+		});
 		
 		$(document).on("click", "#cancelBtn1",function() {
 			var email = "${memberVO.memberEmail}";

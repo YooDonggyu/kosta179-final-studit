@@ -43,6 +43,7 @@ public class StudyRoomController {
 	 */
 	@RequestMapping("/createStudyRoomConditionView")
 	public String createStudyRoomConditionView(String studyRoomNo, Model model) {
+		
 		StudyRoomVO studyRoomVO =  studyRoomDAO.findStudyRoomInfoByStudyRoomNo(studyRoomNo);
 		model.addAttribute("studyRoomVO", studyRoomVO);
 		model.addAttribute("businessDay", companyService.findBusinessDayByCompanyNo(studyRoomVO.getCompanyVO().getCompanyNo()));

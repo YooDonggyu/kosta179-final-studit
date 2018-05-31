@@ -87,7 +87,7 @@ function check(){
                 <div class="form-group">
                     <label for="title" class="col-sm-3 control-label formCategory">제목</label>
                     <div class="col-sm-9">	
-                        <input type="text" id="title" name="title" placeholder="제목을 입력하세요" class="form-control" autofocus>
+                        <input type="text" id="title" name="title" placeholder="제목을 입력하세요" class="form-control" maxlength="33" autofocus>
                     </div>
                 </div>
                 

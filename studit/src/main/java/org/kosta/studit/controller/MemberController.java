@@ -166,11 +166,11 @@ public class MemberController {
 	@RequestMapping(method = RequestMethod.POST, value = "/updateMember")
 	public String updateMember(MemberVO memberVO, MultipartFile picFile, HttpServletRequest request) {
 		MemberVO pMemberVO = (MemberVO) request.getSession(false).getAttribute("memberVO");
+		System.out.println(memberVO.getPicPath());
 		if (picFile != null && !picFile.isEmpty()) {
 			String fileName = memberVO.getMemberEmail() + "_" + picFile.getOriginalFilename();
 			// String path =
-			// request.getSession(false).getServletContext().getRealPath("upload"); 개발 완료 후
-			// 적용
+			// request.getSession(false).getServletContext().getRealPath("upload"); 개발 완료 후 적용
 			String path ="C:/resources/upload/";
 			try {
 				picFile.transferTo(new File(path, fileName));// 지정 경로에 실제 파일 저장
@@ -179,7 +179,11 @@ public class MemberController {
 				return "member/update_pic_fail.tiles";
 			}
 		} else if (picFile.isEmpty() && pMemberVO.getPicPath() != null) {
-			memberVO.setPicPath(pMemberVO.getPicPath());
+			if(memberVO.getPicPath().equals("default.png")) {
+				
+			}else {
+				memberVO.setPicPath(pMemberVO.getPicPath());
+			}
 		} else {// 파일을 첨부하지 않았을 때
 			memberVO.setPicPath("default.png");
 		}
