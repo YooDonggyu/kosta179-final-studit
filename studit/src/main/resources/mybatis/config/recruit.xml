@@ -440,10 +440,55 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</where>
 	</select>
 	
+	<!-- 
+		스터디 참여신청 취소(삭제)
+		@author  김유란
+	 -->
 	<delete id="deleteStudyConditionByStudyConditionNo" parameterType="studyConditionVO">
 		delete from study_condition where study_condition_no=#{studyConditionNo} and state='미승인' and member_email=#{memberVO.memberEmail} 
 	</delete>
 	
+	<!-- 
+		스터디모집글 상태를 '모집완료'로 변경
+		@author  김유란
+	 -->
+	<update id="updateRecruitCondition">
+		update recruit_post set condition='모집완료' where recruit_post_no=#{value}
+	</update>
+	
+	
+	<select id="findStudyConditionCountByGroupNo" resultType="int">
+	select count(*)
+	from study_condition sc, study_group sg
+	where sc.recruit_post_no=sg.recruit_post_no and sg.sg_no=#{value}
+	</select>
+	
+	<!-- 
+		스터디그룹 번호로 스터디 참여 신청자 조회(페이징 처리)
+		@author  김유란
+		@param map(groupNo, pagingBean)
+	 -->
+	<select id="findStudyConditionByGroupNo" parameterType="map" resultMap="scRM">
+		select study_condition_no, member_name, sc_regdate, state, self_appeal
+			from(
+			select row_number() over(order by study_condition_no desc) condition_no, sc.study_condition_no, sc.self_appeal,
+							m.name member_name, to_char(sc.regdate,'yyyy-MM-dd hh24:mi:ss') sc_regdate, sc.state 
+							from member m, study_condition sc, study_group sg
+							where sc.recruit_post_no=sg.recruit_post_no
+							and sg.sg_no=#{groupNo}
+							and m.member_email = sc.member_email
+							and sc.state='미승인')
+			where condition_no between #{pagingBean.startRowNumber} and #{pagingBean.endRowNumber}
+	</select>
+	
+	<!-- 
+		스터디그룹 신청 승인/거절(studyCondition 상태 변경)
+		@author  김유란
+		@param map(state, studyConditionNo)
+	 -->
+	<update id="updateStudyConditionState" parameterType="map">
+		update study_condition set state=#{state} where study_condition_no=#{studyConditionNo}
+	</update>
 	
 	<!-- 
 		스터디 모집 Keyword 조회수 증가

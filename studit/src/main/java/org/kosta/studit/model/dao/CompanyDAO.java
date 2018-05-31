@@ -49,8 +49,6 @@ public interface CompanyDAO {
 
 	List<StudyRoomConditionVO> findStudyRoomConditionByCompanyNoAndMonth(Map<String, String> map);
 
-	List<Map<String, String>> findStudyRoomConditionCountByMonth(String companyNo);
-	
 	int findTotalCountOfCompany(Map<String, Object> map);
 
 	List<CompanyVO> getTopThreeComapny();
@@ -58,4 +56,10 @@ public interface CompanyDAO {
 	void updateCompanyHit(int companyNo);
 
 	String findCompanyMemberEmailByCompanyNO(int companyNo);
+
+	List<Map<String, String>> findStudyRoomConditionCountByMonth(Map<String, String> map);
+
+	List<Map<String, String>> findWaitStudyRoomConditionCountByCompanyNo(String companyNo);
+
+
 }

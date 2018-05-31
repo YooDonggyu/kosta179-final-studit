@@ -635,5 +635,25 @@ where s.company_no=c.company_no and s.studyroom_no=sc.studyroom_no
 and c.company_no=1)
 group by to_char(use_date, 'YYYY-MM'), state 
 
+
+ select to_char(use_date, 'YYYY-MM-DD') m, count(*) count 
+		from (
+			select s.studyroom_no, sc.use_date, sc.state
+			from studyroom s, company c, studyroom_condition sc
+			where s.company_no=c.company_no and s.studyroom_no=sc.studyroom_no 
+			and sc.state='예약대기'
+			and c.company_no =1
+			)
+		group by to_char(use_date, 'YYYY-MM-DD') order by to_char(use_date, 'YYYY-MM-DD')
+
 select * from STUDYROOM_CONDITION;
 
+select to_char(use_date, 'YYYY-MM') m, count(*) count 
+		from (
+			select s.studyroom_no, sc.use_date, sc.state
+			from studyroom s, company c, studyroom_condition sc
+			where s.company_no=c.company_no and s.studyroom_no=sc.studyroom_no 
+			and sc.state='예약대기'
+			and c.company_no =1
+			)
+		group by to_char(use_date, 'YYYY-MM')

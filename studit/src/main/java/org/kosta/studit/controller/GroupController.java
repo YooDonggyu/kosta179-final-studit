@@ -1,18 +1,28 @@
 package org.kosta.studit.controller;
 
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.kosta.studit.model.dao.GroupDAO;
+import org.kosta.studit.model.dao.RecruitDAO;
 import org.kosta.studit.model.service.GroupService;
+import org.kosta.studit.model.service.RecruitService;
 import org.kosta.studit.model.vo.MemberVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/group")
 public class GroupController {
 	
+	private RecruitDAO recruitDAO;
+	@Autowired
+	private RecruitService recruitService;
+	@Autowired
+	private GroupDAO groupDAO;
 	@Autowired
 	private GroupService groupService;
 	
@@ -68,4 +78,13 @@ public class GroupController {
 		return "redirect:/member/getMyPage?nowPage";
 	}
 	
+
+	@RequestMapping("/findGroupMemberView")
+	public String findGroupMemberView(String groupNo, Model model) {
+		model.addAttribute("groupMemberList", groupService.findGroupMemberByGroupNo(groupNo, null));
+		model.addAttribute("conditionList", recruitService.findStudyConditionByGroupNo(groupNo, null));
+		return "group/find_group_member.tiles";
+	}
+
+
 }

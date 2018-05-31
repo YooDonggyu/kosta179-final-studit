@@ -29,6 +29,8 @@ th{
 <div class="col-sm-12">
 <h3>스터디 통합 관리</h3>
 	<div class="row" style="padding-left: 150px; padding-right: 150px; margin-bottom: 100px; margin-top: 50px">
+	<a href="#" id="bookmark">즐겨찾기만 보기</a>
+	<a href="#">편집</a>
 		<div class="MultiCarousel" data-items="1,3,4,5" data-slide="1" id="MultiCarousel"  data-interval="1000">
             <div class="MultiCarousel-inner">
             <div class="item">
@@ -39,9 +41,11 @@ th{
               </div>
             </div>
             <form action="${pageContext.request.contextPath}/group/groupHome" method="post" id="myPageForm"> 
-            <input type="hidden" name="sgNo" id="sgNo">  
+           	 <input type="hidden" name="sgNo" id="sgNo">  
             <c:forEach items="${groupList}" var="g">
-              <div class="item" style=" cursor: pointer;" onclick="return goGroup(${g.groupVO.groupNo})">
+            <c:choose>
+            <c:when test="${g.state eq 'show'}">
+                 <div class="item" style="cursor: pointer;" onclick="return goGroup(${g.groupVO.groupNo})">
                     <div class="pad15 my">
                     	<br>
                     	<p class="lead">${g.groupVO.name}</p>
@@ -51,6 +55,20 @@ th{
 						<br><br><br>
                     </div>
                 </div>
+            </c:when>
+            <c:otherwise>
+                 <div class="item uncheckedItem" style="cursor: pointer;"  onclick="return goGroup(${g.groupVO.groupNo})">
+                    <div class="pad15 my">
+                    	<br>
+                    	<p class="lead">${g.groupVO.name}</p>
+						<c:if test="${g.position eq '팀장'}">
+							<i class="fas fa-crown fa-2x" style="color: #ffcc00"></i>
+						</c:if>
+						<br><br><br>
+                    </div>
+                </div>
+            </c:otherwise>
+                     </c:choose>
             </c:forEach>
             </form>
             </div>
@@ -59,7 +77,7 @@ th{
         </div>
 	</div>
 </div>
-
+<a href="${pageContext.request.contextPath}/group/findGroupMemberView?groupNo=1">그룹</a>
 <div class="col-sm-1"></div>
 <div class="col-sm-10">
 <ul class="nav nav-tabs">
@@ -164,6 +182,18 @@ th{
 
 <script>
 	$(document).ready(function(){
+		
+		var groupList = "${groupList}";
+		$("#bookmark").click(function() {
+			if($(this).text()=='전체보기'){
+				$(this).text('즐겨찾기 보기');
+				$(".uncheckedItem").show();
+			}else{
+				$(this).text('전체보기');
+				$(".uncheckedItem").hide();
+			}
+		});//click
+		
 		var roomPageNo = 1;
 		var recruitPageNo = 1;
 		
@@ -230,7 +260,7 @@ th{
 			var email = "${memberVO.memberEmail}";
 			alert($(this).val())
 			if($(this).text()=="미승인"){
-				if(confirm("정말 취소하시겠어요?")){
+				if(confirm("신청을 취소할까요?")){
 					 $.ajax({
 			    		type:"post",
 						url:"${pageContext.request.contextPath}/ajax/deleteStudyConditionByStudyConditionNo",
@@ -249,7 +279,7 @@ th{
 			$(document).on("click","#cancelBtn2", function(){
 				var email = "${memberVO.memberEmail}";
 				if($(this).text()=='예약대기'){
-					if(confirm("정말 취소하시겠어요?")){
+					if(confirm("예약을 취소할까요?")){
 						 $.ajax({
 				    		type:"post",
 							url:"${pageContext.request.contextPath}/ajax/updateStudyRoomConditionByMember",
@@ -260,6 +290,8 @@ th{
 							}//success
 						})//ajax
 					}
+				}else if($(this).text()=='예약취소'){
+					alert("취소된 예약은 복구할 수 없습니다.");
 				}else{
 					alert("예약 완료 이후 상태 변경은 업체에 문의하세요.");
 				}

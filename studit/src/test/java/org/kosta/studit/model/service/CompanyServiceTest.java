@@ -49,6 +49,7 @@ public class CompanyServiceTest {
 		System.out.println(companyService.findDetailCompanyInfoByCompanyNo(1));
 	}
 	
+
 	/**
 	 * 검색조건에 부합하는 업체 리스트 출력
 	 * @author 송용준
@@ -68,4 +69,11 @@ public class CompanyServiceTest {
 		int companyNo = 2;
 		System.out.println(companyService.findStudyRoomListByCompanyNo(companyNo));
 	}
+
+	@Test
+	public void findStudyRoomConditionCountByMonth() {
+		System.out.println(companyService.findStudyRoomConditionCountByMonth("1"));
+	}
+	
+
 }

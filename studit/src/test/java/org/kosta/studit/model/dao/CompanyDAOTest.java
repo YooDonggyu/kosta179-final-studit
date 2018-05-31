@@ -272,7 +272,10 @@ public class CompanyDAOTest {
 	    */
 	   //@Test
 	   public void findStudyRoomConditionCountByMonthTest() {
-		   System.out.println(companyDAO.findStudyRoomConditionCountByMonth("1"));
+		   Map<String, String> map = new HashMap<>();
+		   map.put("companyNo", "1");
+		   map.put("state", "예약대기");
+		   System.out.println(companyDAO.findStudyRoomConditionCountByMonth(map));
 	   }
 	   
 	   /**
@@ -293,6 +296,15 @@ public class CompanyDAOTest {
 	   //@Test
 	   public void getTopThreeComapnyTest() {
 		   System.out.println(companyDAO.getTopThreeComapny());
+	   }
+	   
+	   /**
+	    * 업체 스터디룸 일별 예약대기 건수 조회
+	    * @author 김유란
+	    */
+	   @Test
+	   public void findWaitStudyRoomConditionCountByCompanyNoTest() {
+		   System.out.println(companyDAO.findWaitStudyRoomConditionCountByCompanyNo("1"));
 	   }
 	   
 	   

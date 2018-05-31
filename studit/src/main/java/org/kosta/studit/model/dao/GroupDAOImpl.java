@@ -70,7 +70,7 @@ public class GroupDAOImpl implements GroupDAO {
 	
 	
 	/**
-	 * 회원이 속한 스터디 그룹 전체 조회
+	 * 회원이 속한 스터디 그룹 전체 정보 및 본인의 직책 조회
 	 * @author 김유란
 	 * @param memberEmail 회원 이메일
 	 * @return List<GroupMemberVO> 스터디그룹 정보를 담은 VO 리스트
@@ -80,6 +80,7 @@ public class GroupDAOImpl implements GroupDAO {
 		return template.selectList("group.findStudyGroupByMemberEmail", memberEmail);
 	}
 	
+
 	/**
 	 * 스터디 그룹 이름을 조회
 	 * @author 송용준
@@ -104,7 +105,36 @@ public class GroupDAOImpl implements GroupDAO {
 	}
 
 	@Override
+
 	public int countMyLeadGroupHasMemberByEmailAndStudyGroupNo(Map<String, String> map) {
 		return template.selectOne("group.countMyLeadGroupHasMemberByEmailAndStudyGroupNo", map);
 	}
+
+	public int findGroupMemberCountByGroupNo(String groupNo) {
+		return template.selectOne("group.findGroupMemberCountByGroupNo", groupNo);
+	}
+	
+	/**
+	 * 스터디 그룹에 속한 멤버 정보 조회
+	 * @author 김유란
+	 * @param groupNo 그룹 번호
+	 * @return List<GroupMemberVO> 그룹 멤버 정보를 담은 VO 리스트
+	 */
+	@Override
+	public List<GroupMemberVO> findGroupMemberByGroupNo(Map<String,Object> map){
+		return template.selectList("group.findGroupMemberByGroupNo", map);
+	}
+	
+
+	/**
+	 * 스터디 그룹 멤버의 직책 변경(팀장<->팀원)
+	 * @author 김유란
+	 * @param map 변경할 직책명과 변경 대상의 그룹 멤버 번호를 담은 map
+	 */
+	@Override
+	public void updateGroupMemberPosition(Map<String, String> map) {
+		template.update("group.updateGroupMemberPosition", map);
+	}
+
+
 }
