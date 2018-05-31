@@ -8,6 +8,8 @@
 	}
 	.navi{
 		float:right;
+		padding-left: 40px;
+		padding-top: 5px;
 	}
 	.block {
 		height:30px; 
@@ -32,8 +34,7 @@
 	}
 	
 	.key-a{
-		width: 30%;
-		padding: 0;
+		padding: 2px;
 	}
 	.key-col{
 		width: auto;
@@ -74,7 +75,7 @@
 			<h3><strong>최근 등록된 스터디</strong></h3>
 			<%--스터디 모집 인기검색어 시작 --%>
 			<div class="row" style="text-align: right;">
-				<div class="col-sm-12" style="padding-right: 70px;"> 
+				<div class="col-sm-12" style="padding-right: 30px;"> 
 					<strong>인기 검색어 TOP5</strong>
 				</div>
 			</div>
