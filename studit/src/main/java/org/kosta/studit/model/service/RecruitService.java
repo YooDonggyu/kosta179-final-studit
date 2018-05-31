@@ -28,9 +28,12 @@ public interface RecruitService {
 
 	public List<SmallCategoryVO> findSmallCategoryListByBigCategoryNo(String bigCategoryNo);
 
-
 	public RecruitPostListVO findRecruitPostByCategoryOrKeyword(String bigCategoryNo, String smallCategoryNo,
 			String keyword, int nowPage);
 
 	void deleteStudyConditionByStudyConditionNo(String memberEmail, String studyConditionNo);
+
+	StudyConditionListVO findStudyConditionByGroupNo(String groupNo, String nowPage);
+
+	void updateStudyConditionState(String state, String studyConditionNo);
 }

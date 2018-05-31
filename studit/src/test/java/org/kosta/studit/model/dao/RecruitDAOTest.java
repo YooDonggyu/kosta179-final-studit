@@ -399,6 +399,7 @@ public class RecruitDAOTest {
 	}
 	
 	/**
+<<<<<<< HEAD
 	 * 스터디 모집 키워드 검색 후 등록 및 업데이트
 	 * @author 유동규 
 	 */
@@ -420,5 +421,33 @@ public class RecruitDAOTest {
 		System.out.println(recruitDAO.getTopFiveRecruitPost());
 	}
 	
+/**
+	 * 스터디 모집완료로 상태 변경 TEST
+	 * @author 김유란
+	 */
+	@Test
+	public void updateRecruitConditionTest() {
+		recruitDAO.updateRecruitCondition("1");
+	}
+	
+	@Test
+	public void findStudyConditionByGroupNoTest() {
+		PagingBean pb = new PagingBean(recruitDAO.findStudyConditionCountByGroupNo("2"));
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("groupNo", "2");
+		map.put("pagingBean", pb);
+
+		List<StudyConditionVO> list = recruitDAO.findStudyConditionByGroupNo(map);
+		for (StudyConditionVO scVO : list) {
+			System.out.println(scVO);
+		}
+	}
+	@Test
+	public void updateStudyConditionStateTest(){
+		Map<String,String> map = new HashMap<>();
+		map.put("state", "승인");
+		map.put("studyConditionNO","5");
+	}
+
 	
 }

@@ -107,12 +107,52 @@ insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_me
 insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 38, 'g@g.com', '팀장');
 insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 1, 'e@e.com', '팀원');
 insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 1, 'h@h.com', '팀원');
-
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 1, 'g@g.com', '팀원');
 commit
 
-select sg.name, m.name, sgm.position
+
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 1, 'a@a.com', '팀장');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 1, 'b@b.com', '팀원');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 1, 'a@a.com', '팀원');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 1, 'b@b.com', '팀원');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 1, 'c@c.com', '팀원');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 1, 'd@d.com', '팀원');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 1, 'c@c.com', '팀원');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 1, 'd@d.com', '팀원');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 1, 'e@e.com', '팀원');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 1, 'f@f.com', '팀원');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 1, 'e@e.com', '팀원');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 1, 'f@f.com', '팀원');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 1, 'g@g.com', '팀원');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 1, 'h@h.com', '팀원');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 1, 'g@g.com', '팀원');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 1, 'h@h.com', '팀원');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 1, 'i@i.com', '팀원');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 1, 'j@j.com', '팀원');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 1, 'i@i.com', '팀원');
+insert into sg_member (sg_member_no, sg_no, member_email, position) values(sg_member_seq.nextval, 1, 'k@k.com', '팀원');
+
+
+select sgm.sg_member_no, sgm.position, m.name, sgm.state, sg.sg_no
+	from sg_member sgm, study_group sg, member m
+	where sgm.sg_no=sg.sg_no and m.member_email=sgm.member_email
+	and sgm.sg_no=3
+
+	update sg_member set position='팀원' where sg_member_no=1
+	
+select sgm.sg_member_no, m.name, sgm.position
 from study_group sg, sg_member sgm, member m
-where sg.sg_no=sgm.sg_no and sgm.email=m.member_email
+where sg.sg_no=sgm.sg_no and sgm.member_email=m.member_email
+
+select member_email, name, position, sg_no, sg_member_no
+from(
+			select row_number() over(order by sg_member_no) rnum, 
+							m.member_email, m.name, sgm.position, sgm.sg_no, sgm.sg_member_no
+							from member m, sg_member sgm, study_group sg
+							where sgm.sg_no=sg.sg_no
+							and sg.sg_no=1
+							and m.member_email = sgm.member_email)
+where rnum between 1 and 5 
 
 --모집 완료된 스터디 일정
 create table sg_schedule(

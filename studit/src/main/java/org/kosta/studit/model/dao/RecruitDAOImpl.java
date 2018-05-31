@@ -338,6 +338,47 @@ public class RecruitDAOImpl implements RecruitDAO {
 	public List<RecruitPostVO> getTopFiveRecruitPost(){
 		return template.selectList("recruit.getTopFiveRecruitPost");
 	}
+	
+	/**
+	 * 스터디 모집 완료(모집글 상태 변경) 
+	 * @author 김유란
+	 * @param recruitPostNo 모집글 번호
+	 */
+	@Override
+	public void updateRecruitCondition(String recruitPostNo) {
+		template.update("recruit.updateRecruitCondition", recruitPostNo);
+	}
+
+	/**
+	 * 스터디 그룹 번호로 신청자 데이터 조회
+	 * @author 김유란
+	 * @param map 그룹 번호(GroupNo), pagingBean 담은 amp
+	 */
+	@Override
+	public List<StudyConditionVO> findStudyConditionByGroupNo(Map<String, Object> map) {
+		return template.selectList("recruit.findStudyConditionByGroupNo", map);
+	}
+	
+	/**
+	 * 스터디 그룹 번호로 신청자 인원수 조회(페이징빈 처리 목적)
+	 * @author 김유란
+	 * @param groupNO
+	 */
+	@Override
+	public int findStudyConditionCountByGroupNo(String groupNo) {
+		return template.selectOne("recruit.findStudyConditionCountByGroupNo", groupNo);
+	}
+	
+	/**
+	 * 스터디 그룹 신청자 승인/거절(상태 변경)를 위한 데이터 map 처리
+	 * @author 김유란
+	 * @param map(state, studyConditionNo)
+	 */
+	@Override
+	public int updateStudyConditionState(Map<String, String> map) {
+		return template.update("recruit.updateStudyConditionState", map);
+
+	}
 }
 
 

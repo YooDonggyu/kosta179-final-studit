@@ -80,9 +80,10 @@ public class CompanyController {
 	 */
 	@RequestMapping("/findStudyRoomConditionByCompanyNo")
 	public String findStudyRoomConditionByCompanyNo(Model model, String companyNo) {
+		model.addAttribute("waitCountList", companyDAO.findWaitStudyRoomConditionCountByCompanyNo("1"));
 		model.addAttribute("businessHour", companyService.findBusinessDayByCompanyNo(1));
 		model.addAttribute("studyRoomResource", companyService.findStudyRoomByCompanyNo(1));
-		model.addAttribute("conditionCount", companyDAO.findStudyRoomConditionCountByMonth("1"));
+		model.addAttribute("conditionCount", companyService.findStudyRoomConditionCountByMonth("1"));
 		return "company/find_studyroom_condition.tiles";
 	}
 	

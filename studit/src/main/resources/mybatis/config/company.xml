@@ -137,22 +137,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       @return studyRoomConditionVO
     -->
    <select id="findStudyRoomConditionByCompanyNoAndMonth" resultMap="studyRoomConditionMap" parameterType="map">
-   	select sc.studyroom_condition_no, sc.member_email, to_char(sc.use_date, 'YYYY-MM-DD') use_date, sc.start_time, sc.end_time, sc.state, s.studyroom_no, s.name as roomName, m.name
+   	select sc.studyroom_condition_no, sc.member_email, to_char(sc.use_date, 'YYYY-MM-DD') use_date, 
+   				sc.start_time, sc.end_time, sc.state, s.studyroom_no, s.name as roomName, m.name, m.phone
 	from studyroom s, studyroom_condition sc, member m
 	where s.studyroom_no=sc.studyroom_no and m.member_email=sc.member_email and s.company_no=#{companyNo} 
-		and use_date between to_date(#{startDate}, 'YYYY-MM-DD') and to_date(#{endDate}, 'YYYY-MM-DD') 
+		and use_date between to_date(#{startDate}, 'YYYY-MM-DD') and to_date(#{endDate}, 'YYYY-MM-DD')  order by sc.use_date,  sc.start_time, sc.end_time
    </select>
    
 
 	<!-- 
 		스터디룸 예약 현황  수정
 		@author 김유란
-		@param studyRoomConditionNo 스터디룸 예약 식별 번호
-		@return studyRoomConditionVO
+		@param studyRoomConditionVO 수정된 정보를 담은 VO(현재는 상태 수정만 가능)
     -->
 	<update id="updatStudyRoomCondition" parameterType="studyRoomConditionVO">
 		update studyroom_condition 
-		set use_date=to_date(#{useDate}, 'YYYY-MM-DD'), start_time=#{startTime}, end_time=#{endTime}, state=#{state}
+		set state=#{state}
 		where studyroom_condition_no=#{studyRoomConditionNo} 
 	</update>
 	
@@ -308,17 +308,36 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     	where company_no = #{value}
 	 </select>
 	 
-	 <!-- 
+ 	 <!-- 
 		스터디룸 예약 현황 월별 건수 조회
 		@author 김유란
 	 -->
-	 <select id="findStudyRoomConditionCountByMonth" resultType="map" parameterType="string">
-	 	select to_char(use_date, 'YYYY-MM') m, count(*) count, state 
-		from (select s.studyroom_no, sc.use_date, sc.state
-		from studyroom s, company c, studyroom_condition sc
-		where s.company_no=c.company_no and s.studyroom_no=sc.studyroom_no 
-		and c.company_no=#{value})
-		group by to_char(use_date, 'YYYY-MM'), state 
+	 <select id="findStudyRoomConditionCountByMonth" resultType="map" parameterType="map">
+	 	select to_char(use_date, 'YYYY-MM') m, count(*) count 
+		from (
+			select s.studyroom_no, sc.use_date, sc.state
+			from studyroom s, company c, studyroom_condition sc
+			where s.company_no=c.company_no and s.studyroom_no=sc.studyroom_no 
+			and sc.state=#{state}
+			and c.company_no =#{companyNo}
+			)
+		group by to_char(use_date, 'YYYY-MM')
+	 </select>
+	 
+	 	 <!-- 
+		스터디룸 예약대기 전체 내역(일별 건수) 조회
+		@author 김유란
+	 -->
+	 <select id="findWaitStudyRoomConditionCountByCompanyNo" resultType="map" parameterType="string">
+	 select to_char(use_date, 'YYYY-MM-DD') m, count(*) count 
+		from (
+			select s.studyroom_no, sc.use_date, sc.state
+			from studyroom s, company c, studyroom_condition sc
+			where s.company_no=c.company_no and s.studyroom_no=sc.studyroom_no 
+			and sc.state='예약대기'
+			and c.company_no =#{companyNo}
+			)
+		group by to_char(use_date, 'YYYY-MM-DD') order by to_char(use_date, 'YYYY-MM-DD')
 	 </select>
 	 
 	 

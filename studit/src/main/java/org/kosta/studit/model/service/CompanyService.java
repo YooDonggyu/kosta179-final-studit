@@ -36,4 +36,7 @@ public interface CompanyService {
 	JSONArray findStudyRoomConditionByCompanyNoAndMonth(String companyNo, String startDate, String endDate);
 	
 	List<StudyRoomVO> findStudyRoomListByCompanyNo(int companyNo);
+
+	JSONArray findStudyRoomConditionCountByMonth(String companyNo);
+
 }

@@ -3,14 +3,17 @@ package org.kosta.studit.model.service;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.kosta.studit.model.PagingBean;
 import org.kosta.studit.model.dao.GroupDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class GroupServiceImpl implements GroupService {
 	@Autowired
 	private GroupDAO groupDAO;
+	
 	
 	/**
 	 * 스터디 그룹 이름을 조회
@@ -38,6 +41,7 @@ public class GroupServiceImpl implements GroupService {
 		return groupDAO.findMemberPositionByMemberEmailAndStudyGroupNo(map);
 	}
 
+
 	@Override
 	public int countMyLeadGroupHasMemberByEmailAndStudyGroupNo(String memberEmail, String sgNo) {
 		Map<String, String> map=new HashMap<>();
@@ -46,5 +50,33 @@ public class GroupServiceImpl implements GroupService {
 		
 		return groupDAO.countMyLeadGroupHasMemberByEmailAndStudyGroupNo(map);
 	}
+
+	
+	@Override
+	public GroupMemberListVO findGroupMemberByGroupNo(String groupNo, String nowPage) {
+		PagingBean pagingBean = null;
+		if(nowPage!=null) {
+			pagingBean = new PagingBean(groupDAO.findGroupMemberCountByGroupNo(groupNo), Integer.parseInt(nowPage));
+		}else {
+			pagingBean = new PagingBean(groupDAO.findGroupMemberCountByGroupNo(groupNo));
+		}
+		Map<String, Object> map = new HashMap<>();
+		map.put("groupNo", groupNo);
+		map.put("pagingBean", pagingBean);
+		return new GroupMemberListVO(pagingBean, groupDAO.findGroupMemberByGroupNo(map));
+	}
+	
+	@Transactional
+	@Override
+	public void updateGroupMemberPosition(String groupMemberNo, String groupOwnerNo) {
+		Map<String,String> map=new HashMap<>();
+		map.put("position", "팀장");
+		map.put("groupMemberNo", groupMemberNo);
+		groupDAO.updateGroupMemberPosition(map);
+		map.put("position", "팀원");
+		map.put("groupMemberNo", groupOwnerNo);
+		groupDAO.updateGroupMemberPosition(map);
+	}
+	
 
 }

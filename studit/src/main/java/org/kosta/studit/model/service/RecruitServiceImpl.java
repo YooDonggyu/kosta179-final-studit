@@ -264,4 +264,26 @@ public class RecruitServiceImpl implements RecruitService {
 		studyConditionVO.setStudyConditionNo(Integer.parseInt(studyConditionNo));
 		recruitDAO.deleteStudyConditionByStudyConditionNo(studyConditionVO);
 	}
+	
+	@Override
+	public StudyConditionListVO findStudyConditionByGroupNo(String groupNo, String nowPage) {
+		PagingBean pagingBean = null;
+		if(nowPage!=null) {
+			pagingBean = new PagingBean(recruitDAO.findStudyConditionCountByGroupNo(groupNo), Integer.parseInt(nowPage));
+		}else {
+			pagingBean = new PagingBean(recruitDAO.findStudyConditionCountByGroupNo(groupNo));
+		}
+		Map<String,Object> map = new HashMap<>();
+		map.put("groupNo", groupNo);
+		map.put("pagingBean", pagingBean);
+		return new StudyConditionListVO(recruitDAO.findStudyConditionByGroupNo(map), pagingBean);
+	}
+	
+	@Override
+	public void updateStudyConditionState(String state, String studyConditionNo) {
+		Map<String, String> map = new HashMap<>();
+		map.put("state", state);
+		map.put("studyConditionNo", studyConditionNo);
+		recruitDAO.updateStudyConditionState(map);
+	}
 }
