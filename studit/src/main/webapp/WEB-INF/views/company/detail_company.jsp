@@ -59,7 +59,7 @@
 						<c:choose><c:when test="${cVO.holiday eq '영업' }">영업</c:when><c:otherwise>휴무</c:otherwise></c:choose>
 					<br>
 					ADDRESS : ${cVO.primaryAddr} ${cVO.detailAddr}
-					<input type="hidden" value="${cVO.primaryAddr}" id="hiddenAddr">
+					<input type="hidden" value="${cVO.primaryAddr} ${cVO.detailAddr}" id="hiddenAddr">
 				</p>
 			</blockquote>
 			<p class="blog-post-meta">#2 DETAIL</p>
@@ -198,7 +198,10 @@
 									</c:forEach>
 								</button>
 								<button type="button" class="list-group-item"><p class="blog-post-meta" style="font-size: 13px;">설명</p>${list.content }</button>
-								<div style="width: 100%; text-align: right;"><a href="${pageContext.request.contextPath }/studyroom/createStudyRoomConditionView?studyRoomNo=${list.studyRoomNo}" class="btn btn-sm" style=" width:100%; background-color: #FFBC9B; color:#ffffff;	">신청하기</a></div>
+								<div style="width: 100%; text-align: right;"><a href="#"  onclick="go()" class="btn btn-sm" style=" width:100%; background-color: #FFBC9B; color:#ffffff;	">신청하기</a></div>
+								<form action="${pageContext.request.contextPath }/studyroom/createStudyRoomConditionView" method="post" id="hiddenStudyRoomNoForm">
+									<input type="hidden" value="${list.studyRoomNo}" name="studyRoomNo">
+								</form>
 							</div>
 						</div>
 					</c:forEach>
@@ -224,7 +227,7 @@
 	// 주소-좌표 변환 객체를 생성합니다
 	var geocoder = new daum.maps.services.Geocoder();
 	// 주소로 좌표를 검색합니다
-	geocoder.addressSearch('제주특별자치도 제주시 첨단로 242', function(result, status) {
+	geocoder.addressSearch($("#hiddenAddr").val(), function(result, status) {
 	    // 정상적으로 검색이 완료됐으면 
 	     if (status === daum.maps.services.Status.OK) {
 	        var coords = new daum.maps.LatLng(result[0].y, result[0].x);
@@ -235,7 +238,7 @@
 	        });
 	        // 인포윈도우로 장소에 대한 설명을 표시합니다
 	        var infowindow = new daum.maps.InfoWindow({
-	            content: '<div style="width:150px;text-align:center;padding:6px 0;">'+$("#hiddenAddr").val()+'</div>'
+	             content: '<div style="width:150px;text-align:center;padding:6px 0;">'+$("#hiddenAddr").val()+'</div>' 
 	        });
 	        infowindow.open(map, marker);
 	        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
@@ -326,6 +329,11 @@
 				interval: 10000
 			})
 	});
+	
+	
+	function go(){
+		$("#hiddenStudyRoomNoForm").submit();
+	}
 </script>
 
 <style>

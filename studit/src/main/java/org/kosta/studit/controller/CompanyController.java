@@ -66,7 +66,7 @@ public class CompanyController {
 		request.setAttribute("pagingBean", allCompanyList.getPagingBean());
 		request.setAttribute("allHashTagList", allHashTagList);
 		
-		return "company/find_Company_View.tiles";
+		return "company/find_company_view.tiles";
 	}
 	
 	/**ajax로 변경
@@ -83,7 +83,7 @@ public class CompanyController {
 		model.addAttribute("businessHour", companyService.findBusinessDayByCompanyNo(1));
 		model.addAttribute("studyRoomResource", companyService.findStudyRoomByCompanyNo(1));
 		model.addAttribute("conditionCount", companyDAO.findStudyRoomConditionCountByMonth("1"));
-		return "company/find_studyRoom_condition.tiles";
+		return "company/find_studyroom_condition.tiles";
 	}
 	
 	/**

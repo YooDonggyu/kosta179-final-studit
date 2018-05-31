@@ -58,10 +58,12 @@ th{
             <button class="btn btn-primary rightLst">></button>
         </div>
 	</div>
-</div>
+</div> 
 
+<div class="col-sm-10" style="text-align: right">예약대기 및 미승인 상태에서 취소할 수 있습니다.</div>
+<div class="col-sm-2"></div>
 <div class="col-sm-1"></div>
-<div class="col-sm-10">
+<div class="col-sm-10" style="padding-bottom: 40px;"> 
 <ul class="nav nav-tabs">
   <li class="active" style="width: 50%"><a data-toggle="tab" href="#home"><b>스터디 신청 현황</b></a></li>
   <li style="width: 50%"><a data-toggle="tab" href="#menu1"><b>스터디룸 신청 현황</b></a></li>
@@ -228,7 +230,6 @@ th{
 		
 		$(document).on("click", "#cancelBtn1",function() {
 			var email = "${memberVO.memberEmail}";
-			alert($(this).val())
 			if($(this).text()=="미승인"){
 				if(confirm("정말 취소하시겠어요?")){
 					 $.ajax({

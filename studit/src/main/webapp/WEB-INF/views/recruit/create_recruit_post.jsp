@@ -35,6 +35,10 @@ function check(){
 		$("#title").focus();
 		return false;
 	}
+	if($("#title").val().length > 33){
+		alert("제목은 33글자까지 가능합니다.");
+		return false;
+	}
 	if($("#capacity").val()==""){
 		alert("희망인원을 입력하세요!");
 		$("#capacity").focus();
@@ -43,6 +47,10 @@ function check(){
 	if($("#location").val()==""){
 		alert("희망지역을 입력하세요!");
 		$("#location").focus();
+		return false;
+	}
+	if($("#location").val().length > 33){
+		alert("지역은 33글자까지 가능합니다.");
 		return false;
 	}
 	if($("#big_category option:selected").val()==0){
@@ -59,6 +67,10 @@ function check(){
 	}
 	if($("#content").val()==""){
 		alert("내용을 입력하세요!"); 
+		return false;
+	}
+	if($("#content").val().length > 1332){
+		alert("내용은 1300글자까지 가능합니다. 현재 "+$("#content").val().length+"글자 입니다."); 
 		return false;
 	}
 	return true;
