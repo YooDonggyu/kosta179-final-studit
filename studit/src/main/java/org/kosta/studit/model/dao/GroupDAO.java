@@ -34,5 +34,7 @@ public interface GroupDAO {
 
 	List<GroupMemberVO> findGroupMemberByGroupNo(Map<String, Object> map);
 
+	void updateGroupMemberState(Map<String, String> map);
+
 
 }

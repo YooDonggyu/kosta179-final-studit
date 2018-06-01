@@ -227,3 +227,5 @@ create sequence sg_post_pic_seq nocache;
 insert into sg_post_pic(sg_post_pic_no, sg_post_no) values(sg_post_pic_seq.nextval, 1);
 
 commit
+
+select * from sg_member where member_email='a@a.com'

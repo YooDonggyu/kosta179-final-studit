@@ -128,7 +128,7 @@ $(document).ready(function() {
             }
            }
        })//on(가격정보)
-})//ready
+});//ready
 
 
 //작성: 김유란

@@ -175,5 +175,25 @@ where rnum between #{pagingBean.startRowNumber} and #{pagingBean.endRowNumber} o
 	update sg_member set position=#{position} where sg_member_no=#{groupMemberNo}
 	</select>
 	
+		<!-- 
+		그룹 멤버 state(즐겨찾기) 변경
+		@author 김유란
+		@param map(
+		state: true or false 
+		/ memberEmail: 멤버의 모든 그룹 상태를 false로 바꿀때 필요 
+		/groupMemberNo: 멤버가 선택한 그룹의 상태를 true로 바꿀 때 필요
+		)
+	 -->
+	<update id="updateGroupMemberState" parameterType="map">
+	update sg_member set state=#{state} 
+		<choose>
+			<when test="memberEmail!=null and memberEmail!=''">
+			where member_email=#{memberEmail} 
+			</when>
+			<otherwise>
+			where sg_member_no=#{groupMemberNo}
+			</otherwise>
+		</choose>
+	</update>
 </mapper>
 

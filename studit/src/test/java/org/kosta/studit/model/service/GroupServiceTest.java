@@ -19,9 +19,15 @@ public class GroupServiceTest {
 		System.out.println(groupService.findGroupMemberByGroupNo("1","1"));
 	}
 	
-	@Test
+	//@Test
 	public void updateGroupMemberPositionTest() {
 		groupService.updateGroupMemberPosition("26", "1");
+	}
+	
+	@Test
+	public void updateGroupMemberStateTest() {
+		String[] checkBookmark= {"1","3"};
+		groupService.updateGroupMemberState("a@a.com", checkBookmark);
 	}
 	
 }

@@ -136,5 +136,14 @@ public class GroupDAOImpl implements GroupDAO {
 		template.update("group.updateGroupMemberPosition", map);
 	}
 
+	/**
+	 * 스터디 그룹 멤버의 그룹 즐겨찾기 상태 변경(true or false)
+	 * @author 김유란
+	 * @param map 변경할 상태명과 그룹멤버 번호 또는 회원 이메일 정보를 담은 map
+	 */
+	@Override
+	public void updateGroupMemberState(Map<String,String> map) {
+		template.update("group.updateGroupMemberState", map);
+	}
 
 }

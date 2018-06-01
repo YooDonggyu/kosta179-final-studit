@@ -20,12 +20,12 @@ import org.kosta.studit.model.dao.GroupDAO;
 import org.kosta.studit.model.dao.MemberDAO;
 import org.kosta.studit.model.dao.RecruitDAO;
 import org.kosta.studit.model.service.CompanyService;
-import org.kosta.studit.model.service.GroupMemberListVO;
 import org.kosta.studit.model.service.GroupService;
 import org.kosta.studit.model.service.MemberService;
 import org.kosta.studit.model.service.RecruitService;
 import org.kosta.studit.model.service.StudyRoomService;
 import org.kosta.studit.model.vo.CompanyListVO;
+import org.kosta.studit.model.vo.GroupMemberListVO;
 import org.kosta.studit.model.vo.MemberVO;
 import org.kosta.studit.model.vo.RecruitPostListVO;
 import org.kosta.studit.model.vo.SmallCategoryVO;
@@ -399,7 +399,6 @@ public class AjaxViewController {
 	        conn.setRequestMethod("GET");
 	        conn.setRequestProperty("Content-type", "application/json");
 	        conn.setRequestProperty("Accept", "application/json;charset=UTF-8");
-	        System.out.println("Response code: " + conn.getResponseCode());
 
 	        BufferedReader rd;
 	        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {

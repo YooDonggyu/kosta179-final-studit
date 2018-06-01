@@ -1,5 +1,7 @@
 package org.kosta.studit.model.service;
 
+import org.kosta.studit.model.vo.GroupMemberListVO;
+
 public interface GroupService {
 
 
@@ -13,5 +15,7 @@ public interface GroupService {
 	GroupMemberListVO findGroupMemberByGroupNo(String groupNo, String nowPage);
 
 	void updateGroupMemberPosition(String groupMemberNo, String groupOwnerNo);
+
+	void updateGroupMemberState(String memberEmail, String[] checkBookmark);
 
 }

@@ -1,9 +1,8 @@
-package org.kosta.studit.model.service;
+package org.kosta.studit.model.vo;
 
 import java.util.List;
 
 import org.kosta.studit.model.PagingBean;
-import org.kosta.studit.model.vo.GroupMemberVO;
 
 public class GroupMemberListVO {
 

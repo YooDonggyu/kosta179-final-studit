@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.kosta.studit.model.PagingBean;
 import org.kosta.studit.model.dao.GroupDAO;
+import org.kosta.studit.model.vo.GroupMemberListVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -78,5 +79,20 @@ public class GroupServiceImpl implements GroupService {
 		groupDAO.updateGroupMemberPosition(map);
 	}
 	
-
+	@Override
+	public void updateGroupMemberState(String memberEmail, String[] checkBookmark) {
+		Map<String,String> map = new HashMap<>();
+		map.put("state", "false");
+		map.put("memberEmail", memberEmail);
+		groupDAO.updateGroupMemberState(map);
+		map.remove("memberEmail");
+		if(checkBookmark!=null && checkBookmark.length!=0) {
+			map.put("state", "true");
+			for(int i=0; i<checkBookmark.length; i++) {
+				map.put("groupMemberNo", checkBookmark[i]);
+				groupDAO.updateGroupMemberState(map);
+			}
+		}
+	}
+	
 }

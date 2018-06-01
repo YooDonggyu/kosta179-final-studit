@@ -110,7 +110,7 @@ public class GroupDAOTest {
 	 * 스터디 그룹에 속한 멤버 조회
 	 * @author 김유란
 	 */
-	@Test
+	//@Test
 	public void findGroupMemberByGroupNoTest() {
 		PagingBean pagingBean = new PagingBean(groupDAO.findGroupMemberCountByGroupNo("1"));
 		Map<String,Object> map = new HashMap<>();
@@ -126,7 +126,7 @@ public class GroupDAOTest {
 	 * 스터디 그룹 멤버 직책 변경
 	 * @author 김유란
 	 */
-	@Test
+	//@Test
 	public void updateGroupMemberPositionTest() {
 		Map<String,String> map = new HashMap<>();
 		map.put("position", "팀장");
@@ -134,5 +134,11 @@ public class GroupDAOTest {
 		groupDAO.updateGroupMemberPosition(map);
 	}
 	
-	
+	@Test
+	public void updateGroupMemberStateTest() {
+		Map<String,String> map=new HashMap<>();
+		map.put("state", "true");
+		map.put("groupMemberNo", "1");
+		groupDAO.updateGroupMemberState(map);
+	}
 }

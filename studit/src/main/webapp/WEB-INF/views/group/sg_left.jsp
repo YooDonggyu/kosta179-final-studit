@@ -21,7 +21,7 @@
             <li> <a href="#"> <i class="icon-grid"> </i><span>SCHEDULER</span></a></li>
             <c:choose>
             	<c:when test="${position eq '팀장' }">
-            		 <li> <a href="#"><i class="icon-form"></i><span>ADMIN</span></a></li>
+            		 <li> <a href="${pageContext.request.contextPath}/group/findGroupMemberView?groupNo=${sgNo}"><i class="icon-form"></i><span>ADMIN</span></a></li>
             	</c:when>
             	<c:otherwise>
             		 <li> <a href="#"><i class="icon-form"></i><span>LEAVE</span></a></li>

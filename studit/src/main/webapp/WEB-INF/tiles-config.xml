@@ -63,11 +63,11 @@
 		<put-attribute name="footer" value="/WEB-INF/views/group/sg_footer.jsp"/>
 	</definition>
 	
-	<definition name="*.sgtiles" extends="studygroup.tiles">
+	<definition name="*.sgtiles" extends="groupHome.tiles">
 		<put-attribute name="main" value="/WEB-INF/views/{1}.jsp"/>
 	</definition>
 	
-	<definition name="*/*.sgtiles" extends="studygroup.tiles">
+	<definition name="*/*.sgtiles" extends="groupHome.tiles">
 		<put-attribute name="main" value="/WEB-INF/views/{1}/{2}.jsp"/>
 	</definition>
 	
