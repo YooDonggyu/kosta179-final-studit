@@ -218,7 +218,7 @@ where p.sg_post_no=c.sg_post_no
 --모집 완료된 스터디 게시글 사진
 create table sg_post_pic (
 	sg_post_pic_no number primary key,
-	path varchar2(100) default 'default.png',
+	path varchar2(100) default 'studypost.png',
 	sg_post_no number not null,
 	constraint fk2_sg_post_no foreign key(sg_post_no) references sg_post(sg_post_no)
 );

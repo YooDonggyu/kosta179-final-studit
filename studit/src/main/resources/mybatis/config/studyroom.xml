@@ -214,8 +214,81 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		and c.member_email = m.member_email
 		and m.member_email = #{value}
    </select> 
-	
+   
+   <!-- 
+		회원 이메일로 스터디룸 사진 경로를 
+		@author 변태섭
+		@param 회원 이메일
+		@return 해당 회원이 등록한 스터디룸 사진들의 경로와 스터디룸 번호
+    -->
+   <select id="findStudyRoomPicPathByMemberEmail" parameterType="string" resultType="map">
+		select sp.path, sp.studyroom_no srno
+		from studyroom_pic sp, company c, member m, studyroom s
+		where sp.studyroom_no = s.studyroom_no
+					and s.company_no = c.company_no
+					and c.member_email = m.member_email
+					and m.member_email = #{value}
+   </select>
+   
+   <!-- 
+   		회원 이메일로 해당 회원이 등록한 스터디룸 제공 기능 리스트를 받아오는 쿼리
+   		@author 변태섭
+   		@param 회원 이메일
+   		@return 해당 회원이 등록한 스터디룸 제공 기능 List 객체
+    -->
+   <select id="findStudyRoomFunctionByMemberEmail" parameterType="string" resultType="map">
+   		select sf.name, sf.studyroom_no srno
+		from studyroom_function sf, studyroom s, company c, member m
+		where sf.studyroom_no = s.studyroom_no
+					and s.company_no = c.company_no
+					and c.member_email = m.member_email
+					and m.member_email = #{value}
+   </select>
+   
+   <!-- 
+		스터디룸 번호로 스터디룸 제공기능을 받아오는 쿼리
+		@author 변태섭
+		@param 스터디룸 번호
+		@return 해당 스터디룸의 제공 기능 리스트
+    -->
+   <select id="findStudyRoomFunctionByStudyRoomNo" parameterType="int" resultType="string">
+   		select name
+		from studyroom_function
+		where studyroom_no = #{value}
+   </select>
+   
+   <!-- 
+   		해당 스터디룸의 모든 제공 기능을 삭제하는 쿼리
+   		@author 변태섭
+   		@param 스터디룸 번호
+    -->
+   <delete id="deleteStudyRoomFunctionByStudyRoomNo" parameterType="int">
+   		delete from studyroom_function where studyroom_no = #{value}
+   </delete>
+   
+   <!-- 
+   		해당 스터디룸의 모든 사진을 삭제하는 쿼리
+   		@author 변태섭
+   		@param 스터디룸 번호
+    -->
+   <delete id="deleteStudyRoomPicFileByStudyRoomNo" parameterType="int">
+   		delete from studyroom_pic where studyroom_no = #{value}
+   </delete>
+   
+   <!-- 
+   		해당 스터디룸의 사진을 변경하는 쿼리
+   		@author 변태섭
+   		@param Map 스터디룸 번호와 사진 경로를 담은 객체
+    -->
+   <update id="updateStudyRoomPicFile" parameterType = "map">
+   		update studyroom_pic set path = #{path} where studyroom_no = #{studyRoomNo}
+   </update>
 
+	<update id="updateStudyRoom" parameterType="studyroomVO">
+		update studyroom
+		set name= #{name}, capacity = #{capacity}, price = #{price}, content = #{content}
+		where studyroom_no = #{studyRoomNo}
+	</update>   
 </mapper>
 
 

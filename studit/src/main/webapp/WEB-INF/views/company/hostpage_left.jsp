@@ -33,6 +33,7 @@ $(document).ready(function(){
 					</c:if>
 				</c:forEach>
 				<a href="${pageContext.request.contextPath }/company/registerStudyRoomForm?companyNo=${cvo.companyNo}&companyName=${cvo.name}" class="list-group-item" ><i class="material-icons" style="font-size: 30px;">add_circle</i><i class="fa fa-caret-down"></i></a>
+				<a href="${pageContext.request.contextPath }/company/findStudyRoomConditionByCompanyNo?companyNo=${cvo.companyNo}" class="list-group-item strong" >예약 현황 관리<i class="fa fa-caret-down"></i></a>
 			</div>
 		</c:forEach>
 	</div>

@@ -1,11 +1,15 @@
 package org.kosta.studit.model.service;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.kosta.studit.model.PagingBean;
+import org.kosta.studit.model.dao.CompanyDAO;
 import org.kosta.studit.model.dao.StudyRoomDAO;
+import org.kosta.studit.model.vo.CompanyVO;
 import org.kosta.studit.model.vo.MemberVO;
 import org.kosta.studit.model.vo.StudyRoomConditionListVO;
 import org.kosta.studit.model.vo.StudyRoomConditionVO;
@@ -13,12 +17,17 @@ import org.kosta.studit.model.vo.StudyRoomVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class StudyRoomServiceImpl implements StudyRoomService {
 	
 	@Autowired
 	private StudyRoomDAO studyroomDAO;
+	
+	@Autowired
+	private CompanyDAO companyDAO;
+	
 	/**
 	 * 스터디 룸 신청현황에 따른 페이징 결과 처리
 	 * @author 유동규
@@ -107,6 +116,32 @@ public class StudyRoomServiceImpl implements StudyRoomService {
 		studyRoomConditionVO.setStudyRoomConditionNo(Integer.parseInt(studyRoomConditionNo));
 		studyroomDAO.updateStudyRoomConditionByMember(studyRoomConditionVO);
 	}
-	
-	
+
+	@Transactional
+	@Override
+	public void updateStudyRoom(String companyNo, String memberEmail, String studyRoomNo, StudyRoomVO studyRoomVO, MultipartFile studyRoomPicFile, String[] studyRoomFunction) {
+		//스터디룸 사진 인코딩
+		studyroomDAO.updateStudyRoom(studyRoomVO);
+		Map<String, Object> map = new HashMap<String, Object>();
+		 map.put("studyRoomNo", studyRoomNo);
+		CompanyVO cvo = companyDAO.findCompanyByCompanyNo(Integer.parseInt(companyNo));
+			if(studyRoomPicFile!=null && !studyRoomPicFile.isEmpty()) {
+			     String fileName = memberEmail+"_"+cvo.getName()+"_"+studyRoomVO.getName()+"_"+studyRoomPicFile.getOriginalFilename();
+			     //String path = request.getSession(false).getServletContext().getRealPath("upload"); 개발 완료 후 적용
+			     map.put("path", fileName);
+			     String path = "C:/resources/upload/";
+			     
+			     try {
+			    	 studyRoomPicFile.transferTo(new File(path, fileName));//지정 경로에 실제 파일 저장
+			    	 studyroomDAO.updateStudyRoomPicFile(map);
+			     } catch (IllegalStateException | IOException e) {
+			        System.out.println("Update StudyRoom PicFile Error(StudyRoomServiceImpl_updateStudyRoom)");
+			     } 
+			  }
+			studyroomDAO.deleteStudyRoomFunctionByStudyRoomNo(Integer.parseInt(studyRoomNo));
+			for(int i=0; i<studyRoomFunction.length; i++) {
+				map.put("studyRoomFunction", studyRoomFunction[i]);
+				studyroomDAO.registerStudyRoomFunction(map);
+			}
+	}
 }

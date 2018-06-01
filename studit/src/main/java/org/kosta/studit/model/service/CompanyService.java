@@ -38,4 +38,6 @@ public interface CompanyService {
 	List<StudyRoomVO> findStudyRoomListByCompanyNo(int companyNo);
 	
 	JSONArray findStudyRoomConditionCountByMonth(String companyNo);
+
+	void updateCompany(CompanyVO companyVO, String day, String hashtag);
 }

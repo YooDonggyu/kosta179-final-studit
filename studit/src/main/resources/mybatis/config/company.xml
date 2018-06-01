@@ -74,6 +74,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where state='승인'
 		order by regdate desc
 	</select>
+	
 	<!-- 
 		 등록이 승인된 업체 목록들의 해쉬태그를 불러온다
 		 @author 송용준 
@@ -84,6 +85,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		from hashtag h, company c
 		where c.company_no=h.company_no and c.state='승인'
 	</select>
+	
 	<!-- 
 		선택된 addr1을 가진 업체들의 addr2를 불러온다
 		 @author 송용준 
@@ -324,7 +326,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		group by to_char(use_date, 'YYYY-MM')
 	 </select>
 	 
-	 	 <!-- 
+	 <!-- 
 		스터디룸 예약대기 전체 내역(일별 건수) 조회
 		@author 김유란
 	 -->
@@ -339,8 +341,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			)
 		group by to_char(use_date, 'YYYY-MM-DD') order by to_char(use_date, 'YYYY-MM-DD')
 	 </select>
-	 
-	 
 	 
 	 <!-- 
 	 	업체의 회원 아이디 찾기(조회수 증가 판단을 위함)
@@ -363,7 +363,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where company_no = #{value}
 	  </update>
 	 
-	 
  	<!-- 
 		조회수가 가장 높은 업체 3곳 조회
 		@author 유동규
@@ -380,9 +379,90 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				   and rnum between 1 and 3
 		order by rnum 
 	</select>
-	
-	
-   
+   	
+   	<!-- 
+   		회원 이메일로 해시태그를 가져오는 쿼리
+   		@author 변태섭
+   		@param 회원 이메일
+   		@return 해시태그 content, company_no
+   	 -->
+   	<select id="findHashTagByMemberEmail" parameterType="string" resultType="map">
+   		select h.content, h.company_no cno
+		from hashtag h, member m, company c
+		where h.company_no = c.company_no
+					and c.member_email = m.member_email
+					and m.member_email = #{value}
+   	</select>
+   	
+   	<!-- 
+   		회원 이메일로 업체요일들을 받아오는 쿼리
+   		@author 변태섭
+   		@param 회원 이메일
+   		@return 해당 회원이 보유한 업체들의 영업요일
+   	 -->
+   	<select id="findDaysByMemberEmail" parameterType="string" resultType="map">
+   		select d.day, d.company_no cno
+		from COM_BUSINESS_DAY d, COMPANY c, MEMBER m
+		where d.company_no = c.company_no
+					and c.member_email = m.member_email
+					and m.member_email = #{value}
+   	</select>
+   	
+   	<!-- 
+   		회원 이메일로 업체 사진(대표사진X)들의 경로를 받아오는 쿼리
+   		@author 변태섭
+   		@param 회원 이메일
+   		@return List 해당 회원이 보유한 업체의 업체사진 경로들을 담은 List 객체
+   	 -->
+   	<select id="findCompanyPicPathByMemberEmail" parameterType="string" resultType="map">
+   		select cp.path, cp.company_no cno
+		from com_pic cp, company c, member m
+		where cp.company_no = c.company_no
+					and c.member_email = m.member_email
+					and m.member_email = #{value}
+   	</select>
+   	
+   	<!-- 
+   		업체 정보를 수정하는 쿼리
+   		@author 변태섭
+   		@param CompanyVO 입력된 업체 정보
+   	 -->
+   	<update id="updateCompany" parameterType="companyVO">
+   		update company
+		set name= #{name}, addr1 = #{addr1}, addr2 = #{addr2}, addr3 = #{addr3}, addr4 = #{addr4}
+			  , primary_addr = #{primaryAddr}, detail_addr = #{detailAddr}
+			  , tel = #{tel}, intro = #{intro}, open = #{open}, close = #{close}, holiday = #{holiday}, url = #{url}
+		where company_no = #{companyNo}
+   	</update>
+   	
+   	<!-- 
+   		업체 프로필을 수정하는 쿼리
+   		@author 변태섭
+   		@param CompanyVO 입력된 업체 정보
+   	 -->
+   	<update id="updateCompanyProfilePath" parameterType="companyVO">
+   		update company
+		set profile_path = #{profilePath}
+		where company_no = #{companyNo}
+   	</update>
+   	
+   	<!-- 
+   		업체 해시태그를 삭제하는 쿼리
+   		@author 변태섭
+   		@param 업체 번호
+   	 -->
+   	<delete id="deleteHashtagByCompanyNo" parameterType="int">
+   		delete from hashtag where company_no = #{value}
+   	</delete>
+   	
+   	<!-- 
+   		업체 영업요일을 삭제하는 쿼리
+   		@author 변태섭
+   		@param 업체 번호
+   	 -->
+   	<delete id="deleteCompanyBusinessDayByCompanyNo" parameterType="int">
+   		delete from com_business_day where company_no = #{value}
+   	</delete>
 </mapper>
  
  

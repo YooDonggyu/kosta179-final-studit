@@ -149,6 +149,11 @@
 			var $tagtrim = $this.val().replace(' ','');
 			$this.val($tagtrim);
 			for(var i=0; i<$this.val().split(',').length; i++){
+				if($this.val().split(',')[i].length>8){
+					alert('해시태그는 최대 8글자까지 가능합니다.');
+					$maxtag = $this.val().substring(0,$this.val().length-1);
+					$this.val($maxtag);
+				}
 				$tagsplit+="<input type='button' class='btn btn-success tag' value='#"+$this.val().split(',')[i]+"'>&emsp;";
 			}
 			if($tagsplit == "<input type='button' class='btn btn-success tag' value='#'>&emsp;"){
@@ -394,7 +399,7 @@
 						<input type="hidden" id="addr1" name="companyVO.addr1">
 						<input type="hidden" id="addr2" name="companyVO.addr2">
 						<input type="hidden" id="addr3" name="companyVO.addr3">
-						<input type="hidden" id="addr4" name="companyVO.addr4" value="임시">
+						<input type="hidden" id="addr4" name="companyVO.addr4">
 						<div id="map" style="height:300px;margin-top:10px;display:none"></div>
                     </div>
                 </div>
@@ -468,7 +473,6 @@
        							<option value="21"> 21 </option>
        							<option value="22"> 22 </option>
        							<option value="23"> 23 </option>
-       							<option value="24"> 24 </option>
   					  </select>
   					  &emsp;&emsp;
   					  마감 시간
@@ -481,8 +485,8 @@
             	<div class="form-group">
             		<label for="" class="col-sm-3 control-label formCategory">공휴일 영업 유무</label>
                     <div class="col-sm-6">	
-						<label><input type='radio' name='companyVO.holiday' value='정상 영업' checked='checked'/>정상 영업</label>&emsp;&emsp;
-						<label><input type='radio' id="test" name='companyVO.holiday' value='휴무' />휴무</label>
+						<label><input type='radio' name='companyVO.holiday' value='영업' checked='checked'/>영업</label>&emsp;&emsp;
+						<label><input type='radio' id="test" name='companyVO.holiday' value='휴업' />휴업</label>
                     </div>
             	</div>
             	
@@ -544,37 +548,59 @@
               	<table style="width: 100%;">
               		<tbody>
               			<tr>
-              				<td style="width: 145px;">
+              				<td style="width: 180px;">
               					<input type="checkbox" id="function1" name="studyRoomFunction" value="에어컨">
 		              			<label for="function1" class=" control-label">에어컨</label>
               				</td>
-              				<td style="width: 145px;">
-              					<input type="checkbox" id="function2" name="studyRoomFunction" value="주소지 등록">
-		              			<label for="function2" class=" control-label">주소지 등록</label>
-              				</td>
               				<td style="width: 180px;">
-              					<input type="checkbox" id="function3" name="studyRoomFunction" value="카페 및 레스토랑">
-		              			<label for="function3" class="control-label">카페 및 레스토랑</label>
+              					<input type="checkbox" id="function2" name="studyRoomFunction" value="복사/인쇄기">
+		              			<label for="function2" class=" control-label">복사/인쇄기</label>
+              				</td>
+              				<td style="width: 120px;">
+              					<input type="checkbox" id="function3" name="studyRoomFunction" value="와이파이">
+		              			<label for="function3" class="control-label">와이파이</label>
               				</td>
               				<td>
-              					<input type="checkbox" id="function4" name="studyRoomFunction" value="케이터링">
-		              			<label for="function4" class="control-label">케이터링</label>
+              					<input type="checkbox" id="function4" name="studyRoomFunction" value="멀티탭/콘센트">
+		              			<label for="function4" class="control-label">멀티탭/콘센트</label>
               				</td>
               			</tr>
               			<tr>
               				<td>
-              					<input type="checkbox" id="function5" name="studyRoomFunction" value="복사/인쇄기">
-		              			<label for="function5" class="control-label">복사/인쇄기</label>
+              					<input type="checkbox" id="function5" name="studyRoomFunction" value="빔프로젝트">
+		              			<label for="function5" class="control-label">빔프로젝트</label>
 		              		</td>
               				<td>
-              					<input type="checkbox" id="function6" name="studyRoomFunction" value="팩스">
-		              			<label for="function6" class="control-label">팩스</label>
+              					<input type="checkbox" id="function6" name="studyRoomFunction" value="화이트보드">
+		              			<label for="function6" class="control-label">화이트보드</label>
               				</td>
               				<td>
-              					<input type="checkbox" id="function7" name="studyRoomFunction" value="반려동물 동반가능">
-		              			<label for="function7" class="control-label">반려동물 동반가능</label>
+              					<input type="checkbox" id="function7" name="studyRoomFunction" value="충전기">
+		              			<label for="function7" class="control-label">충전기</label>
+              				</td>
+              				<td>
+              					<input type="checkbox" id="function8" name="studyRoomFunction" value="마이크">
+		              			<label for="function8" class="control-label">마이크</label>
               				</td>
               			</tr>
+              			<tr>
+              				<td>
+              					<input type="checkbox" id="function9" name="studyRoomFunction" value="카페 및 레스토랑">
+		              			<label for="function9" class="control-label">카페 및 레스토랑</label>
+              				</td>
+              				<td>
+              					<input type="checkbox" id="function10" name="studyRoomFunction" value="반려동물 동반가능">
+		              			<label for="function10" class="control-label">반려동물 동반가능</label>
+              				</td>
+              				<td>
+              					<input type="checkbox" id="function11" name="studyRoomFunction" value="흡연실">
+		              			<label for="function11" class="control-label">흡연실</label>
+              				</td>
+              				<td>
+              					<input type="checkbox" id="function12" name="studyRoomFunction" value="주차공간">
+		              			<label for="function12" class="control-label">주차공간</label>
+              				</td>
+              			</tr>     			
               		</tbody>
               	</table>
               </div>

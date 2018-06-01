@@ -7,14 +7,29 @@
 	width: 150px;
 	/* text-align: left; */
 }
+.updateBtn{
+	width: 300px;
+	height: 50px;
+}
 .table>tbody>tr>td{
 line-height: 2;
+vertical-align: middle;
 }
 .table>thead>tr>th{
 	text-align: center;
 }
-.material-icons { font-size: 36px; }
+.table>tbody>tr>td>img{
+height: 300px;
+width: 300px;
+}
+.material-icons { 
+font-size: 24px; 
+vertical-align: sub;
+}
 </style>
+<script>
+	console.log('srfunction: ${srFunction }');
+</script>
 <section>
 	<div class="col-sm-10" style="padding-left:0px;">
 		<div class="container col-sm-12 col-sm-offset-1">
@@ -40,32 +55,88 @@ line-height: 2;
 						    		<tr>
 						    			<td class="formCategory">제공 기능</td>
 						    			<td colspan="3">
-						    			<i class="material-icons">toys</i>에어컨
-						    			<i class="material-icons">find_in_page</i>주소지등록
-						    			<i class="material-icons">local_cafe</i>카페및레스토랑
-						    			<i class="material-icons">wifi</i>와이파이
-						    			<i class="material-icons">print</i>복사인쇄기
-						    			<i class="material-icons">pets</i>반려동물 동반가능
-						    			<i class="material-icons">mic</i>마이크
-						    			<i class="material-icons">battery_charging_full</i>충전기
-						    			<i class="material-icons">power</i>멀티탭/콘센트
-						    			<i class="material-icons">smoking_rooms</i>흡연실
-						    			<i class="material-icons">border_color</i>화이트보드
-						    			<i class="material-icons">videocam</i>빔프로젝터
-						    			<i class="material-icons">local_parking</i>주차공간
-						    			
+						    				<c:set var="root" value="1"/>
+						    				<%int a=0; %>
+							    			<c:forEach items="${srFunction }" var="func" varStatus="info">
+							    				<c:if test="${func.SRNO eq srno }">
+							    					<%if(a>0){ %>
+							    						&emsp;
+							    					<%} %>
+							    					<%if(a==4 || a==8){ %>
+							    						<br><br>
+							    					<%} %>
+							    					<c:if test="${func.NAME eq '에어컨'}">
+							    						<i class="material-icons">toys</i> 에어컨
+							    						<%a++; %>
+							    					</c:if>
+							    					<c:if test="${func.NAME eq '카페 및 레스토랑'}">
+							    						<i class="material-icons">local_cafe</i> 카페 및 레스토랑
+							    						<%a++; %>
+							    					</c:if>
+							    					<c:if test="${func.NAME eq '와이파이'}">
+							    						<i class="material-icons">wifi</i> 와이파이
+							    						<%a++; %>
+							    					</c:if>
+							    					<c:if test="${func.NAME eq '복사/인쇄기'}">
+							    						<i class="material-icons">print</i> 복사/인쇄기
+							    						<%a++; %>
+							    					</c:if>
+							    					<c:if test="${func.NAME eq '반려동물 동반가능'}">
+							    						<i class="material-icons">pets</i> 반려동물 동반가능
+							    						<%a++; %>
+							    					</c:if>
+							    					<c:if test="${func.NAME eq '마이크'}">
+							    						<i class="material-icons">mic</i> 마이크
+							    						<%a++; %>
+							    					</c:if>
+							    					<c:if test="${func.NAME eq '충전기'}">
+							    						<i class="material-icons">battery_charging_full</i> 충전기
+							    						<%a++; %>
+							    					</c:if>
+							    					<c:if test="${func.NAME eq '멀티탭/콘센트'}">
+							    						<i class="material-icons">power</i> 멀티탭/콘센트
+							    						<%a++; %>
+							    					</c:if>
+							    					<c:if test="${func.NAME eq '흡연실'}">
+							    						<i class="material-icons">smoking_rooms</i> 흡연실
+							    						<%a++; %>
+							    					</c:if>
+							    					<c:if test="${func.NAME eq '화이트보드'}">
+							    						<i class="material-icons">border_color</i> 화이트보드
+							    						<%a++; %>
+							    					</c:if>
+							    					<c:if test="${func.NAME eq '빔프로젝트'}">
+							    						<i class="material-icons">videocam</i> 빔프로젝트
+							    						<%a++; %>
+							    					</c:if>
+							    					<c:if test="${func.NAME eq '주차공간'}">
+							    						<i class="material-icons">local_parking</i> 주차공간
+							    						<%a++; %>
+							    					</c:if>
+							    				</c:if>
+							    			</c:forEach>
 						    			</td>
 						    		</tr>
 						    		<tr>
-						    			<td class="formCategory">사진</td><td colspan="3">사진 경로</td>
+						    			<td class="formCategory" style="height: 350px;">사진</td><td colspan="3">
+						    				<c:forEach items="${srPicPath }" var="srPic">
+						    					<c:if test="${srPic.SRNO eq srno }">
+						    						<img id="picView" src="${pageContext.request.contextPath}/resources/upload/${srPic.PATH }">
+						    					</c:if>
+						    				</c:forEach>
+						    			</td>
+						    		</tr>
+						    		<tr>
+						    			<td colspan="4" style="height: 100px;">
+						    				<div class="updateBtnDiv">
+									    		<a href="${pageContext.request.contextPath }/company/updateStudyroomFrom?memberEmail=${memberVO.memberEmail }&studyRoomNo=${srno}"><input type="button" id="updateBtn" value="수정하기" class="btn btn-danger updateBtn"></a>
+									    	</div>
+						    			</td>
 						    		</tr>
 				    			</tbody>
 				    	</table>
 					  </c:if>
 				  </c:forEach>
-			    	<div class="text-right">
-			    		<span class="label label-danger">수정하기</span>
-			    	</div>
 			    	<br>
 		    	</div>
 	  		</div>

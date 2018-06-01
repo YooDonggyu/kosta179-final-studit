@@ -163,4 +163,76 @@ public class StudyRoomDAOImpl implements StudyRoomDAO {
 	   public List<StudyRoomVO> findStudyRoomListByMemberEmail(String memberEmail){
 		   return template.selectList("studyroom.findStudyRoomListByMemberEmail", memberEmail);
 	   }
+	   
+	   /**
+	    * 회원 이메일로 해당 회원이 등록한 스터디룸의 사진 경로를 받아오는 메서드
+	    * @author 변태섭
+	    * @param memberEmail	회원 이메일
+	    * @return 해당 회원이 등록한 스터디룸 사진 경로가 담긴 List 객체
+	    */
+	   @Override
+	   public List<Map<String, String>> findStudyRoomPicPathByMemberEmail(String memberEmail){
+		   return template.selectList("studyroom.findStudyRoomPicPathByMemberEmail", memberEmail);
+	   }
+	   
+	   /**
+	    * 회원 이메일로 해당 회원이 등록한 스터디룸의 제공 기능을 받아오는 메서드
+	    * @author 변태섭
+	    * @param memberEmail 회원 이메일
+	    * @return 해당 회원이 등록한 스터디룸 제공 기능이 담긴 List 객체
+	    */
+	   @Override
+	   public List<Map<String, String>> findStudyRoomFunctionByMemberEmail(String memberEmail){
+		   return template.selectList("studyroom.findStudyRoomFunctionByMemberEmail", memberEmail);
+	   }
+	   
+	   /**
+	    * 스터디룸 번호로 해당 스터디룸의 제공 기능 리스트를 받아오는 쿼리
+	    * @param studyRoomNo 스터디룸 번호
+	    * @return 해당 스터디룸의 제공 기능 리스트
+	    */
+	   @Override
+	   public List<String> findStudyRoomFunctionByStudyRoomNo(int studyRoomNo){
+		   return template.selectList("studyroom.findStudyRoomFunctionByStudyRoomNo", studyRoomNo);
+	   }
+	   
+	   /**
+	    * 해당 스터디룸의 모든 제공 기능을 삭제하는 메서드
+	    * @author 변태섭
+	    * @param studyRoomNo 스터디룸 번호
+	    */
+	   @Override
+	   public void deleteStudyRoomFunctionByStudyRoomNo(int studyRoomNo) {
+		   template.delete("studyroom.deleteStudyRoomFunctionByStudyRoomNo", studyRoomNo);
+	   }
+	   
+	   /**
+	    * 해당 스터디룸의 모든 사진을 삭제하는 메서드
+	    * @author 변태섭
+	    * @param
+	    */
+	   @Override
+	   public void deleteStudyRoomPicFileByStudyRoomNo(int studyRoomNo) {
+		   template.delete("studyroom.deleteStudyRoomPicFileByStudyRoomNo", studyRoomNo);
+	   }
+	   
+	   /**
+	    * 해당 스터디룸의 사진을 변경하는 메서드
+	    * @author 변태섭
+	    * @param Map 스터디룸 번호와 사진 경로를 담은 객체
+	    */
+	   @Override
+	   public void updateStudyRoomPicFile(Map<String, Object> map) {
+		   template.update("studyroom.updateStudyRoomPicFile", map);
+	   }
+	   
+	   /**
+	    * 스터디룸 정보를 수정하는 메서드
+	    * @author 변태섭
+	    * @param studyRoomVO
+	    */
+	   @Override
+	   public void updateStudyRoom(StudyRoomVO studyRoomVO) {
+		   template.update("studyroom.updateStudyRoom", studyRoomVO);
+	   }
 }

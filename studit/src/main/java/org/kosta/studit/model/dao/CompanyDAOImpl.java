@@ -17,7 +17,6 @@ public class CompanyDAOImpl implements CompanyDAO {
 
 	/**
 	 * 승인대기중인 예약이 있는가를 확인. 업체라면, 탈퇴하기 전에 승인대기중인 예약건수를 처리해야 한다.
-	 * 
 	 * @author 송용준
 	 * @param memberEmail
 	 *            회원 이메일
@@ -30,7 +29,6 @@ public class CompanyDAOImpl implements CompanyDAO {
 	
 	/**
 	 * select box에 제공할 모든 업체의 addr1 값을 불러온다
-	 * 
 	 * @author 송용준
 	 * @return 모든 업체의 addr1 값
 	 */
@@ -41,7 +39,6 @@ public class CompanyDAOImpl implements CompanyDAO {
 	
 	/**
 	 * 등록이 승인된 모든 업체 정보를 불러온다
-	 * 
 	 * @author 송용준
 	 * @return 모든 업체 정보
 	 */
@@ -52,7 +49,6 @@ public class CompanyDAOImpl implements CompanyDAO {
 	
 	/**
 	 * 등록이 승인된 모든 업체의 해쉬태그 정보를 불러온다
-	 * 
 	 * @author 송용준
 	 * @return 모든 해쉬태그 정보
 	 */
@@ -63,7 +59,6 @@ public class CompanyDAOImpl implements CompanyDAO {
 	
 	/**
 	 * 스터디룸(업체) 검색 뷰에서 선택된 addr1에 대응되는 addr2를 조회.
-	 * 
 	 * @author 송용준
 	 * @param addr1 뷰에서 선택된 첫번째 주소값
 	 * @return List<String> 조회한 addr2 리스트를 담은 객체
@@ -75,7 +70,6 @@ public class CompanyDAOImpl implements CompanyDAO {
 	
 	/**
 	 * 스터디룸(업체) 검색 뷰에서 선택된 addr2에 대응되는 addr3를 조회.
-	 * 
 	 * @author 송용준
 	 * @param addr2 뷰에서 선택된 두번째 주소값
 	 * @return List<String> 조회한 addr3 리스트를 담은 객체
@@ -136,7 +130,6 @@ public class CompanyDAOImpl implements CompanyDAO {
 
 	   /**
 	    * 스터디룸 예약 정보를 수정하는 메서드
-	    * 
 	    * @author 김유란
 	    * @param studyRoomConditionVO 스터디룸 예약 정보 담은 VO
 	    */
@@ -159,7 +152,6 @@ public class CompanyDAOImpl implements CompanyDAO {
 
 	   /**
 	    * 업체 등록 시 해시태그를 등록하는 메서드
-	    * 
 	    * @author 변태섭
 	    * @param Map 업체 번호와 해시태그들을 담은 맵
 	    */
@@ -170,7 +162,6 @@ public class CompanyDAOImpl implements CompanyDAO {
 	   
 	   /**
 	    * 업체 등록 시 영업 요일을 등록하는 메서드
-	    * 
 	    * @author 변태섭
 	    * @param Map 업체 번호와 영업 요일을 담은 맵
 	    */
@@ -181,7 +172,6 @@ public class CompanyDAOImpl implements CompanyDAO {
 	  
 	   /**
 	    * 업체 등록 시 입력된 데이터를 업체 테이블에 등록하는 메서드
-	    * 
 	    * @author 변태섭
 	    * @param Map 입력된 업체 정보와 해당 회원 이메일을 담은 맵
 	    */
@@ -192,7 +182,6 @@ public class CompanyDAOImpl implements CompanyDAO {
 	   
 	   /**
 	    * 업체 등록 시 업로드 된 사진들의 경로를 등록하는 메서드
-	    * 
 	    * @author 변태섭
 	    * @param Map 사진의 경로와 해당 업체 번호를 담은 객체
 	    */
@@ -203,7 +192,6 @@ public class CompanyDAOImpl implements CompanyDAO {
 	   
 	   /**
 	    * 사업자 등록 번호 중복 체크를 위해 Count를 받아오는 메서드
-	    * 
 	    * @author 변태섭
 	    * @param license 입력된 사업자 등록 번호
 	    * @return 입력된 사업자 등록번호로 조회되는 데이터의 개수
@@ -300,5 +288,77 @@ public class CompanyDAOImpl implements CompanyDAO {
 			return template.selectList("company.findWaitStudyRoomConditionCountByCompanyNo", companyNo);
 		}
 
+		/**
+		 * 회원 이메일로 해시태그 정보를 받아오는 메서드
+		 * @author 변태섭
+		 * @param memberEmail 회원 이메일
+		 * @return 해시태그 content, company_no를 Map 담은 List 객체
+		 */
+		@Override
+		public List<Map<String, Object>> findHashTagByMemberEmail(String memberEmail){
+			return template.selectList("company.findHashTagByMemberEmail", memberEmail);
+		}
+		
+		/**
+		 * 회원 이메일로 업체요일을 받아오는 메서드
+		 * @author 변태섭
+		 * @param memberEmail 회원 이메일
+		 * @return 해당 회원이 보유한 업체들의 요일을 map에 담아 리턴
+		 */
+		@Override
+		public List<Map<String, Object>> findDaysByMemberEmail(String memberEmail){
+			return template.selectList("company.findDaysByMemberEmail", memberEmail);
+		}
+		
+		/**
+		 * 회원 이메일로 업체 사진(대표사진X)들의 경로를 받아오는 메서드
+		 * @author 변태섭
+		 * @param memberEmail 회원 이메일
+		 * @return List 해당 회원이 보유한 업체의 업체사진 경로들을 담은 List 객체
+		 */
+		@Override
+		public List<Map<String, String>> findCompanyPicPathByMemberEmail(String memberEmail){
+			return template.selectList("company.findCompanyPicPathByMemberEmail", memberEmail);
+		}
+		
+		/**
+		 * 업체 정보를 수정하는 메서드
+		 * @author 변태섭
+		 * @param companyVO 입력된 업체 정보
+		 */
+		@Override
+		public void updateCompany(CompanyVO companyVO) {
+			template.update("company.updateCompany", companyVO);
+		}
+		
+		/**
+		 * 업체 프로필을 수정하는 메서드
+		 * @author 변태섭
+		 * @param companyVO 입력된 업체 정보
+		 */
+		@Override
+		public void updateCompanyProfilePath(CompanyVO companyVO) {
+			template.update("company.updateCompanyProfilePath", companyVO);
+		}
+		
+		/**
+		 * 업체 해시태그를 삭제하는 메서드
+		 * @author 변태섭
+		 * @param companyNo 업체 번호
+		 */
+		@Override
+		public void deleteHashtagByCompanyNo(int companyNo) {
+			template.delete("company.deleteHashtagByCompanyNo", companyNo);
+		}
+		
+		/**
+		 * 업체 영업요일을 지우는 메서드
+		 * @author 변태섭
+		 * @param companyNo 회원 번호
+		 */
+		@Override
+		public void deleteCompanyBusinessDayByCompanyNo(int companyNo) {
+			template.delete("company.deleteCompanyBusinessDayByCompanyNo", companyNo);
+		}
 }
 

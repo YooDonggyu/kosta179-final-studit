@@ -36,4 +36,18 @@ public interface StudyRoomDAO {
 
 	List<StudyRoomVO> findStudyRoomListByMemberEmail(String memberEmail);
 
+	List<Map<String, String>> findStudyRoomPicPathByMemberEmail(String memberEmail);
+
+	List<Map<String, String>> findStudyRoomFunctionByMemberEmail(String memberEmail);
+
+	List<String> findStudyRoomFunctionByStudyRoomNo(int studyRoomNo);
+
+	void deleteStudyRoomFunctionByStudyRoomNo(int studyRoomNo);
+
+	void deleteStudyRoomPicFileByStudyRoomNo(int studyRoomNo);
+
+	void updateStudyRoomPicFile(Map<String, Object> map);
+
+	void updateStudyRoom(StudyRoomVO studyRoomVO);
+
 }

@@ -5,7 +5,7 @@ import java.util.List;
 import org.kosta.studit.model.vo.StudyRoomConditionListVO;
 
 import org.kosta.studit.model.vo.StudyRoomVO;
-
+import org.springframework.web.multipart.MultipartFile;
 import org.kosta.studit.model.vo.StudyRoomConditionVO;
 
 public interface StudyRoomService {
@@ -17,5 +17,7 @@ public interface StudyRoomService {
 	List<StudyRoomConditionVO> findStudyRoomConditionByStudyRoomNoAndDate(String selectedDate, String studyRoomNo);
 
 	void updateStudyRoomConditionByMember(String memberEmail, String studyRoomConditionNo);
+
+	void updateStudyRoom(String companyNo, String memberEmail, String studyRoomNo, StudyRoomVO studyRoomVO,	MultipartFile studyRoomPicFile, String[] studyRoomFunction);
 
 }

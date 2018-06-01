@@ -31,9 +31,7 @@ public class CompanyServiceImpl implements CompanyService {
 	private StudyRoomDAO studyRoomDAO;
 	
 	/**
-	 * 
 	 * 등록이 승인된 업체들의 첫번째 주소를 조회 : 뷰에 셀렉트 박스에 제공될 주소목록
-	 * 
 	 * @author 송용준
 	 * @return List<String> 등록이 승인된 업체들의 첫번째 주소
 	 */
@@ -43,9 +41,7 @@ public class CompanyServiceImpl implements CompanyService {
 	}
 	
 	/**
-	 * 
 	 * 등록이 승인된 업체 정보들을 조회 : 뷰에 카드 형식으로 표시
-	 * 
 	 * @author 송용준
 	 * @return List<CompanyVO> 등록이 승인된 업체들의 정보
 	 */
@@ -55,9 +51,7 @@ public class CompanyServiceImpl implements CompanyService {
 	}
 	
 	/**
-	 * 
 	 * 등록이 승인된 업체 정보들의 해쉬태그를 조회
-	 * 
 	 * @author 송용준
 	 * @return List<Map<String, Object>> 등록이 승인된 업체 정보들의 해쉬태그
 	 */
@@ -69,7 +63,6 @@ public class CompanyServiceImpl implements CompanyService {
 	/**
 	    * 스터디룸 정보를 가져와 json형태로 변환하여 반환하는 메서드
 	    * 풀캘린더에 예약현황을 보여줄 때 사용
-	    * 
 	    * @author 김유란
 	    * @param memberEmail 접속중인 사용자의 세션에 저장된 회원 식별 정보(임시*****)
 	    * @return JSONArray VO List로 받은 정보를 json객체로 변환하여 담은 json배열
@@ -98,7 +91,6 @@ public class CompanyServiceImpl implements CompanyService {
 	/**
 	    * 선택된 월 정보를 이용해 스터디룸 예약정보를 조회하는 메서드
 	    * 풀캘린더에 예약현황을 보여줄 때 사용
-	    * 
 	    * @author 김유란
 	    * @param studyRoomNo 스터디룸 번호
 	    * @param startDate 선택된 월의 첫날
@@ -132,7 +124,6 @@ public class CompanyServiceImpl implements CompanyService {
 	    * 업체의 영업일 정보를 가져와 json형태로 변환하여 반환하는 메서드
 	    * 풀캘린더에 스터디룸 예약 가능일을 보여줄 때 사용
 	    * 풀캘린더의 business hour 설정에서 요구하는 필드명과 값으로 변환함
-	    * 
 	    * @author 김유란
 	    * @param memberEmail 접속중인 사용자의 세션에 저장된 회원 식별 정보(임시*****)
 	    * @return JSONObject VO List로 받은 정보를 담은 json객체
@@ -223,7 +214,6 @@ public class CompanyServiceImpl implements CompanyService {
 
 	/**
 	 * 업체 및 업체 연관 테이블을 등록하는 메서드
-	 * 
 	 * @author 변태섭
 	 * @param CompanyVO 업체 관련 정보가 담긴 객체
 	 * @param String day 영업요일
@@ -303,7 +293,6 @@ public class CompanyServiceImpl implements CompanyService {
 
 	/**
 	 * 업체 번호로 해당 업체의 스터디룸 리스트를 불러오는 메서드
-	 * 
 	 * @author 변태섭
 	 * @param companyNo 업체 번호
 	 * @return List<StudyRoomVO> 해당 업체가 등록한 스터디룸 정보 리스트
@@ -338,4 +327,42 @@ public class CompanyServiceImpl implements CompanyService {
 		
 		return arr;
 		}
+
+	/**
+	 * 업체 정보를 수정하는 메서드
+	 * @author 변태섭
+	 * @param companyVO 입력된 업체 정보
+	 * @param day 입력된 요일 정보
+	 * @param hashtag 입력된 해시태그 정보
+	 */
+	@Transactional
+	@Override
+	public void updateCompany(CompanyVO companyVO, String day, String hashtag) {
+		String[] days = day.split(" ");
+		String[] hashtags = hashtag.split(",");
+		System.out.println("day: "+days);
+		System.out.println("hashtag: "+hashtags);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("companyNo", companyVO.getCompanyNo());
+		
+		companyDAO.updateCompany(companyVO);
+		System.out.println("updateCompany Complete");
+		
+		companyDAO.deleteCompanyBusinessDayByCompanyNo(companyVO.getCompanyNo());
+		System.out.println("delete BusinessDay Complete");
+		companyDAO.deleteHashtagByCompanyNo(companyVO.getCompanyNo());
+		System.out.println("delete Hashtag Complete");
+		
+		for(int i=0; i<days.length; i++) {
+			map.put("day", days[i]); 
+			companyDAO.registerBusinessDay(map);
+		}
+		System.out.println("register BusinessDay Complete");
+	
+		for(int j=0; j<hashtags.length; j++) {
+			map.put("tag", hashtags[j]);
+			companyDAO.registerHashtag(map);
+		}
+		System.out.println("register Hashtag Complete");
+	}
 }

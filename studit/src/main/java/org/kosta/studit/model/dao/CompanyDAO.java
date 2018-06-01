@@ -61,5 +61,17 @@ public interface CompanyDAO {
 
 	List<Map<String, String>> findWaitStudyRoomConditionCountByCompanyNo(String companyNo);
 
+	List<Map<String, Object>> findHashTagByMemberEmail(String memberEmail);
 
+	List<Map<String, Object>> findDaysByMemberEmail(String memberEmail);
+
+	List<Map<String, String>> findCompanyPicPathByMemberEmail(String memberEmail);
+
+	void updateCompany(CompanyVO companyVO);
+
+	void updateCompanyProfilePath(CompanyVO companyVO);
+
+	void deleteHashtagByCompanyNo(int companyNo);
+
+	void deleteCompanyBusinessDayByCompanyNo(int companyNo);
 }

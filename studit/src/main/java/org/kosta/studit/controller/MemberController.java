@@ -114,10 +114,9 @@ public class MemberController {
 	public String registerMember(MemberVO memberVO, MultipartFile picFile) {
 		if (picFile != null && !picFile.isEmpty()) {
 			String fileName = memberVO.getMemberEmail() + "_" + picFile.getOriginalFilename();
-			// String path =
-			// request.getSession(false).getServletContext().getRealPath("upload"); 개발 완료 후
-			// 적용
-			String path ="c:/resources/upload/";//동규
+			// request.getSession(false).getServletContext().getRealPath("upload"); 개발 완료 후 적용
+
+			String path ="C:/resources/upload/";
 			try {
 				picFile.transferTo(new File(path, fileName));// 지정 경로에 실제 파일 저장
 				memberVO.setPicPath(fileName);

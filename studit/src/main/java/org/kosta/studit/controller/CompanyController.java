@@ -80,10 +80,10 @@ public class CompanyController {
 	 */
 	@RequestMapping("/findStudyRoomConditionByCompanyNo")
 	public String findStudyRoomConditionByCompanyNo(Model model, String companyNo) {
-		model.addAttribute("waitCountList", companyDAO.findWaitStudyRoomConditionCountByCompanyNo("1"));
-		model.addAttribute("businessHour", companyService.findBusinessDayByCompanyNo(1));
-		model.addAttribute("studyRoomResource", companyService.findStudyRoomByCompanyNo(1));
-		model.addAttribute("conditionCount", companyService.findStudyRoomConditionCountByMonth("1"));
+		model.addAttribute("waitCountList", companyDAO.findWaitStudyRoomConditionCountByCompanyNo(companyNo));
+		model.addAttribute("businessHour", companyService.findBusinessDayByCompanyNo(Integer.parseInt(companyNo)));
+		model.addAttribute("studyRoomResource", companyService.findStudyRoomByCompanyNo(Integer.parseInt(companyNo)));
+		model.addAttribute("conditionCount", companyService.findStudyRoomConditionCountByMonth(companyNo));
 		return "company/find_studyroom_condition.tiles";
 	}
 	
@@ -117,7 +117,10 @@ public class CompanyController {
 		if(memberDAO.findCountMemberPositionByMemberPositionAndMemberEmail(map)!=0) {
 			model.addAttribute("cvoList", companyDAO.findCompanyByMemberEmail(mvo.getMemberEmail()));
 			model.addAttribute("srvoList", studyroomDAO.findStudyRoomListByMemberEmail(mvo.getMemberEmail()));
-			return "company/update_company/hostpage_left.tiles";
+			model.addAttribute("hashList", companyDAO.findHashTagByMemberEmail(mvo.getMemberEmail()));
+			model.addAttribute("days", companyDAO.findDaysByMemberEmail(mvo.getMemberEmail()));
+			model.addAttribute("companyPicPath", companyDAO.findCompanyPicPathByMemberEmail(mvo.getMemberEmail()));
+			return "company/company_info_view/hostpage_left.tiles";
 		}
 		return "company/company_view.tiles";
 	}
@@ -271,6 +274,71 @@ public class CompanyController {
 		model.addAttribute("cvoList", companyDAO.findCompanyByMemberEmail(memberEmail));
 		model.addAttribute("srvoList", studyroomDAO.findStudyRoomListByMemberEmail(memberEmail));
 		model.addAttribute("srno",studyRoomNo);
+		model.addAttribute("srPicPath", studyroomDAO.findStudyRoomPicPathByMemberEmail(memberEmail));
+		model.addAttribute("srFunction", studyroomDAO.findStudyRoomFunctionByMemberEmail(memberEmail));
 		return "company/studyroom_info_view/hostpage_left.tiles";
+	}
+	
+	/**
+	 * 업체 정보 수정 폼으로 가는 메서드
+	 * @author 변태섭
+	 * @param companyNo 업체 번호
+	 * @param model 업체 번호를 View단으로 보내기 위해 사용
+	 */
+	@RequestMapping("updateCompanyForm")
+	public String updateCompanyForm(String companyNo, Model model) {
+		model.addAttribute("cno", companyNo);
+		int cno = Integer.parseInt(companyNo);
+		model.addAttribute("cvo", companyDAO.findCompanyByCompanyNo(cno));
+		model.addAttribute("hashtags", companyDAO.findHashTagByCompanyNo(cno));
+		model.addAttribute("days", companyDAO.findBusinessDayByCompanyNo(cno));
+		model.addAttribute("companyPicPath", companyDAO.findComPicByCompanyNo(cno));
+		return "company/update_company/hostpage_left.tiles";
+	}
+	
+	/**
+	 * 업체 정보를 수정하는 컨트롤러 
+	 * @author 변태섭
+	 * @param companyVO 입력된 업체 정보
+	 * @param day 입력된 영업요일 정보
+	 * @param hashtag 입력된 해시태그 정보
+	 * @param companyPicFile 입력된 사진 경로
+	 * @return
+	 */
+	@RequestMapping("updateCompany")
+	public String updateCompany(CompanyVO companyVO, String day, String hashtag, MultipartFile[] companyPicFile) {
+		System.out.println(companyVO);
+		System.out.println(day);
+		System.out.println(hashtag);
+		System.out.println(companyPicFile); //사진 처리 아직X
+		companyService.updateCompany(companyVO, day, hashtag);
+		return "redirect:updateCompanyOkView";
+	}
+	
+	/**
+	 * 업체 수정 완료 script 페이지로 이동
+	 * @author 변태섭
+	 */
+	@RequestMapping("updateCompanyOkView")
+	public String updateCompanyOkView() {
+		return "/company/update_company_ok";
+	}
+	
+	/**
+	 * 스터디룸 수정 페이지로 이동하는 메서드
+	 * @author 변태섭
+	 * @param studyRoomNo 스터디룸 번호
+	 * @param memberEmail 회원 이메일
+	 * @param model 스터디룸 수정 관련 데이터를 담아 보냄
+	 * @return
+	 */
+	@RequestMapping("updateStudyroomFrom")
+	public String updateStudyroomFrom(String studyRoomNo, String memberEmail, Model model) {
+			model.addAttribute("cvoList", companyDAO.findCompanyByMemberEmail(memberEmail));
+			model.addAttribute("srvoList", studyroomDAO.findStudyRoomListByMemberEmail(memberEmail));
+			model.addAttribute("srno",studyRoomNo);
+			model.addAttribute("srPicPath", studyroomDAO.findStudyRoomPicPathByMemberEmail(memberEmail));
+			model.addAttribute("srFunction", studyroomDAO.findStudyRoomFunctionByStudyRoomNo(Integer.parseInt(studyRoomNo)));
+		return "company/update_studyroom/hostpage_left.tiles";
 	}
 }

@@ -20,8 +20,7 @@
 </style>
  <section>
 <h3>Host Page</h3><br><br>
-<a href="${pageContext.request.contextPath }/company/registerCompanyView"><input type="button" value="업체 등록 하기" class="companyBtn" ></a>&emsp;&emsp;&emsp;
-<a href="${pageContext.request.contextPath}/company/findStudyRoomConditionByCompanyNo/">예약현황 관리</a>
+<a href="${pageContext.request.contextPath }/company/registerCompanyView"><input type="button" value="업체 등록 하기" class="companyBtn" ></a>
 </section>
 
 

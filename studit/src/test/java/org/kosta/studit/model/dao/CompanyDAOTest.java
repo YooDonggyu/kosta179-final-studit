@@ -148,7 +148,6 @@ public class CompanyDAOTest {
 			
 	   /**
 	    * 해시태그 등록
-	    * 
 	    * @author 변태섭
 	    */
 	   //@Test
@@ -168,7 +167,6 @@ public class CompanyDAOTest {
 	   
 	   /**
 	    * 업체 영업 요일을 등록하는 테스트
-	    * 
 	    * @author 변태섭
 	    */
 	   //@Test
@@ -216,7 +214,6 @@ public class CompanyDAOTest {
 	   
 	   /**
 	    * 업체 사진 경로를 등록하는 테스트
-	    * 
 	    * @author 변태섭
 	    */
 	   //@Test
@@ -229,7 +226,6 @@ public class CompanyDAOTest {
 	   
 	   /**
 	    * 사업자등록번호 중복 유무를 체크하는 테스트
-	    * 
 	    * @author 변태섭
 	    */
 	  // @Test
@@ -307,5 +303,97 @@ public class CompanyDAOTest {
 		   System.out.println(companyDAO.findWaitStudyRoomConditionCountByCompanyNo("1"));
 	   }
 	   
+	   /**
+	    * 회원 이메일로 해시태그 정보를 받아오는 테스트
+	    * @author 변태섭
+	    */
+	   //@Test
+	   public void findHashTagByMemberEmailTest() {
+		   String memberEmail = "test@a.com";
+		   List<Map<String, Object>> hashList=companyDAO.findHashTagByMemberEmail(memberEmail);
+		   for(int i=0; i<hashList.size(); i++) {
+			   System.out.println("---------( "+i+" )----------");
+			   System.out.println(hashList.get(i).get("CNO"));
+			   System.out.println(hashList.get(i).get("CONTENT"));
+			   System.out.println("**");
+		   }
+	   }
 	   
+	   /**
+	    * 회원 이메일로 업체 요일들을 받아오는 테스트
+	    * @author 변태섭
+	    */
+	   //@Test
+	   public void findDaysByMemberEmailTest() {
+		   String memberEmail = "test@a.com";
+		   System.out.println(companyDAO.findDaysByMemberEmail(memberEmail));
+	   }
+	   
+	   /**
+	    * 회원 이메일로 업체 사진경로들을 반아오는 테스트
+	    * @author 변태섭
+	    */
+	   //@Test
+	   public void findCompanyPicPathByMemberEmailTest() {
+		   String memberEmail = "test@a.com";
+		   System.out.println(companyDAO.findCompanyPicPathByMemberEmail(memberEmail));
+	   }
+	   
+	   /**
+	    * 업체 정보를 수정하는 테스트
+	    * @author 변태섭
+	    */
+	   //@Test
+		public void updateCompanyTest() {
+			CompanyVO cvo = new CompanyVO();
+			cvo.setCompanyNo(5);
+			cvo.setName("상호명");
+			cvo.setAddr1("ad1");
+			cvo.setAddr2("ad2");
+			cvo.setAddr3("ad3");
+			cvo.setAddr4("ad4");
+			cvo.setDetailAddr("da");
+			cvo.setPrimaryAddr("pa");
+			cvo.setOpen("05");
+			cvo.setClose("20");
+			cvo.setHoliday("휴업");
+			cvo.setUrl("cc.com");
+			cvo.setTel("0123456");
+			cvo.setIntro("업체 소개!");
+			companyDAO.updateCompany(cvo);
+			System.out.println(companyDAO.findCompanyByCompanyNo(5));
+		}
+		
+		/**
+		 * 업체 프로필을 수정하는 테스트
+		 * @author 변태섭
+		 */
+		//@Test
+		public void updateCompanyProfilePathTest() {
+			CompanyVO cvo = new CompanyVO();
+			cvo.setCompanyNo(5);
+			cvo.setProfilePath("cocococo.jpg");
+			companyDAO.updateCompanyProfilePath(cvo);
+			System.out.println(companyDAO.findCompanyByCompanyNo(5));
+		}
+		
+		/**
+		 * 업체 해시태그를 삭제하는 테스트
+		 * @author 변태섭
+		 */
+		//@Test
+		public void deleteHashtagByCompanyNoTest() {
+			int cno = 5;
+			companyDAO.deleteHashtagByCompanyNo(cno);
+		}
+		
+		/**
+		 * 업체 영업요일을 지우는 테스트
+		 * @author 변태섭
+		 */
+		//@Test
+		public void deleteCompanyBusinessDayByCompanyNoTest() {
+			int cno = 5;
+			companyDAO.deleteCompanyBusinessDayByCompanyNo(cno);
+		}
 }

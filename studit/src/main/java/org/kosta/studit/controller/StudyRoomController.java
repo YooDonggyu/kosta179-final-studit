@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.kosta.studit.model.dao.CompanyDAO;
 import org.kosta.studit.model.dao.StudyRoomDAO;
 import org.kosta.studit.model.service.CompanyService;
 import org.kosta.studit.model.service.StudyRoomService;
@@ -32,6 +33,9 @@ public class StudyRoomController {
 	
 	@Autowired
 	private StudyRoomService studyRoomService;
+	
+	@Autowired
+	private CompanyDAO companyDAO;
 	
 	/**
 	 * 스터디룸 예약 뷰 호출 메서드
@@ -106,8 +110,7 @@ public class StudyRoomController {
 				     String fileName = memberEmail+"_"+studyRoomVO.getCompanyVO().getName()+"_"+studyRoomVO.getName()+"_"+studyRoomPicFile.getOriginalFilename();
 				     //String path = request.getSession(false).getServletContext().getRealPath("upload"); 개발 완료 후 적용
 				     
-				     //태섭 경로
-				     String path = "D:/KOSTA/workspace/resources/upload/studyroom/";
+				     String path = "C:/resources/upload/";
 				     
 				     //String path ="C:/java-kosta/project/Final/kosta179-final-studit/studit/src/main/webapp/resources/upload";
 				     try {
@@ -127,11 +130,45 @@ public class StudyRoomController {
 	
 	/**
 	 * 추가 스터디룸 등록 완료 script
-	 * 
 	 * @author 변태섭
 	 */
 	@RequestMapping("addStudyRoomOkView")
 	public String addStudyRoomOkView() {
 		return "studyroom/add_studyroom_ok";
+	}
+	
+	/**
+	 * 스터디룸 정보 수정
+	 * @author 변태섭
+	 * @param companyNo 업체 번호
+	 * @param memberEmail 회원 이메일
+	 * @param studyRoomNo 스터디룸 번호
+	 * @param studyRoomVO 입려된 스터디룸 수정 데이터
+	 * @param studyRoomPicFile 입력된 스터디룸 사진 경로
+	 * @param studyRoomFunction 입력된 스터디룸 제공 기능
+	 */
+	@PostMapping
+	@RequestMapping("updateStudyRoom")
+	public String updateStudyRoom(String companyNo, String memberEmail, String studyRoomNo, StudyRoomVO studyRoomVO, MultipartFile studyRoomPicFile,String[] studyRoomFunction) {
+			studyRoomService.updateStudyRoom(companyNo, memberEmail, studyRoomNo, studyRoomVO, studyRoomPicFile, studyRoomFunction);
+			System.out.println(companyNo);
+			System.out.println(memberEmail);
+			System.out.println(studyRoomNo);
+			System.out.println(studyRoomVO);
+			System.out.println(studyRoomPicFile);
+			System.out.println(studyRoomFunction);
+		return "redirect:updateStudyRoomOkView?studyRoomNo="+studyRoomNo;
+	}
+	
+	/**
+	 * 스터디룸 정보 수정 완료 script
+	 * @author 변태섭
+	 * @param studyRoomNo 스터디룸 번호
+	 * @param model 스터디룸 번호를 뷰로 전달
+	 */
+	@RequestMapping("updateStudyRoomOkView")
+	public String updateStudyRoomOkView(String studyRoomNo, Model model) {
+		model.addAttribute("srno", studyRoomNo);
+		return "studyroom/update_studyroom_ok";
 	}
 }
