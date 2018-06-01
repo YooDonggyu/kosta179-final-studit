@@ -291,6 +291,7 @@ public class CompanyServiceImpl implements CompanyService {
 		return dataMap;
 	}
 
+
 	/**
 	 * 업체 번호로 해당 업체의 스터디룸 리스트를 불러오는 메서드
 	 * @author 변태섭
