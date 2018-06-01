@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.kosta.studit.exception.EmailNotFoundException;
 import org.kosta.studit.exception.IsNotMemberException;
@@ -27,6 +28,7 @@ import org.kosta.studit.model.service.StudyRoomService;
 import org.kosta.studit.model.vo.CompanyListVO;
 import org.kosta.studit.model.vo.GroupMemberListVO;
 import org.kosta.studit.model.vo.GroupMemberVO;
+import org.kosta.studit.model.vo.GroupVO;
 import org.kosta.studit.model.vo.MemberVO;
 import org.kosta.studit.model.vo.RecruitPostListVO;
 import org.kosta.studit.model.vo.SmallCategoryVO;
@@ -466,5 +468,18 @@ public class AjaxViewController {
 		groupService.registerGroupMember(state, studyConditionNo, groupNo);
 	}
 
+	@RequestMapping(method=RequestMethod.POST, value="/updateRecruitCondition")
+	@ResponseBody
+	public void updateRecruitCondition(String recruitPostNo, HttpServletRequest request) {
+		groupService.updateRecruitCondition(recruitPostNo);
+		HttpSession session = request.getSession(false);
+		if(session!=null && session.getAttribute("groupMemberVO")!=null) {
+			GroupMemberVO gvo = (GroupMemberVO)session.getAttribute("groupMemberVO");
+			GroupVO groupVO = groupService.findStudyGroupInfoByStudyGroupNo(Integer.toString(gvo.getGroupVO().getGroupNo()));
+			gvo.setGroupVO(groupVO);
+			session.setAttribute("groupMemberVO", gvo);
+		}
+		
+	}
 	
 }

@@ -62,9 +62,9 @@ th{
 <div style="max-width: 500px; float: left; margin: 50px">
 <h5><b>승인 대기중인 신청자</b></h5>
   <c:choose>
-  	<c:when test="${empty conditionList}">
+  	<c:when test="${empty conditionList.list}">
   	<br><br><br><br><br>
-  	아직 신청자가 없습니다.
+  	대기중인 신청자가 없습니다.
   	<br><br><br><br><br>
   	</c:when>
   	<c:otherwise>
@@ -104,12 +104,12 @@ th{
 </div>
 </div>
 <div align="center">
-<%-- <c:if test="${conditionList[0].recruitPostVO.condition eq '모집중' || conditionList[0].recruitPostVO.condition eq '추가모집'}">
-	<button class="btn btn-primary"><i class="fas fa-check"></i> 스터디 개설</button>
+<c:if test="${groupMemberVO.groupVO.recruitPostVO.condition eq '모집중' || groupMemberVO.groupVO.recruitPostVO.condition eq '추가모집'}">
+	<button id="openGroupBtn" class="btn btn-primary"><i class="fas fa-check"></i> 스터디 개설</button>
 </c:if>
-<c:if test="${conditionList[0].recruitPostVO.condition eq '모집완료'}">
+<c:if test="${groupMemberVO.groupVO.recruitPostVO.condition eq '모집완료'}">
 	<button class="btn btn-outline-warning"><i class="fas fa-plus"></i> 추가모집</button>
-</c:if>	 --%>
+</c:if>	
 </div>
 </div>
 </section>
@@ -176,6 +176,21 @@ $(document).ready(function() {
 			}//success
 		})//ajax
 	});//click
+	
+	$("#openGroupBtn").click(function() {
+		if(confirm("스터디 개설 후에는 모집글을 열람할 수 없습니다. \n이후 새로운 팀원을 모집하고 싶다면 추가모집 메뉴를 이용해주세요. \n이제 스터디를 개설할까요?")){
+			$.ajax({
+				type:"post",
+				url:"${pageContext.request.contextPath}/ajax/updateRecruitCondition",
+				data:"recruitPostNo="+${groupMemberVO.groupVO.recruitPostVO.recruitPostNo},
+				success:function(data){
+					alert("스터디 개설 완료! 그룹 활동을 시작합니다.")
+					location.reload();
+				}//success
+			})//ajax
+		}
+	});
+	
 })//ready
 
 
@@ -211,5 +226,7 @@ function denyMember(conditionNo) {
 		})//ajax
 	}
 }
+
+
 
 </script>

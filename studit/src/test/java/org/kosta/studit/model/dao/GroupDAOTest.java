@@ -67,12 +67,12 @@ public class GroupDAOTest {
 	 * 스터디 그룹에 맴버를 등록
 	 * @author 송용준
 	 */
-	@Test
+	//@Test
 	public void registerStudyGroupMemberTest() {
 		// 모집글 작성자의 이름 : 디폴트는 팀장
 		String memberEmail = "a@a.com";
 		// 맴버를 추가할 스터디 그룹 번호
-		int groupNo = 6;
+		int groupNo = 1;
 		
 		GroupMemberVO groupMemberVO = new GroupMemberVO();
 		groupMemberVO.setMemberVO(new MemberVO(memberEmail, null));
@@ -148,5 +148,15 @@ public class GroupDAOTest {
 		map.put("state", "true");
 		map.put("groupMemberNo", "1");
 		groupDAO.updateGroupMemberState(map);
+	}
+	
+	//@Test
+	public void findStudyGroupInfoByStudyGroupNoTest() {
+		System.out.println(groupDAO.findStudyGroupInfoByStudyGroupNo("1"));
+	}
+	
+	@Test
+	public void findConfirmedConditionNoByGroupNoTest() {
+		System.out.println(groupDAO.findConfirmedConditionNoByGroupNo("1"));
 	}
 }

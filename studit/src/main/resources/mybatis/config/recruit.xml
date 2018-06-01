@@ -476,7 +476,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 							m.name member_name, to_char(sc.regdate,'yyyy-MM-dd hh24:mi:ss') stc_regdate, sc.state 
 							from member m, study_condition sc, study_group sg, recruit_post rp
 							where sc.recruit_post_no=sg.recruit_post_no and sc.recruit_post_no=rp.recruit_post_no
-							--and sg.sg_no=#{groupNo}
+							and sg.sg_no=#{groupNo}
 							and m.member_email = sc.member_email
 							and sc.state='미승인')
 			where condition_no between #{pagingBean.startRowNumber} and #{pagingBean.endRowNumber}

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.kosta.studit.model.vo.GroupMemberVO;
+import org.kosta.studit.model.vo.GroupVO;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -88,8 +89,8 @@ public class GroupDAOImpl implements GroupDAO {
 	 * @return 스터디 그룹 이름
 	 */
 	@Override
-	public String findStudyGroupNameByStudyGroupNo(String sgNo) {
-		return template.selectOne("group.findStudyGroupNameByStudyGroupNo", sgNo);
+	public GroupVO findStudyGroupInfoByStudyGroupNo(String sgNo) {
+		return template.selectOne("group.findStudyGroupInfoByStudyGroupNo", sgNo);
 	}
 	
 	/**
@@ -146,6 +147,11 @@ public class GroupDAOImpl implements GroupDAO {
 		template.update("group.updateGroupMemberState", map);
 		
 		
+	}
+	
+	@Override
+	public List<String> findConfirmedConditionNoByGroupNo(String recruitPostNo){
+		return template.selectList("group.findConfirmedConditionNoByGroupNo", recruitPostNo);
 	}
 
 }

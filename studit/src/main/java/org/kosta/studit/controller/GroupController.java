@@ -38,8 +38,9 @@ public class GroupController {
 	 */
 	@RequestMapping("/groupHome")
 	public String home(String sgNo, HttpServletRequest request) {
-		//1. 스터디 그룹 이름
-		String groupName=groupService.findStudyGroupNameByStudyGroupNo(sgNo);
+		//1. 스터디 그룹 정보(이름, 모집글 번호, 모집글 상태)
+		GroupVO groupVO=groupService.findStudyGroupInfoByStudyGroupNo(sgNo);
+		System.out.println(groupVO);
 		//2. 회원 이름 : Session
 		HttpSession session=request.getSession(false);
 		MemberVO mv=(MemberVO)session.getAttribute("memberVO");
@@ -52,9 +53,6 @@ public class GroupController {
 		MemberVO memberVO = new MemberVO();
 		memberVO.setMemberEmail(memberEmail);
 		memberVO.setName(memberName);
-		GroupVO groupVO = new GroupVO();
-		groupVO.setGroupNo(Integer.parseInt(sgNo));
-		groupVO.setName(groupName);
 	
 		GroupMemberVO groupMemberVO = new GroupMemberVO();
 		groupMemberVO.setGroupVO(groupVO);

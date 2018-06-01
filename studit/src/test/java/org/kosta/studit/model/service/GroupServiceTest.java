@@ -35,12 +35,17 @@ public class GroupServiceTest {
 	}
 	
 	/**
-	 * 스터디 그룹 신청 상태 변경(승인/거절)  및 멤버 등록 TEST
+	 * 스터디 그룹 신청 상태 변경(승인/거절) 및 멤버 등록 TEST
 	 * @author 김유란
 	 */
-	@Test
+	//@Test
 	public void updateStudyConditionStateTest() {
 		groupService.registerGroupMember("거절", "1", "1");
+	}
+	
+	@Test
+	public void updateRecruitConditionTest() {
+		groupService.updateRecruitCondition("1");
 	}
 	
 }

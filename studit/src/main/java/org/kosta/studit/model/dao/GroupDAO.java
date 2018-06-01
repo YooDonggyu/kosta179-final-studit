@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.kosta.studit.model.vo.GroupMemberVO;
+import org.kosta.studit.model.vo.GroupVO;
 
 public interface GroupDAO {
 
@@ -17,9 +18,7 @@ public interface GroupDAO {
 	int findStudyGroupNoByRecruitPostNo(int recruitPostNo);
 
 	List<GroupMemberVO> findStudyGroupByMemberEmail(String memberEmail);
-
-	String findStudyGroupNameByStudyGroupNo(String sgNo);
-
+	
 	String findMemberPositionByMemberEmailAndStudyGroupNo(Map<String, String> map);
 
 	int countMyLeadGroupHasMemberByEmailAndStudyGroupNo(Map<String, String> map);
@@ -33,6 +32,10 @@ public interface GroupDAO {
 	void updateGroupMemberState(Map<String, String> map);
 
 	void registerStudyGroupMember(GroupMemberVO groupMemberVO);
+
+	GroupVO findStudyGroupInfoByStudyGroupNo(String sgNo);
+
+	List<String> findConfirmedConditionNoByGroupNo(String recruitPostNo);
 
 
 }

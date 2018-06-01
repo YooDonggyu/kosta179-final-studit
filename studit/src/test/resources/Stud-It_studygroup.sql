@@ -207,4 +207,5 @@ insert into sg_post_pic(sg_post_pic_no, sg_post_no) values(sg_post_pic_seq.nextv
 
 commit
 
+update recruit_post set condition='모집중' where recruit_post_no='1'
 select * from sg_member where member_email='a@a.com'

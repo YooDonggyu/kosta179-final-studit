@@ -1,6 +1,7 @@
 package org.kosta.studit.model.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.kosta.studit.model.PagingBean;
@@ -24,13 +25,13 @@ public class GroupServiceImpl implements GroupService {
 	
 	/**
 	 * 스터디 그룹 이름을 조회
-	 * @author 송용준
+	 * @author 송용준, 김유란 (groupName->groupInfo로 변경)
 	 * @param sgNo 이름을 조회할 스터디 그룹 번호
 	 * @return 스터디 그룹 이름
 	 */
 	@Override
-	public String findStudyGroupNameByStudyGroupNo(String sgNo) {
-		return groupDAO.findStudyGroupNameByStudyGroupNo(sgNo);
+	public GroupVO findStudyGroupInfoByStudyGroupNo(String sgNo) {
+		return groupDAO.findStudyGroupInfoByStudyGroupNo(sgNo);
 	}
 	
 	/**
@@ -140,4 +141,19 @@ public class GroupServiceImpl implements GroupService {
 			groupDAO.registerStudyGroupMember(groupMemberVO);
 		}
 	}
+	
+	@Override
+	public void updateRecruitCondition(String recruitPostNo) {
+		recruitDAO.updateRecruitCondition(recruitPostNo);
+		List<String> confirmedList = groupDAO.findConfirmedConditionNoByGroupNo(recruitPostNo);
+		if(!confirmedList.isEmpty())
+		for(String conditionNo: confirmedList) {
+			Map<String,String> map = new HashMap<>();
+			map.put("state", "진행중");
+			map.put("studyConditionNo", conditionNo);
+			recruitDAO.updateStudyConditionState(map);
+		}
+		
+	}
+
 }

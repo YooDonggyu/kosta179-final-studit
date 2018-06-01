@@ -458,7 +458,7 @@ CREATE TABLE study_condition
 );
 create sequence study_condition_no_seq nocache;
 drop sequence study_condition_no_seq
-select *from study_condition where state='미승인'
+select *from study_condition 
 
 insert into study_condition(study_condition_no, regdate, state, self_appeal, member_email, recruit_post_no)
 values(study_condition_no_seq.nextval, sysdate, '미승인', '열심히 할게요 ! ', 'f@f.com', 1);
@@ -472,30 +472,3 @@ insert into study_condition(study_condition_no, regdate, state, self_appeal, mem
 values(study_condition_no_seq.nextval, sysdate, '미승인', '열심히 할게요 ! ', 'g@g.com', 1); --def
 
 commit
-
-select count(*)
-from study_condition sc, study_group sg
-where sc.recruit_post_no=sg.recruit_post_no and sg.sg_no='1'
-
-select study_condition_no, member_name, sc_regdate, state, self_appeal
-from(
-			select row_number() over(order by study_condition_no desc) condition_no, sc.study_condition_no, sc.self_appeal,
-							m.name member_name, to_char(sc.regdate,'yyyy-MM-dd hh24:mi:ss') sc_regdate, sc.state 
-							from member m, study_condition sc, study_group sg
-							where sc.recruit_post_no=sg.recruit_post_no
-							and sg.sg_no=29
-							and m.member_email = sc.member_email
-							and sc.state='미승인'
-							)
-where condition_no between 6 and 10
-
-select study_condition_no, member_name, stc_regdate, state, self_appeal, condition
-			from(
-			select row_number() over(order by study_condition_no desc) condition_no, sc.study_condition_no, sc.self_appeal, rp.condition,
-							m.name member_name, to_char(sc.regdate,'yyyy-MM-dd hh24:mi:ss') stc_regdate, sc.state 
-							from member m, study_condition sc, study_group sg, recruit_post rp
-							where sc.recruit_post_no=sg.recruit_post_no and sc.recruit_post_no=rp.recruit_post_no
-							--and sg.sg_no=1
-							and m.member_email = sc.member_email
-							and sc.state='미승인')
-			where condition_no between 1 and 5
