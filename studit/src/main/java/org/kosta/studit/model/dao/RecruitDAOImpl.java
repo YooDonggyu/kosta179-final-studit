@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.kosta.studit.model.vo.BigCategoryVO;
 import org.kosta.studit.model.vo.GroupMemberVO;
+import org.kosta.studit.model.vo.MemberVO;
 import org.kosta.studit.model.vo.RecruitPostCommentVO;
 import org.kosta.studit.model.vo.RecruitPostVO;
 import org.kosta.studit.model.vo.SmallCategoryVO;
@@ -379,6 +380,19 @@ public class RecruitDAOImpl implements RecruitDAO {
 		return template.update("recruit.updateStudyConditionState", map);
 
 	}
+	
+	/**
+	 * 스터디 신청번호로 신청자 정보(메일) 조회
+	 * @author 김유란
+	 * @param studyConditionNo 스터디 신청 번호
+	 * @return memberVO 회원 정보를 담은 VO
+	 */
+	@Override
+	public MemberVO findMemberByStudyConditionNo(String studyConditionNo) {
+		return template.selectOne("recruit.findMemberByStudyConditionNo", studyConditionNo);
+	}
+	
+
 }
 
 

@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.kosta.studit.model.vo.BigCategoryVO;
 import org.kosta.studit.model.vo.GroupMemberVO;
+import org.kosta.studit.model.vo.MemberVO;
 import org.kosta.studit.model.vo.RecruitPostCommentVO;
 import org.kosta.studit.model.vo.RecruitPostVO;
 import org.kosta.studit.model.vo.SmallCategoryVO;
@@ -87,6 +88,8 @@ public interface RecruitDAO {
 	int findStudyConditionCountByGroupNo(String groupNo);
 
 	int updateStudyConditionState(Map<String, String> map);
+
+	MemberVO findMemberByStudyConditionNo(String studyConditionNo);
 
 
 }

@@ -9,6 +9,8 @@ import org.kosta.studit.model.PagingBean;
 import org.kosta.studit.model.dao.GroupDAO;
 import org.kosta.studit.model.dao.RecruitDAO;
 import org.kosta.studit.model.vo.BigCategoryVO;
+import org.kosta.studit.model.vo.GroupMemberVO;
+import org.kosta.studit.model.vo.GroupVO;
 import org.kosta.studit.model.vo.MemberVO;
 import org.kosta.studit.model.vo.RecruitPostCommentVO;
 import org.kosta.studit.model.vo.RecruitPostListVO;
@@ -154,7 +156,7 @@ public class RecruitServiceImpl implements RecruitService {
 	
 	/**
 	 * 스터디 모집글 등록, 해당 모집글의 요일 등록, 해당 모집글의 스터디 그룹 등록, 해당 스터디 그룹에 팀장 등록
-	 * @author 송용준
+	 * @author 송용준, 김유란
 	 * @param RecruitPostVO 등록할 모집글의 정보를 담은 객체
 	 * @param String[] recruitDay 등록할 모집글의 활동 요일을 담은 배열 객체
 	 */
@@ -175,12 +177,15 @@ public class RecruitServiceImpl implements RecruitService {
 		createStudyGroupInfo.put("recruitPostNo", recruitPostVO.getRecruitPostNo());
 		groupDAO.createStudyGroup(createStudyGroupInfo);
 		// 등록된 글의 작성자를 해당 스터디 그룹맴버로 등록 : 팀장
-		HashMap<String, Object> registerStudyGroupMemberInfo = new HashMap<>();
-		int studyGroupNo = groupDAO.findStudyGroupNoByRecruitPostNo(recruitPostVO.getRecruitPostNo());
-		registerStudyGroupMemberInfo.put("memberEmail", recruitPostVO.getMemberVO().getMemberEmail());
-		registerStudyGroupMemberInfo.put("groupPosition", "팀장");
-		registerStudyGroupMemberInfo.put("studyGroupNo", studyGroupNo);
-		groupDAO.registerStudyGroupMember(registerStudyGroupMemberInfo);
+		int groupNo = groupDAO.findStudyGroupNoByRecruitPostNo(recruitPostVO.getRecruitPostNo());
+		String memberEmail = recruitPostVO.getMemberVO().getMemberEmail();
+		GroupMemberVO groupMemberVO = new GroupMemberVO();
+		GroupVO groupVO = new GroupVO();
+		groupVO.setGroupNo(groupNo);
+		groupMemberVO.setGroupVO(groupVO);
+		groupMemberVO.setPosition("팀장");
+		groupMemberVO.setMemberVO(new MemberVO(memberEmail, null));
+		groupDAO.registerStudyGroupMember(groupMemberVO);
 
 	}
 	
@@ -265,6 +270,13 @@ public class RecruitServiceImpl implements RecruitService {
 		recruitDAO.deleteStudyConditionByStudyConditionNo(studyConditionVO);
 	}
 	
+	/**
+	 * 스터디 그룹 번호로 해당 그룹의 참여 신청자 정보를 불러오는 메서드
+	 * @author 김유란
+	 * @param groupNo 조회를 원하는 그룹 번호
+	 * @param nowPage 조회를 원하는 페이지 번호
+	 * @return studyConditionListVO 신청자 정보를 페이징처리하여 담은 ListVO
+	 */
 	@Override
 	public StudyConditionListVO findStudyConditionByGroupNo(String groupNo, String nowPage) {
 		PagingBean pagingBean = null;
@@ -278,12 +290,8 @@ public class RecruitServiceImpl implements RecruitService {
 		map.put("pagingBean", pagingBean);
 		return new StudyConditionListVO(recruitDAO.findStudyConditionByGroupNo(map), pagingBean);
 	}
+
 	
-	@Override
-	public void updateStudyConditionState(String state, String studyConditionNo) {
-		Map<String, String> map = new HashMap<>();
-		map.put("state", state);
-		map.put("studyConditionNo", studyConditionNo);
-		recruitDAO.updateStudyConditionState(map);
-	}
+
+	
 }

@@ -14,17 +14,13 @@ public interface GroupDAO {
 
 	void createStudyGroup(HashMap<String, Object> createStudyGroupInfo);
 
-	void registerStudyGroupMember(HashMap<String, Object> registerStudyGroupMemberInfo);
-
 	int findStudyGroupNoByRecruitPostNo(int recruitPostNo);
 
 	List<GroupMemberVO> findStudyGroupByMemberEmail(String memberEmail);
 
-
 	String findStudyGroupNameByStudyGroupNo(String sgNo);
 
 	String findMemberPositionByMemberEmailAndStudyGroupNo(Map<String, String> map);
-
 
 	int countMyLeadGroupHasMemberByEmailAndStudyGroupNo(Map<String, String> map);
 
@@ -35,6 +31,8 @@ public interface GroupDAO {
 	List<GroupMemberVO> findGroupMemberByGroupNo(Map<String, Object> map);
 
 	void updateGroupMemberState(Map<String, String> map);
+
+	void registerStudyGroupMember(GroupMemberVO groupMemberVO);
 
 
 }

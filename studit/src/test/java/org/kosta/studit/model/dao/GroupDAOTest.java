@@ -8,6 +8,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kosta.studit.model.PagingBean;
 import org.kosta.studit.model.vo.GroupMemberVO;
+import org.kosta.studit.model.vo.GroupVO;
+import org.kosta.studit.model.vo.MemberVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -65,18 +67,20 @@ public class GroupDAOTest {
 	 * 스터디 그룹에 맴버를 등록
 	 * @author 송용준
 	 */
-	//@Test
+	@Test
 	public void registerStudyGroupMemberTest() {
 		// 모집글 작성자의 이름 : 디폴트는 팀장
 		String memberEmail = "a@a.com";
 		// 맴버를 추가할 스터디 그룹 번호
-		int studyGroupNo = 6;
+		int groupNo = 6;
 		
-		HashMap<String, Object> registerStudyGroupMemberInfo = new HashMap<>();
-		registerStudyGroupMemberInfo.put("memberEmail", memberEmail);
-		registerStudyGroupMemberInfo.put("groupPosition", "팀장");
-		registerStudyGroupMemberInfo.put("studyGroupNo", studyGroupNo);
-		groupDAO.registerStudyGroupMember(registerStudyGroupMemberInfo);
+		GroupMemberVO groupMemberVO = new GroupMemberVO();
+		groupMemberVO.setMemberVO(new MemberVO(memberEmail, null));
+		groupMemberVO.setPosition("팀장");
+		GroupVO groupVO = new GroupVO();
+		groupVO.setGroupNo(groupNo);
+		groupMemberVO.setGroupVO(groupVO);
+		groupDAO.registerStudyGroupMember(groupMemberVO);
 	}
 	
 	
@@ -134,7 +138,11 @@ public class GroupDAOTest {
 		groupDAO.updateGroupMemberPosition(map);
 	}
 	
-	@Test
+	/**
+	 * 스터디 그룹 즐겨찾기 상태 변경 테스트
+	 * @author 김유란
+	 */
+	//@Test
 	public void updateGroupMemberStateTest() {
 		Map<String,String> map=new HashMap<>();
 		map.put("state", "true");

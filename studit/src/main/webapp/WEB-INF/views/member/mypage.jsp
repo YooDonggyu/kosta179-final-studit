@@ -87,10 +87,10 @@ th{
            	 </form>
 </div>
 
-<div class="col-sm-10" style="text-align: right">예약대기 및 미승인 상태에서 취소할 수 있습니다.</div>
+<div class="col-sm-10 col-sm-offset-1" style="text-align: right"> <i class="fas fa-info-circle"></i> 예약대기 및 미승인 상태에서 취소할 수 있습니다.<br></div>
 <div class="col-sm-2"></div>
 <div class="col-sm-1"></div>
-<div class="col-sm-10" style="padding-bottom: 40px;"> 
+<div class="col-sm-10 col-sm-offset-1" style="padding-bottom: 40px;"> 
 <ul class="nav nav-tabs">
   <li class="active" style="width: 50%"><a data-toggle="tab" href="#home"><b>스터디 신청 현황</b></a></li>
   <li style="width: 50%"><a data-toggle="tab" href="#menu1"><b>스터디룸 신청 현황</b></a></li>

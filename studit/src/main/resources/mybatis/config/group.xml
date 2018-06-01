@@ -75,14 +75,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 
 		스터디 그룹에 스터디 맴버 등록
-		@author 송용준
+		@author 송용준, 김유란
 		@param map key : memberEmail 회원 이메일
 		@param map key : groupPosition 그룹 직책
 		@param map key : studyGroupNo 맴버를 추가할 스터디 그룹 넘버
 	 -->
-	<insert id="registerStudyGroupMember" parameterType="map">
+	<insert id="registerStudyGroupMember" parameterType="groupMemberVO">
 		insert into sg_member(sg_member_no, member_email, position, state, sg_no)
-		values(sg_member_seq.nextVal, #{memberEmail}, #{groupPosition}, 'show',#{studyGroupNo}) 
+		values(sg_member_seq.nextVal, #{memberVO.memberEmail}, #{position}, 'true',#{groupVO.groupNo}) 
 	</insert>
 	
 	<!-- 

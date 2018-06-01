@@ -1,6 +1,9 @@
 package org.kosta.studit.model.dao;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -425,7 +428,7 @@ public class RecruitDAOTest {
 	 * 스터디 모집완료로 상태 변경 TEST
 	 * @author 김유란
 	 */
-	@Test
+	//@Test
 	public void updateRecruitConditionTest() {
 		recruitDAO.updateRecruitCondition("1");
 	}
@@ -442,12 +445,18 @@ public class RecruitDAOTest {
 			System.out.println(scVO);
 		}
 	}
+	
 	@Test
 	public void updateStudyConditionStateTest(){
 		Map<String,String> map = new HashMap<>();
 		map.put("state", "승인");
 		map.put("studyConditionNO","5");
 	}
+	
+	@Test
+	public void findMemberBystudyConditionNoTest() throws ParseException {
+		System.out.println(recruitDAO.findMemberByStudyConditionNo("1"));		
+		}
 
 	
 }

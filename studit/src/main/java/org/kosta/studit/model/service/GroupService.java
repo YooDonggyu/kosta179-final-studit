@@ -18,4 +18,6 @@ public interface GroupService {
 
 	void updateGroupMemberState(String memberEmail, String[] checkBookmark);
 
+	void registerGroupMember(String state, String studyConditionNo, String groupNo);
+
 }

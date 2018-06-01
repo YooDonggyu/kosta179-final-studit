@@ -49,12 +49,12 @@ public class GroupDAOImpl implements GroupDAO {
 
 	/**
 	 * 스터디 그룹의 맴버를 등록하는 메서드
-	 * @author 송용준
-	 * @param registerStudyGroupMemberInfo 등록할 맴버의 정보를 담은 객체
+	 * @author 송용준, 김유란
+	 * @param registerStudyGroupMemberInfo 등록할 맴버의 정보를 담은 객체-> GroupMemberVO로 변경
 	 */
 	@Override
-	public void registerStudyGroupMember(HashMap<String, Object> registerStudyGroupMemberInfo) {
-		template.insert("group.registerStudyGroupMember", registerStudyGroupMemberInfo);
+	public void registerStudyGroupMember(GroupMemberVO groupMemberVO) {
+		template.insert("group.registerStudyGroupMember", groupMemberVO);
 	}
 
 	/**
@@ -144,6 +144,8 @@ public class GroupDAOImpl implements GroupDAO {
 	@Override
 	public void updateGroupMemberState(Map<String,String> map) {
 		template.update("group.updateGroupMemberState", map);
+		
+		
 	}
 
 }

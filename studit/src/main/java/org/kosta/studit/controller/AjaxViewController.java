@@ -26,6 +26,7 @@ import org.kosta.studit.model.service.RecruitService;
 import org.kosta.studit.model.service.StudyRoomService;
 import org.kosta.studit.model.vo.CompanyListVO;
 import org.kosta.studit.model.vo.GroupMemberListVO;
+import org.kosta.studit.model.vo.GroupMemberVO;
 import org.kosta.studit.model.vo.MemberVO;
 import org.kosta.studit.model.vo.RecruitPostListVO;
 import org.kosta.studit.model.vo.SmallCategoryVO;
@@ -444,5 +445,26 @@ public class AjaxViewController {
 	public GroupMemberListVO findGroupMemberByNowPage(String groupNo, String nowPage){
 		return groupService.findGroupMemberByGroupNo(groupNo, nowPage);
 	}
+	
+	/**
+	 * 스터디 그룹 신청자 조회
+	 * @author 김유란
+	 * @param nowPage 현재 페이지
+	 * @return studyConditionListVO 페이징한 결과(list)와 페이징 객체가 담겨있는 객체
+	 */
+	@RequestMapping("/findStudyConditionByNowPageAndConditionNo")
+	@ResponseBody
+	public StudyConditionListVO findStudyConditionByNowPageAndConditionNo(String groupNo, String nowPage){
+		return recruitService.findStudyConditionByGroupNo(groupNo, nowPage);
+	}
+	
+	
+	
+	@RequestMapping(method=RequestMethod.POST, value="/registerGroupMember")
+	@ResponseBody
+	public void registerGroupMember(String state, String studyConditionNo, String groupNo) {
+		groupService.registerGroupMember(state, studyConditionNo, groupNo);
+	}
 
+	
 }

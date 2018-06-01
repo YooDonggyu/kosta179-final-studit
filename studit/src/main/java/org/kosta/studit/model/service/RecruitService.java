@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.kosta.studit.model.vo.BigCategoryVO;
+import org.kosta.studit.model.vo.GroupMemberVO;
 import org.kosta.studit.model.vo.RecruitPostListVO;
 import org.kosta.studit.model.vo.RecruitPostVO;
 import org.kosta.studit.model.vo.SmallCategoryVO;
@@ -14,11 +15,9 @@ public interface RecruitService {
 
 	void updateRecruitStudy(int recruitPostNo, String memberEmail, String context);
 
-
 	Map<String, Object> findRecruitPostDetailByRecruitNo(String memberEmail, int recruitNo);
 
 	void updateRecruitPostInfoByRecruitNo(RecruitPostVO recruitPostVO, List<String> days);
-
 
 	StudyConditionListVO findStudyConditionByMemberEmail(String memberEmail, int nowPage);
 	
@@ -35,5 +34,5 @@ public interface RecruitService {
 
 	StudyConditionListVO findStudyConditionByGroupNo(String groupNo, String nowPage);
 
-	void updateStudyConditionState(String state, String studyConditionNo);
+
 }

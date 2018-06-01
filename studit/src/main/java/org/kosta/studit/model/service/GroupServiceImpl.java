@@ -5,7 +5,11 @@ import java.util.Map;
 
 import org.kosta.studit.model.PagingBean;
 import org.kosta.studit.model.dao.GroupDAO;
+import org.kosta.studit.model.dao.RecruitDAO;
 import org.kosta.studit.model.vo.GroupMemberListVO;
+import org.kosta.studit.model.vo.GroupMemberVO;
+import org.kosta.studit.model.vo.GroupVO;
+import org.kosta.studit.model.vo.MemberVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class GroupServiceImpl implements GroupService {
 	@Autowired
 	private GroupDAO groupDAO;
+	@Autowired
+	private RecruitDAO recruitDAO;
 	
 	
 	/**
@@ -67,6 +73,12 @@ public class GroupServiceImpl implements GroupService {
 		return new GroupMemberListVO(pagingBean, groupDAO.findGroupMemberByGroupNo(map));
 	}
 	
+	/**
+	 * 스터디 그룹 멤버 직책 변경(팀장<->팀원) 
+	 * @author 김유란
+	 * @param groupMemberNo 팀장을 위임받을 멤버 번호
+	 * @param groupOwnerNo 현재 팀장의 멤버 번호
+	 */
 	@Transactional
 	@Override
 	public void updateGroupMemberPosition(String groupMemberNo, String groupOwnerNo) {
@@ -79,6 +91,14 @@ public class GroupServiceImpl implements GroupService {
 		groupDAO.updateGroupMemberPosition(map);
 	}
 	
+	/**
+	 * 스터디 그룹 멤버의 즐겨찾기 상태 변경
+	 *  회원이메일을 이용해 회원의 모든 가입 그룹 상태를 false로 변경한 뒤
+	 *  checkBookmark에 값이 있으면 해당 그룹만 true로 변경 
+	 * @author 김유란
+	 * @param memberEmail 회원 이메일
+	 * @param checkBookmark 선택된 그룹 번호값을 담은 배열
+	 */
 	@Override
 	public void updateGroupMemberState(String memberEmail, String[] checkBookmark) {
 		Map<String,String> map = new HashMap<>();
@@ -95,4 +115,29 @@ public class GroupServiceImpl implements GroupService {
 		}
 	}
 	
+	
+	/**
+	 * 스터디 신청 상태를 변경하고 '승인'일 경우 스터디 그룹 멤버를 등록하는  메서드
+	 * @author 김유란
+	 * @param state 스터디 신청 결과(승인 or 거절)
+	 * @param nowPage studyConditionNo 스터디 신청 번호
+	 * @param GroupMemberVO 멤버 정보(메일, 포지션, 그룹 번호)
+	 */
+	@Transactional
+	@Override
+	public void registerGroupMember(String state, String studyConditionNo, String groupNo) {
+		Map<String, String> map = new HashMap<>();
+		GroupMemberVO groupMemberVO = new GroupMemberVO();
+		map.put("state", state);
+		map.put("studyConditionNo", studyConditionNo);
+		recruitDAO.updateStudyConditionState(map);
+		if(state.equals("승인")) {
+			groupMemberVO.setPosition("팀원");
+			groupMemberVO.setMemberVO(new MemberVO(recruitDAO.findMemberByStudyConditionNo(studyConditionNo).getMemberEmail(), null));
+			GroupVO groupVO = new GroupVO();
+			groupVO.setGroupNo(Integer.parseInt(groupNo));
+			groupMemberVO.setGroupVO(groupVO);
+			groupDAO.registerStudyGroupMember(groupMemberVO);
+		}
+	}
 }

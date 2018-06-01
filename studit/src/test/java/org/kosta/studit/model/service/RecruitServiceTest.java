@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kosta.studit.model.vo.RecruitPostVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -108,14 +107,7 @@ public class RecruitServiceTest {
 		System.out.println(recruitService.findStudyConditionByGroupNo("1", "1"));
 	}
 	
-	/**
-	 * 스터디 신청자 상태 변경(승인/거절)  TEST
-	 * @author 김유란
-	 */
-	//@Test
-	public void updateStudyConditionStateTest() {
-		recruitService.updateStudyConditionState("승인",	 "1");
-	}
+
 }
 
 

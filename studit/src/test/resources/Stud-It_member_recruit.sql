@@ -15,6 +15,7 @@ CREATE TABLE member
     pic_path varchar2(300) default 'default.png' 
 );
  
+update member_position set name='회원' where member_email='h@h.com'
 select * from member
 commit
 insert into member(member_email,password,name,primary_addr,detail_addr,phone,regdate,password_hint,password_answer) 
@@ -57,7 +58,6 @@ insert into member(member_email,password,name,primary_addr,detail_addr,phone,reg
 values('i@j.com','1','아이십','수원','9호','010-1234-5678',sysdate,'내 나이는?','25');
 insert into member(member_email,password,name,primary_addr,detail_addr,phone,regdate,password_hint,password_answer) 
 values('j@k.com','1','아이십','수원','9호','010-1234-5678',sysdate,'내 나이는?','25');
-
 
 
 select *from member
@@ -443,7 +443,7 @@ values(recruit_comment_no_seq.nextval, '스터디 시간이 안 적혀있네요.
 insert into recruit_post_comment(recruit_comment_no, content, member_email, regdate, recruit_post_no)
 values(recruit_comment_no_seq.nextval, '화목 싫은데요? 에벱베베','c@c.com' ,sysdate,1);
 
-
+drop table study_condition cascade constraint
 --회원이 신청한 스터디 현황
 CREATE TABLE study_condition
 (
@@ -456,10 +456,9 @@ CREATE TABLE study_condition
 	constraint fk3_recruit_post_no foreign key(recruit_post_no) references recruit_post(recruit_post_no),
 	constraint fk3_member_email foreign key(member_email) references member(member_email)
 );
-drop table study_condition
 create sequence study_condition_no_seq nocache;
 drop sequence study_condition_no_seq
-select *from study_condition
+select *from study_condition where state='미승인'
 
 insert into study_condition(study_condition_no, regdate, state, self_appeal, member_email, recruit_post_no)
 values(study_condition_no_seq.nextval, sysdate, '미승인', '열심히 할게요 ! ', 'f@f.com', 1);
@@ -484,7 +483,19 @@ from(
 							m.name member_name, to_char(sc.regdate,'yyyy-MM-dd hh24:mi:ss') sc_regdate, sc.state 
 							from member m, study_condition sc, study_group sg
 							where sc.recruit_post_no=sg.recruit_post_no
-							and sg.sg_no=1
-							and m.member_email = sc.member_email)
-where condition_no between 1 and 5
+							and sg.sg_no=29
+							and m.member_email = sc.member_email
+							and sc.state='미승인'
+							)
+where condition_no between 6 and 10
 
+select study_condition_no, member_name, stc_regdate, state, self_appeal, condition
+			from(
+			select row_number() over(order by study_condition_no desc) condition_no, sc.study_condition_no, sc.self_appeal, rp.condition,
+							m.name member_name, to_char(sc.regdate,'yyyy-MM-dd hh24:mi:ss') stc_regdate, sc.state 
+							from member m, study_condition sc, study_group sg, recruit_post rp
+							where sc.recruit_post_no=sg.recruit_post_no and sc.recruit_post_no=rp.recruit_post_no
+							--and sg.sg_no=1
+							and m.member_email = sc.member_email
+							and sc.state='미승인')
+			where condition_no between 1 and 5

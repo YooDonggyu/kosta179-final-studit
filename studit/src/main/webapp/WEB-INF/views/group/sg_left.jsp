@@ -7,8 +7,8 @@
         <div class="sidenav-header d-flex align-items-center justify-content-center" style="background-color: #F78181;">
           <div class="sidenav-header-inner text-center">
           <div id="egg"><img src="${pageContext.request.contextPath }/resources/assets/img/groupLogo1.png" alt="person" class="img-fluid rounded-circle"></div>
-            <h2 class="h5 text-uppercase">${groupName }</h2><span class="text-uppercase">${memberName }(${memberEmail })님</span>
-            <c:if test="${position eq '팀장' }"><i class="fas fa-crown fa-2x" style="color: #ffcc00"></i></c:if>
+            <h2 class="h5 text-uppercase">${groupMemberVO.groupVO.name}</h2><span class="text-uppercase">${groupMemberVO.memberVO.name}(${groupMemberVO.memberVO.memberEmail })님</span>
+            <c:if test="${groupMemberVO.position eq '팀장' }"><i class="fas fa-crown fa-2x" style="color: #ffcc00"></i></c:if>
           </div>
           <!-- <div class="sidenav-header-logo"><a href="index.html" class="brand-small text-center"> <strong>B</strong><strong class="text-primary">D</strong></a></div> -->
         </div>
@@ -16,12 +16,12 @@
         <form method="post" action="${pageContext.request.contextPath }/group/groupHome" id="groupHome">
         <input type="hidden" id="sgNo" name="sgNo">
           <ul id="side-main-menu" class="side-menu list-unstyled">               
-            <li><a id="home" onclick="return groupHome(${sgNo})"> <i class="icon-home"></i><span>HOME</span></a></li>
+            <li><a id="home" onclick="return groupHome(${groupMemberVO.groupVO.groupNo})"> <i class="icon-home"></i><span>HOME</span></a></li>
             <li> <a href="#"><i class="icon-presentation"></i><span>BOARD</span></a></li>
             <li> <a href="#"> <i class="icon-grid"> </i><span>SCHEDULER</span></a></li>
             <c:choose>
-            	<c:when test="${position eq '팀장' }">
-            		 <li> <a href="${pageContext.request.contextPath}/group/findGroupMemberView?groupNo=${sgNo}"><i class="icon-form"></i><span>ADMIN</span></a></li>
+            	<c:when test="${groupMemberVO.position eq '팀장' }">
+            		 <li> <a href="${pageContext.request.contextPath}/group/findGroupMemberView?groupNo=${groupMemberVO.groupVO.groupNo}"><i class="icon-form"></i><span>ADMIN</span></a></li>
             	</c:when>
             	<c:otherwise>
             		 <li> <a href="#"><i class="icon-form"></i><span>LEAVE</span></a></li>
