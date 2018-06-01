@@ -35,7 +35,14 @@
  							</div>
  						</td>
  						<td>
-							<input id="keyword" name="keyword" type="text" placeholder="제목, 지역을 검색하세요" class="form-control">
+ 						<c:choose>
+ 							<c:when test="${srchKeyword != null && srchKeyword !=''}">
+ 								<input id="keyword" name="keyword" type="text" value="${srchKeyword}" class="form-control" >
+ 							</c:when>
+ 							<c:otherwise>
+								<input id="keyword" name="keyword" type="text" placeholder="제목, 지역을 검색하세요" class="form-control" >
+ 							</c:otherwise>
+ 						</c:choose>
 						</td>
 						<td>
 							<input type="button" value="검색" class="btn btn-primary" id="recruitSrchBtn" onclick="return categoryCheck(1)"> 

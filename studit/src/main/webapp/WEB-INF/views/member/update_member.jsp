@@ -13,6 +13,90 @@
 	max-width: 100%;
 } 
 </style>
+
+
+<div class="col-sm-3"></div>
+<div class="col-sm-6">
+	<form class="form-horizontal" role="form" method="post" action="${pageContext.request.contextPath }/member/updateMember"
+		enctype="multipart/form-data" id="updateForm">
+		<br>
+		<h2>회원정보 수정</h2>
+		<br>
+		<div class="form-group">
+			<label for="memberEmail" class="col-sm-2 control-label formCategory">이메일</label>
+			<div class="col-sm-9">
+				<input type="email" id="memberEmail" name="memberEmail" 
+					class="form-control" readonly="readonly" value="${rMemberVO.memberEmail}">
+				<!-- <span class="help-block">Last Name, First Name, eg.: Smith, Harry</span> -->
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label for="name" class="col-sm-2 control-label formCategory">이름</label>
+			<div class="col-sm-9">
+				<input type="text" id="name" name="name" value="${rMemberVO.name}" maxlength="50"
+					class="form-control">
+			</div>
+		</div>
+
+		 <div class="form-group">
+                    <label for="addrSerchBtn" class="col-sm-2 control-label formCategory">주소</label>
+                    <div class="col-sm-9">
+                       <!--  <input type="text" id="sample6_postcode" placeholder="우편번호"> -->
+						<input type="button" name="addrSerchBtn" id="addrSerchBtn" onclick="sample6_execDaumPostcode()" value="주소 찾기"  class="col-sm-12 control-label btn btn-default" style="text-align:center;">
+						<input type="text" id="sample6_address" name="primaryAddr" readonly="readonly"   value="${rMemberVO.primaryAddr}" class="form-control"><br>
+						<input type="text" id="addrDetail" name="detailAddr" value="${rMemberVO.detailAddr}" class="form-control" required="required" maxlength="50">
+                    </div>
+                </div>
+
+		<div class="form-group">
+			<label for="phone" class="col-sm-2 control-label formCategory">전화번호</label>
+			<div class="col-sm-9">
+				<input type="text" id="phone" name="phone" value="${rMemberVO.phone}" maxlength="50"
+					class="form-control">
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="passwordHint" class="col-sm-2 control-label formCategory">비밀번호 힌트</label>
+			<div class="col-sm-9">
+				<input type="text" id="passwordHint" name="passwordHint" maxlength="50"
+					value="${rMemberVO.passwordHint}" class="form-control">
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="passwordAnswer" class="col-sm-2 control-label formCategory">비밀번호 정답</label>
+			<div class="col-sm-9">
+				<input type="text" id="passwordAnswer" name="passwordAnswer" maxlength="50"
+					value="${rMemberVO.passwordAnswer}" class="form-control">
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="birthDate" class="col-sm-2 control-label formCategory">프로필 사진</label>
+			<div class="col-sm-5">
+				<input type="file" id="picFile" name="picFile" class="form-control" value="${rMemberVO.picPath}">
+				<span id="deletePic"><a>사진 지우기</a></span>
+			</div>
+			<div class="col-sm-4" id="picDiv">
+				<img id="picView" src="${pageContext.request.contextPath}/resources/upload/${rMemberVO.picPath}"
+					width="100px">
+			</div>
+		</div>
+		<input type="hidden" id="picPath" name="picPath">
+		<div class="form-group">
+			<div class="col-sm-9 col-sm-offset-2">
+				<button type="button" id="submitBtn" class="btn btn-primary btn-block">수정</button>
+				<button type="button" id="deleteBtn" class="btn btn-light btn-block">회원탈퇴</button>
+			</div>
+		</div>
+	</form>
+	<!-- /form -->
+</div>
+<!-- ./container -->
+<div class="col - sm- 3"></div>
+
 <script>
 // 작성: 변태섭
 // 기능: 우편번호 API Sciprt
@@ -57,8 +141,14 @@ new daum.Postcode({
     }
 }).open();
 }
-</script>
-<script>
+
+	//탈퇴 버튼
+	$("#deleteBtn").click(function() {
+		if(confirm("탈퇴시 계정 정보를 복구할 수 없습니다. 정말 탈퇴하시겠습니까?")){
+			location.href="${pageContext.request.contextPath}/member/deleteMemberView";
+		}
+	})
+
     $(document).ready(function() {
 	var selFile;
 	//작성: 김유란
@@ -70,6 +160,7 @@ new daum.Postcode({
 			filesArr.forEach(function(f) {
 				if(!f.type.match("image.*")){
 					alert("이미지 파일을 선택하세요.");
+					$("#picFile").val("");
 					return false;
 				}
 				
@@ -82,6 +173,12 @@ new daum.Postcode({
 				reader.readAsDataURL(f);
 			})//each
 		})//on
+		
+		//사진 지우기
+		$("#deletePic").click(function () {
+			$("#picView").attr("src","${pageContext.request.contextPath}/resources/upload/default.png");
+			$("#picPath").val("default.png");
+		})
 		
 		$("#submitBtn").click(function(){
 			 if($("#name").val()==""){
@@ -104,83 +201,3 @@ new daum.Postcode({
 		})//click
 	})//ready
 </script>
-
-<div class="col-sm-3"></div>
-<div class="col-sm-6">
-	<form class="form-horizontal" role="form" method="post" action="${pageContext.request.contextPath }/member/updateMember"
-		enctype="multipart/form-data" id="updateForm">
-		<br>
-		<h2>회원정보 수정</h2>
-		<br>
-		<div class="form-group">
-			<label for="memberEmail" class="col-sm-2 control-label formCategory">이메일</label>
-			<div class="col-sm-9">
-				<input type="email" id="memberEmail" name="memberEmail"
-					class="form-control" readonly="readonly" value="${rMemberVO.memberEmail}">
-				<!-- <span class="help-block">Last Name, First Name, eg.: Smith, Harry</span> -->
-			</div>
-		</div>
-		
-		<div class="form-group">
-			<label for="name" class="col-sm-2 control-label formCategory">이름</label>
-			<div class="col-sm-9">
-				<input type="text" id="name" name="name" value="${rMemberVO.name}"
-					class="form-control">
-			</div>
-		</div>
-
-		 <div class="form-group">
-                    <label for="addrSerchBtn" class="col-sm-2 control-label formCategory">주소</label>
-                    <div class="col-sm-9">
-                       <!--  <input type="text" id="sample6_postcode" placeholder="우편번호"> -->
-						<input type="button" name="addrSerchBtn" id="addrSerchBtn" onclick="sample6_execDaumPostcode()" value="주소 찾기"  class="col-sm-12 control-label btn btn-default" style="text-align:center;">
-						<input type="text" id="sample6_address" name="primaryAddr" readonly="readonly"   value="${rMemberVO.primaryAddr}" class="form-control"><br>
-						<input type="text" id="addrDetail" name="detailAddr" value="${rMemberVO.detailAddr}" class="form-control" required="required">
-                    </div>
-                </div>
-
-		<div class="form-group">
-			<label for="phone" class="col-sm-2 control-label formCategory">전화번호</label>
-			<div class="col-sm-9">
-				<input type="text" id="phone" name="phone" value="${rMemberVO.phone}"
-					class="form-control">
-			</div>
-		</div>
-
-		<div class="form-group">
-			<label for="passwordHint" class="col-sm-2 control-label formCategory">비밀번호 힌트</label>
-			<div class="col-sm-9">
-				<input type="text" id="passwordHint" name="passwordHint"
-					value="${rMemberVO.passwordHint}" class="form-control">
-			</div>
-		</div>
-
-		<div class="form-group">
-			<label for="passwordAnswer" class="col-sm-2 control-label formCategory">비밀번호 정답</label>
-			<div class="col-sm-9">
-				<input type="text" id="passwordAnswer" name="passwordAnswer"
-					value="${rMemberVO.passwordAnswer}" class="form-control">
-			</div>
-		</div>
-
-		<div class="form-group">
-			<label for="birthDate" class="col-sm-2 control-label formCategory">프로필 사진</label>
-			<div class="col-sm-5">
-				<input type="file" id="picFile" name="picFile" class="form-control" value="${rMemberVO.picPath}">
-			</div>
-			<div class="col-sm-4" id="picDiv">
-				<img id="picView" src="${pageContext.request.contextPath}/resources/upload/${rMemberVO.picPath}"
-					width="100px">
-			</div>
-		</div>
-
-		<div class="form-group">
-			<div class="col-sm-9 col-sm-offset-2">
-				<button type="button" id="submitBtn" class="btn btn-primary btn-block">수정</button>
-			</div>
-		</div>
-	</form>
-	<!-- /form -->
-</div>
-<!-- ./container -->
-<div class="col - sm- 3"></div>

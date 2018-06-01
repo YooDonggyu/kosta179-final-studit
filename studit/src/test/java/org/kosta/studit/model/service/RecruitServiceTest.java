@@ -22,7 +22,7 @@ public class RecruitServiceTest {
 	 * 스터디를 신청 테스트
 	 * @author 이승수
 	 */
-	@Test
+	//@Test
 	public void registerRecruitStudyTest() {
 		recruitService.registerRecruitStudy(2, "j@k.com", "자기소개냐??");
 	}
@@ -31,7 +31,7 @@ public class RecruitServiceTest {
 	 * 스터디신청시 이미 거절상태일때 다시 미승인 상태로 바꿔주는 메서드 테스트
 	 * @author 이승수
 	 */
-	@Test
+	//@Test
 	public void updateRecruitStudyTest() {
 		recruitService.updateRecruitStudy(2, "b@b.com", "다시 신청합니다");
 	}
@@ -64,7 +64,7 @@ public class RecruitServiceTest {
 	}
 	
 	
-	@Test
+	//@Test
 	public void findRecruitPostByCategoryAndKeywordTest() {
 		Map<String, Object> map = new HashMap<>();
 		List<Integer> list = new ArrayList<>();
@@ -94,9 +94,27 @@ public class RecruitServiceTest {
 	 * 스터디 신청 삭제 TEST
 	 * @author 김유란
 	 */
-	@Test
+	//@Test
 	public void deleteStudyConditionByStudyConditionNoTest() {
 		recruitService.deleteStudyConditionByStudyConditionNo("b@b.com", "6");
+	}
+	
+	/**
+	 * 스터디 그룹번호로 신청현황 조회 TEST
+	 * @author 김유란
+	 */
+	//@Test
+	public void findStudyConditionByGroupNoTest() {
+		System.out.println(recruitService.findStudyConditionByGroupNo("1", "1"));
+	}
+	
+	/**
+	 * 스터디 신청자 상태 변경(승인/거절)  TEST
+	 * @author 김유란
+	 */
+	//@Test
+	public void updateStudyConditionStateTest() {
+		recruitService.updateStudyConditionState("승인",	 "1");
 	}
 }
 

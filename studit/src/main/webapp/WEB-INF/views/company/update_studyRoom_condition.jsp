@@ -18,13 +18,14 @@
 	                <div class="form-group">
 	                    	<span id="name"> </span><br>
 	                    	<span id="roomName"></span><br>
-	                    	<input type="date" id="useDate" name="useDate">
-	                 		<input type="time" id="startTime" name="startTime">-
-	                 		<input type="time" id="endTime" name="endTime"><br>
+	                    	<span id="useDate"></span>
+	                 		<span id="startTime"></span>:00~
+	                 		<span id="endTime"></span>:50<br>
 	                 		<select id="state" name="state">
 	                 			<option>예약대기</option>
 	                 			<option>예약완료</option>
 	                 			<option>예약불가</option>
+	                 			<option>예약취소</option>
 	                 		</select>
 	                </div>
 					<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>

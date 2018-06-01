@@ -1,5 +1,11 @@
 package org.kosta.studit.controller;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,13 +16,16 @@ import org.kosta.studit.exception.EmailNotFoundException;
 import org.kosta.studit.exception.IsNotMemberException;
 import org.kosta.studit.exception.PasswordIncorrectException;
 import org.kosta.studit.model.dao.CompanyDAO;
+import org.kosta.studit.model.dao.GroupDAO;
 import org.kosta.studit.model.dao.MemberDAO;
 import org.kosta.studit.model.dao.RecruitDAO;
 import org.kosta.studit.model.service.CompanyService;
+import org.kosta.studit.model.service.GroupService;
 import org.kosta.studit.model.service.MemberService;
 import org.kosta.studit.model.service.RecruitService;
 import org.kosta.studit.model.service.StudyRoomService;
 import org.kosta.studit.model.vo.CompanyListVO;
+import org.kosta.studit.model.vo.GroupMemberListVO;
 import org.kosta.studit.model.vo.MemberVO;
 import org.kosta.studit.model.vo.RecruitPostListVO;
 import org.kosta.studit.model.vo.SmallCategoryVO;
@@ -29,7 +38,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import net.minidev.json.JSONArray;
+import net.minidev.json.JSONObject;
 
 @Controller
 @RequestMapping("/ajax")
@@ -49,6 +64,10 @@ public class AjaxViewController {
 	private StudyRoomService studyroomService;
 	@Autowired
 	private CompanyService companyService;
+	@Autowired
+	private GroupService groupService;
+	@Autowired
+	private GroupDAO GroupDAO;
 	   
 
 	/**
@@ -356,8 +375,74 @@ public class AjaxViewController {
 	@RequestMapping("/findStudyRoomConditionByStudyRoomNoAndMonth")
 	@ResponseBody
 	public JSONArray findStudyRoomConditionByStudyRoomNoAndMonth(String companyNo, String startDate, String endDate){
-		System.out.println(startDate);
 		return companyService.findStudyRoomConditionByCompanyNoAndMonth(companyNo, startDate, endDate);
+	}
+	
+	/**
+	 * 공휴일 정보 받아 예약현황 캘린더에 전송
+	 * @author 김유란
+	 * @param year 정보 조회를 원하는 연도
+	 * @param month 정보 조회를 원하는 월
+	 * @return JSONArray 공휴일 정보를 담은 JSON객체 배열
+	 */
+	@RequestMapping("/findHolidayInfoByDate")
+	@ResponseBody
+	public JSONArray findHolidayInfoByDate(String year, String month) throws IOException {
+		 StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B090041/openapi/service/SpcdeInfoService/getRestDeInfo"); /*URL*/
+	        urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=esTFesfy%2FQV6VHLKYY4%2BpN2t9zAFnLmx9lInXwDXqRFTA%2FZcRvMgcVSDTCIiVelBr4KESA3BNGKabphAj2fs1w%3D%3D"); /*Service Key*/
+	        urlBuilder.append("&" + URLEncoder.encode("solYear","UTF-8") + "=" + URLEncoder.encode(year, "UTF-8")); /*연*/
+	        urlBuilder.append("&" + URLEncoder.encode("solMonth","UTF-8") + "=" + URLEncoder.encode(month, "UTF-8")); /*월*/
+	      //  urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /**/
+	       // urlBuilder.append("&" + URLEncoder.encode("totalCount","UTF-8") + "=" + URLEncoder.encode("16", "UTF-8")); /**/
+	        URL url = new URL(urlBuilder.toString());
+	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+	        conn.setRequestMethod("GET");
+	        conn.setRequestProperty("Content-type", "application/json");
+	        conn.setRequestProperty("Accept", "application/json;charset=UTF-8");
+
+	        BufferedReader rd;
+	        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+	            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+	        } else {
+	            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+	        }
+	        StringBuilder sb = new StringBuilder();
+	        String line;
+	        while ((line = rd.readLine()) != null) {
+	            sb.append(line);
+	        }
+	        rd.close();
+	        conn.disconnect();
+ 
+	    ObjectMapper mapper = new ObjectMapper();
+	     JsonFactory factory = mapper.getFactory();
+	     JsonParser jsonParser = factory.createParser(sb.toString());
+	     JsonNode node = mapper.readTree(jsonParser);
+
+	     JSONArray arr = new JSONArray();
+	     List<String> titleList = node.findValuesAsText("dateName");
+	     List<String> dateList = node.findValuesAsText("locdate");	     
+
+	     for(int i=0; i<titleList.size();i++) {
+	    	 JSONObject obj = new JSONObject();
+	    	 obj.put("title", titleList.get(i));
+			obj.put("start", dateList.get(i));			
+	    	 arr.add(obj);
+	     }
+	     return arr;
+
+	     }
+	
+	/**
+	 * 스터디 그룹 멤버 조회
+	 * @author 김유란
+	 * @param nowPage 현재 페이지
+	 * @return GroupMemberListVO 페이징한 결과(list)와 페이징 객체가 담겨있는 객체
+	 */
+	@RequestMapping("/findGroupMemberByNowPage")
+	@ResponseBody
+	public GroupMemberListVO findGroupMemberByNowPage(String groupNo, String nowPage){
+		return groupService.findGroupMemberByGroupNo(groupNo, nowPage);
 	}
 
 }

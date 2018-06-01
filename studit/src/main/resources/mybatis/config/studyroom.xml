@@ -214,5 +214,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		and c.member_email = m.member_email
 		and m.member_email = #{value}
    </select> 
+	
+
 </mapper>
+
+
+
  

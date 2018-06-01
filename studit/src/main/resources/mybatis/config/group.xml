@@ -7,8 +7,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<resultMap type="groupMemberVO" id="groupMemberRM">
 		<result property="groupVO.groupNo" column="sg_no"/>
 		<result property="groupVO.name" column="name"/>
+		<result property="groupVO.recruitPostVO.recruitPostNo" column="recruit_post_no"/>
 		<result property="groupMemberNo" column="sg_member_no"/>
-		<result property="email" column="member_email"/>
+		<result property="memberVO.memberEmail" column="member_email"/>
+		<result property="memberVO.name" column="member_name"/>
 	</resultMap>
 	<!-- 
 		본인이 팀장인 스터디 그룹의 개수 조회
@@ -39,6 +41,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			group by sm1.sg_no
 		) a, RECRUIT_POST rp, study_group sg
 		where sg.sg_no = a.sg_no and sg.recruit_post_no = rp.recruit_post_no and a.cnt>1
+	</select>
+	
+	<!-- 
+		매개변수로 받은 스터디 그룹이 본인이 팀장이고 팀원이 있는 스터디 그룹인지 확인
+		@author 송용준, 유동규
+		@param sgNo 스터디 그룹의 번호
+		@return int 팀장이고 팀원이면 1, 아니면 0 반환
+	 -->
+	<select id="countMyLeadGroupHasMemberByEmailAndStudyGroupNo" parameterType="map" resultType="int">
+		select count(a.sg_no)
+		from (
+			select sm1.sg_no as sg_no, count(sm2.member_email) as cnt
+			from sg_member sm1, sg_member sm2 
+			where sm1.member_email=#{memberEmail} 
+					and sm1.position='팀장' 
+				  	and sm1.sg_no = sm2.sg_no
+			group by sm1.sg_no
+		) a, RECRUIT_POST rp, study_group sg
+		where sg.sg_no = a.sg_no and sg.recruit_post_no = rp.recruit_post_no and a.cnt>1 and sg_no=#{sgNo}
 	</select>
 	
 	<!-- 
@@ -77,17 +98,102 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 
-		회원이 속해있는 스터디 그룹을 모두 조회
+		회원이 속해있는 스터디 그룹과 본인의 직책 정보를 모두 조회
 		@author 김유란
 		@param memberEmail 회원 이메일
-		@return GroupVO
+		@return GroupMemberVO
 	 -->
 	<select id="findStudyGroupByMemberEmail" resultMap="groupMemberRM">
-	select sgm.sg_member_no, sgm.sg_no, sgm.position, sgm.member_email, sgm.state, sg.name 
-	from sg_member sgm, study_group sg 
-	where sgm.sg_no=sg.sg_no and sgm.member_email=#{value} 
+	select sgm.sg_member_no, sgm.sg_no, sgm.position, sgm.member_email, sgm.state, sg.name, rp.recruit_post_no 
+	from sg_member sgm, study_group sg, recruit_post rp 
+	where sgm.sg_no=sg.sg_no and rp.recruit_post_no=sg.recruit_post_no and sgm.member_email=#{value} and sgm.position!='탈퇴'
+	and rp.condition!='삭제'
 	</select>
 	
+	<!-- 
+	  스터디 그룹 이름을 조회
+	 @author 송용준
+	 @param sgNo 이름을 조회할 스터디 그룹 번호
+	 @return 스터디 그룹 이름
+ 	-->
+	<select id="findStudyGroupNameByStudyGroupNo" parameterType="string" resultType="string">
+		select name
+		from study_group
+		where sg_no=#{value}
+	</select>
+	
+	<!-- 
+	 회원이 가지고 있는 스터디 그룹 내의 직책을 조회 
+	 @author 송용준
+	 @param sgNo 조회할 스터디 그룹 번호
+	 @param memberEmail 직책을 확인할 회원의 이메일
+	 @return 회원의 직책
+ 	-->
+	<select id="findMemberPositionByMemberEmailAndStudyGroupNo" parameterType="map" resultType="string" >
+		select sm.position
+		from sg_member sm, study_group sg
+		where sg.sg_no=#{sgNo} and sm.member_email=#{memberEmail} and sm.sg_no=sg.sg_no
+	</select>
+	
+	<!--
+		스터디 그룹 번호로 그룹 멤버 수 조회
+		@author 김유란
+		@param groupNo 그룹 번호
+		@return int 멤버 수
+	 -->
+	<select id="findGroupMemberCountByGroupNo" parameterType="string" resultType="int">
+	select count(*)
+	from sg_member sgm, study_group sg, member m
+	where sgm.sg_no=sg.sg_no and m.member_email=sgm.member_email
+				and sgm.sg_no=#{value}
+	</select>
+	
+	<!-- 
+		스터디 그룹 번호로 그룹 멤버를 조회
+		@author 김유란
+		@param map(groupNo, pagingBean)
+		@return GroupMemberVO
+	 -->
+	<select id="findGroupMemberByGroupNo" parameterType="map"  resultMap="groupMemberRM">
+	select member_email, member_name, position, sg_no, sg_member_no
+from(
+			select row_number() over(order by sg_member_no) rnum, 
+							m.member_email, m.name member_name, sgm.position, sgm.sg_no, sgm.sg_member_no
+							from member m, sg_member sgm, study_group sg
+							where sgm.sg_no=sg.sg_no
+							and sg.sg_no=#{groupNo}
+							and m.member_email = sgm.member_email)
+where rnum between #{pagingBean.startRowNumber} and #{pagingBean.endRowNumber} order by sg_member_no, position desc
+	</select>
+	
+	<!-- 
+		그룹 멤버 직책 변경
+		@author 김유란
+		@param map(position: 변경할 직책명 / groupMemberNo: 변경할 그룹 멤버의 식별번호)
+	 -->
+	<select id="updateGroupMemberPosition"  parameterType="map">
+	update sg_member set position=#{position} where sg_member_no=#{groupMemberNo}
+	</select>
+	
+		<!-- 
+		그룹 멤버 state(즐겨찾기) 변경
+		@author 김유란
+		@param map(
+		state: true or false 
+		/ memberEmail: 멤버의 모든 그룹 상태를 false로 바꿀때 필요 
+		/groupMemberNo: 멤버가 선택한 그룹의 상태를 true로 바꿀 때 필요
+		)
+	 -->
+	<update id="updateGroupMemberState" parameterType="map">
+	update sg_member set state=#{state} 
+		<choose>
+			<when test="memberEmail!=null and memberEmail!=''">
+			where member_email=#{memberEmail} 
+			</when>
+			<otherwise>
+			where sg_member_no=#{groupMemberNo}
+			</otherwise>
+		</choose>
+	</update>
 </mapper>
- 
- 
+

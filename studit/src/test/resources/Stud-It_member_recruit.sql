@@ -295,6 +295,8 @@ values(recruit_post_no_seq.nextval,'모여서 시 낭송 하실분들구해요',
  
 commit
 
+select * from recruit_post
+
 --모집  선택
 CREATE TABLE recruit_day
 (
@@ -472,4 +474,18 @@ insert into study_condition(study_condition_no, regdate, state, self_appeal, mem
 values(study_condition_no_seq.nextval, sysdate, '미승인', '열심히 할게요 ! ', 'g@g.com', 1); --def
 
 commit
+
+select count(*)
+from study_condition sc, study_group sg
+where sc.recruit_post_no=sg.recruit_post_no and sg.sg_no='1'
+
+select study_condition_no, member_name, sc_regdate, state, self_appeal
+from(
+			select row_number() over(order by study_condition_no desc) condition_no, sc.study_condition_no, sc.self_appeal,
+							m.name member_name, to_char(sc.regdate,'yyyy-MM-dd hh24:mi:ss') sc_regdate, sc.state 
+							from member m, study_condition sc, study_group sg
+							where sc.recruit_post_no=sg.recruit_post_no
+							and sg.sg_no=1
+							and m.member_email = sc.member_email)
+where condition_no between 1 and 5
 

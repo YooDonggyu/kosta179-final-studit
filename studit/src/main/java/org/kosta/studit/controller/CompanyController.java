@@ -66,7 +66,7 @@ public class CompanyController {
 		request.setAttribute("pagingBean", allCompanyList.getPagingBean());
 		request.setAttribute("allHashTagList", allHashTagList);
 		
-		return "company/find_Company_View.tiles";
+		return "company/find_company_view.tiles";
 	}
 	
 	/**ajax로 변경
@@ -80,10 +80,11 @@ public class CompanyController {
 	 */
 	@RequestMapping("/findStudyRoomConditionByCompanyNo")
 	public String findStudyRoomConditionByCompanyNo(Model model, String companyNo) {
+		model.addAttribute("waitCountList", companyDAO.findWaitStudyRoomConditionCountByCompanyNo("1"));
 		model.addAttribute("businessHour", companyService.findBusinessDayByCompanyNo(1));
 		model.addAttribute("studyRoomResource", companyService.findStudyRoomByCompanyNo(1));
-		model.addAttribute("conditionCount", companyDAO.findStudyRoomConditionCountByMonth("1"));
-		return "company/find_studyRoom_condition.tiles";
+		model.addAttribute("conditionCount", companyService.findStudyRoomConditionCountByMonth("1"));
+		return "company/find_studyroom_condition.tiles";
 	}
 	
 	/**
@@ -156,10 +157,7 @@ public class CompanyController {
 			     String fileName = memberVO.getMemberEmail()+"_"+studyRoomVO.getCompanyVO().getName()+"_"+companyPicFile[i].getOriginalFilename();
 			     //String path = request.getSession(false).getServletContext().getRealPath("upload"); 개발 완료 후 적용
 			     
-			     //String path ="C:/java-kosta/project/Final/kosta179-final-studit/studit/src/main/webapp/resources/upload";
-			     //String path ="C:/resources/upload/";
-			     String path = "D:/KOSTA/workspace/resources/upload/company/";
-			     //String path ="C:/java-kosta/project/Final/kosta179-final-studit/studit/src/main/webapp/resources/upload";
+			     String path = "C:/resources/upload/";
 			     try {
 			    	companyPicFile[i].transferTo(new File(path, fileName));//지정 경로에 실제 파일 저장
 			    	if(i==0) {
@@ -180,10 +178,7 @@ public class CompanyController {
 				     String fileName = memberVO.getMemberEmail()+"_"+studyRoomVO.getCompanyVO().getName()+"_"+studyRoomVO.getName()+"_"+studyRoomPicFile.getOriginalFilename();
 				     //String path = request.getSession(false).getServletContext().getRealPath("upload"); 개발 완료 후 적용
 				     
-				     //String path ="C:/resources/upload/";
-				     String path = "D:/KOSTA/workspace/resources/upload/studyroom/";
-				     
-				     //String path ="C:/java-kosta/project/Final/kosta179-final-studit/studit/src/main/webapp/resources/upload";
+				     String path ="C:/resources/upload/";
 				     try {
 				    	 studyRoomPicFile.transferTo(new File(path, fileName));//지정 경로에 실제 파일 저장
 				    	 studyRoomPicFileList.add(fileName);
@@ -227,6 +222,17 @@ public class CompanyController {
 		int companyNo = -1;
 		if(request.getParameter("companyNo") != null ) {
 			companyNo = Integer.parseInt(request.getParameter("companyNo"));
+			
+			// 1.세션 이메일과 게시글 작성자를 비교해서 작성자이면 조회수 증가 방지
+			// 2.cHitList에 포함된 게시글은 조회수 증가 방지
+			String sessionEmail = ((MemberVO) request.getSession().getAttribute("memberVO")).getMemberEmail();
+			String companyMemberEmail = companyDAO.findCompanyMemberEmailByCompanyNO(companyNo);
+			ArrayList<Integer> cHitList = (ArrayList<Integer>) request.getSession().getAttribute("cHitList");
+			if (!cHitList.contains(companyNo) && !sessionEmail.equals(companyMemberEmail)) {
+				companyDAO.updateCompanyHit(companyNo);
+				cHitList.add(companyNo);
+			}
+			
 		}
 		model.addAttribute("com", companyService.findDetailCompanyInfoByCompanyNo(companyNo));
 		

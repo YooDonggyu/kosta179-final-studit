@@ -88,7 +88,7 @@ public class CompanyDAOTest {
 	    * 업체 번호로 등록된 스터디룸 조회 테스트
 	    * @author 김유란
 	    */
-	   @Test
+	   //@Test
 	   public void findStudyRoomByCompanyNo() {
 		   System.out.println(companyDAO.findStudyRoomByCompanyNo(1));
 	   }
@@ -97,7 +97,7 @@ public class CompanyDAOTest {
 	    * 스터디룸 번호로 예약현황 조회
 	    * @author 김유란
 	    */
-	   @Test
+	   //@Test
 	   public void findStudyRoomConditionByStudyRoomNoAndMonthTest() {
 		   Map<String,String> map=new HashMap<>();
 		   map.put("companyNo", "1");
@@ -270,20 +270,41 @@ public class CompanyDAOTest {
 	    * 스터디룸 예약 월별 통계 조회 테스트
 	    * @author 김유란
 	    */
-	   @Test
+	   //@Test
 	   public void findStudyRoomConditionCountByMonthTest() {
-		   System.out.println(companyDAO.findStudyRoomConditionCountByMonth("1"));
+		   Map<String, String> map = new HashMap<>();
+		   map.put("companyNo", "1");
+		   map.put("state", "예약대기");
+		   System.out.println(companyDAO.findStudyRoomConditionCountByMonth(map));
 	   }
 	   
 	   /**
 	    * 승인된 업체의 전체 수를 출력
 	    * @author 송용준
 	    */
-	   @Test
-	   public void findTotalCountOfCompany() {
+	   //@Test
+	   public void findTotalCountOfCompanyTest() {
 		   //findTotalCountOfCompany() 메소드에서 매개변수는 검색 조건
 		   //검색 조건에 부합하는 업체들의 총 수를 반환
 		   System.out.println(companyDAO.findTotalCountOfCompany(null));
+	   }
+	   
+	   /**
+	    * 조회수가 가장 높은 업체 3곳 조회
+	    * @author 유동규
+	    */
+	   //@Test
+	   public void getTopThreeComapnyTest() {
+		   System.out.println(companyDAO.getTopThreeComapny());
+	   }
+	   
+	   /**
+	    * 업체 스터디룸 일별 예약대기 건수 조회
+	    * @author 김유란
+	    */
+	   @Test
+	   public void findWaitStudyRoomConditionCountByCompanyNoTest() {
+		   System.out.println(companyDAO.findWaitStudyRoomConditionCountByCompanyNo("1"));
 	   }
 	   
 	   

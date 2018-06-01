@@ -35,6 +35,10 @@ function check(){
 		$("#title").focus();
 		return false;
 	}
+	if($("#title").val().length > 33){
+		alert("제목은 33글자까지 가능합니다.");
+		return false;
+	}
 	if($("#capacity").val()==""){
 		alert("희망인원을 입력하세요!");
 		$("#capacity").focus();
@@ -43,6 +47,10 @@ function check(){
 	if($("#location").val()==""){
 		alert("희망지역을 입력하세요!");
 		$("#location").focus();
+		return false;
+	}
+	if($("#location").val().length > 33){
+		alert("지역은 33글자까지 가능합니다.");
 		return false;
 	}
 	if($("#big_category option:selected").val()==0){
@@ -58,7 +66,11 @@ function check(){
 		return false;
 	}
 	if($("#content").val()==""){
-		alert("내용을 입력하세요!");
+		alert("내용을 입력하세요!"); 
+		return false;
+	}
+	if($("#content").val().length > 1332){
+		alert("내용은 1300글자까지 가능합니다. 현재 "+$("#content").val().length+"글자 입니다."); 
 		return false;
 	}
 	return true;
@@ -75,21 +87,21 @@ function check(){
                 <div class="form-group">
                     <label for="title" class="col-sm-3 control-label formCategory">제목</label>
                     <div class="col-sm-9">	
-                        <input type="text" id="title" name="title" placeholder="제목을 입력하세요" class="form-control" autofocus>
+                        <input type="text" id="title" name="title" placeholder="제목을 입력하세요" class="form-control" maxlength="33" autofocus>
                     </div>
                 </div>
                 
                 <div class="form-group">
                     <label for="capacity" class="col-sm-3 control-label formCategory">희망인원</label>
                     <div class="col-sm-9">
-                        <input type="number" id="capacity"  name= "capacity" class="form-control">
+                        <input type="number" id="capacity"  name= "capacity" class="form-control" min="1" max="1000">
                     </div>
                 </div>
                 
                 <div class="form-group">
                     <label for="location" class="col-sm-3 control-label formCategory">희망지역</label>
                     <div class="col-sm-9">
-                        <input type="text" id="location"  name="location" class="form-control">
+                        <input type="text" id="location"  name="location" class="form-control" placeholder="판교">
                     </div>
                 </div>
                 
@@ -125,13 +137,14 @@ function check(){
                 <div class="form-group">
                     <label for="content" class="col-sm-3 control-label formCategory" >내용</label>
                     <div class="col-sm-9">
-                        <pre><textarea style="resize:none; height: 250px;" placeholder="내용을 입력하세요!" id="content" cols="75" name="content"></textarea></pre>
+                        <pre><textarea style="width:100%; height: 250px;" placeholder="내용을 입력하세요!" id="content" name="content"></textarea></pre>
                     </div>
                 </div>
                 
                 <div class="form-group">
                     <div class="col-sm-9 col-sm-offset-3">
-                        <input type="submit" value="작성">
+                        <input type="submit" value="작성"> &nbsp;
+                        <a href="${pageContext.request.contextPath}/recruit/getRecruitPostList?pageNo=1" class="btn" style="color: black;"><u>목록</u></a>
                     </div>
                 </div>
             </form> <!-- /form -->

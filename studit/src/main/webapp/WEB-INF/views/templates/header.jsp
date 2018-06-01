@@ -18,9 +18,7 @@
 		            <li class="headerUl"><a href="${pageContext.request.contextPath}/recruit/getRecruitPostList?pageNo=1">STUDY</a></li>
 		            <li class="headerUl"><a href="${pageContext.request.contextPath}/company/findCompanyView">STUDY-ROOM</a></li>
 		            <li class="headerUl"><a href="${pageContext.request.contextPath}/company/companyView">PLACE</a></li>
-		            <li><a href="${pageContext.request.contextPath}/company/findStudyRoomConditionByCompanyNo/">PLACE2</a></li>
 		            <%-- <li><a href="${pageContext.request.contextPath}/member/getMyPage?nowPage=1"></a></li> --%>
-		            <li class="headerUl"><a href="${pageContext.request.contextPath}/member/deleteMemberView">HIDE</a></li>
 	          	</ul>
             
               <ul class="nav navbar-nav navbar-right">
@@ -39,6 +37,7 @@
 	                  <li class="dropdown-header">회원정보</li>
 	                  <li><a data-toggle="modal"  href="#checkMemberModal">회원정보 수정</a></li>
 	                  <li><a href="${pageContext.request.contextPath}/member/updatePasswordView">비밀번호 변경</a></li>
+	                  <li><a href="${pageContext.request.contextPath}/group/groupHome">나의 그룹</a></li>
 	                  <li><a href="${pageContext.request.contextPath}/member/logout">로그아웃</a></li>
 	                </ul>
 	              </li>

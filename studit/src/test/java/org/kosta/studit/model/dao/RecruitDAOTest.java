@@ -27,7 +27,7 @@ public class RecruitDAOTest {
 	 * 
 	 * @author 송용준
 	 */
-	@Test
+	//@Test
 	public void findWaitStudyByEmailTest() {
 		System.out.println(recruitDAO.findWaitStudyByEmail("c@c.com"));
 	}
@@ -37,7 +37,7 @@ public class RecruitDAOTest {
 	 * 
 	 * @author 변태섭
 	 */
-	@Test
+	//@Test
 	public void findStudyConditionByMemberEmailTest() {
 		String memberEmail = "test@a.com";
 		PagingBean pb = new PagingBean(recruitDAO.findCountStudyConditionByMemberEmail(memberEmail));
@@ -64,7 +64,7 @@ public class RecruitDAOTest {
 	 * 
 	 * @author 변태섭
 	 */
-	@Test
+	//@Test
 	public void findCountStudyConditionByMemberEmailTest() {
 		System.out.println("스터디 내역 개수: " + recruitDAO.findCountStudyConditionByMemberEmail("test@a.com"));
 	}
@@ -74,7 +74,7 @@ public class RecruitDAOTest {
 	 * 
 	 * @author 이승수
 	 */
-	@Test
+	//@Test
 	public void registerRecruitStudyTest() {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("recruitPostNo", 2);
@@ -88,7 +88,7 @@ public class RecruitDAOTest {
 	 * 
 	 * @author 이승수
 	 */
-	@Test
+	//@Test
 	public void findGroupMemberByRecruitPostNoTest() {
 		System.out.println(recruitDAO.findGroupMemberByRecruitPostNo(2));
 	}
@@ -97,7 +97,7 @@ public class RecruitDAOTest {
 	 * 사용자와 모집 게시글 번호에 따른 모집 게시글 수 구하기 테스트
 	 * @author 이승수
 	 */
-	@Test
+	//@Test
     public void findStudyConditionCountByEmailAndRecruitNoTest() {
 	  HashMap<String,Object> map=new HashMap<>();
 	  map.put("memberEmail", "a@a.com");
@@ -109,7 +109,7 @@ public class RecruitDAOTest {
 	 *  스터디 신청시 거절당했던 회원이 다시신청했을때 상태를 미승인 상태로 업데이트해주는 메서드 테스트
 	 *  @author 이승수
 	 */
-	@Test
+	//@Test
 	public void updateRecruitStudyTest() {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("recruitPostNo", 1);
@@ -123,7 +123,7 @@ public class RecruitDAOTest {
 	 * 
 	 * @author 김유란
 	 */
-	@Test
+	//@Test
 	public void getBigCategoryListTest() {
 		System.out.println(recruitDAO.getBigCategoryList());
 	}
@@ -165,7 +165,7 @@ public class RecruitDAOTest {
 	 * 
 	 * @author 유동규
 	 */
-	@Test
+	//@Test
 	public void findDetailRecruitPostAndCategoryByRecruitNoTest() {
 		System.out.println(recruitDAO.findDetailRecruitPostAndCategoryByRecruitNo(4));
 	}
@@ -175,7 +175,7 @@ public class RecruitDAOTest {
 	 * 
 	 * @author 유동규
 	 */
-	 @Test
+	 //@Test
 	public void findDayByRecruitNoTest() {
 		System.out.println(recruitDAO.findDayByRecruitNo(1));
 	}
@@ -185,7 +185,7 @@ public class RecruitDAOTest {
 	 * 
 	 * @author 유동규
 	 */
-	@Test
+	//@Test
 	public void findRecruitCommentByRecruitNoTest() {
 		System.out.println(recruitDAO.findRecruitCommentByRecruitNo(1));
 	}
@@ -195,7 +195,7 @@ public class RecruitDAOTest {
 	 * 
 	 * @author 유동규
 	 */
-	@Test
+	//@Test
 	public void updateRecruitPostHitByRecruitNoTest() {
 		recruitDAO.updateRecruitPostHitByRecruitNo(1);
 		System.out.println(recruitDAO.findDetailRecruitPostAndCategoryByRecruitNo(1));
@@ -206,7 +206,7 @@ public class RecruitDAOTest {
 	 * 
 	 * @author 유동규
 	 */
-	@Test
+	//@Test
 	public void findRecruitWriterByRecruitNoTest() {
 		System.out.println(recruitDAO.findRecruitWriterByRecruitNo(1));
 	}
@@ -216,7 +216,7 @@ public class RecruitDAOTest {
 	 * 
 	 * @author 유동규
 	 */
-	@Test
+	//@Test
 	public void findStudyConditionStateByEmailAndRecruitNoTest() {
 		Map<String, Object> map = new HashMap<>();
 		map.put("memberEmail", "d@d.com");
@@ -229,7 +229,7 @@ public class RecruitDAOTest {
 	 * 
 	 * @author 유동규
 	 */
-	@Test
+	//@Test
 	public void updateSmallCategoryNoByRecruitNoTest() {
 		// update
 		Map<String, Integer> map = new HashMap<>();
@@ -246,7 +246,7 @@ public class RecruitDAOTest {
 	 * 
 	 * @author 유동규
 	 */
-	@Test
+	//@Test
 	public void updateRecruitPostByRecruitNoTest() {
 		// 변경내용
 		RecruitPostVO recruitPostVO = new RecruitPostVO(1, "제목변경", "내용 변경", 3, "지역변경");
@@ -262,7 +262,7 @@ public class RecruitDAOTest {
 	 * 
 	 * @author 유동규
 	 */
-	@Test
+	//@Test
 	public void deleteAndinsertDayTest() {
 		// 삭제
 		recruitDAO.deleteDayByRecruitNo(1);
@@ -282,7 +282,7 @@ public class RecruitDAOTest {
 	 * 
 	 * @author 유동규
 	 */
-	@Test
+	//@Test
 	public void updateDeleteStudyConditionByRecruitNoTest() {
 		recruitDAO.updateDeleteStudyConditionByRecruitNo(1);
 	}
@@ -292,7 +292,7 @@ public class RecruitDAOTest {
 	 * 
 	 * @author 송용준
 	 */
-	 @Test
+	 //@Test
 	public void createRecruitPostTest() {
 		// RecruitPostVO Has A MemberVO
 		MemberVO memberVO = new MemberVO();
@@ -310,7 +310,7 @@ public class RecruitDAOTest {
 	 * 
 	 * @author 송용준
 	 */
-	 @Test
+	 //@Test
 	public void registerRecruitDayTest() {
 		String[] recruitDay = { "월", "수" };
 		// 등록하는 모집글의 번호
@@ -326,7 +326,7 @@ public class RecruitDAOTest {
 
 
 	
-	@Test
+	//@Test
 	public void findSmallCategoryListByBigCategoryNoTest() {
 		String bigCategoryNo = "3";
 
@@ -339,7 +339,7 @@ public class RecruitDAOTest {
 		}
 	}
 	
-	@Test
+	//@Test
 	public void findRecruitPostByKeywordAndCategoryTest() {
 		List<Integer> list = new ArrayList<>();
 		//list.add(1);
@@ -350,7 +350,7 @@ public class RecruitDAOTest {
 	}
 	
 	
-	@Test
+	//@Test
 	public void findRecruitPostCountByCategoryOrKeywordTest() {
 		Map<String, Object> map = new HashMap<>();
 		List<Integer> list = new ArrayList<>();
@@ -362,7 +362,7 @@ public class RecruitDAOTest {
 	}
 	
 
-	@Test
+	//@Test
 	public void findRecruitPostByPagingBeanAndDataTest() {
 		Map<String, Object> map = new HashMap<>();
 		List<Integer> list = new ArrayList<>();
@@ -388,15 +388,66 @@ public class RecruitDAOTest {
 	
 	/**
 	 * 스터디 신청 취소 TEST
-	 * 
 	 * @author 김유란
 	 */
-	@Test
+	//@Test
 	public void deleteStudyConditionByStudyConditionNoTest() {
 		StudyConditionVO vo = new StudyConditionVO();
 		vo.setMemberVO(new MemberVO("b@b.com", null));
 		vo.setStudyConditionNo(35);
 		recruitDAO.deleteStudyConditionByStudyConditionNo(vo);
 	}
+	
+	/**
+<<<<<<< HEAD
+	 * 스터디 모집 키워드 검색 후 등록 및 업데이트
+	 * @author 유동규 
+	 */
+	//@Test
+	public void registerAndUpateKeywordTest() {
+		String insertKeyword = "판교";
+		if( recruitDAO.findKeyword(insertKeyword) == null) {
+			recruitDAO.registerKeyword(insertKeyword);
+		}else {
+			recruitDAO.updateKeyword(insertKeyword);
+		}
+	}
+	/**
+	 * 최근 등록된 스터디 모집 게시글 5개 가져오기
+	 * @author 유동규
+	 */
+	//@Test
+	public void getTopFiveRecruitPostTest() {
+		System.out.println(recruitDAO.getTopFiveRecruitPost());
+	}
+	
+/**
+	 * 스터디 모집완료로 상태 변경 TEST
+	 * @author 김유란
+	 */
+	@Test
+	public void updateRecruitConditionTest() {
+		recruitDAO.updateRecruitCondition("1");
+	}
+	
+	@Test
+	public void findStudyConditionByGroupNoTest() {
+		PagingBean pb = new PagingBean(recruitDAO.findStudyConditionCountByGroupNo("2"));
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("groupNo", "2");
+		map.put("pagingBean", pb);
+
+		List<StudyConditionVO> list = recruitDAO.findStudyConditionByGroupNo(map);
+		for (StudyConditionVO scVO : list) {
+			System.out.println(scVO);
+		}
+	}
+	@Test
+	public void updateStudyConditionStateTest(){
+		Map<String,String> map = new HashMap<>();
+		map.put("state", "승인");
+		map.put("studyConditionNO","5");
+	}
+
 	
 }

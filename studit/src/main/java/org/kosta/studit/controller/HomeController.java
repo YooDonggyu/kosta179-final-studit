@@ -1,6 +1,19 @@
 package org.kosta.studit.controller;
 
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+
+import org.kosta.studit.model.dao.CompanyDAO;
+import org.kosta.studit.model.dao.RecruitDAO;
+import org.kosta.studit.model.vo.CompanyVO;
+import org.kosta.studit.model.vo.RecruitPostVO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -8,6 +21,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/")
 public class HomeController {
+	
+	@Autowired
+	private RecruitDAO recruitDAO;
+	@Autowired
+	private CompanyDAO companyDAO;
+	
+	
 	/**
 	 * 
 	 * 메인 홈페이지로 이동.
@@ -16,7 +36,18 @@ public class HomeController {
 	 * @return home.tiles tiles가 적용된 메인 홈페이지로 이동
 	 */
 	@RequestMapping("/")
-	public String home() {
+	public String home(Model model) {
+		//1. 인기 검색어 TOP5 가져오기
+		List<Map<String, Object>> keywordList = recruitDAO.getTopFiveKeyword();
+		//2. 최근 등록된 스터디 모집 게시글 TOP5 가져오기
+		List<RecruitPostVO> recruitPostList = recruitDAO.getTopFiveRecruitPost();
+		//3. 조회수가 가장 높은 업체 3곳 가져오기
+		List<CompanyVO> companyList = companyDAO.getTopThreeComapny();
+		
+		model.addAttribute("keywordList", keywordList);
+		model.addAttribute("recruitPostList", recruitPostList);
+		model.addAttribute("companyList", companyList);
+		
 		return"home.tiles";
 	}
 	

@@ -29,18 +29,40 @@ th{
 <div class="col-sm-12">
 <h3>스터디 통합 관리</h3>
 	<div class="row" style="padding-left: 150px; padding-right: 150px; margin-bottom: 100px; margin-top: 50px">
+	<a href="#" id="bookmark">즐겨찾기 보기</a>&nbsp;&nbsp;&nbsp;
+	<a href="#" id="edit">편집</a>
+	<button class="btn btn-default btn-sm" id="editBtn">확인</button>
 		<div class="MultiCarousel" data-items="1,3,4,5" data-slide="1" id="MultiCarousel"  data-interval="1000">
             <div class="MultiCarousel-inner">
             <div class="item">
-                    <div class="pad15" style="background-color: white;">
-                    	<br>
-                    	<p class="lead"><b>진행중인 스터디</b></p>
-                    	<p>신청,개설,참여중인 스터디를 모두 확인할 수 있습니다.</p>
-                    </div>
-                </div>
+              <div class="pad15" style="background-color: white;">
+              	<br>
+              	<p class="lead"><b>진행중인 스터디</b></p>
+              	<p>신청,개설,참여중인 스터디를 모두 확인할 수 있습니다.</p>
+              </div>
+            </div>
+            <form action="${pageContext.request.contextPath}/group/updateGroupMemberState" method="post" id="editForm">
+	<input type="hidden" name="memberEmail"  value="${memberVO.memberEmail}">
             <c:forEach items="${groupList}" var="g">
-              <div class="item" style=" cursor: pointer;" onclick="location.href='#'">
+            <c:choose>
+            <c:when test="${g.state eq'true'}">
+                 <div class="item" style="cursor: pointer;" onclick="return goGroup(${g.groupVO.groupNo})">
                     <div class="pad15 my">
+                    <input type="checkbox" class="checkbox-inline checkBookmark" name="checkBookmark" checked="checked"  value="${g.groupMemberNo}" style="position: relative; float: right; width: 70px">
+                    	<br>
+                    	<p class="lead">${g.groupVO.name}</p>
+						<c:if test="${g.position eq '팀장'}">
+							<i class="fas fa-crown fa-2x" style="color: #ffcc00"></i>
+						</c:if>
+						<i class="fas fa-star" style="color: #ffcc00"></i>
+						<br><br><br>
+                    </div>      
+                </div>
+            </c:when>
+            <c:otherwise>
+                 <div class="item uncheckedItem" style="cursor: pointer;"  onclick="return goGroup(${g.groupVO.groupNo})">
+                    <div class="pad15 my">
+                    <input type="checkbox" class="checkbox-inline checkBookmark" name="checkBookmark" value="${g.groupMemberNo}" style="position: relative; float: right; width: 70px">
                     	<br>
                     	<p class="lead">${g.groupVO.name}</p>
 						<c:if test="${g.position eq '팀장'}">
@@ -49,16 +71,26 @@ th{
 						<br><br><br>
                     </div>
                 </div>
+            </c:otherwise>
+                     </c:choose>
             </c:forEach>
+            </form>
             </div>
             <button class="btn btn-primary leftLst"><</button>
             <button class="btn btn-primary rightLst">></button>
         </div>
+
 	</div>
+	
+	 <form action="${pageContext.request.contextPath}/group/groupHome" method="post" id="myPageForm"> 
+           	 <input type="hidden" name="sgNo" id="sgNo">  
+           	 </form>
 </div>
 
+<div class="col-sm-10" style="text-align: right">예약대기 및 미승인 상태에서 취소할 수 있습니다.</div>
+<div class="col-sm-2"></div>
 <div class="col-sm-1"></div>
-<div class="col-sm-10">
+<div class="col-sm-10" style="padding-bottom: 40px;"> 
 <ul class="nav nav-tabs">
   <li class="active" style="width: 50%"><a data-toggle="tab" href="#home"><b>스터디 신청 현황</b></a></li>
   <li style="width: 50%"><a data-toggle="tab" href="#menu1"><b>스터디룸 신청 현황</b></a></li>
@@ -161,6 +193,42 @@ th{
 
 <script>
 	$(document).ready(function(){
+		
+		$(".checkBookmark").hide();
+		$("#editBtn").hide(); 
+		
+		//즐겨찾기/전체보기 선택
+		var groupList = "${groupList}";
+		$("#bookmark").click(function() {
+			if($(this).text()=='전체보기'){
+				$(this).text('즐겨찾기 보기');
+				$(".uncheckedItem").show();
+			}else{
+				$(this).text('전체보기');
+				$(".uncheckedItem").hide();
+			}
+		});//click
+		
+		//즐겨찾기 편집 기능 보이기/감추기
+		$("#edit").click(function() {
+			if($(this).text()=='편집'){
+				$(".checkBookmark").show();
+				 $(this).text("취소");
+				$("#editBtn").show();
+				$(".item").removeAttr("onclick");
+			}else{
+				$(".checkBookmark").hide();
+				 $(this).text("편집");
+				$("#editBtn").hide();
+				$(".item").attr('onclick', 'return goGroup('+'${g.groupVO.groupNo}'+')');
+			}
+		});//
+		
+		//즐겨찾기 편집 실행
+		$("#editBtn").click(function() {
+			$("#editForm").submit();
+		});
+		
 		var roomPageNo = 1;
 		var recruitPageNo = 1;
 		
@@ -223,11 +291,12 @@ th{
 			})//ajax
 		})//click
 		
+	
+		
 		$(document).on("click", "#cancelBtn1",function() {
 			var email = "${memberVO.memberEmail}";
-			alert($(this).val())
 			if($(this).text()=="미승인"){
-				if(confirm("정말 취소하시겠어요?")){
+				if(confirm("신청을 취소할까요?")){
 					 $.ajax({
 			    		type:"post",
 						url:"${pageContext.request.contextPath}/ajax/deleteStudyConditionByStudyConditionNo",
@@ -246,7 +315,7 @@ th{
 			$(document).on("click","#cancelBtn2", function(){
 				var email = "${memberVO.memberEmail}";
 				if($(this).text()=='예약대기'){
-					if(confirm("정말 취소하시겠어요?")){
+					if(confirm("예약을 취소할까요?")){
 						 $.ajax({
 				    		type:"post",
 							url:"${pageContext.request.contextPath}/ajax/updateStudyRoomConditionByMember",
@@ -257,6 +326,8 @@ th{
 							}//success
 						})//ajax
 					}
+				}else if($(this).text()=='예약취소'){
+					alert("취소된 예약은 복구할 수 없습니다.");
 				}else{
 					alert("예약 완료 이후 상태 변경은 업체에 문의하세요.");
 				}
@@ -361,6 +432,10 @@ th{
 	        ResCarousel(ell, Parent, slide);
 	    }
 	})//ready
+	function goGroup(sgNo){
+		$("#sgNo").val(sgNo);
+		$("#myPageForm").submit();
+	}
 </script>
 
 

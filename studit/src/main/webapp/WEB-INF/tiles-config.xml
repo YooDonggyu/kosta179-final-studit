@@ -53,6 +53,24 @@
 		<put-attribute name="left" value="/WEB-INF/views/{1}/{3}.jsp"/>
 	</definition>
 
+	<!-- Controller에서 반환하는 viewName이 studygroup.tiles이면 tiles view가 응답 -->
+	<definition name="groupHome.tiles" template="/WEB-INF/views/templates/sg_layout.jsp">
+		<put-attribute name="title" value="STUD-IT"/>
+		<put-attribute name="header" value="/WEB-INF/views/templates/header.jsp"/>
+		<put-attribute name="left" value="/WEB-INF/views/group/sg_left.jsp"/>
+		<put-attribute name="main" value="/WEB-INF/views/group/sg_home.jsp"/>
+		<put-attribute name="right" value="/WEB-INF/views/templates/right.jsp"/>
+		<put-attribute name="footer" value="/WEB-INF/views/group/sg_footer.jsp"/>
+	</definition>
+	
+	<definition name="*.sgtiles" extends="groupHome.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/{1}.jsp"/>
+	</definition>
+	
+	<definition name="*/*.sgtiles" extends="groupHome.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/{1}/{2}.jsp"/>
+	</definition>
+	
 </tiles-definitions>
  
  

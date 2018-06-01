@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.kosta.studit.exception.EmailNotFoundException;
@@ -52,7 +54,7 @@ public class MemberController {
 	 * @return redirect:/ 로그인 한 후 메인페이지로 이동
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(String loginEmail, String loginPassword, HttpServletRequest request, Model model) {
+	public String login(String loginEmail, String loginPassword, String rememberEmail, HttpServletRequest request, HttpServletResponse response, Model model) {
 		MemberVO rMemberVO = null;
 		try {
 			rMemberVO = memberService.login(new MemberVO(loginEmail, loginPassword));
@@ -61,8 +63,26 @@ public class MemberController {
 			} else {
 				// 세션할당
 				request.getSession().setAttribute("memberVO", rMemberVO);
-				// 조회수 증가 판단을 위한 session
-				request.getSession().setAttribute("hitList", new ArrayList<>());
+				// 모집 조회수 증가 판단을 위한 session
+				request.getSession().setAttribute("rHitList", new ArrayList<>());
+				// 업체 조회수 증가 판단을 위한 session
+				request.getSession().setAttribute("cHitList", new ArrayList<>());
+				// 아이디 저장 확인(cookie)
+				if(rememberEmail != null) {
+					Cookie cookie = new Cookie("remember", loginEmail);
+					cookie.setMaxAge(7*24*60*60);
+					cookie.setPath("/");
+					response.addCookie(cookie);
+				}else {
+					Cookie[] cookies = request.getCookies();
+					for(int i =0; i<cookies.length; i++) {
+						if(cookies[i].getName().equals("remember")) {
+							cookies[i].setMaxAge(0);
+							cookies[i].setPath("/");
+							response.addCookie(cookies[i]);
+						}
+					}
+				}
 			}
 		} catch (EmailNotFoundException | PasswordIncorrectException | IsNotMemberException e) {
 			model.addAttribute("msg", e.getMessage());
@@ -97,9 +117,7 @@ public class MemberController {
 			// String path =
 			// request.getSession(false).getServletContext().getRealPath("upload"); 개발 완료 후
 			// 적용
-//			String path = "D:/KOSTA/workspace/resources/upload/"; //변태섭 경로
-			//String path = "C:/java-kosta/framework-workspace2/resources/upload/";
-			String path ="D:/resources/upload/";//동규
+			String path ="c:/resources/upload/";//동규
 			try {
 				picFile.transferTo(new File(path, fileName));// 지정 경로에 실제 파일 저장
 				memberVO.setPicPath(fileName);
@@ -166,14 +184,12 @@ public class MemberController {
 	@RequestMapping(method = RequestMethod.POST, value = "/updateMember")
 	public String updateMember(MemberVO memberVO, MultipartFile picFile, HttpServletRequest request) {
 		MemberVO pMemberVO = (MemberVO) request.getSession(false).getAttribute("memberVO");
+		System.out.println(memberVO.getPicPath());
 		if (picFile != null && !picFile.isEmpty()) {
 			String fileName = memberVO.getMemberEmail() + "_" + picFile.getOriginalFilename();
 			// String path =
-			// request.getSession(false).getServletContext().getRealPath("upload"); 개발 완료 후
-			// 적용
-			//String path ="C:/java-kosta/project/Final/kosta179-final-studit/studit/src/main/webapp/resources/upload";
-			/*String path = "C:/java-kosta/framework-workspace2/resources/upload";*/
-			String path ="D:/resources/upload/";
+			// request.getSession(false).getServletContext().getRealPath("upload"); 개발 완료 후 적용
+			String path ="C:/resources/upload/";
 			try {
 				picFile.transferTo(new File(path, fileName));// 지정 경로에 실제 파일 저장
 				memberVO.setPicPath(fileName);
@@ -181,7 +197,11 @@ public class MemberController {
 				return "member/update_pic_fail.tiles";
 			}
 		} else if (picFile.isEmpty() && pMemberVO.getPicPath() != null) {
-			memberVO.setPicPath(pMemberVO.getPicPath());
+			if(memberVO.getPicPath().equals("default.png")) {
+				
+			}else {
+				memberVO.setPicPath(pMemberVO.getPicPath());
+			}
 		} else {// 파일을 첨부하지 않았을 때
 			memberVO.setPicPath("default.png");
 		}

@@ -118,8 +118,8 @@ public class CompanyServiceImpl implements CompanyService {
 				condition.put("id", srcVO.getStudyRoomConditionNo());
 				condition.put("resourceId", srcVO.getStudyRoomVO().getStudyRoomNo());
 				condition.put("resourceName", srcVO.getStudyRoomVO().getName());
-				condition.put("start", srcVO.getUseDate()+"T"+srcVO.getStartTime());
-				condition.put("end", srcVO.getUseDate()+"T"+srcVO.getEndTime());
+				condition.put("start", srcVO.getUseDate()+"T"+srcVO.getStartTime()+":00");
+				condition.put("end", srcVO.getUseDate()+"T"+srcVO.getEndTime()+":50");
 				condition.put("title", srcVO.getMemberVO().getName());
 				condition.put("state", srcVO.getState());
 				arr.add(condition);
@@ -312,4 +312,30 @@ public class CompanyServiceImpl implements CompanyService {
 	public List<StudyRoomVO> findStudyRoomListByCompanyNo(int companyNo){
 		return companyDAO.findStudyRoomByCompanyNo(companyNo);
 	}
+	
+	@Override
+	public JSONArray findStudyRoomConditionCountByMonth(String companyNo){
+		Map<String, String> map = new HashMap<>();
+		map.put("companyNo", companyNo);
+		JSONObject waitList = new JSONObject();
+		JSONObject completeList = new JSONObject();
+		JSONObject denyList = new JSONObject();
+		JSONObject cancelList = new JSONObject();
+		map.put("state", "예약대기");
+		waitList.put("예약대기", companyDAO.findStudyRoomConditionCountByMonth(map));
+		map.put("state", "예약완료");
+		completeList.put("예약완료", companyDAO.findStudyRoomConditionCountByMonth(map));
+		map.put("state", "예약불가");
+		denyList.put("예약불가", companyDAO.findStudyRoomConditionCountByMonth(map));
+		map.put("state", "예약취소");
+		cancelList.put("예약취소", companyDAO.findStudyRoomConditionCountByMonth(map));
+
+		JSONArray arr = new JSONArray();
+		arr.add(waitList);
+		arr.add(completeList);
+		arr.add(denyList);
+		arr.add(cancelList);
+		
+		return arr;
+		}
 }

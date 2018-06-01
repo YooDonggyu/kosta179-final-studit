@@ -56,26 +56,23 @@
     <div class="col-md-12">
       <h4 class="services-heading">LookUp</h4>
       <div class="row photo">
-      	<div id="studyroomList">
-       	<c:forEach items="${allCompanyList }" var="clist">
-       		<div class="hidden">${pageContext.request.contextPath }/resources/upload/업체1.JPG</div>
-          <div class="col-sm-4 ">
-            <div class="box box-services">
-              <div>
-              <form action="${pageContext.request.contextPath }/company/findDetailCompanyInfoByCompanyNo" method="post" id="imgForm">
-              	<input type="hidden" value="${clist.companyNo}" name="companyNo">
-              	<img src="${pageContext.request.contextPath }/resources/upload/업체1.JPG" style="width: 300px; height: 200px" onclick="return goDetail()">
-              </form>
-              </div>
-              <div>
-              	<h4 class="heading">${clist.name }</h4>
-              </div>
-              <div id="showAddress" style="font-size: 14px; color: #AB8888; font-weight: bold;">${clist.addr1 } ${clist.addr2 } ${clist.addr3 }</div><br>
-              <p>${clist.intro }</p>
-            </div>
-          </div>
-         </c:forEach>
-        </div>
+      	<form action="${pageContext.request.contextPath }/company/findDetailCompanyInfoByCompanyNo" method="post" id="imgForm">
+      		<input type="hidden" id="companyNo" name="companyNo">
+      		<div id="studyroomList">
+      			<c:forEach items="${allCompanyList }" var="clist">
+          			<div class="col-sm-4 ">
+           				<div class="box box-services">
+              				<img src="${pageContext.request.contextPath }/resources/upload/업체1.JPG" style="width: 300px; height: 200px" onclick="return goDetail(${clist.companyNo})">
+              				<div>
+              					<h4 class="heading">${clist.name }</h4>
+              				</div>
+              				<div id="showAddress" style="font-size: 14px; color: #AB8888; font-weight: bold;">${clist.addr1 } ${clist.addr2 } ${clist.addr3 }</div><br>
+              				<p>${clist.intro }</p>
+            			</div>
+          			</div>
+         		</c:forEach>
+        	</div>
+        </form>
       </div>
     </div>
   </div>
@@ -103,10 +100,10 @@
 				success:function(data){
 					var studyroom="";
 				 	$.each(data.list, function(index, item) {
-				 		studyroom+="<div class='hidden'>${pageContext.request.contextPath }/resources/upload/업체1.JPG</div>";
 						studyroom+="<div class='col-sm-4'><div class='box box-services'><div>";
-						studyroom+="<form action='${pageContext.request.contextPath }/company/findDetailCompanyInfoByCompanyNo' method='post' id='imgForm'><input type='hidden' value='${clist.companyNo}' name='companyNo'>";
-						studyroom+="<img src='${pageContext.request.contextPath }/resources/upload/업체1.JPG' style='width: 300px; height: 200px' onclick='return goDetail()'></form>";
+						studyroom+="<img src='${pageContext.request.contextPath }/resources/upload/업체1.JPG' style='width: 300px; height: 200px' onclick='return goDetail(";
+						studyroom+=item.companyNo;
+						studyroom+=")'>";
 						studyroom+="</div><div><h4 class='heading'>";
 						studyroom+=item.name;
 						studyroom+="</h4></div><div id='showAddress' style='font-size: 14px; color: #AB8888; font-weight: bold;'>";
@@ -141,19 +138,17 @@
 					var studyroom="";
 					if(result.list==""){
 						studyroom+="<c:forEach items='${allCompanyList }' var='clist'>";
-						studyroom+="<div class='hidden'>${pageContext.request.contextPath }/resources/upload/업체1.JPG</div>";
 						studyroom+="<div class='col-sm-4'><div class='box box-services'><div>";
-						studyroom+="<form action='${pageContext.request.contextPath }/company/findDetailCompanyInfoByCompanyNo' method='post' id='imgForm'><input type='hidden' value='${clist.companyNo}' name='companyNo'>";
-						studyroom+="<img src='${pageContext.request.contextPath }/resources/upload/업체1.JPG' style='width: 300px; height: 200px' onclick='return goDetail()'></form>";
+						studyroom+="<img src='${pageContext.request.contextPath }/resources/upload/업체1.JPG' style='width: 300px; height: 200px' onclick='return goDetail(${clist.companyNo})'>";
 						studyroom+="</div><div><h4 cl ass='heading'>${clist.name }</h4></div>";
 						studyroom+="<div id='showAddress' style='font-size: 14px; color: #AB8888; font-weight: bold;'>${clist.addr1 } ${clist.addr2 } ${clist.addr3 }</div>";
 						studyroom+="<p>${clist.intro }</p></div></div></c:forEach>";
 					}else{
 						$.each(result.list, function(index, item){
-							studyroom+="<div class='hidden'>${pageContext.request.contextPath }/resources/upload/업체1.JPG</div>";
 							studyroom+="<div class='col-sm-4'><div class='box box-services'><div>";
-							studyroom+="<form action='${pageContext.request.contextPath }/company/findDetailCompanyInfoByCompanyNo' method='post' id='imgForm'><input type='hidden' value='${clist.companyNo}' name='companyNo'>";
-							studyroom+="<img src='${pageContext.request.contextPath }/resources/upload/업체1.JPG' style='width: 300px; height: 200px' onclick='return goDetail()'></form>";
+							studyroom+="<img src='${pageContext.request.contextPath }/resources/upload/업체1.JPG' style='width: 300px; height: 200px' onclick='return goDetail(";
+							studyroom+=item.companyNo;
+							studyroom+=")'>";
 							studyroom+="</div><div><h4 class='heading'>";
 							studyroom+=item.name;
 							studyroom+="</h4></div><div id='showAddress' style='font-size: 14px; color: #AB8888; font-weight: bold;'>";
@@ -212,10 +207,10 @@
 						studyroom+=firstAddrSelectedVal;
 					}else{
 						$.each(result.list, function(index, item){
-							studyroom+="<div class='hidden'>${pageContext.request.contextPath }/resources/upload/업체1.JPG</div>";
 							studyroom+="<div class='col-sm-4'><div class='box box-services'><div>";
-							studyroom+="<form action='${pageContext.request.contextPath }/company/findDetailCompanyInfoByCompanyNo' method='post' id='imgForm'><input type='hidden' value='${clist.companyNo}' name='companyNo'>";
-							studyroom+="<img src='${pageContext.request.contextPath }/resources/upload/업체1.JPG' style='width: 300px; height: 200px' onclick='return goDetail()'></form>";
+							studyroom+="<img src='${pageContext.request.contextPath }/resources/upload/업체1.JPG' style='width: 300px; height: 200px' onclick='return goDetail(";
+							studyroom+=item.companyNo;
+							studyroom+=")'>";
 							studyroom+="</div><div><h4 class='heading'>";
 							studyroom+=item.name;
 							studyroom+="</h4></div><div id='showAddress' style='font-size: 14px; color: #AB8888; font-weight: bold;'>";
@@ -273,10 +268,10 @@
 						studyroom+=secondAddrSelectedVal;
 					}else{
 						$.each(result.list, function(index, item){
-							studyroom+="<div class='hidden'>${pageContext.request.contextPath }/resources/upload/업체1.JPG</div>";
 							studyroom+="<div class='col-sm-4'><div class='box box-services'><div>";
-							studyroom+="<form action='${pageContext.request.contextPath }/company/findDetailCompanyInfoByCompanyNo' method='post' id='imgForm'><input type='hidden' value='${clist.companyNo}' name='companyNo'>";
-							studyroom+="<img src='${pageContext.request.contextPath }/resources/upload/업체1.JPG' style='width: 300px; height: 200px' onclick='return goDetail()'></form>";
+							studyroom+="<img src='${pageContext.request.contextPath }/resources/upload/업체1.JPG' style='width: 300px; height: 200px' onclick='return goDetail(";
+							studyroom+=item.companyNo;
+							studyroom+=")'>";
 							studyroom+="</div><div><h4 class='heading'>";
 							studyroom+=item.name;
 							studyroom+="</h4></div><div id='showAddress' style='font-size: 14px; color: #AB8888; font-weight: bold;'>";
@@ -313,10 +308,10 @@
 						studyroom+="검색 결과가 없습니다!";
 					}else{
 						$.each(result.list, function(index, item){
-							studyroom+="<div class='hidden'>${pageContext.request.contextPath }/resources/upload/업체1.JPG</div>";
 							studyroom+="<div class='col-sm-4'><div class='box box-services'><div>";
-							studyroom+="<form action='${pageContext.request.contextPath }/company/findDetailCompanyInfoByCompanyNo' method='post' id='imgForm'><input type='hidden' value='${clist.companyNo}' name='companyNo'>";
-							studyroom+="<img src='${pageContext.request.contextPath }/resources/upload/업체1.JPG' style='width: 300px; height: 200px' onclick='return goDetail()'></form>";
+							studyroom+="<img src='${pageContext.request.contextPath }/resources/upload/업체1.JPG' style='width: 300px; height: 200px' onclick='return goDetail(";
+							studyroom+=item.companyNo;
+							studyroom+=")'>";
 							studyroom+="</div><div><h4 class='heading'>";
 							studyroom+=item.name;
 							studyroom+="</h4></div><div id='showAddress' style='font-size: 14px; color: #AB8888; font-weight: bold;'>";
@@ -346,7 +341,8 @@
 		});
 	});
 	
-	function goDetail(){
+	function goDetail(compNo){
+		$("#companyNo").val(compNo);
 		$("#imgForm").submit();
 	}
 </script>

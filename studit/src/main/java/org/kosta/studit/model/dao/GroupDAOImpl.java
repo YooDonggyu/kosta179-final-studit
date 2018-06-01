@@ -70,7 +70,7 @@ public class GroupDAOImpl implements GroupDAO {
 	
 	
 	/**
-	 * 회원이 속한 스터디 그룹 전체 조회
+	 * 회원이 속한 스터디 그룹 전체 정보 및 본인의 직책 조회
 	 * @author 김유란
 	 * @param memberEmail 회원 이메일
 	 * @return List<GroupMemberVO> 스터디그룹 정보를 담은 VO 리스트
@@ -79,4 +79,71 @@ public class GroupDAOImpl implements GroupDAO {
 	public List<GroupMemberVO> findStudyGroupByMemberEmail(String memberEmail) {
 		return template.selectList("group.findStudyGroupByMemberEmail", memberEmail);
 	}
+	
+
+	/**
+	 * 스터디 그룹 이름을 조회
+	 * @author 송용준
+	 * @param sgNo 이름을 조회할 스터디 그룹 번호
+	 * @return 스터디 그룹 이름
+	 */
+	@Override
+	public String findStudyGroupNameByStudyGroupNo(String sgNo) {
+		return template.selectOne("group.findStudyGroupNameByStudyGroupNo", sgNo);
+	}
+	
+	/**
+	 * 회원이 가지고 있는 스터디 그룹 내의 직책을 조회 
+	 * @author 송용준
+	 * @param sgNo 조회할 스터디 그룹 번호
+	 * @param memberEmail 직책을 확인할 회원의 이메일
+	 * @return 회원의 직책
+	 */
+	@Override
+	public String findMemberPositionByMemberEmailAndStudyGroupNo(Map<String, String> map) {
+		return template.selectOne("group.findMemberPositionByMemberEmailAndStudyGroupNo", map);
+	}
+
+	@Override
+
+	public int countMyLeadGroupHasMemberByEmailAndStudyGroupNo(Map<String, String> map) {
+		return template.selectOne("group.countMyLeadGroupHasMemberByEmailAndStudyGroupNo", map);
+	}
+
+	public int findGroupMemberCountByGroupNo(String groupNo) {
+		return template.selectOne("group.findGroupMemberCountByGroupNo", groupNo);
+	}
+	
+	/**
+	 * 스터디 그룹에 속한 멤버 정보 조회
+	 * @author 김유란
+	 * @param groupNo 그룹 번호
+	 * @return List<GroupMemberVO> 그룹 멤버 정보를 담은 VO 리스트
+	 */
+	@Override
+	public List<GroupMemberVO> findGroupMemberByGroupNo(Map<String,Object> map){
+		return template.selectList("group.findGroupMemberByGroupNo", map);
+	}
+	
+
+	/**
+	 * 스터디 그룹 멤버의 직책 변경(팀장<->팀원)
+	 * @author 김유란
+	 * @param map 변경할 직책명과 변경 대상의 그룹 멤버 번호를 담은 map
+	 */
+	@Override
+	public void updateGroupMemberPosition(Map<String, String> map) {
+		template.update("group.updateGroupMemberPosition", map);
+	}
+
+	/**
+	 * 스터디 그룹 멤버의 그룹 즐겨찾기 상태 변경(true or false)
+	 * @author 김유란
+	 * @param map 변경할 상태명과 그룹멤버 번호 또는 회원 이메일 정보를 담은 map
+	 */
+	@Override
+	public void updateGroupMemberState(Map<String,String> map) {
+		template.update("group.updateGroupMemberState", map);
+	}
+
 }

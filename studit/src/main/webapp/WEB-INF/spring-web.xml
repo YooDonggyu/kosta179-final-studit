@@ -80,6 +80,7 @@
 		<mvc:exclude-mapping path="/member/login"/>
 		<mvc:exclude-mapping path="/member/registerMember"/>
 		<mvc:exclude-mapping path="/recruit/getRecruitPostList" />
+		<mvc:exclude-mapping path="/recruit/findRecruitPostListByKeyword"/>
 		<mvc:exclude-mapping path="/company/findCompanyView" />
 		<mvc:exclude-mapping path="/member/findPasswordView" />
 		<mvc:exclude-mapping path="/member/findPassword" />

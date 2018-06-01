@@ -27,8 +27,6 @@ public interface RecruitDAO {
 
 	int findCountStudyConditionByMemberEmail(String memberEmail);
 
-
-
 	List<SmallCategoryVO> findSmallCategoryListByBigCategoryNo(String bigCategoryNo);
 
 	List<BigCategoryVO> getBigCategoryList();
@@ -61,11 +59,7 @@ public interface RecruitDAO {
 
 	public void updateCommentByCommentNo(Map<String, Object> map);
 
-
-
 	int findRecruitPostCountByCategoryOrKeyword(Map<String, Object> map);
-
-
 
 	List<RecruitPostVO> findRecruitPostByPagingBeanAndData(Map<String, Object> dataMap);
 
@@ -75,5 +69,24 @@ public interface RecruitDAO {
 	void updateDeleteStudyConditionByRecruitNo(int recruitNo);
 
 	void deleteStudyConditionByStudyConditionNo(StudyConditionVO studyConditionVO);
+
+	void registerKeyword(String keyword);
+
+	void updateKeyword(String keyword);
+
+	String findKeyword(String keyword);
+
+	List<Map<String, Object>> getTopFiveKeyword();
+
+	List<RecruitPostVO> getTopFiveRecruitPost();
+
+	void updateRecruitCondition(String recruitPostNo);
+
+	List<StudyConditionVO> findStudyConditionByGroupNo(Map<String, Object> map);
+
+	int findStudyConditionCountByGroupNo(String groupNo);
+
+	int updateStudyConditionState(Map<String, String> map);
+
 
 }

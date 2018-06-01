@@ -252,9 +252,9 @@ public class CompanyDAOImpl implements CompanyDAO {
 	    * @return List<Map<String,String>> 스터디룸 예약 통계 정보를 담은 list(m, count) 
 	    */
 	   @Override
-	   public List<Map<String, String>> findStudyRoomConditionCountByMonth(String companyNo){
-		   return template.selectList("company.findStudyRoomConditionCountByMonth",companyNo);
-	   }
+	   public List<Map<String, String>> findStudyRoomConditionCountByMonth(Map<String, String> map){
+		   return template.selectList("company.findStudyRoomConditionCountByMonth",map);
+	   } 
 	   
 	   /**
 	    * 검색조건에 부합하는 총 업체 리스트 수를 조회
@@ -266,12 +266,39 @@ public class CompanyDAOImpl implements CompanyDAO {
 		public int findTotalCountOfCompany(Map<String, Object> map) {
 			return template.selectOne("company.findTotalCountOfCompany", map);
 		}
+
+		/**
+		 * 업체의 회원 이메일 찾기(조회수 증가용)
+		 * @author 유동규
+		 */
+		@Override
+		public String findCompanyMemberEmailByCompanyNO(int companyNo) {
+			return template.selectOne("company.findCompanyMemberEmailByCompanyNO", companyNo);
+		}
+		
+		/**
+		 * 조회수 증가
+		 * @author 유동규
+		 * @param companyNo 증가할 업체 번호
+		 */
+		@Override
+		public void updateCompanyHit(int companyNo) {
+			template.update("company.updateCompanyHit", companyNo);
+		}
+		
+		/**
+		 * 조회수가 가장 높은 업체수 3곳 조회
+		 * @author 유동규
+		 */
+		@Override
+		public List<CompanyVO> getTopThreeComapny(){
+			return template.selectList("company.getTopThreeComapny");
+		}
+		
+		@Override
+		public List<Map<String,String>>findWaitStudyRoomConditionCountByCompanyNo(String companyNo){
+			return template.selectList("company.findWaitStudyRoomConditionCountByCompanyNo", companyNo);
+		}
+
 }
-
-
-
-
-
-
-
 
