@@ -2,10 +2,6 @@
     pageEncoding="UTF-8"%>
  <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
-   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-   <script type = "text/javascript">
-         google.charts.load('current', {packages: ['corechart']});     
-      </script>
 <style>
 th{
 	text-align: center;
@@ -71,7 +67,6 @@ th{
   </div>
   </div>
 </div>  		
-
 			<span class="badge badge-primary" style="background-color: #379392; font-size: 15px">예약완료</span>
 			<span class="badge badge-primary" style="background-color: #f7d83d; font-size: 15px">예약대기</span>
 			<span class="badge badge-primary" style="background-color: #8c8c8a; font-size: 15px">예약불가</span>
@@ -91,6 +86,7 @@ th{
 $(document).ready(function() {
 	
 	$("#companyName").text(studyRoomResource[0].companyName);
+	
 	    $('#calendar').fullCalendar({
     	
 	      schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',	

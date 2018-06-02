@@ -424,16 +424,23 @@ public class RecruitDAOTest {
 		System.out.println(recruitDAO.getTopFiveRecruitPost());
 	}
 	
-/**
-	 * 스터디 모집완료로 상태 변경 TEST
+	/**
+	 * 스터디 상태 변경 TEST
 	 * @author 김유란
 	 */
 	//@Test
 	public void updateRecruitConditionTest() {
-		recruitDAO.updateRecruitCondition("1");
+		Map<String,String> map = new HashMap<>();
+		map.put("condition", "모집완료");
+		map.put("recruitPostNo", "1");
+		recruitDAO.updateRecruitConditionByRecruitPostNo(map);
 	}
 	
-	@Test
+	/**
+	 * 스터디 신청자 조회 TEST
+	 * @author 김유란
+	 */
+	//@Test
 	public void findStudyConditionByGroupNoTest() {
 		PagingBean pb = new PagingBean(recruitDAO.findStudyConditionCountByGroupNo("2"));
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -446,17 +453,30 @@ public class RecruitDAOTest {
 		}
 	}
 	
-	@Test
+	/**
+	 * 스터디 신청자 상태 변경(승인/거절)  TEST
+	 * @author 김유란
+	 */
+	//@Test
 	public void updateStudyConditionStateTest(){
 		Map<String,String> map = new HashMap<>();
 		map.put("state", "승인");
 		map.put("studyConditionNO","5");
 	}
 	
-	@Test
+	//@Test
 	public void findMemberBystudyConditionNoTest() throws ParseException {
 		System.out.println(recruitDAO.findMemberByStudyConditionNo("1"));		
 		}
+	
+	@Test
+	public void updateRecruitPostNo() {
+		Map<String,String> map = new HashMap<>();
+		map.put("table", "recruit_post_comment");
+		map.put("nowNo","3");
+		map.put("newNo", "2");
+		recruitDAO.updateRecruitPostNo(map);
+	}
 
 	
 }

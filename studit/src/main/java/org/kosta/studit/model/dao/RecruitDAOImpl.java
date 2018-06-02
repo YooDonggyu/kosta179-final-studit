@@ -341,13 +341,13 @@ public class RecruitDAOImpl implements RecruitDAO {
 	}
 	
 	/**
-	 * 스터디 모집 완료(모집글 상태 변경) 
+	 * 모집글 상태 변경
 	 * @author 김유란
-	 * @param recruitPostNo 모집글 번호
+	 * @param map(recruitPostNo 모집글 번호, condition 변경할 상태명)
 	 */
 	@Override
-	public void updateRecruitCondition(String recruitPostNo) {
-		template.update("recruit.updateRecruitCondition", recruitPostNo);
+	public void updateRecruitConditionByRecruitPostNo(Map<String, String> map) {
+		template.update("recruit.updateRecruitConditionByRecruitPostNo", map);
 	}
 
 	/**
@@ -390,6 +390,11 @@ public class RecruitDAOImpl implements RecruitDAO {
 	@Override
 	public MemberVO findMemberByStudyConditionNo(String studyConditionNo) {
 		return template.selectOne("recruit.findMemberByStudyConditionNo", studyConditionNo);
+	}
+	
+	@Override
+	public void updateRecruitPostNo(Map<String, String> map) {
+		template.update("recruit.updateRecruitPostNo", map);
 	}
 	
 

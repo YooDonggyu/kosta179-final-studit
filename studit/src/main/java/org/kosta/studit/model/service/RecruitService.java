@@ -34,5 +34,7 @@ public interface RecruitService {
 
 	StudyConditionListVO findStudyConditionByGroupNo(String groupNo, String nowPage);
 
+	void deleteRecruitPostByRecruitNo(String recruitPostNo);
+
 
 }

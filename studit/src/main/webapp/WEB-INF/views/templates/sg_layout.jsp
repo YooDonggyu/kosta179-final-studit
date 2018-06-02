@@ -19,7 +19,6 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
 <!-- theme stylesheet-->
 <link rel="stylesheet" href="https://d19m59y37dris4.cloudfront.net/dashboard/1-1/css/style.default.css" id="theme-stylesheet">
-
 <!-- Javascript files-->
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>

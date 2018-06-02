@@ -81,8 +81,6 @@ public interface RecruitDAO {
 
 	List<RecruitPostVO> getTopFiveRecruitPost();
 
-	void updateRecruitCondition(String recruitPostNo);
-
 	List<StudyConditionVO> findStudyConditionByGroupNo(Map<String, Object> map);
 
 	int findStudyConditionCountByGroupNo(String groupNo);
@@ -90,6 +88,10 @@ public interface RecruitDAO {
 	int updateStudyConditionState(Map<String, String> map);
 
 	MemberVO findMemberByStudyConditionNo(String studyConditionNo);
+
+	void updateRecruitConditionByRecruitPostNo(Map<String, String> map);
+
+	void updateRecruitPostNo(Map<String, String> map);
 
 
 }

@@ -150,13 +150,29 @@ public class GroupDAOTest {
 		groupDAO.updateGroupMemberState(map);
 	}
 	
+	/**
+	 * 그룹 번호로 스터디 그룹 정보 조회 테스트
+	 * @author 김유란
+	 */
 	//@Test
 	public void findStudyGroupInfoByStudyGroupNoTest() {
 		System.out.println(groupDAO.findStudyGroupInfoByStudyGroupNo("1"));
 	}
 	
-	@Test
+	/**
+	 * 승인된 신청자 번호 조회 테스트
+	 * @author 김유란
+	 */
+	//@Test
 	public void findConfirmedConditionNoByGroupNoTest() {
-		System.out.println(groupDAO.findConfirmedConditionNoByGroupNo("1"));
+		System.out.println(groupDAO.findConfirmedConditionNoByRecruitPostNo("1"));
+	}
+	
+	@Test
+	public void updateGroupNameTest() {
+		Map<String,String> map=new HashMap<>();
+		map.put("name", "바꾼 이름");
+		map.put("groupNo", "15");
+		groupDAO.updateGroupName(map);
 	}
 }

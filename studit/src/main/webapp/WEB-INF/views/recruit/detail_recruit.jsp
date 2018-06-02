@@ -91,7 +91,9 @@
 				    <c:if test="${sessionEmail == requestEmail }"> 
 				    	<a href="${pageContext.request.contextPath}/recruit/updateRecruitPostInfoByRecruitNoView?recruitNo=${recruitInfo.detail.recruitPostNo}&bigCategoryNo=${recruitInfo.detail.smallCategoryVO.bigCategoryVO.bigCategoryNo}" 
 				    		class="btn btn-primary">수정</a> &nbsp;
-				    	<a  data-toggle="modal"  href="#deleteConfrimModal" class="btn btn-primary" >삭제</a> &nbsp;
+					    <c:if test="${recruitInfo.detail.condition eq '모집중'}">		
+					    	<a  data-toggle="modal"  href="#deleteConfrimModal" class="btn btn-primary" >삭제</a> &nbsp;
+					    </c:if>
 				    </c:if>
 				    <a  href="${pageContext.request.contextPath}/recruit/getRecruitPostList?pageNo=${nowPage}" class="btn btn-primary">목록으로</a> &nbsp;
 		    	</div><!-- col -->

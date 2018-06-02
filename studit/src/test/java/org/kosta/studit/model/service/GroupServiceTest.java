@@ -2,9 +2,8 @@ package org.kosta.studit.model.service;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.kosta.studit.model.vo.GroupMemberVO;
-import org.kosta.studit.model.vo.GroupVO;
-import org.kosta.studit.model.vo.MemberVO;
+import org.kosta.studit.model.dao.RecruitDAO;
+import org.kosta.studit.model.vo.RecruitPostVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -15,6 +14,8 @@ public class GroupServiceTest {
 
 	@Autowired
 	private GroupService groupService;
+	@Autowired
+	private RecruitDAO recruitDAO;
 
 	
 
@@ -43,9 +44,23 @@ public class GroupServiceTest {
 		groupService.registerGroupMember("거절", "1", "1");
 	}
 	
-	@Test
+	//@Test
 	public void updateRecruitConditionTest() {
 		groupService.updateRecruitCondition("1");
+	}
+	
+	//@Test
+	public void createAdditionalRecruitTest() {
+		RecruitPostVO recruitPostVO = recruitDAO.findDetailRecruitPostAndCategoryByRecruitNo(12);
+		String[] day= {"월", "화", "수"};
+		groupService.createAdditionalRecruit(recruitPostVO, day);
+		
+		
+	}
+	
+	@Test
+	public void updateGroupNameTest() {
+		groupService.updateGroupName("7", "또바꿈");
 	}
 	
 }

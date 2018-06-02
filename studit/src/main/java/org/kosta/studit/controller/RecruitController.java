@@ -155,7 +155,7 @@ public class RecruitController {
 	 */
 	@RequestMapping(value = "deleteRecruitPostByRecruitNo", method = RequestMethod.POST)
 	public String deleteRecruitPostByRecruitNo(int recruitNo) {
-		recruitDAO.updateDeleteRecruitPostByRecruitNo(recruitNo);
+		recruitService.deleteRecruitPostByRecruitNo(Integer.toString(recruitNo));
 		recruitDAO.updateDeleteStudyConditionByRecruitNo(recruitNo);
 		return "redirect:/recruit/getRecruitPostList?pageNo=1";
 	}

@@ -111,6 +111,12 @@ public class GroupDAOImpl implements GroupDAO {
 		return template.selectOne("group.countMyLeadGroupHasMemberByEmailAndStudyGroupNo", map);
 	}
 
+	/**
+	 * 스터디 그룹 멤버 수를 조회 
+	 * @author 김유란
+	 * @param groupNo 조회할 스터디 그룹 번호
+	 * @return 그룹 멤버 수
+	 */
 	public int findGroupMemberCountByGroupNo(String groupNo) {
 		return template.selectOne("group.findGroupMemberCountByGroupNo", groupNo);
 	}
@@ -149,9 +155,21 @@ public class GroupDAOImpl implements GroupDAO {
 		
 	}
 	
+	/**
+	 * 스터디 신청 승인된 회원의 신청 번호를 조회
+	 * 스터디 모집완료시 신청상태를 '진행중'으로 변경하기 위해 호출
+	 * @author 김유란
+	 * @param recruitPostNo 신청한 스터디 모집글 번호
+	 * @return List<String> 신청번호를 담은 list
+	 */
 	@Override
-	public List<String> findConfirmedConditionNoByGroupNo(String recruitPostNo){
-		return template.selectList("group.findConfirmedConditionNoByGroupNo", recruitPostNo);
+	public List<String> findConfirmedConditionNoByRecruitPostNo(String recruitPostNo){
+		return template.selectList("group.findConfirmedConditionNoByRecruitPostNo", recruitPostNo);
+	}
+	
+	@Override
+	public void updateGroupName(Map<String,String> map) {
+		template.update("group.updateGroupName", map);
 	}
 
 }

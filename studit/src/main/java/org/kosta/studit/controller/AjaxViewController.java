@@ -365,16 +365,16 @@ public class AjaxViewController {
 			recruitService.deleteStudyConditionByStudyConditionNo(memberEmail, studyConditionNo);
 	}
 	
-	/**
-	    * 선택된 월 정보를 이용해 스터디룸 예약정보를 조회하는 메서드
-	    * 캘린더의 월이 변경될 때마다 호출
-	    * 
-	    * @author 김유란
-	    * @param studyRoomNo 스터디룸 번호
-	    * @param startDate 선택된 월의 첫날
-	    * @param endDate 선택된 월의 마지막날
-	    * @return 조회된 예약현황 정보를 담은 VO 리스트
-	    */
+/**
+    * 선택된 월 정보를 이용해 스터디룸 예약정보를 조회하는 메서드
+    * 캘린더의 월이 변경될 때마다 호출
+    * 
+    * @author 김유란
+    * @param studyRoomNo 스터디룸 번호
+    * @param startDate 선택된 월의 첫날
+    * @param endDate 선택된 월의 마지막날
+    * @return 조회된 예약현황 정보를 담은 VO 리스트
+    */
 	@RequestMapping("/findStudyRoomConditionByStudyRoomNoAndMonth")
 	@ResponseBody
 	public JSONArray findStudyRoomConditionByStudyRoomNoAndMonth(String companyNo, String startDate, String endDate){
@@ -461,19 +461,46 @@ public class AjaxViewController {
 	}
 	
 	
-	
+	/**
+	 * 스터디그룹에 새 팀원을 등록(신청자 승인/거절)
+	 * @author 김유란
+	 * @param state 변경된 신청자 상태(승인/거절)
+	 * @param studyConditionNo 상태 변경될 신청 번호
+	 * @return groupNo 팀원을 등록할 그룹 번호
+	 */
 	@RequestMapping(method=RequestMethod.POST, value="/registerGroupMember")
 	@ResponseBody
 	public void registerGroupMember(String state, String studyConditionNo, String groupNo) {
 		groupService.registerGroupMember(state, studyConditionNo, groupNo);
 	}
 
+	/**
+	 * 스터디 개설(모집완료)처리
+	 * 스터디 모집글 상태는 모집완료로, 승인된 신청자의 상태는 '진행중'으로 변경
+	 * @author 김유란
+	 * @param recruitPostNo 모집완료로 상태 변경할 스터디 모집글 번호
+	 * @param request 세션에 담긴 groupMemberVO 정보를 변경하기 위해 호출
+	 */
 	@RequestMapping(method=RequestMethod.POST, value="/updateRecruitCondition")
 	@ResponseBody
 	public void updateRecruitCondition(String recruitPostNo, HttpServletRequest request) {
 		groupService.updateRecruitCondition(recruitPostNo);
 		HttpSession session = request.getSession(false);
-		if(session!=null && session.getAttribute("groupMemberVO")!=null) {
+		if(session.getAttribute("groupMemberVO")!=null) {
+			GroupMemberVO gvo = (GroupMemberVO)session.getAttribute("groupMemberVO");
+			GroupVO groupVO = groupService.findStudyGroupInfoByStudyGroupNo(Integer.toString(gvo.getGroupVO().getGroupNo()));
+			gvo.setGroupVO(groupVO);
+			session.setAttribute("groupMemberVO", gvo);
+		}
+		
+	}
+	
+	@RequestMapping(method=RequestMethod.POST, value="/updateGroupName")
+	@ResponseBody
+	public void updateGroupName(String groupNo, String name, HttpServletRequest request) {
+		groupService.updateGroupName(groupNo, name);
+		HttpSession session = request.getSession(false);
+		if(session.getAttribute("groupMemberVO")!=null) {
 			GroupMemberVO gvo = (GroupMemberVO)session.getAttribute("groupMemberVO");
 			GroupVO groupVO = groupService.findStudyGroupInfoByStudyGroupNo(Integer.toString(gvo.getGroupVO().getGroupNo()));
 			gvo.setGroupVO(groupVO);

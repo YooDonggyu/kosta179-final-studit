@@ -291,6 +291,13 @@ public class RecruitServiceImpl implements RecruitService {
 		return new StudyConditionListVO(recruitDAO.findStudyConditionByGroupNo(map), pagingBean);
 	}
 
+	@Override
+	public void deleteRecruitPostByRecruitNo(String recruitPostNo) {
+		Map<String,String> map = new HashMap<>();
+		map.put("recruitPostNo", recruitPostNo);
+		map.put("condition", "삭제");
+		recruitDAO.updateRecruitConditionByRecruitPostNo(map);
+	}
 	
 
 	

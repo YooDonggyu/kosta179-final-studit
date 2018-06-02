@@ -2,6 +2,7 @@ package org.kosta.studit.model.service;
 
 import org.kosta.studit.model.vo.GroupMemberListVO;
 import org.kosta.studit.model.vo.GroupVO;
+import org.kosta.studit.model.vo.RecruitPostVO;
 
 public interface GroupService {
 
@@ -20,5 +21,9 @@ public interface GroupService {
 	GroupVO findStudyGroupInfoByStudyGroupNo(String sgNo);
 
 	void updateRecruitCondition(String recruitPostNo);
+
+	void createAdditionalRecruit(RecruitPostVO recruitPostVO, String[] day);
+
+	void updateGroupName(String groupNo, String name);
 
 }

@@ -294,7 +294,7 @@ insert into recruit_post (recruit_post_no,title,content,regdate,condition,capaci
 values(recruit_post_no_seq.nextval,'모여서 시 낭송 하실분들구해요','시를 낭송하시면서 내면의 평화를 찾으세요',sysdate,'모집중',5,'g@g.com',15,'판교');
 commit
 
-select * from recruit_post
+select * from recruit_post where condition in ('모집중', '추가모집')
 
 --모집  선택
 CREATE TABLE recruit_day 

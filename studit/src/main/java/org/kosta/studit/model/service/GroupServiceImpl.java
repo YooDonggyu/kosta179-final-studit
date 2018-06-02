@@ -11,6 +11,7 @@ import org.kosta.studit.model.vo.GroupMemberListVO;
 import org.kosta.studit.model.vo.GroupMemberVO;
 import org.kosta.studit.model.vo.GroupVO;
 import org.kosta.studit.model.vo.MemberVO;
+import org.kosta.studit.model.vo.RecruitPostVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -59,7 +60,12 @@ public class GroupServiceImpl implements GroupService {
 		return groupDAO.countMyLeadGroupHasMemberByEmailAndStudyGroupNo(map);
 	}
 
-	
+	/**
+	 * 스터디 그룹 멤버 목록 조회(페이징 처리)
+	 * @author 김유란
+	 * @param groupNo 그룹 번호
+	 * @param nowPage 멤버 목록 페이지번호
+	 */
 	@Override
 	public GroupMemberListVO findGroupMemberByGroupNo(String groupNo, String nowPage) {
 		PagingBean pagingBean = null;
@@ -142,18 +148,74 @@ public class GroupServiceImpl implements GroupService {
 		}
 	}
 	
+	/**
+	 * 스터디 개설에 대한 작업 처리
+	 * 스터디 모집글 상태를 '모집완료'로, 스터디 신청 승인된 회원의 신청 상태를 '진행중'으로 변경한다.
+	 * @author 김유란
+	 * @param recruitPostNo 모집글 번호
+	 */
+	@Transactional
 	@Override
 	public void updateRecruitCondition(String recruitPostNo) {
-		recruitDAO.updateRecruitCondition(recruitPostNo);
-		List<String> confirmedList = groupDAO.findConfirmedConditionNoByGroupNo(recruitPostNo);
+		Map<String,String> map1 = new HashMap<>();
+		map1.put("recruitPostNo", recruitPostNo);
+		map1.put("condition", "모집완료");
+		recruitDAO.updateRecruitConditionByRecruitPostNo(map1);
+		List<String> confirmedList = groupDAO.findConfirmedConditionNoByRecruitPostNo(recruitPostNo);
 		if(!confirmedList.isEmpty())
 		for(String conditionNo: confirmedList) {
-			Map<String,String> map = new HashMap<>();
-			map.put("state", "진행중");
-			map.put("studyConditionNo", conditionNo);
-			recruitDAO.updateStudyConditionState(map);
+			Map<String,String> map2 = new HashMap<>();
+			map2.put("state", "진행중");
+			map2.put("studyConditionNo", conditionNo);
+			recruitDAO.updateStudyConditionState(map2);
 		}
 		
+	}
+	
+	@Override
+	public void createAdditionalRecruit(RecruitPostVO recruitPostVO, String[] day) {
+		//기존 글번호 저장
+		String nowNo = Integer.toString(recruitPostVO.getRecruitPostNo());
+		System.out.println("now:"+nowNo);
+		//새 글 등록
+		recruitDAO.createRecruitPost(recruitPostVO);
+		//새 글번호
+		String newNo = Integer.toString(recruitPostVO.getRecruitPostNo());
+		System.out.println("now:"+newNo);
+		//글 상태 변경(모집중->추가모집)
+		Map<String,String> conditionMap = new HashMap<>();
+		conditionMap.put("recruitPostNo", newNo);
+		conditionMap.put("condition", "추가모집");
+		recruitDAO.updateRecruitConditionByRecruitPostNo(conditionMap);
+		//기존에 등록된 요일 삭제
+		recruitDAO.deleteDayByRecruitNo(recruitPostVO.getRecruitPostNo());
+		//요일 새로 새로 등록
+		Map<String, Object> dayMap;
+		for(int i =0; i<day.length; i++) {
+			dayMap = new HashMap<>();
+			dayMap.put("recruitPostNo", recruitPostVO.getRecruitPostNo());
+			dayMap.put("recruitDay", day[i]);
+			recruitDAO.registerRecruitDay(dayMap);
+		}
+		//코멘트, 스터디 그룹, 신청현황 글번호 변경
+		Map<String,String> map = new HashMap<>();
+		map.put("nowNo", nowNo);
+		map.put("newNo", newNo);
+		map.put("table", "recruit_post_comment");
+		recruitDAO.updateRecruitPostNo(map);
+		map.put("table", "study_group");
+		recruitDAO.updateRecruitPostNo(map);
+		map.put("table", "study_condition");
+		recruitDAO.updateRecruitPostNo(map);
+		
+	}
+	
+	@Override
+	public void updateGroupName(String groupNo, String name) {
+		Map<String,String> map=new HashMap<>();
+		map.put("name", name);
+		map.put("groupNo", groupNo);
+		groupDAO.updateGroupName(map);
 	}
 
 }

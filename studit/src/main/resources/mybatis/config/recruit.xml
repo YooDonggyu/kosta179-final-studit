@@ -321,11 +321,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		모집중인 게시글 삭제할 때 상태를 변경.(모집중 -> 삭제)
 		@author 유동규
 	 -->
-	<update id="updateDeleteRecruitPostByRecruitNo">
+	<!-- <update id="updateDeleteRecruitPostByRecruitNo">
 		update recruit_post
 		set condition = '삭제'
 		where recruit_post_no = #{value}
-	</update>
+	</update> -->
 	
 	<update id="updateDeleteStudyConditionByRecruitNo">
 		update study_condition
@@ -374,7 +374,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 							, row_number() over(order by recruit_post_no desc) as rnum
 				from recruit_post
 				<where>
-				 condition = '모집중' 
+				 condition in ('모집중','추가모집')
 					<choose>
 						<when test="dataMap.smallCategoryNo != null and dataMap.smallCategoryNo.size != 0">
 							<!-- 소분류 검색 -->
@@ -450,11 +450,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 	
 	<!-- 
-		스터디모집글 상태를 '모집완료'로 변경
+		스터디모집글 상태 변경(삭제, 모집완료, 추가모집)
 		@author  김유란
 	 -->
-	<update id="updateRecruitCondition">
-		update recruit_post set condition='모집완료' where recruit_post_no=#{value}
+	<update id="updateRecruitConditionByRecruitPostNo" parameterType="map">
+		update recruit_post set condition=#{condition} where recruit_post_no=#{recruitPostNo}
 	</update>
 	
 	
@@ -553,6 +553,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="findMemberByStudyConditionNo" resultType="memberVO" parameterType="string">
 		select member_email from study_condition where study_condition_no=#{value}
 	</select>
+	
+	<!-- 추가모집 -->
+	<update id="updateRecruitPostNo" parameterType="map">
+		update ${table} set recruit_post_no=#{newNo} where recruit_post_no=#{nowNo}
+	</update>
 	
 </mapper>
  

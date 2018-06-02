@@ -10,6 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="groupVO.recruitPostVO.recruitPostNo" column="recruit_post_no"/>
 		<result property="groupMemberNo" column="sg_member_no"/>
 		<result property="memberVO.memberEmail" column="member_email"/>
+		<result property="memberVO.picPath" column="pic_path"/>
 		<result property="memberVO.name" column="member_name"/>
 	</resultMap>
 	<resultMap type="groupVO" id="groupRM">
@@ -111,7 +112,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="findStudyGroupByMemberEmail" resultMap="groupMemberRM">
 	select sgm.sg_member_no, sgm.sg_no, sgm.position, sgm.member_email, sgm.state, sg.name, rp.recruit_post_no 
 	from sg_member sgm, study_group sg, recruit_post rp 
-	where sgm.sg_no=sg.sg_no and rp.recruit_post_no=sg.recruit_post_no and sgm.member_email=#{value} and sgm.position!='탈퇴'
+	where sgm.sg_no=sg.sg_no and rp.recruit_post_no=sg.recruit_post_no and sgm.member_email=#{value} and sgm.position!='탈퇴' and rp.condition!='삭제'
 	</select>
 	
 	<!-- 
@@ -123,7 +124,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="findStudyGroupInfoByStudyGroupNo" parameterType="string" resultMap="groupRM">
 		select sg.sg_no, sg.name, rp.recruit_post_no, rp.condition
 		from study_group sg, recruit_post rp
-		where sg.recruit_post_no=rp.recruit_post_no and sg_no=#{value}
+		where sg.recruit_post_no=rp.recruit_post_no 
+		and sg_no=#{value}
 	</select>
 	
 	<!-- 
@@ -159,15 +161,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		@return GroupMemberVO
 	 -->
 	<select id="findGroupMemberByGroupNo" parameterType="map"  resultMap="groupMemberRM">
-	select member_email, member_name, position, sg_no, sg_member_no
+	select member_email, member_name, position, sg_no, sg_member_no, pic_path
 from(
-			select row_number() over(order by sg_member_no) rnum, 
-							m.member_email, m.name member_name, sgm.position, sgm.sg_no, sgm.sg_member_no
+			select row_number() over(order by position desc) rnum, 
+							m.member_email, m.name member_name, m.pic_path, sgm.position, sgm.sg_no, sgm.sg_member_no
 							from member m, sg_member sgm, study_group sg
 							where sgm.sg_no=sg.sg_no
 							and sg.sg_no=#{groupNo}
 							and m.member_email = sgm.member_email)
-where rnum between #{pagingBean.startRowNumber} and #{pagingBean.endRowNumber} order by sg_member_no, position desc
+where rnum between #{pagingBean.startRowNumber} and #{pagingBean.endRowNumber} order by position desc, sg_member_no
 	</select>
 	
 	<!-- 
@@ -200,11 +202,20 @@ where rnum between #{pagingBean.startRowNumber} and #{pagingBean.endRowNumber} o
 		</choose>
 	</update>
 	
-	<select id="findConfirmedConditionNoByGroupNo" resultType="string">
+	<!-- 
+		스터디 그룹 번호로 승인된 신청자의 신청번호 조회
+		@author 김유란
+		@param studyConditionNo 스터디 신청 번호
+	 -->
+	<select id="findConfirmedConditionNoByRecruitPostNo" resultType="string">
 		select sc.study_condition_no
 		from study_condition sc, recruit_post rp
 		where sc.recruit_post_no=rp.recruit_post_no
 		and rp.recruit_post_no=#{value} and sc.state='승인'
 	</select>
+	
+	<update id="updateGroupName" parameterType="map">
+		update study_group set name=#{name} where sg_no=#{groupNo}
+	</update>
 </mapper>
 

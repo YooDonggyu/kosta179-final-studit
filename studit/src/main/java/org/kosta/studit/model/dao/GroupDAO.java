@@ -35,7 +35,9 @@ public interface GroupDAO {
 
 	GroupVO findStudyGroupInfoByStudyGroupNo(String sgNo);
 
-	List<String> findConfirmedConditionNoByGroupNo(String recruitPostNo);
+	List<String> findConfirmedConditionNoByRecruitPostNo(String recruitPostNo);
+
+	void updateGroupName(Map<String, String> map);
 
 
 }

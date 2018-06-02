@@ -1,6 +1,8 @@
 package org.kosta.studit.controller;
 
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -11,6 +13,7 @@ import org.kosta.studit.model.service.RecruitService;
 import org.kosta.studit.model.vo.GroupMemberVO;
 import org.kosta.studit.model.vo.GroupVO;
 import org.kosta.studit.model.vo.MemberVO;
+import org.kosta.studit.model.vo.RecruitPostVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping("/group")
 public class GroupController {
-	
+	@Autowired
 	private RecruitDAO recruitDAO;
 	@Autowired
 	private RecruitService recruitService;
@@ -91,9 +94,13 @@ public class GroupController {
 	 * @return group/find_group_member.tiles 스터디 그룹 팀원관리 페이지
 	 */
 	@RequestMapping("/findGroupMemberView")
-	public String findGroupMemberView(String groupNo, Model model) {
-		model.addAttribute("groupMemberList", groupService.findGroupMemberByGroupNo(groupNo, null));
-		model.addAttribute("conditionList", recruitService.findStudyConditionByGroupNo(groupNo, null));
+	public String findGroupMemberView(HttpServletRequest request) {
+		GroupMemberVO gvo= (GroupMemberVO) request.getSession(false).getAttribute("groupMemberVO");
+		String groupNo = Integer.toString(gvo.getGroupVO().getGroupNo());
+		request.setAttribute("recruitInfo", 
+				recruitService.findRecruitPostDetailByRecruitNo(null, gvo.getGroupVO().getRecruitPostVO().getRecruitPostNo()));
+		request.setAttribute("groupMemberList", groupService.findGroupMemberByGroupNo(groupNo, null));
+		request.setAttribute("conditionList", recruitService.findStudyConditionByGroupNo(groupNo, null));
 		return "group/find_group_member.sgtiles";
 	}
 	
@@ -122,10 +129,39 @@ public class GroupController {
 		return "redirect:/group/updateGroupMemberPositionOKView";
 	}
 	
+	/**
+	 * 스터디 그룹 팀원 직책 변경 후 결과 알림 보여주기
+	 * @author 김유란
+	 * @param /group/update_position_ok 결과 알림 뷰
+	 */
 	@RequestMapping("/updateGroupMemberPositionOKView")
 	public String updateGroupMemberPositionOKView() {
 		return "/group/update_position_ok";
 	}
 	
+	@RequestMapping("/updateRecruitPostInfoToAddByRecruitNoView")
+	public String updateRecruitPostInfoToAddByRecruitNoView(String recruitPostNo, Model model) {
+		Map<String, Object> map = recruitService.findRecruitPostDetailByRecruitNo(null, Integer.parseInt(recruitPostNo));
+		model.addAttribute("recruitInfo", map);
+		System.out.println(recruitDAO.getBigCategoryList());
+		model.addAttribute("bigCategoryList", recruitDAO.getBigCategoryList());
+		RecruitPostVO recruitPostVO = (RecruitPostVO)map.get("detail");
+		int bigCategoryNo = recruitPostVO.getSmallCategoryVO().getBigCategoryVO().getBigCategoryNo();
+		model.addAttribute("smallCategoryList", recruitDAO.findSmallCategoryListByBigCategoryNo(Integer.toString(bigCategoryNo)));
+		return "group/create_additional_recruit.sgtiles";
+	}
 
+	@RequestMapping("/createAdditionalRecruit")
+	public String createAdditionalRecruit(RecruitPostVO recruitPostVO, String[] day, HttpServletRequest request){
+		HttpSession session=request.getSession();
+		recruitPostVO.setMemberVO((MemberVO)session.getAttribute("memberVO"));
+		groupService.createAdditionalRecruit(recruitPostVO, day);
+		if(session.getAttribute("groupMemberVO")!=null) {
+			GroupMemberVO gvo = (GroupMemberVO)session.getAttribute("groupMemberVO");
+			GroupVO groupVO = groupService.findStudyGroupInfoByStudyGroupNo(Integer.toString(gvo.getGroupVO().getGroupNo()));
+			gvo.setGroupVO(groupVO);
+			session.setAttribute("groupMemberVO", gvo);
+		}
+		return "redirect:/group//findGroupMemberView";
+	}
 }

@@ -28,7 +28,6 @@ $(document).ready(function(){
 		});//ajax
 	});//big_category
 });//ready
-
 function check(){
 	if($("#title").val()==""){
 		alert("제목을 입력하세요!");
@@ -151,4 +150,3 @@ function check(){
         </div> <!-- ./container -->
         <div class="col - sm- 3" ></div>
 			
-
