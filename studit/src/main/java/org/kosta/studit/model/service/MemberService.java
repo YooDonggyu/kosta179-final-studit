@@ -6,6 +6,7 @@ import java.util.Map;
 import org.kosta.studit.exception.EmailNotFoundException;
 import org.kosta.studit.exception.IsNotMemberException;
 import org.kosta.studit.exception.PasswordIncorrectException;
+import org.kosta.studit.model.vo.MemberListVO;
 import org.kosta.studit.model.vo.MemberVO;
 
 public interface MemberService {
@@ -21,4 +22,7 @@ public interface MemberService {
 	void deleteMember(String memberEmail);
 
 	Map<String, String> checkPasswordHintAndAnswer(String memberEmail);
+
+
+	MemberListVO getMemberListForAdmin(int nowPage, String memberSrch);
 }

@@ -33,6 +33,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<resultMap type="companyVO" id="comMap" extends="companyMap">
 		<result column="memberName" property="memberVO.name"/>
 	</resultMap>
+	
+	<resultMap type="companyVO" id="comForMemberRM">
+		<result column="member_email" property="memberVO.memberEmail"/>
+		<result column="memberName" property="memberVO.name"/>
+	</resultMap>
 	<!--*** resultMap ***-->
 	
 	<!-- 
@@ -463,6 +468,51 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    	<delete id="deleteCompanyBusinessDayByCompanyNo" parameterType="int">
    		delete from com_business_day where company_no = #{value}
    	</delete>
+	
+	 <!-- 
+	 	업체 대기 상태 조회 - 관리자용
+	 	@author 유동규
+	  -->
+	  <select id="getCompanyListForAdmin" resultMap="comForMemberRM">
+	 	select *
+	 	from(
+	 				select c.company_no, c.name, c.primary_addr, c.detail_addr, c.tel, c.license, c.regdate, c.state
+	 						  , m.member_email, m.name as memberName
+	 						  , row_number() over(order by c.company_no desc) as rnum
+	 				from company c, member m
+	 				<where>
+					 	c.member_email = m.member_email
+					 	<if test="comSrch != null">
+					 		and c.name || c.state like '%' || #{comSrch} || '%'
+					 	</if> 
+	 				</where>
+	 			) 
+	 	where  rnum between #{pagingBean.startRowNumber} and #{pagingBean.endRowNumber}
+	  </select>
+   
+   <!-- 
+   		관리자용 - 전체 업체 수 가져오기
+   		@author 유동규
+    -->
+    <select id="getTotalCompanyCount" resultType="int">
+    	select count(*)
+    	from company
+		<where>
+		 	<if test="_parameter != null">
+		 		and name || state like '%' || #{value} || '%'
+		 	</if> 
+		</where>
+    </select>
+    
+    <!-- 
+    	관리자용 - 업체 상태 변경
+    	@author 유동규
+     -->
+    <update id="updateCompanyCondition">
+    	update company
+    	set state = #{state}
+    	where company_no = #{companyNo}
+    </update>
 </mapper>
  
  

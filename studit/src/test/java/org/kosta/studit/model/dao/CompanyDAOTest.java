@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.kosta.studit.model.CompanyPagingBean;
 import org.kosta.studit.model.vo.CompanyVO;
 import org.kosta.studit.model.vo.MemberVO;
 import org.kosta.studit.model.vo.StudyRoomConditionVO;
@@ -298,7 +299,7 @@ public class CompanyDAOTest {
 	    * 업체 스터디룸 일별 예약대기 건수 조회
 	    * @author 김유란
 	    */
-	   @Test
+	   //@Test
 	   public void findWaitStudyRoomConditionCountByCompanyNoTest() {
 		   System.out.println(companyDAO.findWaitStudyRoomConditionCountByCompanyNo("1"));
 	   }
@@ -396,4 +397,20 @@ public class CompanyDAOTest {
 			int cno = 5;
 			companyDAO.deleteCompanyBusinessDayByCompanyNo(cno);
 		}
+	 /**
+		* 업체 목록 조회 - 관리자용
+	    * @author 유동규 
+	    */
+	   //@Test
+	   public void getCompanyListForAdminTest() {
+		   
+		   String comSrch = null;
+		   int totalCount = companyDAO.getTotalCompanyCount(comSrch);
+		   CompanyPagingBean cpb = new CompanyPagingBean(totalCount, 1);
+		   Map<String, Object> map = new HashMap<>();
+		   map.put("comSrch", comSrch);
+		   map.put("pagingBean", cpb);
+		   System.out.println(companyDAO.getCompanyListForAdmin(map));
+	   }
+	   
 }

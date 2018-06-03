@@ -290,8 +290,7 @@ public class CompanyServiceImpl implements CompanyService {
 		
 		return dataMap;
 	}
-
-
+	
 	/**
 	 * 업체 번호로 해당 업체의 스터디룸 리스트를 불러오는 메서드
 	 * @author 변태섭
@@ -328,6 +327,27 @@ public class CompanyServiceImpl implements CompanyService {
 		
 		return arr;
 		}
+
+	
+	
+	/**
+	 * 관리자 - 업체 페이징
+	 * @author 유동규
+	 */
+	@Override
+	public CompanyListVO getCompanyListForAdmin(int nowPage, String comSrch) {
+		//전체 개수
+		int totalCnt = companyDAO.getTotalCompanyCount(comSrch);
+		//페이징 빈
+		CompanyPagingBean cpb = new CompanyPagingBean(totalCnt, nowPage);
+		//업체 목록 조회
+		Map<String, Object> srchMap = new HashMap<>();
+		srchMap.put("comSrch", comSrch);
+		srchMap.put("pagingBean", cpb);
+		List<CompanyVO> cList = companyDAO.getCompanyListForAdmin(srchMap);
+		//ListVO만들기
+		return  new CompanyListVO(cList, cpb);
+	}
 
 	/**
 	 * 업체 정보를 수정하는 메서드
@@ -366,4 +386,7 @@ public class CompanyServiceImpl implements CompanyService {
 		}
 		System.out.println("register Hashtag Complete");
 	}
+
+	
+
 }

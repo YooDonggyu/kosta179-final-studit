@@ -4,7 +4,6 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="member">
-	
 	<!-- 
 		이메일을 통한 회원 객체 검색.
 		@author 유동규
@@ -78,10 +77,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 <select id="isMember" resultType="int">
 	 	select count(m.member_email) 
 		from member m, member_position p
-		where m.member_email = p.member_email and m.member_email = #{value} and p.name = '탈퇴'
-	 </select>
-	 
-	 
+		where m.member_email = p.member_email and m.member_email = #{value} and (p.name = '탈퇴' or p.name = '정지')
+	</select>
+	
+	
 	 <!-- 
       	회원의 직책이 업체인지 확인
       	@author 송용준
@@ -122,6 +121,71 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		from member
 		where member_email=#{value}
 	</select>
+	
+	<!-- 
+		관리자 아이디인지 확인
+		@author 유동규
+	 -->
+	 <select id="isAdmin" resultType="int">
+	 	select count(*) 
+	 	from member_position
+	 	where member_email = #{value} and name='관리자'
+	 </select>
+	 
+	 <!-- 
+	 	관리자용 - 회원 수 반환
+	 	@author 유동규
+	  -->
+	  <select id="getTotalMemberForAdmin" resultType="int">
+	  	select count(*)
+	  	from member
+	  	<where>
+	  		<if test="_parameter != null and _parameter != '' ">
+	  			member_email || name like '%' || #{value} || '%'
+	  		</if>
+	  	</where>
+	  </select>
+	  
+	  <!-- 
+		관리자용 - 회원 리스트 반환
+		@author 유동규
+	   -->
+	 <select id="getMemberListForAdmin" resultType="memberVO">
+	 	select * 
+	 	from(
+	 			select member_email, name, primary_addr, detail_addr, phone, regdate
+	 					, row_number() over(order by regdate desc) as rnum
+	 			from member
+	 			<where>
+	 				<if test="memberSrch != null and memberSrch != '' ">
+	 					member_email || name like '%' || #{memberSrch} || '%'
+	 				</if>
+	 			</where>
+	 			)
+	 	where  rnum between #{pagingBean.startRowNumber} and #{pagingBean.endRowNumber}
+	 </select>
+	 
+	 
+	 <!-- 
+	 	관리자용 - 회원 이메일에 따른 직책들 구하기
+	 	@author  유동규
+	  -->
+	  <select id="findMemberPositionByMemberEmail" resultType="string">
+	  		select name
+	  		from member_position
+	  		where member_email = #{value}
+	  </select>
+	 
+	 
+	 <insert id="updateMemberState">
+	  insert into member_position
+	  values(member_position_no_seq.nextval, '정지', #{value})
+	 </insert>
+	 
+	 <delete id="deleteMemberState">
+	 	delete from member_position
+	 	where member_email = #{value} and name='정지'
+	 </delete>
 </mapper>
  
  

@@ -29,6 +29,7 @@ import org.kosta.studit.model.vo.CompanyListVO;
 import org.kosta.studit.model.vo.GroupMemberListVO;
 import org.kosta.studit.model.vo.GroupMemberVO;
 import org.kosta.studit.model.vo.GroupVO;
+import org.kosta.studit.model.vo.MemberListVO;
 import org.kosta.studit.model.vo.MemberVO;
 import org.kosta.studit.model.vo.RecruitPostListVO;
 import org.kosta.studit.model.vo.SmallCategoryVO;
@@ -472,6 +473,29 @@ public class AjaxViewController {
 	@ResponseBody
 	public void registerGroupMember(String state, String studyConditionNo, String groupNo) {
 		groupService.registerGroupMember(state, studyConditionNo, groupNo);
+	}
+	/**
+	 * 관리자용 - 업체검색
+	 * @author 유동규
+	 */
+	@ResponseBody
+	@RequestMapping("/getCompanyListForAdmin")
+	public CompanyListVO getCompanyListForAdmin(HttpServletRequest request, String comSrch) {
+		int nowPage = 1;
+		if(request.getParameter("nowPage") != null) {
+			nowPage = Integer.parseInt(request.getParameter("nowPage"));
+		}
+		return companyService.getCompanyListForAdmin(nowPage, comSrch);
+	}
+	
+	@ResponseBody
+	@RequestMapping("/getMemberListForAdmin")
+	public MemberListVO getMemberListForAdmin(HttpServletRequest request, String memberSrch) {
+		int nowPage = 1;
+		if(request.getParameter("nowPage") != null) {
+			nowPage = Integer.parseInt(request.getParameter("nowPage"));
+		}
+		return memberService.getMemberListForAdmin(nowPage, memberSrch);
 	}
 
 	/**

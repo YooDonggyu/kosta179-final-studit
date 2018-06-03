@@ -3,6 +3,7 @@ package org.kosta.studit.model.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.kosta.studit.model.CompanyPagingBean;
 import org.kosta.studit.model.vo.CompanyVO;
 import org.kosta.studit.model.vo.StudyRoomConditionVO;
 import org.kosta.studit.model.vo.StudyRoomVO;
@@ -74,4 +75,13 @@ public interface CompanyDAO {
 	void deleteHashtagByCompanyNo(int companyNo);
 
 	void deleteCompanyBusinessDayByCompanyNo(int companyNo);
+
+
+	int getTotalCompanyCount(String comSrch);
+
+	List<CompanyVO> getCompanyListForAdmin(Map<String, Object> map);
+
+	void updateCompanyCondition(Map<String, Object> map);
+
+
 }

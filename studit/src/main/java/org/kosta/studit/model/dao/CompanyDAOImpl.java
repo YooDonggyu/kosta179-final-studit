@@ -3,6 +3,7 @@ package org.kosta.studit.model.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.kosta.studit.model.CompanyPagingBean;
 import org.kosta.studit.model.vo.CompanyVO;
 import org.kosta.studit.model.vo.StudyRoomConditionVO;
 import org.kosta.studit.model.vo.StudyRoomVO;
@@ -359,6 +360,32 @@ public class CompanyDAOImpl implements CompanyDAO {
 		@Override
 		public void deleteCompanyBusinessDayByCompanyNo(int companyNo) {
 			template.delete("company.deleteCompanyBusinessDayByCompanyNo", companyNo);
+		}		
+		/**
+		 * 관리자용 - 업체 목록조회
+		 * @author 유동규
+		 */
+		@Override
+		public List<CompanyVO>getCompanyListForAdmin(Map<String, Object> map){
+			return template.selectList("company.getCompanyListForAdmin", map);
+		}
+		
+		/**
+		 * 관리자용 - 업체 전체 수 조회
+		 * @author 유동규
+		 */
+		@Override
+		public int getTotalCompanyCount(String comSrch) {
+			return template.selectOne("company.getTotalCompanyCount", comSrch);
+		}
+		
+		/**
+		 * 관리자용-업체 상태 변경
+		 * @param map
+		 */
+		@Override
+		public void updateCompanyCondition(Map<String, Object> map) {
+			template.update("company.updateCompanyCondition", map);
 		}
 }
 

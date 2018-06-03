@@ -1,10 +1,12 @@
 package org.kosta.studit.model.dao;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.kosta.studit.model.PagingBean;
 import org.kosta.studit.model.vo.MemberVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -80,7 +82,7 @@ public class MemberDAOTest {
 	 * 회원이 탈퇴상태인지 확인
 	 * @author 유동규
 	 */
-	@Test
+	//@Test
 	public void isMemberTest() {
 		System.out.println(memberDAO.isMember("a@a.com"));
 	}
@@ -99,6 +101,18 @@ public class MemberDAOTest {
 		System.out.println(map);
 		memberDAO.registerMemberPosition(map);
 		//System.out.println(memberDAO.findMemberByEmail("a@a.com"));
+	}
+	
+	@Test
+	public void test() {
+		
+		String memberSrch = null;
+		int totalCnt = memberDAO.getTotalMemberForAdmin(memberSrch);
+		PagingBean pb = new PagingBean(totalCnt, 1);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("memberSrch", memberSrch);
+		map.put("pagingBean", pb);
+		System.out.println(memberDAO.getMemberListForAdmin(map));
 	}
 	
 }

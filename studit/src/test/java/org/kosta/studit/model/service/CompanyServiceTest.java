@@ -70,10 +70,18 @@ public class CompanyServiceTest {
 		System.out.println(companyService.findStudyRoomListByCompanyNo(companyNo));
 	}
 
-	@Test
+	//@Test
 	public void findStudyRoomConditionCountByMonth() {
 		System.out.println(companyService.findStudyRoomConditionCountByMonth("1"));
 	}
 	
+	/**
+	 * 관리자용 - 업체 목록 페이징
+	 * @author 유동규
+	 */
+	//@Test
+	public void getCompanyListForAdminTest() {
+		//System.out.println(companyService.getCompanyListForAdmin(1));
+	}
 
 }

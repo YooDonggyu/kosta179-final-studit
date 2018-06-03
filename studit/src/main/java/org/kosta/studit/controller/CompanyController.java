@@ -47,7 +47,6 @@ public class CompanyController {
 	
 	/**
 	 * 업체 검색을 위한 뷰로 이동시키는 메서드. 초기 검색 시 필요한 정보를 저장하여 업체 검색 뷰로 이동
-	 * 
 	 * @author 송용준
 	 * @param request 초기 검색 시 필요한 정보를 저장하기 위한 객체
 	 * @return 업체 검색 뷰 : tiles 적용
@@ -90,7 +89,6 @@ public class CompanyController {
 	/**
 	 * 업체의 스터디룸 예약현황 수정 메서드
 	 * 업체회원이 스터디룸 예약을 승인하거나 수정할 때 실행 
-	 * 
 	 * @author 김유란
 	 * @param studyRoomConditionVO 수정된 예약정보를 담은 VO
 	 * @return 업체 스터디룸 예약현황 관리 뷰로 이동하기 위해 해당 뷰 호출 메서드로 redirect
@@ -104,7 +102,6 @@ public class CompanyController {
 	
 	/**
 	 * Host Page로 이동하는 Controller
-	 * 
 	 * @author 변태섭
 	 */
 	@RequestMapping("/companyView")
@@ -136,7 +133,6 @@ public class CompanyController {
 	
 	/**
 	 * 업체 및 스터디룸을 등록하는 Controller
-	 * 
 	 * @author 변태섭
 	 * @param request Session에 담긴 MemberVO.memberEmail을 활용
 	 * @param studyRoomVO 입력받은 업체, 스터디룸 정보
@@ -206,7 +202,6 @@ public class CompanyController {
 	
 	/**
 	 * 업체 등록 완료 시 띄우는 script
-	 * 
 	 * @author 변태섭
 	 */
 	@RequestMapping("/registerCompanyOkView")
@@ -215,6 +210,7 @@ public class CompanyController {
 	}
 	
 	/**
+	 * 업체 번호에 따른 상세 업체 내용 조회
 	 * @author 유동규
 	 * @param model
 	 * @param request
@@ -244,7 +240,6 @@ public class CompanyController {
 	
 	/**
 	 * 스터디룸을 추가하는 폼으로 이동
-	 * 
 	 * @author 변태섭
 	 * @param companyNo 스터디룸이 추가 되는 업체 번호
 	 * @param model companyNo을 받아 view로 넘겨주는 역할
@@ -263,7 +258,6 @@ public class CompanyController {
 	
 	/**
 	 * 등록 된 스터디룸 정보를 조회하는 뷰
-	 * 
 	 * @author 변태섭
 	 * @param studyRoomNo 조회하는 스터디룸 번호
 	 * @param memberEmail 회원 이메일
@@ -341,4 +335,25 @@ public class CompanyController {
 			model.addAttribute("srFunction", studyroomDAO.findStudyRoomFunctionByStudyRoomNo(Integer.parseInt(studyRoomNo)));
 		return "company/update_studyroom/hostpage_left.tiles";
 	}
+	
+	/**
+	 * 관리자용 - 업체 승인 및 대기
+	 * @author 유동규
+	 * @param state 업데이트할 상태
+	 * @param companyNo 업데이트할 업체 번호
+	 */
+	@RequestMapping(value="/updateCompanyCondition", method=RequestMethod.POST)
+	public String updateCompanyCondition(String state, String companyNo) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("companyNo", Integer.parseInt(companyNo));
+		map.put("state", state);
+		companyDAO.updateCompanyCondition(map);
+		return "redirect:updateCompanyConditionResult";
+	}
+	
+	@RequestMapping("/updateCompanyConditionResult")
+	public String updateCompanyConditionResult() {
+		return "company/update_companycondition_result";
+	}
+	
 }

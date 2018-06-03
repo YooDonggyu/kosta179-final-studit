@@ -11,6 +11,7 @@ public class MemberVO {
 	private String passwordHint;
 	private String passwordAnswer;
 	private String picPath;
+	private boolean isAdmin;
 	public MemberVO() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -39,6 +40,14 @@ public class MemberVO {
 	
 	
 
+
+	public boolean isAdmin() {
+		return isAdmin;
+	}
+
+	public void setAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
 
 	public String getMemberEmail() {
 		return memberEmail;

@@ -3,17 +3,17 @@ package org.kosta.studit.controller;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletRequest;
 
 import org.kosta.studit.model.dao.CompanyDAO;
 import org.kosta.studit.model.dao.RecruitDAO;
+import org.kosta.studit.model.service.CompanyService;
+import org.kosta.studit.model.service.MemberService;
 import org.kosta.studit.model.vo.CompanyVO;
 import org.kosta.studit.model.vo.RecruitPostVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -26,7 +26,10 @@ public class HomeController {
 	private RecruitDAO recruitDAO;
 	@Autowired
 	private CompanyDAO companyDAO;
-	
+	@Autowired
+	private CompanyService companyService;
+	@Autowired
+	private MemberService memberService;
 	
 	/**
 	 * 
@@ -57,8 +60,6 @@ public class HomeController {
 	}
 	
 	
-	
-	
 	/**
 	 * session처리가 필요없는 요청에 즉각 페이지를 이동하기 위한 메서드.
 	 * 이동할 .jsp를 viewName으로 url-pattern으로 지정해서 viewName.tiles로 이동한다. 
@@ -72,5 +73,7 @@ public class HomeController {
 		return "member/"+viewName+".tiles";
 	}
 
+	
+	
 
 }

@@ -39,17 +39,19 @@
 	                  <li><a href="${pageContext.request.contextPath}/member/updatePasswordView">비밀번호 변경</a></li>
 	                  <li><a href="${pageContext.request.contextPath}/group/groupHome">나의 그룹</a></li>
 	                  <li><a href="${pageContext.request.contextPath}/member/logout">로그아웃</a></li>
+	                   <li class="divider"></li>
+	                  <c:if test="${sessionScope.memberVO.admin}"> 
+	                  	<li class="dropdown-header">관리자</li>
+	                  	<li><a href="${pageContext.request.contextPath}/member/getCompanyAndMemberInfo">관리자</a></li>
+	                  </c:if>
 	                </ul>
 	              </li>
               </c:otherwise>
               </c:choose>
               </ul>
-             
             </div>
           </div>
         </div>
-        
-
 
 
     <jsp:include page="../member/login_modal.jsp" />

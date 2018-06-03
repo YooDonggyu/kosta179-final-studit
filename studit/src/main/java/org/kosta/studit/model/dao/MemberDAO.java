@@ -1,5 +1,6 @@
 package org.kosta.studit.model.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.kosta.studit.model.vo.MemberVO;
@@ -30,5 +31,17 @@ public interface MemberDAO {
 	String findPasswordHint(String memberEmail);
 
 	String findPasswordAnswer(String memberEmail);
+
+	int isAdmin(String memberEmail);
+
+	int getTotalMemberForAdmin(String memberSrch);
+
+	List<MemberVO> getMemberListForAdmin(Map<String, Object> map);
+
+	List<String> findMemberPositionByMemberEmail(String memberEmail);
+
+	void updateMemberState(String memberEmail);
+
+	void deleteMemberState(String memberEmail);
 
 }

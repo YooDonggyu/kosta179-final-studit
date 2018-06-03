@@ -16,6 +16,7 @@ import org.kosta.studit.exception.IsNotMemberException;
 import org.kosta.studit.exception.PasswordIncorrectException;
 import org.kosta.studit.model.dao.GroupDAO;
 import org.kosta.studit.model.dao.MemberDAO;
+import org.kosta.studit.model.service.CompanyService;
 import org.kosta.studit.model.service.MemberService;
 import org.kosta.studit.model.service.RecruitService;
 import org.kosta.studit.model.service.StudyRoomService;
@@ -40,6 +41,8 @@ public class MemberController {
 	private StudyRoomService studyroomService;
 	@Autowired
 	private GroupDAO groupDAO;
+	@Autowired
+	private CompanyService companyService;
 
 	/**
 	 * 사용자 로그인을 위한 메서드. 가장 먼저 아이디 확인한 후 비밀번호 일치여부를 확인한다.
@@ -61,8 +64,14 @@ public class MemberController {
 			if (rMemberVO == null) {
 				// Null일 경우는 Error = 404? 405? 500?
 			} else {
+				int isAdmin = memberDAO.isAdmin(rMemberVO.getMemberEmail());
+				if(isAdmin >0) {
+					rMemberVO.setAdmin(true);
+				}else {
+					rMemberVO.setAdmin(false);
+				}
 				// 세션할당
-				request.getSession().setAttribute("memberVO", rMemberVO);
+				request.getSession().setAttribute("memberVO", rMemberVO); 
 				// 모집 조회수 증가 판단을 위한 session
 				request.getSession().setAttribute("rHitList", new ArrayList<>());
 				// 업체 조회수 증가 판단을 위한 session
@@ -347,4 +356,44 @@ public class MemberController {
 		request.setAttribute("memberInfo", map);
 		return "member/create_newpassword.tiles";
 	}
+	
+	
+
+	/**
+	 * 관리자용 - 업체, 회원 목록
+	 * @author 유동규
+	 */
+	@RequestMapping("/getCompanyAndMemberInfo")
+	public String getCompanyListForAdmin(HttpServletRequest request, Model model) {
+		int nowPage = 1;
+		if(request.getParameter("nowPage") != null) {
+			nowPage = Integer.parseInt(request.getParameter("nowPage"));
+		}
+		model.addAttribute("comListVO", companyService.getCompanyListForAdmin(nowPage, null));
+		model.addAttribute("memberListVO", memberService.getMemberListForAdmin(nowPage, null));
+		return "member/admin.tiles";
+	}
+	
+	
+	@RequestMapping(value="/updateMemberState", method = RequestMethod.POST)
+	public String updateMemberState(String memberEmail) {
+		memberDAO.updateMemberState(memberEmail);
+		return "redirect:updateMemberStateView";
+	}
+	@RequestMapping(value="/deleteMemberState", method = RequestMethod.POST)
+	public String deleteMemberState(String memberEmail) {
+		memberDAO.deleteMemberState(memberEmail);
+		return "redirect:updateMemberStateView";
+	}
+	
+	@RequestMapping(value="/updateMemberStateView")
+	public String updateMemberStateView() {
+		return "member/update_memberstate_result";
+	}
+	
+	
+	
+	
+	
+	
 }

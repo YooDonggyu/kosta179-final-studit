@@ -1,5 +1,6 @@
 package org.kosta.studit.model.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,11 +8,13 @@ import java.util.Map;
 import org.kosta.studit.exception.EmailNotFoundException;
 import org.kosta.studit.exception.IsNotMemberException;
 import org.kosta.studit.exception.PasswordIncorrectException;
+import org.kosta.studit.model.PagingBean;
 import org.kosta.studit.model.dao.CompanyDAO;
 import org.kosta.studit.model.dao.GroupDAO;
 import org.kosta.studit.model.dao.MemberDAO;
 import org.kosta.studit.model.dao.RecruitDAO;
 import org.kosta.studit.model.dao.StudyRoomDAO;
+import org.kosta.studit.model.vo.MemberListVO;
 import org.kosta.studit.model.vo.MemberVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -146,6 +149,30 @@ public class MemberServiceImpl implements MemberService {
 		
 		return map;
 		
+	}
+
+	/**
+	 * 관리자용 - 회원명단 불러오기
+	 */
+	@Override
+	public MemberListVO getMemberListForAdmin(int nowPage, String memberSrch) {
+		//전체 수
+		int totalCnt = memberDAO.getTotalMemberForAdmin(memberSrch);
+		//페이징 빈
+		PagingBean pb = new PagingBean(totalCnt, nowPage);
+		//조회
+		Map<String, Object> map = new HashMap<>();
+		map.put("memberSrch", memberSrch);
+		map.put("pagingBean", pb);
+		List<MemberVO> mList = memberDAO.getMemberListForAdmin(map);
+		//직책 가져오기(string : memberEmail, Object : List (직책들)
+		Map<String, Object> pMap = new HashMap<>();
+		List<String> positionList = null;
+		for(MemberVO mVO: mList) {
+			positionList = memberDAO.findMemberPositionByMemberEmail(mVO.getMemberEmail());
+			pMap.put(mVO.getMemberEmail(), positionList);
+		}
+		return new MemberListVO(mList, pb, pMap);
 	}
 
 }

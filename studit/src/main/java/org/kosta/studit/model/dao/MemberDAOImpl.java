@@ -1,5 +1,6 @@
 package org.kosta.studit.model.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.kosta.studit.model.vo.MemberVO;
@@ -153,4 +154,52 @@ public class MemberDAOImpl implements MemberDAO {
 	public String findPasswordAnswer(String memberEmail) {
 		return template.selectOne("member.findPasswordAnswer",memberEmail);
 	}
+	
+	/**
+	 * 관리자 인지 확인
+	 * @author 유동규
+	 * @param memberEmail 확인할 아이디
+	 * @return count(*) 관리자이면 0보다 큰 값, 아니면 0
+	 */
+	@Override
+	public int isAdmin(String memberEmail) {
+		return template.selectOne("member.isAdmin", memberEmail);
+	}
+	
+	/**
+	 * 관리자용 - 조건에 따른 멤버 수 반환
+	 * @author 유동규
+	 */
+	@Override
+	public int getTotalMemberForAdmin(String memberSrch) {
+		return template.selectOne("member.getTotalMemberForAdmin", memberSrch);
+	}
+	/**
+	 * 관리자용 - 조건에 따른 멤버 리스트 반환
+	 * @author 유동규
+	 */
+	@Override
+	public List<MemberVO> getMemberListForAdmin(Map<String, Object> map) {
+		return template.selectList("member.getMemberListForAdmin", map);
+	}
+	
+	/**
+	 * 관리자용 - 회원이메일에 따른 직책 구하기
+	 * @author 유동규
+	 */
+	@Override
+	public List<String> findMemberPositionByMemberEmail(String memberEmail) {
+		return template.selectList("member.findMemberPositionByMemberEmail", memberEmail);
+	}
+	
+	@Override
+	public void updateMemberState(String memberEmail) {
+		template.update("member.updateMemberState", memberEmail);
+	}
+	
+	@Override
+	public void deleteMemberState(String memberEmail) {
+		template.delete("member.deleteMemberState", memberEmail);
+	}
+	
 }
