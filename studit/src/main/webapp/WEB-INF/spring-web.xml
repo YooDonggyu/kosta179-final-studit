@@ -87,6 +87,12 @@
 		<mvc:exclude-mapping path="/member/checkPasswordHintAndAnswer" />
 		<bean class="org.kosta.studit.controller.SessionCheckInterceptor"/>
 	</mvc:interceptor>
+	<mvc:interceptor>
+		<mvc:mapping path="/group/*"/>
+		<mvc:exclude-mapping path="/group/groupHome"/>
+		<mvc:exclude-mapping path="/group/updateGroupMemberState"/>
+		<bean class="org.kosta.studit.controller.GroupSessionCheckInterceptor"/>
+	</mvc:interceptor>
 </mvc:interceptors>
 
 	<!-- DispatcherServlet의 url pattern 이 *.do 에서 / 로 변경된 상태에서 정적 파일(img ,css 

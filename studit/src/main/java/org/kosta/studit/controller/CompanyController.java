@@ -79,6 +79,7 @@ public class CompanyController {
 	 */
 	@RequestMapping("/findStudyRoomConditionByCompanyNo")
 	public String findStudyRoomConditionByCompanyNo(Model model, String companyNo) {
+		model.addAttribute("companyNo", companyNo);
 		model.addAttribute("waitCountList", companyDAO.findWaitStudyRoomConditionCountByCompanyNo(companyNo));
 		model.addAttribute("businessHour", companyService.findBusinessDayByCompanyNo(Integer.parseInt(companyNo)));
 		model.addAttribute("studyRoomResource", companyService.findStudyRoomByCompanyNo(Integer.parseInt(companyNo)));
@@ -92,13 +93,13 @@ public class CompanyController {
 	 * @author 김유란
 	 * @param studyRoomConditionVO 수정된 예약정보를 담은 VO
 	 * @return 업체 스터디룸 예약현황 관리 뷰로 이동하기 위해 해당 뷰 호출 메서드로 redirect
-	 */
+	 *//*
 	@RequestMapping("/updateStudyRoomCondition")
 	public String updateStudyRoomCondition(StudyRoomConditionVO studyRoomConditionVO){
 		System.out.println(studyRoomConditionVO);
 		companyDAO.updatStudyRoomCondition(studyRoomConditionVO);
 		return "redirect:/company/findStudyRoomConditionByCompanyNo";
-	}
+	}*/
 	
 	/**
 	 * Host Page로 이동하는 Controller

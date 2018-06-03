@@ -128,7 +128,7 @@ $(document).ready(function() {
 	    				url:"${pageContext.request.contextPath}/ajax/findStudyRoomConditionByStudyRoomNoAndMonth",
 	    				dataType:"json",
 	    				async:false,
-	    				data:"companyNo="+studyRoomResource[0].companyNo+"&startDate="+startDate+"&endDate="+endDate,
+	    				data:"companyNo="+"${companyNo}"+"&startDate="+startDate+"&endDate="+endDate,
 	    				success:function(data){
 	    				 		studyRoomCondition = data.sort(function(a, b) {
 	    					    return a.start -b.start;
@@ -138,7 +138,7 @@ $(document).ready(function() {
 	    				}//success	
 	    			})//ajax
 	      }
-	    	  },
+	    	  },//event1 예약현황
 	    	 {
 	    		  events: function(start, end, timezone, callback){
 	    			  var date = $("#calendar").fullCalendar('getDate');
@@ -157,8 +157,8 @@ $(document).ready(function() {
 	    	    			})//ajax
 	    	      }, 
 	    	      color: 'transparent',
-	    	      textColor: 'red',
-	   	    	 }
+	    	      textColor: 'red'
+	   	    	 }//event2 공휴일
 	      ],
 	      eventRender: function (event, element, view) {
 	    	  if(event.state!=null){
@@ -209,6 +209,24 @@ $(document).ready(function() {
     		  $('#calendar').fullCalendar('changeView', 'timelineDay',$(this).text());
     	  }
 	});	   
+	    
+	//작성: 김유란
+	//기능: 예약상태 변경
+	//로직: 이벤트를 클릭했을 때 나타나는 예약수정폼 모달에서 수정버튼을 클릭하면 신청번호와 상태명이 전송되어 예약데이터 변경.
+	//	    업체번호는 데이터를 다시 불러와 페이지를 리로드할때 사용됨
+	 $("#updateBtn").click(function() {
+		 var date = $("#useDate").text();
+		 $.ajax({
+				type:"post",
+				url:"${pageContext.request.contextPath}/ajax/updateStudyRoomCondition",
+				dataType:"json",
+				async:false,
+				data:"studyRoomConditionNo="+$("#studyRoomConditionNo").val()+"&state="+$("#state").val()+"&companyNo="+"${companyNo}",
+				success:function(data){
+				 location.reload();
+				}//success	
+			})//ajax
+	 })//click   
 
 })//ready
 

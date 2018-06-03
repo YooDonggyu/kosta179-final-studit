@@ -142,8 +142,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 -->
 	<select id="findGroupMemberCountByGroupNo" parameterType="string" resultType="int">
 	select count(*)
-	from sg_member sgm, study_group sg, member m
-	where sgm.sg_no=sg.sg_no and m.member_email=sgm.member_email
+	from sg_member sgm, study_group sg, member m, member_position mp
+	where sgm.sg_no=sg.sg_no and m.member_email=sgm.member_email and sgm.position!='탈퇴'
+				and m.member_email=mp.member_email 
+				and mp.name!='탈퇴'
 				and sgm.sg_no=#{value}
 	</select>
 	
@@ -158,8 +160,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 from(
 			select row_number() over(order by position desc) rnum, 
 							m.member_email, m.name member_name, m.pic_path, sgm.position, sgm.sg_no, sgm.sg_member_no
-							from member m, sg_member sgm, study_group sg
+							from member m, sg_member sgm, study_group sg, member_position mp
 							where sgm.sg_no=sg.sg_no
+							and sgm.position!='탈퇴'
+							and m.member_email=mp.member_email 
+							and mp.name!='탈퇴'
 							and sg.sg_no=#{groupNo}
 							and m.member_email = sgm.member_email)
 where rnum between #{pagingBean.startRowNumber} and #{pagingBean.endRowNumber} order by position desc, sg_member_no

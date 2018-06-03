@@ -37,6 +37,7 @@ import org.kosta.studit.model.vo.SmallCategoryVO;
 import org.kosta.studit.model.vo.StudyConditionListVO;
 import org.kosta.studit.model.vo.StudyRoomConditionListVO;
 import org.kosta.studit.model.vo.StudyRoomConditionVO;
+import org.omg.PortableServer.REQUEST_PROCESSING_POLICY_ID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -385,7 +386,8 @@ public class AjaxViewController {
 	}
 
 	/**
-	 * 스터디 신청 취소 스터디 신청 내역을 삭제한다.
+	 * 스터디 신청 취소 
+	 * 스터디 신청 내역을 삭제한다.
 	 * 
 	 * @author 김유란
 	 * @param memberEmail
@@ -673,6 +675,25 @@ public class AjaxViewController {
 		groupDAO.updateGroupPostCommentByCommentNo(map);
 
 		return "true";
+	}
+
+	
+	/**
+	 * 업체의 스터디룸 예약현황 수정 메서드
+	 * 업체회원이 스터디룸 예약을 승인하거나 수정할 때 실행 
+	 * @author 김유란
+	 * @param studyRoomConditionVO 수정된 예약정보를 담은 VO
+	 * @return 업체 스터디룸 예약현황 관리 뷰로 이동하기 위해 해당 뷰 호출 메서드로 redirect
+	 */
+	@RequestMapping(method=RequestMethod.POST, value="/updateStudyRoomCondition")
+	@ResponseBody
+	public String updateStudyRoomCondition(String studyRoomConditionNo, String state, String companyNo){
+		StudyRoomConditionVO scVO = new StudyRoomConditionVO();
+		scVO.setStudyRoomConditionNo(Integer.parseInt(studyRoomConditionNo));
+		scVO.setState(state);
+		System.out.println(scVO);
+		companyDAO.updatStudyRoomCondition(scVO);
+		return companyNo;
 	}
 
 }

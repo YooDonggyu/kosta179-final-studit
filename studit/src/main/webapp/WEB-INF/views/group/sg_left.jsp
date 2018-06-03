@@ -28,7 +28,7 @@
             <li> <a href="#"> <i class="icon-grid"> </i><span>SCHEDULER</span></a></li>
             <c:choose>
             	<c:when test="${groupMemberVO.position eq '팀장' }">
-            		 <li> <a href="${pageContext.request.contextPath}/group/findGroupMemberView?groupNo=${groupMemberVO.groupVO.groupNo}"><i class="icon-form"></i><span>LEADER</span></a></li>
+            		 <li> <a href="${pageContext.request.contextPath}/group/findGroupMemberView"><i class="icon-form"></i><span>LEADER</span></a></li>
             	</c:when>
             	<c:otherwise>
             		 <li><a onclick="return leaveGroup(${sgNo})"><i class="icon-form"></i><span>LEAVE</span></a></li>

@@ -97,7 +97,7 @@ public class StudyRoomServiceImpl implements StudyRoomService {
 	@Override
 	public List<StudyRoomConditionVO> findStudyRoomConditionByStudyRoomNoAndDate(String selectedDate, String studyRoomNo) {
 		StudyRoomConditionVO studyRoomConditionVO = new StudyRoomConditionVO();
-		studyRoomConditionVO.setStudyRoomVO(new StudyRoomVO(1));
+		studyRoomConditionVO.setStudyRoomVO(new StudyRoomVO(Integer.parseInt(studyRoomNo)));
 		studyRoomConditionVO.setUseDate(selectedDate);
 		return studyroomDAO.findStudyRoomConditionByStudyRoomNoAndDate(studyRoomConditionVO);
 	}

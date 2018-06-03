@@ -14,7 +14,6 @@
 			</div>
 			<!-- Modal Body -->
 			<div class="modal-body">
-			    <form role="form" action="${pageContext.request.contextPath }/company/updateStudyRoomCondition" method="post"  id="updateRoomConditionForm" autocomplete="off">
 	                <div class="form-group">
 	                    	<span id="name"> </span><br>
 	                    	<span id="roomName"></span><br>
@@ -30,8 +29,7 @@
 	                </div>
 					<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
 					<input type="hidden" id="studyRoomConditionNo" name="studyRoomConditionNo">
-	                <input type="submit" id="updateBtn" class="btn btn-primary" value="수정">
-	             </form>
+	                <input type="button" id="updateBtn" class="btn btn-primary" value="수정">
 			</div>
 			 <div class="modal-footer">
 

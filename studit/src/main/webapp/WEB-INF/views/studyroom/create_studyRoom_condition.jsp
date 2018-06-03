@@ -105,7 +105,12 @@ $(document).ready(function() {
               if (start.isAfter(moment())) {//영업일이지만 오늘보다 과거인 날은 클릭 가능한 대신 조건문으로 제약
                    getTimeTable(start.format('YYYY-MM-DD'));//날짜 바뀔 때마다 시간선택표 새로 불러오기
               } else {
-                alert('이미 지나간 날들...');
+            	  if(start){
+					  alert("당일 예약 가능여부는 실시간 상황에 따라 변동이 있을 수 있습니다.")
+            		  getTimeTable(start.format('YYYY-MM-DD'));
+            	  }else{
+            		  alert('이미 지나간 날들...');
+            	  }
               }
             }
        }); //fullCalendar
@@ -172,26 +177,40 @@ function getTimeTable(selectedDate){
             timeTable+=  "<input type='button' id='time' class='btn btn-default' value='"+i+"'>"
          }//for(timeTable)
          $("#times").html(timeTable);
-         
          //기존 예약정보 표시 및 클릭 제어
          var $times =  $("#times").children("#time");
          var length = $times.length;
             $.each(data, function(index, item){
-            for(var j=item.startTime; j<=item.endTime; j++){
-                for(var i=0; i<length; i++){
-                   //당일 예약일 경우 현재 시간 이후만 가능하도록 제한---테스트 후 추가
-                   // || moment().format("YYYY-MM-DD")==selectedDate&&moment().hour()>=$times.eq(i).val()
-                  if($times.eq(i).val()==j){
-                     $times.eq(i).attr("disabled", true);
-                     $times.eq(i).css("background-color", "gray");
-                  }//if 
-               }//for 
-            }//for 
+	            for(var j=item.startTime; j<=item.endTime; j++){
+	                for(var i=0; i<length; i++){
+	                   //당일 예약일 경우 현재 시간 이후만 가능하도록 제한---테스트 후 추가
+	                	   if(moment().format("HH")>=$times.eq(i).val()){
+	                		  
+	                		   /* if(moment().format("YYYY-MM-DD")==selectedDate){
+	                        	   $times.eq(i).attr("disabled", true);
+	                               $times.eq(i).css("background-color", "gray");
+	                           } */
+	                	   }       		  
+		               if($times.eq(i).val()==j){
+		                   $times.eq(i).attr("disabled", true);
+		                   $times.eq(i).css("background-color", "gray");
+	                  }//if 
+	               }//for 
+	            }//for 
             })//each 
+            
+            if(moment().format('YYYY-MM-DD')==selectedDate){
+              for(var i=0; i<length; i++){
+                 //당일 예약일 경우 현재 시간 이후만 가능하도록 제한
+              	   if(moment().format('HH')>=$times.eq(i).val()){
+              		  $times.eq(i).attr("disabled", true);
+                     $times.eq(i).css("background-color", "gray");
+              		  }//if 
+       	      }//for 
+            }
       }//success 
    })//ajax
 };//getTimeTable
-
 
 
 //작성 :유동규
