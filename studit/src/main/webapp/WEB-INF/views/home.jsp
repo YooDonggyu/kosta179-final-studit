@@ -98,8 +98,9 @@
 					</div>
 				</div><%--col --%>
 			</div><%--row --%>
-		
 			<%--스터디 모집 인기검색어 끝 --%>
+			
+			
 			<%--최근 모집 글 5개 시작 --%>
 			<div class="row">
 					<table class="table table-hover">
@@ -139,17 +140,17 @@
 	
 	
 	<%--인기 업체 3곳 조회 --%>
-	<section class="section testimonails background-gray-lightest">
-		<div class="container">
+	<section class="section testimonails" style="background-image: url(resources/assets/img/main-com.png); background-size: 100% 100%;"> <%-- background-gray-lightest --%>
+		<div class="container" >
 			<h2 class="text-center" style="padding-bottom: 50px;"><strong>인기 스터디 룸 TOP3</strong></h2>
 			<div class="row">
 				<form action="${pageContext.request.contextPath }/company/findDetailCompanyInfoByCompanyNo" method="post" id="imgForm">
 				<input type="hidden" id="companyNo" name="companyNo">
 	      			<c:forEach items="${companyList }" begin="0" end="2" var="clist">
 	          			<div class="col-sm-4 ">
-	           				<div class="box box-services">
+	           				<div class="box box-services" style="background: white; border: 1px solid white ; border-radius: 4px; ">
 	           					<h5 style="text-align: right;"><span class="label label-danger">HIT ${clist.hit}</span></h5>
-	              				<img src="${pageContext.request.contextPath }/resources/upload/${clist.profilePath}" style="width: 300px; height: 200px" onclick="return goDetail(${clist.companyNo})">
+	              				<img src="${pageContext.request.contextPath }/resources/upload/${clist.profilePath}" style="width: 100%; height: 200px" onclick="return goDetail(${clist.companyNo})">
 	              				<div class="text-center" style="font-size: 30px;">
 	              					<strong>${clist.name }</strong> 
 	              				</div>
@@ -163,8 +164,33 @@
 		</div><%--container --%>
 	</section>
 	
+	
+	  <section class="section ">
+        <div class="container">
+          <div class="row text-center-mobile"> 
+            <div class="col-md-6">
+              <p><img alt="" src="${pageContext.request.contextPath }/resources/assets/img/features2.png" class="img-responsive" style="padding-top: 120px; padding-right: 50px;"></p>
+            </div>
+            <div class="col-md-6">
+              <div class="icon brand-terciary"><i class="pe-7s-rocket"></i></div>
+              <h2><strong>PLACE를 등록하세요</strong></h2><br>
+              <h4 style="text-align: left;">1. 장소를 제공해 주세요</h4> 
+              <p style="text-align: left;"> 등록이 무료에요! 자유롭게 홍보할 수 있습니다. </p>
+              <h4 style="text-align: left;">2. 마음대로, 편리하게 수정하세요</h4> 
+              <p style="text-align: left;"> 공간을 직접 관리 할 수 있습니다. </p>
+              <h4 style="text-align: left;">3. 쉽게 찾을 수 있어요</h4> 
+              <p style="text-align: left;"> 해시태그, 장소, 이름으로 사용자가 쉽게 검색할 수 있어요 </p><br>
+              <a href="${pageContext.request.contextPath}/company/companyView" class="btn btn-warning">PLACE 등록하러 가기</a> 
+              
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      
+      
 	<%-- --%>
-      <section id="contact" > 
+      <section id="contact" class="background-gray-lightest"> 
         <div class="container">
           <div class="row">
             <div class="col-md-4">
