@@ -52,13 +52,13 @@
         <div class="container">
           <div class="row">
             <div class="col-md-12">
-              <h1>This could be your perfect <!-- <span class="rotate">startup intro site, landing page, bootstrap template</span> --> </h1>
-              <h3 class="weight-300">It is SEO friendly, responsive and free.</h3>
+              <h1>STUD-IT </h1>
+              <h3 class="weight-300">STUDY, STUDY-ROOM and STUDY-GROUP.</h3>
             </div>
           </div>
           <div class="row">
             <div class="col-md-12">
-              <p>500,000 users have already trusted <a href="http://bootstrapious.com">Bootstrapious templates</a>.<br />Try it for yourself.</p>
+              <p>500,000 users have already trusted <a href="http://edu2.kosta.or.kr">our informations</a>.<br />Try it for yourself.</p>
             </div>
             <div class="col-md-12 col-lg-8 col-lg-offset-2">
               <p class="margin-bottom--zero"><img alt="" src="${pageContext.request.contextPath }/resources/assets/img/features3.png" class="img-responsive"></p>
@@ -109,7 +109,7 @@
       
 	<section>
 		<div class="container section background-gray-lightest">
-			<h3><strong>최근 등록된 스터디</strong></h3>
+			<h2><strong>최근 등록된 스터디</strong></h2>
 			<%--스터디 모집 인기검색어 시작 --%>
 			<div class="row" style="text-align: right;">
 				<div class="col-sm-12" style="padding-right: 30px;"> 
@@ -185,7 +185,7 @@
 				<input type="hidden" id="companyNo" name="companyNo">
 	      			<c:forEach items="${companyList }" begin="0" end="2" var="clist">
 	          			<div class="col-sm-4 ">
-	           				<div class="box box-services" style="background: white; border:1px solid white; border-radius: 4px; ">
+	           				<div class="box box-services" style="background: white; border:1px solid white; border-radius: 8px; ">
 	           					<h5 style="text-align: right;"><span class="label label-danger">HIT ${clist.hit}</span></h5>
 	              				<img src="${pageContext.request.contextPath }/resources/upload/${clist.profilePath}" style="width: 100%; height: 200px" onclick="return goDetail(${clist.companyNo})">
 	              				<div class="text-center" style="font-size: 30px;">
