@@ -9,7 +9,6 @@
 
 <!-- 목록으로 돌아가는 폼 -->
 <form method="post" action="${pageContext.request.contextPath }/group/findGroupBoard" id="goBackForm">
-	<input type="hidden" id="nowPage" name="nowPage" value="${nowPage }">
 	<input type="hidden" id="sgNo" name="sgNo" value="${sessionScope.sgNo }">
 </form>
 

@@ -79,12 +79,14 @@ public class GroupController {
 	 * @return 스터디 그룹의 게시판
 	 */
 	@RequestMapping("findGroupBoard")
-	public String findGroupBoard(HttpServletRequest request, String nowPage) {
+	public String findGroupBoard(HttpServletRequest request, String nowPage, String keyword, String name) {
 		Map<String, Object> map=new HashMap<>();
 		HttpSession session=request.getSession(false);
 		GroupMemberVO gvo=(GroupMemberVO)session.getAttribute("groupMemberVO");
 		map.put("nowPage", nowPage);
 		map.put("sgNo", gvo.getGroupVO().getGroupNo());
+		map.put("keyword", keyword);
+		map.put("name", name);
 		GroupPostListVO glist=groupService.findGroupBoard(map);
 		request.setAttribute("nowPage", glist.getPb().getNowPage());
 		request.setAttribute("glist", glist);
@@ -206,7 +208,7 @@ public class GroupController {
 	 * @return 상세보기 화면으로 이동
 	 */
 	@RequestMapping("findDetailGroupPostByPostNo")
-	public String findDetailGroupPostByPostNo(HttpServletRequest request, String gpNo, String nowPage) {
+	public String findDetailGroupPostByPostNo(HttpServletRequest request, String gpNo, String nowPage, String keyword, String name) {
 		// 1.세션 이메일과 게시글 작성자를 비교해서 작성자이면 조회수 증가 방지
 		// 2.hitList에 포함된 게시글은 조회수 증가 방지
 		String sessionEmail = ((MemberVO) request.getSession().getAttribute("memberVO")).getMemberEmail();
@@ -227,6 +229,8 @@ public class GroupController {
 		request.setAttribute("nowPage", nowPage);
 		request.setAttribute("gpNo", gpNo);
 		request.setAttribute("comment", commentVO);
+		request.setAttribute("name", name);
+		request.setAttribute("keyword", keyword);
 		
 		return "group/detail_group_post.sgtiles";
 	}

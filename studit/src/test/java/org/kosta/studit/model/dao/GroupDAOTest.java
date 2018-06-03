@@ -168,12 +168,21 @@ public class GroupDAOTest {
 		System.out.println(groupDAO.findConfirmedConditionNoByRecruitPostNo("1"));
 	}
 	
-	@Test
+	//@Test
 	public void updateGroupNameTest() {
 		Map<String,String> map=new HashMap<>();
 		map.put("name", "바꾼 이름");
 		map.put("groupNo", "15");
 		groupDAO.updateGroupName(map);
 	}
-
+	
+	@Test
+	public void findTotalCountOfGroupPost() {
+		Map<String, Object> map=new HashMap<>();
+		map.put("keyword", "스터디");
+		map.put("name", null);
+		map.put("sgNo", 3);
+		System.out.println(groupDAO.findTotalCountOfGroupPost(map));
+	}
+	
 }

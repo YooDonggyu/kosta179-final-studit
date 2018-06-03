@@ -235,10 +235,10 @@ where rnum between #{pagingBean.startRowNumber} and #{pagingBean.endRowNumber} o
 		from sg_post sp, study_group sg, sg_member sm, member m
 		<where>
 			sp.sg_no=#{sgNo} and sp.sg_no=sg.sg_no and sg.sg_no=sm.sg_no and sp.sg_member_no=sm.sg_member_no and m.member_email=sm.member_email
-			<if test="keyword != null">
+			<if test="keyword != null and keyword != ''">
 				and sp.title || sp.content like '%'||#{keyword}||'%'
 			</if>
-			<if test="name != null">
+			<if test="name != null and name != ''">
 				and m.name=#{name}
 			</if>
 		</where>
@@ -255,15 +255,15 @@ where rnum between #{pagingBean.startRowNumber} and #{pagingBean.endRowNumber} o
 		from sg_post sp, sg_member sm, member m, (
 			select cc.sg_post_no as sg_post_no, row_number() over(order by cc.sg_post_no desc) as rnum
 			from(
-				select distinct sp.sg_post_no as sg_post_no
-				from sg_post sp, study_group sg, sg_member sm, member m
+				select distinct ssp.sg_post_no as sg_post_no
+				from sg_post ssp, study_group sg, sg_member sm, member m
 				<where>
-					sp.sg_no=#{sgNo}
+					ssp.sg_no=#{sgNo}
 					<if test="keyword != null">
-						and sp.title || sp.content like '%'||#{keyword}||'%'
+						and ssp.title || ssp.content like '%'||#{keyword}||'%'
 					</if>
 					<if test="name != null">
-						and sp.sg_no=sg.sg_no and sg.sg_no=sm.sg_no and sp.sg_member_no=sm.sg_member_no and m.member_email=sm.member_email and m.name=#{name}
+						and ssp.sg_no=sg.sg_no and sg.sg_no=sm.sg_no and ssp.sg_member_no=sm.sg_member_no and m.member_email=sm.member_email and m.name=#{name}
 					</if> 
 				</where>
 			)cc

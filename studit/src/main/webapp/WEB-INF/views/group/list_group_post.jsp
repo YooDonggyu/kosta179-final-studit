@@ -16,11 +16,15 @@
 </section>
 
 <input type="hidden" id="sgNo" value="${groupMemberVO.groupVO.groupNo }">
+<input type="hidden" class="name" name="name">
+<input type="hidden" class="keyword" name="keyword">
 
 <!-- 상세보기 폼 -->
 <form method="post" action="${pageContext.request.contextPath}/group/findDetailGroupPostByPostNo" id="groupBoardForm">
 	<input type="hidden" id="gpNo" name="gpNo">
 	<input type="hidden" class="nowPage" name="nowPage" value="${glist.pb.nowPage }">
+	<input type="hidden" class="keyword" name="keyword">
+	<input type="hidden" class="name" name="name">
 </form>
 <!-- 글작성 폼 -->
 <form method="post" action="${pageContext.request.contextPath}/group/createGroupPostView" id="createPost">
@@ -28,7 +32,7 @@
 </form>
 
 <section class="dashboard-header" style="padding-top: 10px;">
-<input type="button" class="btn btn-primary" value="글작성" onclick="return createPost()" style="color:black; background-color:#F2F5A9 ; margin-left: 1200px; margin-bottom: 10px;">
+<input type="button" class="btn btn-primary" value="글작성" onclick="return createPost()" style="color:black; background-color:#F2F5A9 ; margin-left: 1140px; margin-bottom: 10px;">
  <div class="container-fluid">
     <div class="row d-flex align-items-md-stretch">
 		<table class="table table-hover">
@@ -59,26 +63,51 @@
 	<div id="pagingDiv">
 	<c:set var="pb" value="${glist.pb}"></c:set>
 	</div>
-	<ul class="pagination" id="divData">
-		<c:if test="${pb.previousPageGroup}">	
-			<li><a href="javascript:void(0);" onclick="return findGroupBoard(${pb.startPageOfPageGroup-1})">&laquo;</a></li>
-		</c:if>
-		<c:forEach var="i" begin="${pb.startPageOfPageGroup}" end="${pb.endPageOfPageGroup}">
-			<c:choose>
-				<c:when test="${pb.nowPage!=i}">
-					<li><a href="javascript:void(0);" onclick="return findGroupBoard(${i})">${i}</a></li>
-				</c:when>
-				<c:otherwise>
-					<li class="disabled"><a href="#">${i}</a></li>
-				</c:otherwise>
-			</c:choose>
-		</c:forEach>
-		<c:if test="${pb.nextPageGroup}">	
-			<li><a href="javascript:void(0);" onclick="return findGroupBoard(${pb.endPageOfPageGroup+1})">&raquo;</a></li>
-		</c:if>
-	</ul>	 		
+	<table>
+		<tbody>
+			<tr>
+				<td></td>
+				<td>
+					<ul class="pagination" id="divData">
+						<c:if test="${pb.previousPageGroup}">	
+							<li><a href="javascript:void(0);" onclick="return findGroupBoard(${pb.startPageOfPageGroup-1})">&laquo;</a></li>
+						</c:if>
+						<c:forEach var="i" begin="${pb.startPageOfPageGroup}" end="${pb.endPageOfPageGroup}">
+							<c:choose>
+								<c:when test="${pb.nowPage!=i}">
+									<li><a href="javascript:void(0);" onclick="return findGroupBoard(${i})">${i}</a></li>
+								</c:when>
+								<c:otherwise>
+									<li class="disabled"><a href="#">${i}</a></li>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+						<c:if test="${pb.nextPageGroup}">	
+							<li><a href="javascript:void(0);" onclick="return findGroupBoard(${pb.endPageOfPageGroup+1})">&raquo;</a></li>
+						</c:if>
+					</ul>
+				</td>
+				<td>
+					<select id="searchWay" class="form-control" style="margin-left: 150px;">
+						<option value="제목내용">제목&내용</option>
+						<option value="작성자">작성자</option>
+					</select>
+				</td>
+				<td>
+					<input id="searchKeyword" type="text" class="form-control" placeholder="키워드 입력" >
+				</td>
+				<td>
+					<input type="button" id="searchBtn" value="검색" class="btn btn-primary">
+				</td>
+			</tr>
+		</tbody>
+	</table>
 </div> 
 </section>
+
+
+
+
 <script>
 
 function createPost(){
@@ -97,7 +126,7 @@ function findGroupBoard(nowPage){
 		type: "post",
 		url: "${pageContext.request.contextPath}/ajax/findGroupBoardAjax",
 		dataType: "json",
-		data: "sgNo="+sgNo+"&pageNo="+pageNo,
+		data: "sgNo="+sgNo+"&pageNo="+pageNo+"&keyword="+$(".keyword").val()+"&name="+$(".name").val(),
 		success: function(data){
 			var temp1="";
 			$.each(data.list, function(index, item){
@@ -150,6 +179,86 @@ function findGroupBoard(nowPage){
 		}//success
 	});//ajax
 }//findGroupBoard
+
+$(document).ready(function(){
+	$("#searchBtn").click(function(){
+		// 1. 제목내용으로 검색
+		// 2. 작성자로 검색
+		var keyword=$("#searchKeyword").val();
+		var searchway=$("#searchWay").val();
+		
+		alert(keyword);
+		alert(searchway);
+		
+		if(keyword==""||keyword==null){
+			alert("키워드를 입력하세요!");
+		}else{
+			if(searchway=="제목내용"){
+				$(".keyword").val(keyword);
+				$(".name").val(null);
+			}else{
+				$(".keyword").val(null);
+				$(".name").val(keyword);
+			}
+			$.ajax({
+				type: "post",
+				url: "${pageContext.request.contextPath}/ajax/findGroupBoardAjax",
+				dataType: "json",
+				data: "keyword="+$(".keyword").val()+"&name="+$(".name").val(),
+				success: function(data){
+					var temp1="";
+					$.each(data.list, function(index, item){
+						temp1+="<tr onclick='goDetail(";
+						temp1+=item.groupPostNo;
+						temp1+=")'>";
+						temp1+="<td>";
+						temp1+=item.groupPostNo;
+						temp1+="</td>";
+						temp1+="<td>";
+						temp1+=item.title;
+						temp1+="</td>";
+						temp1+="<td>";
+						temp1+=item.groupMemberVO.memberVO.name+"(";
+						temp1+=item.groupMemberVO.memberVO.memberEmail+")";
+						temp1+="</td>";
+						temp1+="<td>";
+						temp1+=item.regdate;
+						temp1+="</td>";
+						temp1+="<td>";
+						temp1+=item.hit;
+						temp1+="</td>";
+						temp1+="</tr>";
+					});
+					$("#groupPostBoard").html(temp1);
+					
+					//페이징 객체 담기
+					var pagingData = data.pb;
+					//페이징처리할 곳 초기화
+					$("#divData").empty();
+					var pData = 0;
+					//이전 그룹이 있으면 버튼 생성
+					 if(pagingData.previousPageGroup){
+						 pData = parseInt(pagingData.startPageOfPageGroup)-1;              
+						$("#divData").append("<li><a href=\"javascript:void(0);\" onclick=\"return findGroupBoard("+pData+")\">&laquo;</a></li>");
+					}
+					//페이지 그룹 수 만큼 번호 버튼 생성
+					 for(var i =pagingData.startPageOfPageGroup; i<=pagingData.endPageOfPageGroup; i++){
+						 pData = i;
+						 $("#divData").append("<li><a href=\"javascript:void(0);\" onclick=\"return findGroupBoard("+pData+")\">"+pData+"</a></li> ");
+					 }
+					//다음 그룹이 있으면 버튼 생성
+					if(pagingData.nextPageGroup){
+						pData = parseInt(pagingData.endPageOfPageGroup)+1;
+						$("#divData").append("<li><a href=\"javascript:void(0);\" onclick=\"return findGroupBoard("+pData+")\" >&raquo;</a></li>");
+					}
+					
+					 //nowPage 설정
+					$(".nowPage").val(pagingData.nowPage); 
+				}//success
+			});//ajax
+		}
+	});//searchBtn
+});//ready
 
 </script>
 

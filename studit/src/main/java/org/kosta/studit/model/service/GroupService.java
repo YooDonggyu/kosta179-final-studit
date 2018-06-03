@@ -34,8 +34,6 @@ public interface GroupService {
 
 	GroupPostListVO findGroupBoard(Map<String, Object> map);
 
-	List<GroupPostVO> findGroupPostList(PagingBean pb);
-
 	List<GroupPostVO> findGroupPostList(Map<String, Object> map);
 
 	GroupPostVO findGroupBoardDetail(String groupPostNo);

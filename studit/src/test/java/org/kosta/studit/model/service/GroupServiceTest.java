@@ -62,7 +62,7 @@ public class GroupServiceTest {
 		
 	}
 	
-	@Test
+	//@Test
 	public void updateGroupNameTest() {
 		groupService.updateGroupName("7", "또바꿈");
 	}
@@ -71,6 +71,7 @@ public class GroupServiceTest {
 	public void findGroupBoard() {
 		Map<String, Object> map=new HashMap<>();
 		map.put("sgNo", 3);
+		map.put("keyword", "스터디");
 		GroupPostListVO glist=groupService.findGroupBoard(map);
 		for(int i=0; i<glist.getList().size(); i++) {
 			System.out.println(glist.getList().get(i).getTitle());
@@ -79,7 +80,7 @@ public class GroupServiceTest {
 			
 		}
 	}
-	
+
 }
 
 

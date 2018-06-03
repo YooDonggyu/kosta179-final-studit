@@ -563,12 +563,15 @@ public class AjaxViewController {
 	 */
 	@RequestMapping("findGroupBoardAjax")
 	@ResponseBody
-	public GroupPostListVO findGroupBoard(HttpServletRequest request, String sgNo, String pageNo) {
+	public GroupPostListVO findGroupBoard(HttpServletRequest request, String sgNo, String pageNo, String keyword, String name) {
 		Map<String, Object> map = new HashMap<>();
+		GroupMemberVO gvo=(GroupMemberVO)request.getSession().getAttribute("groupMemberVO");
 		map.put("nowPage", pageNo);
-		map.put("sgNo", sgNo);
+		map.put("sgNo", gvo.getGroupVO().getGroupNo());
+		map.put("keyword", keyword);
+		map.put("name", name);
 		GroupPostListVO glist = groupService.findGroupBoard(map);
-
+		
 		return glist;
 	}
 
@@ -671,4 +674,5 @@ public class AjaxViewController {
 
 		return "true";
 	}
+
 }

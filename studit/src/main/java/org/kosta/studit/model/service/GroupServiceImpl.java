@@ -17,6 +17,7 @@ import org.kosta.studit.model.vo.RecruitPostVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.SystemPropertyUtils;
 
 @Service
 public class GroupServiceImpl implements GroupService {
@@ -223,19 +224,6 @@ public class GroupServiceImpl implements GroupService {
 		map.put("groupNo", groupNo);
 		groupDAO.updateGroupName(map);
 	}
-
-	/**
-	 * 스터디 그룹 내 게시글을 페이징 처리하여 반환
-	 * @author 송용준
-	 * @param pb 페이징 처리하기 위한 객체
-	 * @return List<GroupPostVO> 페이징 처리된 게시글
-	 */
-	@Override
-	public List<GroupPostVO> findGroupPostList(PagingBean pb){
-		Map<String, Object> map=new HashMap<>();
-		map.put("pagingBean", pb);
-		return groupDAO.findGroupPostList(map);
-	}
 	
 	/**
 	 * 스터디 그룹 내 게시글을 페이징 처리하여 반환
@@ -259,28 +247,38 @@ public class GroupServiceImpl implements GroupService {
 		List<GroupPostVO> list=null;
 		PagingBean pb=null;
 		
-		if(map==null) {
-			pb=new PagingBean(groupDAO.findTotalCountOfGroupPost(null));
-			list=findGroupPostList(pb);
-		}else {
-			int nowPage=0;
-			if(map.get("nowPage")!=null && map.get("nowPage")!="") {
-				nowPage=Integer.parseInt((String)map.get("nowPage"));
-			}
-			
-			if(nowPage==0) {
-				pb=new PagingBean(groupDAO.findTotalCountOfGroupPost(map));
-			}else {
-				pb=new PagingBean(groupDAO.findTotalCountOfGroupPost(map), nowPage);
-			}
-			map.put("pagingBean", pb);
-			list=findGroupPostList(map);
+		System.out.println("service nowPage : " + map.get("nowPage"));
+		System.out.println("service sgNo : " + map.get("sgNo"));
+		System.out.println("service keyword : " + map.get("keyword"));
+		System.out.println("service name : " + map.get("name"));
+		
+		if(map.get("keyword")==null || map.get("keyword")=="") {
+			map.put("keyword", null);
 		}
+		if(map.get("name")==null || map.get("name")==""){
+			map.put("name", null);
+		}
+		
+		
+		int nowPage=0;
+		if(map.get("nowPage")!=null && map.get("nowPage")!="") {
+			nowPage=Integer.parseInt((String)map.get("nowPage"));
+		}
+		
+		if(nowPage==0) {
+			pb=new PagingBean(groupDAO.findTotalCountOfGroupPost(map));
+		}else {
+			pb=new PagingBean(groupDAO.findTotalCountOfGroupPost(map), nowPage);
+		}
+		
+		map.put("pagingBean", pb);
+		list=findGroupPostList(map);
 		
 		GroupPostListVO pagingList=new GroupPostListVO(list, pb);
 		
 		return pagingList;
 	}
+	
 	
 	/**
 	 * 스터디 그룹 내 게시글의 상세보기를 하고자 할 때 호출
