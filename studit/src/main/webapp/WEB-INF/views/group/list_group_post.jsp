@@ -187,9 +187,6 @@ $(document).ready(function(){
 		var keyword=$("#searchKeyword").val();
 		var searchway=$("#searchWay").val();
 		
-		alert(keyword);
-		alert(searchway);
-		
 		if(keyword==""||keyword==null){
 			alert("키워드를 입력하세요!");
 		}else{

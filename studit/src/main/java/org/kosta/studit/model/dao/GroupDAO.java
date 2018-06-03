@@ -79,4 +79,5 @@ public interface GroupDAO {
 	List<GroupMemberVO> getGroupMemberCount(String sgNo);
 
 
+
 }

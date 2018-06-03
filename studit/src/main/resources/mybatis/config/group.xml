@@ -427,7 +427,6 @@ where rnum between #{pagingBean.startRowNumber} and #{pagingBean.endRowNumber} o
 			order by cc.post desc
 	</select>
 	
-	
 	<select id="getTotalStudyGroupCount" resultType="int">
 		select count(*) from study_group
 	</select>
@@ -443,6 +442,6 @@ where rnum between #{pagingBean.startRowNumber} and #{pagingBean.endRowNumber} o
 		from sg_member
 		where sg_no=#{value}
 	</select>
-	
+
 </mapper>
 
