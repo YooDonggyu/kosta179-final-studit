@@ -15,9 +15,6 @@ CREATE TABLE member
     pic_path varchar2(300) default 'default.png' 
 );
  
-update member_position set name='회원' where member_email='h@h.com'
-select * from member
-commit
 insert into member(member_email,password,name,primary_addr,detail_addr,phone,regdate,password_hint,password_answer) 
 values('a@a.com','1','아이유','경기도 판교','1호','010-1234-5678',sysdate,'내 나이는?','25');
 insert into member(member_email,password,name,primary_addr,detail_addr,phone,regdate,password_hint,password_answer) 
@@ -60,10 +57,6 @@ insert into member(member_email,password,name,primary_addr,detail_addr,phone,reg
 values('j@k.com','1','아이십','수원','9호','010-1234-5678',sysdate,'내 나이는?','25');
 
 
-select *from member
-select *
-from member_position
-drop table member_position
 --직책
 -- 직책은 관리자, 회원, 업체, 탈퇴
 CREATE TABLE member_position
@@ -73,7 +66,7 @@ CREATE TABLE member_position
 	member_email varchar2(100)  not null,
 	constraint fk_member_email foreign key(member_email) references member(member_email)
 );
-drop sequence member_position_no_seq;
+
 create sequence member_position_no_seq nocache;
 
 insert into MEMBER_POSITION(member_position_no,name,member_email) 
@@ -116,9 +109,6 @@ insert into MEMBER_POSITION(member_position_no,name,member_email)
 values(member_position_no_seq.nextval,'회원','i@j.com');
 insert into MEMBER_POSITION(member_position_no,name,member_email) 
 values(member_position_no_seq.nextval,'회원','j@k.com');
-
-select *from member_position
-
 
 
 
@@ -190,10 +180,6 @@ values(small_category_no_seq.nextval,'기타','3');
 insert into small_category(small_category_no,name,big_category_no) 
 values(small_category_no_seq.nextval,'기타','4');
 
-select s.small_category_no, s.name as 소분류, b.name as 대분류
-from small_category s, big_category b
-where s.big_category_no=b.big_category_no
-
 --모집 게시글
 CREATE TABLE recruit_post
 (
@@ -213,7 +199,6 @@ CREATE TABLE recruit_post
 create sequence recruit_post_no_seq nocache;
 drop sequence recruit_post_no_seq
 drop table recruit_post
-select * from recruit_post
 
 insert into recruit_post (recruit_post_no,title,content,regdate,condition,capacity,member_email,small_category_no,location) 
 values(recruit_post_no_seq.nextval,'대기업1','11111',sysdate,'모집중',6,'a@a.com',1,'강남');
@@ -248,7 +233,7 @@ values(recruit_post_no_seq.nextval,'베트남어 하쉴?','또이 뗀 라 유란
 insert into recruit_post (recruit_post_no,title,content,regdate,condition,capacity,member_email,small_category_no,location) 
 values(recruit_post_no_seq.nextval,'헬로 베트남','또이 무언 응언 안껌',sysdate,'모집중',3,'h@h.com',8,'용인');
 insert into recruit_post (recruit_post_no,title,content,regdate,condition,capacity,member_email,small_category_no,location) 
-values(recruit_post_no_seq.nextval,'러시아어 하실분','러시아어 잘해여? 스파시바',sysdate,'모집중',4,'g@k.com',9,'신촌');
+values(recruit_post_no_seq.nextval,'러시아어 하실분','러시아어 잘해여? 스파시바',sysdate,'모집중',4,'g@g.com',9,'신촌');
 insert into recruit_post (recruit_post_no,title,content,regdate,condition,capacity,member_email,small_category_no,location) 
 values(recruit_post_no_seq.nextval,'Java 같이하실분','자바를 자바라 자바라? 자블래?',sysdate,'모집완료',5,'j@j.com',10,'판교');
 insert into recruit_post (recruit_post_no,title,content,regdate,condition,capacity,member_email,small_category_no,location) 
@@ -294,8 +279,6 @@ insert into recruit_post (recruit_post_no,title,content,regdate,condition,capaci
 values(recruit_post_no_seq.nextval,'모여서 시 낭송 하실분들구해요','시를 낭송하시면서 내면의 평화를 찾으세요',sysdate,'모집중',5,'g@g.com',15,'판교');
 commit
 
-select * from recruit_post where condition in ('모집중', '추가모집')
-
 --모집  선택
 CREATE TABLE recruit_day 
 (
@@ -304,13 +287,13 @@ CREATE TABLE recruit_day
 	recruit_post_no not null,
 	constraint fk_recruit_post_no foreign key(recruit_post_no) references recruit_post(recruit_post_no)
 );
-drop table recruit_day
-create sequence recruit_day_no_seq nocache;
-drop sequence recruit_day_no_seq
-select *from recruit_day
 
-select *
-from member
+create sequence recruit_day_no_seq nocache;
+
+
+
+
+
 
 insert into recruit_day(recruit_day_no,day,recruit_post_no) 
 values(recruit_day_no_seq.nextval,'월',1);
@@ -458,7 +441,6 @@ CREATE TABLE study_condition
 );
 create sequence study_condition_no_seq nocache;
 drop sequence study_condition_no_seq
-select *from study_condition 
 
 insert into study_condition(study_condition_no, regdate, state, self_appeal, member_email, recruit_post_no)
 values(study_condition_no_seq.nextval, sysdate, '미승인', '열심히 할게요 ! ', 'f@f.com', 1);

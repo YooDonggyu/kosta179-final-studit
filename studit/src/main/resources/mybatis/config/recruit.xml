@@ -531,19 +531,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		@author 유동규
 	 -->
 	<select id="getTopFiveRecruitPost" resultMap="recruitPagingMap">
-		select  n.recruit_post_no
-				  , r.title, r.location
-				  , m.member_email, m.name as memberName
-				  , s.name as smallName, b.name as bigName
-		from(
-					select row_number() over(order by recruit_post_no desc) as rnum, recruit_post_no
-					from recruit_post
-				) n, recruit_post r, member m, small_category s, big_category b
-		where m.member_email = r.member_email
-				  and r.recruit_post_no = n.recruit_post_no
-				  and s.small_category_no = r.small_category_no
-				  and s.big_category_no = b.big_category_no
-				  and n.rnum between 1 and 5
+		select *
+		from (
+				select r.recruit_post_no, r.title, r.location
+						, m.member_email, m.name as memberName
+						 , s.name as smallName, b.name as bigName
+						 , row_number() over(order by r.recruit_post_no desc) as rnum
+				from recruit_post r, member m, small_category s, big_category b
+				where r.member_email = m.member_email
+						and s.small_category_no = r.small_category_no
+						and s.big_category_no = b.big_category_no
+				)
+		where rnum between 1 and 5
 	 </select>
 	
 	<!-- 

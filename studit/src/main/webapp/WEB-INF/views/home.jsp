@@ -108,12 +108,12 @@
 								<td>번호</td>
 								<td>카테고리</td>
 								<td>제목</td>
-								<td>지역</td>
+								<td>지역</td> 
 								<td>작성자</td>
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach items="${recruitPostList}" begin="0" end="4" var="rpList" varStatus="cnt">
+							<c:forEach items="${recruitPostList}" var="rpList" varStatus="cnt">
 								<tr onclick="findDetailRecruitPostInfoByRecruitNo(${rpList.recruitPostNo})">
 									<td>${rpList.recruitPostNo}</td>
 									<td>[${rpList.smallCategoryVO.bigCategoryVO.name}/${rpList.smallCategoryVO.name}]</td>
@@ -162,6 +162,8 @@
 			</div><%--row --%>
 		</div><%--container --%>
 	</section>
+	
+	<%-- --%>
       <section id="contact" > 
         <div class="container">
           <div class="row">
