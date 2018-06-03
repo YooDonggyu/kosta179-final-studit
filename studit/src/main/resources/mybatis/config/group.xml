@@ -426,5 +426,11 @@ where rnum between #{pagingBean.startRowNumber} and #{pagingBean.endRowNumber} o
 					and sg.sg_no=#{value} and cc.sg_no=sm.sg_member_no and m.member_email=sm.member_email
 			order by cc.post desc
 	</select>
+	
+	
+	<select id="getTotalStudyGroupCount" resultType="int">
+		select count(*) from study_group
+	</select>
+	
 </mapper>
 

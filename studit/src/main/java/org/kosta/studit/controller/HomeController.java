@@ -3,9 +3,8 @@ package org.kosta.studit.controller;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.kosta.studit.model.dao.CompanyDAO;
+import org.kosta.studit.model.dao.GroupDAO;
 import org.kosta.studit.model.dao.RecruitDAO;
 import org.kosta.studit.model.service.CompanyService;
 import org.kosta.studit.model.service.MemberService;
@@ -30,6 +29,8 @@ public class HomeController {
 	private CompanyService companyService;
 	@Autowired
 	private MemberService memberService;
+	@Autowired
+	private GroupDAO groupDAO;
 	
 	/**
 	 * 
@@ -50,7 +51,9 @@ public class HomeController {
 		model.addAttribute("keywordList", keywordList);
 		model.addAttribute("recruitPostList", recruitPostList);
 		model.addAttribute("companyList", companyList);
-		
+		model.addAttribute("groupCount", groupDAO.getTotalStudyGroupCount());
+		model.addAttribute("recruitCount", recruitDAO.findRecruitPostCountByCategoryOrKeyword(null));
+		model.addAttribute("companyCount", companyDAO.getTotalCompanyCount(null));
 		return"home.tiles";
 	}
 	

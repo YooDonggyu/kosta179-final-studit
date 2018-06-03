@@ -59,10 +59,6 @@
           <div class="row">
             <div class="col-md-12">
               <p>500,000 users have already trusted <a href="http://bootstrapious.com">Bootstrapious templates</a>.<br />Try it for yourself.</p>
-         <!--      <form class="form-inline margin-top sign-up-form">
-                <input id="email_intro" type="email" placeholder="name@company.com" class="form-control">
-                <input id="submit_intro" type="submit" value="Get started for FREE" class="btn btn-primary">
-              </form> -->
             </div>
             <div class="col-md-12 col-lg-8 col-lg-offset-2">
               <p class="margin-bottom--zero"><img alt="" src="${pageContext.request.contextPath }/resources/assets/img/features3.png" class="img-responsive"></p>
@@ -70,6 +66,47 @@
           </div>
         </div>
       </section>
+      
+      
+      
+            
+	<%--업체수, 스터디 게시글 수, 스터디 그룹 수 --%>
+      <section id="contact" class="background-gray-lightest"> 
+        <div class="container">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="box-simple">
+                <div class="icon"><i class="pe-7s-map-2"></i></div>
+                <h3>PLACE COUNT</h3>
+                <h2><span class="count">${companyCount}</span></h2>
+                <p>다양한 종류의 <strong>PLACE</strong> 가 있습니다.<br> <u>HASHTAG</u>, <u>지역</u>별로 검색해하세요. <br><br>혹시, PLACE를 갖고 있다면 <br> 여러분도 등록할 수 있습니다.</p>
+              </div> 
+            </div>
+            <div class="col-md-4">
+              <div class="box-simple">
+                <div class="icon"><i class="pe-7s-phone"></i></div>
+                <h3>STUDY COUNT</h3>
+                <h2><span class="count">${recruitCount }</span></h2>
+                <p>여러분을 기다리는 스터디가 있습니다.<br>마음에 드는 <u>카테고리</u>, <u>지역</u>으로 쉽게 찾을 수 있습니다. <br><br>원하는 스터디가 없으면 <br>바로 만들 수 있습니다. </p>
+              </div>
+            </div>
+            <div class="col-md-4"> 
+              <div class="box-simple">
+                <div class="icon"><i class="pe-7s-mail-open-file"></i></div>
+                <h3>STUDY GROUP COUNT</h3>
+                <h2><span class="count">${groupCount}</span></h2>
+                <p class="text-muted">스터디를 관리해보세요.<br>스터디  <u>구성원 확인 </u>,  <u>Drag-Drop </u>을 통한 일정관리,  <u>게시판 </u>을 통한 정보공유 <br>간편하지만 빠르게 사용할 수 있습니다.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      
+      
+      
+      
+      
 	<section>
 		<div class="container section background-gray-lightest">
 			<h3><strong>최근 등록된 스터디</strong></h3>
@@ -148,7 +185,7 @@
 				<input type="hidden" id="companyNo" name="companyNo">
 	      			<c:forEach items="${companyList }" begin="0" end="2" var="clist">
 	          			<div class="col-sm-4 ">
-	           				<div class="box box-services" style="background: white; border: 1px solid white ; border-radius: 4px; ">
+	           				<div class="box box-services" style="background: white; border:1px solid white; border-radius: 4px; ">
 	           					<h5 style="text-align: right;"><span class="label label-danger">HIT ${clist.hit}</span></h5>
 	              				<img src="${pageContext.request.contextPath }/resources/upload/${clist.profilePath}" style="width: 100%; height: 200px" onclick="return goDetail(${clist.companyNo})">
 	              				<div class="text-center" style="font-size: 30px;">
@@ -188,42 +225,11 @@
       </section>
       
       
-      
-	<%-- --%>
-      <section id="contact" class="background-gray-lightest"> 
-        <div class="container">
-          <div class="row">
-            <div class="col-md-4">
-              <div class="box-simple">
-                <div class="icon"><i class="pe-7s-map-2"></i></div>
-                <h3>Address</h3>
-                <p>13/25 New Avenue<br>New Heaven, 45Y 73J<br>England, <strong>Great Britain</strong></p>
-              </div> 
-            </div>
-            <div class="col-md-4">
-              <div class="box-simple">
-                <div class="icon"><i class="pe-7s-phone"></i></div>
-                <h3>Call center</h3>
-                <p class="text-muted">This number is toll free if calling from Great Britain otherwise we advise you to use the electronic form of communication.</p>
-                <p><strong>+33 555 444 333</strong></p>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="box-simple">
-                <div class="icon"><i class="pe-7s-mail-open-file"></i></div>
-                <h3>Electronic support</h3>
-                <p class="text-muted">Please feel free to write an email to us or to use our electronic ticketing system.</p>
-                <p><strong><a href="mailto:">info@bootstrap.com</a></strong></p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 		
 		
 
 <script>
-$(document).ready(function(){
+	$(document).ready(function(){
 		var ticker = function(){
 			timer = setTimeout(function(){
 				$('#ticker li:first').animate( {marginTop: '-20px'}, 400, function(){
@@ -283,7 +289,22 @@ $(document).ready(function(){
 		
 		// 4 끝
 		ticker();
-	});
+		
+		
+		//counting
+		$('.count').each(function () {
+		    $(this).prop('Counter',0).animate({
+		        Counter: $(this).text()
+		    }, {
+		        duration: 4000,
+		        easing: 'swing',
+		        step: function (now) {
+		            $(this).text(Math.ceil(now));
+		        }
+		    });
+		});
+		
+	});//document
 	
 	
 	
