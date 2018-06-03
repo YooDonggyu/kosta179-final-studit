@@ -176,13 +176,23 @@ public class GroupDAOTest {
 		groupDAO.updateGroupName(map);
 	}
 	
-	@Test
+	//@Test
 	public void findTotalCountOfGroupPost() {
 		Map<String, Object> map=new HashMap<>();
 		map.put("keyword", "스터디");
 		map.put("name", null);
 		map.put("sgNo", 3);
 		System.out.println(groupDAO.findTotalCountOfGroupPost(map));
+	}
+	
+	@Test
+	public void findPostCountOfMemberByStudyGroup() {
+		List<Map<String, Object>> list=groupDAO.findPostCountOfMemberByStudyGroup("3");
+		if(list!=null) {
+			System.out.println(list.get(0));
+		}else {
+			System.out.println("NULL");
+		}
 	}
 	
 }

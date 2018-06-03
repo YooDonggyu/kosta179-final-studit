@@ -49,26 +49,30 @@ public class GroupController {
 	public String home(String sgNo, HttpServletRequest request) {
 		
 		//1. 스터디 그룹 정보(이름, 모집글 번호, 모집글 상태)
-				GroupVO groupVO=groupService.findStudyGroupInfoByStudyGroupNo(sgNo);
-				//2. 회원 이름 : Session
-				HttpSession session=request.getSession(false);
-				MemberVO mv=(MemberVO)session.getAttribute("memberVO");
-				String memberName=mv.getName();
-				//3. 회원 이메일 : Session
-				String memberEmail=mv.getMemberEmail();
-				//4. 회원 직책
-				String position=groupService.findMemberPositionByMemberEmailAndStudyGroupNo(sgNo,memberEmail);
-				
-				MemberVO memberVO = new MemberVO();
-				memberVO.setMemberEmail(memberEmail);
-				memberVO.setName(memberName);
-			
-				GroupMemberVO groupMemberVO = new GroupMemberVO();
-				groupMemberVO.setGroupVO(groupVO);
-				groupMemberVO.setMemberVO(memberVO);
-				groupMemberVO.setPosition(position);
-				session.setAttribute("groupMemberVO", groupMemberVO);
-				return"groupHome.tiles";
+		GroupVO groupVO=groupService.findStudyGroupInfoByStudyGroupNo(sgNo);
+		//2. 회원 이름 : Session
+		HttpSession session=request.getSession(false);
+		MemberVO mv=(MemberVO)session.getAttribute("memberVO");
+		String memberName=mv.getName();
+		//3. 회원 이메일 : Session
+		String memberEmail=mv.getMemberEmail();
+		//4. 회원 직책
+		String position=groupService.findMemberPositionByMemberEmailAndStudyGroupNo(sgNo,memberEmail);
+		//5. Top3 회원
+		List<Map<String, Object>> list=groupService.findTopThreeMemberByStudyGroup(sgNo);
+		
+		
+		MemberVO memberVO = new MemberVO();
+		memberVO.setMemberEmail(memberEmail);
+		memberVO.setName(memberName);
+	
+		GroupMemberVO groupMemberVO = new GroupMemberVO();
+		groupMemberVO.setGroupVO(groupVO);
+		groupMemberVO.setMemberVO(memberVO);
+		groupMemberVO.setPosition(position);
+		session.setAttribute("groupMemberVO", groupMemberVO);
+		request.setAttribute("topList", list);
+		return"groupHome.tiles";
 	}
 	
 	/**

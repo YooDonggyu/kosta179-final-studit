@@ -69,5 +69,7 @@ public interface GroupDAO {
 
 	String findStudyGroupNameByStudyGroupNo(String sgNo);
 
+	List<Map<String, Object>> findPostCountOfMemberByStudyGroup(String sgNo);
+
 
 }

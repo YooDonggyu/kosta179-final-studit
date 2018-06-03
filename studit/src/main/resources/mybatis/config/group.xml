@@ -409,5 +409,17 @@ where rnum between #{pagingBean.startRowNumber} and #{pagingBean.endRowNumber} o
 		from study_group
 		where sg_no=#{value}
 	</select>
+	
+	<select id="findPostCountOfMemberByStudyGroup" parameterType="string" resultType="map">
+		select distinct sm.member_email as email, cc.post as post, m.name as name, m.pic_path as picpath, sm.position as position
+			from study_group sg, sg_member sm, sg_post sp, member m, (
+				select count(sg_post_no) as post, sg_member_no as sg_no
+				from sg_post
+				group by sg_member_no
+			)cc
+			where sg.sg_no=sm.sg_no and sg.sg_no=sp.sg_no and sm.sg_member_no=sp.sg_member_no 
+					and sg.sg_no=#{value} and cc.sg_no=sm.sg_member_no and m.member_email=sm.member_email
+			order by cc.post desc
+	</select>
 </mapper>
 

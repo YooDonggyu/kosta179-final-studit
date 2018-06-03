@@ -4,18 +4,19 @@
 <section class="dashboard-counts section-padding">
         <div class="container-fluid">
           <div class="row">
+          	<div class="col-xl-1 col-md-4 col-6"></div>
             <div class="col-xl-2 col-md-4 col-6">
               <div class="wrapper count-title d-flex">
                 <div class="icon"><i class="icon-user"></i></div>
-                <div class="name"><strong class="text-uppercase">New Clients</strong><span>Last 7 days</span>
+                <div class="name"><strong class="text-uppercase">LEADER</strong><span>Last 7 days</span>
                   <div class="count-number">25</div>
-                </div>
+                </div>	
               </div>
             </div>
             <div class="col-xl-2 col-md-4 col-6">
               <div class="wrapper count-title d-flex">
                 <div class="icon"><i class="icon-padnote"></i></div>
-                <div class="name"><strong class="text-uppercase">Work Orders</strong><span>Last 5 days</span>
+                <div class="name"><strong class="text-uppercase">GROUP MEMBER</strong><span>Last 5 days</span>
                   <div class="count-number">400</div>
                 </div>
               </div>
@@ -23,7 +24,7 @@
             <div class="col-xl-2 col-md-4 col-6">
               <div class="wrapper count-title d-flex">
                 <div class="icon"><i class="icon-check"></i></div>
-                <div class="name"><strong class="text-uppercase">New Quotes</strong><span>Last 2 months</span>
+                <div class="name"><strong class="text-uppercase">TO DO LIST</strong><span>Last 2 months</span>
                   <div class="count-number">342</div>
                 </div>
               </div>
@@ -31,7 +32,7 @@
             <div class="col-xl-2 col-md-4 col-6">
               <div class="wrapper count-title d-flex">
                 <div class="icon"><i class="icon-bill"></i></div>
-                <div class="name"><strong class="text-uppercase">New Invoices</strong><span>Last 2 days</span>
+                <div class="name"><strong class="text-uppercase">DOING LIST</strong><span>Last 2 days</span>
                   <div class="count-number">123</div>
                 </div>
               </div>
@@ -39,19 +40,19 @@
             <div class="col-xl-2 col-md-4 col-6">
               <div class="wrapper count-title d-flex">
                 <div class="icon"><i class="icon-list"></i></div>
-                <div class="name"><strong class="text-uppercase">Open Cases</strong><span>Last 3 months</span>
+                <div class="name"><strong class="text-uppercase">DONE LIST</strong><span>Last 3 months</span>
                   <div class="count-number">92</div>
                 </div>
               </div>
             </div>
-            <div class="col-xl-2 col-md-4 col-6">
-              <div class="wrapper count-title d-flex">
+             <div class="col-xl-1 col-md-4 col-6">
+             <!--  <div class="wrapper count-title d-flex">
                 <div class="icon"><i class="icon-list-1"></i></div>
                 <div class="name"><strong class="text-uppercase">New Cases</strong><span>Last 7 days</span>
                   <div class="count-number">70</div>
                 </div>
-              </div>
-            </div>
+              </div> -->
+            </div> 
           </div>
         </div>
       </section>
@@ -60,11 +61,12 @@
       <section class="dashboard-header section-padding">
         <div class="container-fluid">
           <div class="row d-flex align-items-md-stretch">
+          	<div class="col-lg-1"></div>
             <!-- To Do List-->
             <div class="col-lg-3 col-md-6">
               <div class="wrapper to-do">
                 <header>
-                  <h2 class="display h4">Today Schedule</h2>
+                  <h2 class="display h4" style="text-align: center;">Today Schedule</h2>
                   <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
                 </header>
                 
@@ -106,16 +108,17 @@
             </div>
             <!-- Pie Chart-->
             <div class="col-lg-3 col-md-6">
-              <div class="wrapper project-progress">
-                <h2 class="display h4">Project Beta progress</h2>
-                <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+              <div class="wrapper project-progress" style="text-align: center;">
+                <h2 class="display h4">Progress Of Study</h2><!-- 
+                <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p> -->
                 <div class="pie-chart">
-                  <canvas id="pieChart"></canvas>
+                  <canvas id="pieChartt" width="320px;" height="320px;"></canvas>
                 </div>
               </div>
             </div>
-            <!-- Line Chart -->
-            <div class="col-lg-6 col-md-12 flex-lg-last flex-md-first align-self-baseline">
+            
+            <%-- <!-- Line Chart -->
+            <div class="col-lg-5 col-md-12 flex-lg-last flex-md-first align-self-baseline">
               <div class="wrapper sales-report">
                 <h2 class="display h4">Sales marketing report</h2>
                 <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor amet officiis</p>
@@ -123,7 +126,66 @@
                   <canvas id="lineCahrt"></canvas>
                 </div>
               </div>
-            </div>
+            </div> --%>
+            <div class="col-lg-4 col-md-12 flex-lg-last flex-md-first align-self-baseline">
+				<h2 class="display h4" style="text-align: center;">Top3 Member Rank</h2>
+				<form action="${pageContext.request.contextPath}/group/updateGroupMemberPosition" method="post" id="changePositionForm">
+			  	<table class="table table-hover">
+					<thead>
+						<tr>
+							<th>이름</th>
+							<th>메일</th>
+							<th>직책</th>
+							<th>게시글수</th>
+						</tr>
+					</thead>
+					<tbody id="memberList">
+						<c:forEach items="${topList}" var="list">
+							<tr>
+								<td>
+								<div style="width: 50px;">
+								<img alt="person" class="img-fluid rounded-circle" src="${pageContext.request.contextPath}/resources/upload/${list.PICPATH}">
+								${list.NAME}
+								</div>
+								</td>
+								<td>${list.EMAIL }</td>
+								<td>${list.POSITION }</td>
+								<td>${list.POST}</td>
+								<td></td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+				<input type="hidden" name="groupMemberNo" id="groupMemberNo">
+				</form>
+			</div>
+            <div class="col-lg-1"></div>
           </div>
         </div>
       </section>
+      
+<script>
+$(document).ready(function(){
+	var chartDiv = $("#pieChartt");
+	var myChart = new Chart(chartDiv, {
+	    type: 'pie',
+	    data: {
+	        labels: ["TO DO", "DOING", "DONE"],
+	        datasets: [{
+	            data: [30,60, 10],
+	            backgroundColor: [
+	            	"#FF6384",
+		            "#4BC0C0",
+		            "#FFCE56"
+		            /* "#E7E9ED",
+		            "#36A2EB" */
+	            ]
+	        }]
+	    },
+	    options: {
+	 	responsive: true,
+		maintainAspectRatio: false,
+	    }
+	});
+});
+</script>

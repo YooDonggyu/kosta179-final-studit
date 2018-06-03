@@ -1,5 +1,6 @@
 package org.kosta.studit.model.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +18,6 @@ import org.kosta.studit.model.vo.RecruitPostVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.SystemPropertyUtils;
 
 @Service
 public class GroupServiceImpl implements GroupService {
@@ -246,12 +246,7 @@ public class GroupServiceImpl implements GroupService {
 	public GroupPostListVO findGroupBoard(Map<String, Object> map) {
 		List<GroupPostVO> list=null;
 		PagingBean pb=null;
-		
-		System.out.println("service nowPage : " + map.get("nowPage"));
-		System.out.println("service sgNo : " + map.get("sgNo"));
-		System.out.println("service keyword : " + map.get("keyword"));
-		System.out.println("service name : " + map.get("name"));
-		
+
 		if(map.get("keyword")==null || map.get("keyword")=="") {
 			map.put("keyword", null);
 		}
@@ -320,6 +315,22 @@ public class GroupServiceImpl implements GroupService {
 	@Override
 	public String findStudyGroupNameByStudyGroupNo(String sgNo) {
 		return groupDAO.findStudyGroupNameByStudyGroupNo(sgNo);
+	}
+
+	@Override
+	public List<Map<String, Object>> findTopThreeMemberByStudyGroup(String sgNo) {
+		List<Map<String, Object>> list=groupDAO.findPostCountOfMemberByStudyGroup(sgNo);
+		List<Map<String, Object>> flist=new ArrayList<Map<String, Object>>();
+		
+		for(int i=0; i<list.size(); i++) {
+			if(!list.get(i).get("POSITION").equals("탈퇴")) {
+				flist.add(list.get(i));
+			}
+			if(flist.size()>=3) {
+				break;
+			}
+		}
+		return flist;
 	}
 
 }

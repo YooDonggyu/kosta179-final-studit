@@ -293,4 +293,10 @@ public class GroupDAOImpl implements GroupDAO {
 		return template.selectOne("group.findStudyGroupNameByStudyGroupNo", sgNo);
 	}
 
+	@Override
+	public List<Map<String, Object>> findPostCountOfMemberByStudyGroup(String sgNo) {
+		List<Map<String, Object>> list=template.selectList("group.findPostCountOfMemberByStudyGroup", sgNo);
+		return list;
+	}
+
 }

@@ -44,4 +44,6 @@ public interface GroupService {
 
 	String findStudyGroupNameByStudyGroupNo(String sgNo);
 
+	List<Map<String, Object>> findTopThreeMemberByStudyGroup(String sgNo);
+
 }

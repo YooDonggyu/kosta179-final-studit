@@ -396,7 +396,7 @@ public class AjaxViewController {
 	@RequestMapping(method = RequestMethod.POST, value = "/deleteStudyConditionByStudyConditionNo")
 	@ResponseBody
 	public void deleteStudyConditionByStudyConditionNo(String memberEmail, String studyConditionNo) {
-		System.out.println(memberEmail + " " + studyConditionNo);
+		//System.out.println(memberEmail + " " + studyConditionNo);
 		recruitService.deleteStudyConditionByStudyConditionNo(memberEmail, studyConditionNo);
 	}
 
