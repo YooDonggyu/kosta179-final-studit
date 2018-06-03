@@ -1,87 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<<<<<<< HEAD
 <style>
 .formCategory{
 	font-weight: bold;
 }
 </style>
-<script type="text/javascript">
-$(document).ready(function(){
-	$("#big_category").change(function(){
-		$.ajax({
-			type: "get",
-			dataType: "json",
-			url:"${pageContext.request.contextPath}/ajax/getSmallCategoryByBigCategoryAjax",
-			data:"bigCategoryNo="+$("#big_category option:selected").val(),
-			success:function(result){
-				var smallCategory="<option value='0'>소분류</option>";
-				$.each(result, function(index, item){
-					smallCategory+="<option value='";
-					smallCategory+=item.smallCategoryNo;
-					smallCategory+="'>";
-					smallCategory+=item.name;
-					smallCategory+="</option>";			
-				})
-				$("#small_category").html(smallCategory);
-			}
-		});//ajax
-	});//big_category
-});//ready
-function check(){
-	if($("#title").val()==""){
-		alert("제목을 입력하세요!");
-		$("#title").focus();
-		return false;
-	}
-	if($("#title").val().length > 33){
-		alert("제목은 33글자까지 가능합니다.");
-		return false;
-	}
-	if($("#capacity").val()==""){
-		alert("희망인원을 입력하세요!");
-		$("#capacity").focus();
-		return false;
-	}
-	if($("#location").val()==""){
-		alert("희망지역을 입력하세요!");
-		$("#location").focus();
-		return false;
-	}
-	if($("#location").val().length > 33){
-		alert("지역은 33글자까지 가능합니다.");
-		return false;
-	}
-	if($("#big_category option:selected").val()==0){
-		alert("대분류를 선택하세요!");
-		return false;
-	}
-	if($("#small_category option:selected").val()==0){
-		alert("소분류를 선택하세요!");
-		return false;
-	}
-	if($("input[name=days]:checked").size()==0){
-		alert("요일을 선택하세요!");
-		return false;
-	}
-	if($("#content").val()==""){
-		alert("내용을 입력하세요!"); 
-		return false;
-	}
-	if($("#content").val().length > 1332){
-		alert("내용은 1300글자까지 가능합니다. 현재 "+$("#content").val().length+"글자 입니다."); 
-		return false;
-	}
-	return true;
-}
-</script>
 
-</head>
 <body>
-=======
-
->>>>>>> stash
 
 <div class="col-sm-3" ></div>
 	<div class="col-sm-6">
@@ -153,15 +79,8 @@ function check(){
             </form> <!-- /form -->
         </div> <!-- ./container -->
         <div class="col - sm- 3" ></div>
-<<<<<<< HEAD
-			
-=======
 
-<style>
-.formCategory{
-	font-weight: bold;
-}
-</style>
+
 <script type="text/javascript">
 $(document).ready(function(){
 	$("#big_category").change(function(){
@@ -239,4 +158,3 @@ function check(){
 }
 </script>
 
->>>>>>> stash

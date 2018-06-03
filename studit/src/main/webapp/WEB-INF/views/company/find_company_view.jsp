@@ -5,15 +5,15 @@
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<section class="signup-section text-center no-padding-bottom">
+<section class="signup-section text-center" style="padding-bottom:150px; padding-top:150px; background-image:url(../resources/assets/img/com-main.png); background-size: 80% 100%; background-position: center; background-repeat: no-repeat;">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
-				<h3>스터디룸 검색</h3>
-				<p class="lead text-gray-light">지금 당신에게 필요한 모든 스터디룸을 찾아보세요!</p>
+				<h1><strong>스터디룸 검색</strong></h1>
+				<h3><p>지금 당신에게 필요한 모든 스터디룸을 찾아보세요!</p></h3>
 			</div>
 		</div>
-		<div class="row">
+		<div class="row" style="padding-top: 20px;">
 			<div class="col-md-12">
 				<table style="width: 600px; margin: 0 auto">
 					<tr>

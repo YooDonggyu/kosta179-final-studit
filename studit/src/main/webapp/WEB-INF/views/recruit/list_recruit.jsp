@@ -3,18 +3,16 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 
 
-<section class="signup-section text-center no-padding-bottom" >
-<!-- style="background-image: url('${pageContext.request.contextPath}/resources/assets/img/recruit-main.png');  background-position: center; background-repeat:no-repeat; background-size: 100% 100%;" -->
-
-
+<section class="signup-section text-center " style="padding-bottom:150px; padding-top:150px;background-image: url(../resources/assets/img/study-main.png); background-size: 80% 100%; background-position: center; background-repeat: no-repeat;">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
-				<h3>스터디 모집</h3>
-				<p class="lead text-gray-light">지금 당신에게 필요한 모든 스터디를 찾아보세요!</p>
+				<h1><strong>스터디 모집</strong></h1>
+				<h3><p>지금 당신에게 필요한 모든 스터디를 찾아보세요!</p></h3>
 			</div>   
-		</div> 
-		<div class="row">
+		</div>
+		
+		<div class="row" style="padding-top: 20px;">
 			<div class="col-md-12">
 				<table style="width: 600px; margin: 0 auto">
 					<tr>
@@ -28,7 +26,7 @@
 						</td>
 						<td style="padding-left: 10px; padding-right: 10px">
 							<div class="dropdown">
-								<a href="#" class="dropdown-toggle" id="smallCategoryMenu" data-toggle="dropdown">소분류<b class="caret"></b></a>
+								<a href="#" class="dropdown-toggle" id="smallCategoryMenu" data-toggle="dropdown" style="color:#555555; border: 1px solid #cccccc; background-color: #ffffff; border-radius: 4px; padding: 8px;">소분류<b class="caret"></b></a>
 								<ul class="dropdown-menu" id="smallCheckbox">
 									<li><a href='#' class='dropdown-item'>대분류를 먼저 선택하세요.</a></li>
 								</ul>
@@ -222,13 +220,11 @@
 				$("#resultData").empty();
 				if(bigCategory > 0){
 					$("#resultData").append("\""+$("#bigCategory option:selected").text()+"\"");
-					$("#resultData").append("    ");
 				}
 				if(smallCategory.length >0){
 					$("input[name='category']:checked").each(function(i){
 						$("#resultData").append("\""+$(this).data("citem")+"\"")
 					});
-					$("#resultData").append("    ");
 				}
 				if(keyword != "" && keyword != null){
 					$("#resultData").append("\""+keyword+"\"");
