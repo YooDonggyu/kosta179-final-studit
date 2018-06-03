@@ -8,7 +8,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="all,follow">
-  <title><tiles:insertAttribute name="title" ignore="true" /></title> 
+  <title><%-- <tiles:insertAttribute name="title" ignore="true" /> --%>STUD-IT</title> 
   	<!-- favicon -->
   	<link rel="shortcut icon" href="${pageContext.request.contextPath }/resources/assets/img/favicon.ico">
     <!-- Meterial Icon-->
@@ -34,7 +34,6 @@
     <link href='${pageContext.request.contextPath}/resources/fullcalendar-scheduler/lib/fullcalendar.min.css' rel='stylesheet' />
 	<link href='${pageContext.request.contextPath}/resources/fullcalendar-scheduler/lib/fullcalendar.print.min.css' rel='stylesheet' media='print' />
 	<link href='${pageContext.request.contextPath}/resources/fullcalendar-scheduler/scheduler.min.css' rel='stylesheet' />
-    <!-- Favicon-->
     
   	<!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>

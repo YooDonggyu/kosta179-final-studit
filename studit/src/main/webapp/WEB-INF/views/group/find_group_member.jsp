@@ -69,6 +69,9 @@ th{
 									<input type="button" value="팀장 위임" onclick="changeGroupOwner(${member.groupMemberNo})" class="btn btn-default btn-sm" >
 								</td>
 								</c:when>
+								<c:when test="${member.position eq '탈퇴'}"> 
+								<td></td>
+								</c:when>
 								<c:otherwise>
 									<input type="hidden" name="groupOwnerNo" id="groupOwnerNo" value="${member.groupMemberNo}">
 									<td align="center"><i class="fas fa-crown" style="color: #ffcc00"></i></td>

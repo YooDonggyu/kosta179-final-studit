@@ -28,6 +28,7 @@ import org.kosta.studit.model.service.StudyRoomService;
 import org.kosta.studit.model.vo.CompanyListVO;
 import org.kosta.studit.model.vo.GroupMemberListVO;
 import org.kosta.studit.model.vo.GroupMemberVO;
+import org.kosta.studit.model.vo.GroupPostListVO;
 import org.kosta.studit.model.vo.GroupVO;
 import org.kosta.studit.model.vo.MemberListVO;
 import org.kosta.studit.model.vo.MemberVO;
@@ -71,13 +72,14 @@ public class AjaxViewController {
 	@Autowired
 	private GroupService groupService;
 	@Autowired
-	private GroupDAO GroupDAO;
-	   
+	private GroupDAO groupDAO;
 
 	/**
 	 * 아아디 중복확인을 위한 메서드. 사용자가 입력한 Email을 실시간으로 중복확인 한다.
+	 * 
 	 * @author 송용준,변태섭
-	 * @param 사용자가 입력한 Email
+	 * @param 사용자가
+	 *            입력한 Email
 	 * @return 중복인 경우 false, 중복이 아닌 경우 true
 	 */
 	@RequestMapping("/findCheckByEmail")
@@ -93,10 +95,14 @@ public class AjaxViewController {
 	/**
 	 * 
 	 * 비밀번호 검증 메서드 사용자가 입력한 현재 비밀번호를 DB에 저장된 정보와 비교하여 검증하여 결과값을 반환
+	 * 
 	 * @author 김유란
-	 * @param HttpServletRequest 파라미터를 받아오기 위해 호출
-	 * @exception EmailNotFoundException 아이디가 없을 때 발생하는 예외
-	 * @exception PasswordIncorrectException  비밀번호가 틀릴 때 발생하는 예외
+	 * @param HttpServletRequest
+	 *            파라미터를 받아오기 위해 호출
+	 * @exception EmailNotFoundException
+	 *                아이디가 없을 때 발생하는 예외
+	 * @exception PasswordIncorrectException
+	 *                비밀번호가 틀릴 때 발생하는 예외
 	 * @return boolean 파라미터로 받아온 비밀번호 입력값의 DB 일치 여부에 따라 true/false 반환
 	 */
 	@RequestMapping(method = RequestMethod.POST, value = "/checkPassword")
@@ -114,11 +120,11 @@ public class AjaxViewController {
 
 	/**
 	 * 
-	 * 소분류 목록을 불러오는 메서드 
-	 * 사용자가 선택한 대분류 번호를 전달받아 소분류 목록을 즉시 로드
+	 * 소분류 목록을 불러오는 메서드 사용자가 선택한 대분류 번호를 전달받아 소분류 목록을 즉시 로드
 	 * 
 	 * @author 김유란
-	 * @param bigCategoryNo  사용자가 선택한 대분류 번호
+	 * @param bigCategoryNo
+	 *            사용자가 선택한 대분류 번호
 	 * @return List<SmallCategoryVO> 소분류 번호와 이름 정보를 담은 VO 리스트
 	 */
 	@RequestMapping(method = RequestMethod.POST, value = "/getSmallCategoryList")
@@ -129,15 +135,18 @@ public class AjaxViewController {
 
 	/**
 	 * 모집게시글에 따른 댓글 등록
+	 * 
 	 * @author 유동규
-	 * @param recruitNo 댓글을 가지고 있는 모집 게시글 번호
-	 * @param comment 입력할 댓글
+	 * @param recruitNo
+	 *            댓글을 가지고 있는 모집 게시글 번호
+	 * @param comment
+	 *            입력할 댓글
 	 * @return true 정상 작동하면 true
 	 */
 	@RequestMapping(value = "/registerComment", method = RequestMethod.POST)
 	@ResponseBody
 	public String registerComment(int recruitNo, String comment, HttpServletRequest request) {
-		String userEmail = ((MemberVO)request.getSession().getAttribute("memberVO")).getMemberEmail();
+		String userEmail = ((MemberVO) request.getSession().getAttribute("memberVO")).getMemberEmail();
 		Map<String, Object> commentMap = new HashMap<>();
 		commentMap.put("comment", comment);
 		commentMap.put("userEmail", userEmail);
@@ -145,136 +154,155 @@ public class AjaxViewController {
 		recruitDAO.registerCommentByRecruitNo(commentMap);
 		return "true";
 	}
-	
+
 	/**
-	 * 스터디 룸 현황 조회를 위한 페이징.
-	 * 해당 사용자에 따른 전체 수를 구한 뒤 페이징처리를 한다.
+	 * 스터디 룸 현황 조회를 위한 페이징. 해당 사용자에 따른 전체 수를 구한 뒤 페이징처리를 한다.
+	 * 
 	 * @author 유동규
-	 * @param nowPage 현재 페이지
+	 * @param nowPage
+	 *            현재 페이지
 	 * @return StudyRoomConditionListVO 페이징한 결과(list)와 페이징 객체가 담겨있는 객체
 	 */
 	@RequestMapping("/findStudyRoomConditionByNowPage")
 	@ResponseBody
-	public StudyRoomConditionListVO findStudyRoomConditionByNowPage(int nowPage, HttpServletRequest request){
-		return studyroomService.findStudyRoomConditionListVOByEmail(((MemberVO)request.getSession().getAttribute("memberVO")).getMemberEmail(), nowPage);
+	public StudyRoomConditionListVO findStudyRoomConditionByNowPage(int nowPage, HttpServletRequest request) {
+		return studyroomService.findStudyRoomConditionListVOByEmail(
+				((MemberVO) request.getSession().getAttribute("memberVO")).getMemberEmail(), nowPage);
 	}
-	
+
 	/**
 	 * 입력된 주소에 따른 업체 리스트 반환
+	 * 
 	 * @author 송용준
-	 * @param addr1, addr2, addr3 입력된 주소값
-	 * @param keywordORhashtag, nowPage 키워드와 현재 페이지정보
+	 * @param addr1,
+	 *            addr2, addr3 입력된 주소값
+	 * @param keywordORhashtag,
+	 *            nowPage 키워드와 현재 페이지정보
 	 * @return CompanyListVO 검색 조건에 부합하는 페이징된 업체 리스트
 	 */
 	@RequestMapping("/findCompanyListByConditionAjax")
 	@ResponseBody
-	public CompanyListVO findCompanyListByCondition(String addr1, String addr2, String addr3, String keywordORhashtag, String nowPage) {
-		Map<String, Object> map=new HashMap<>();
-		if(addr1!=null) {
-			if(addr1.equals("주소1")||addr1.equals("")) {
+	public CompanyListVO findCompanyListByCondition(String addr1, String addr2, String addr3, String keywordORhashtag,
+			String nowPage) {
+		Map<String, Object> map = new HashMap<>();
+		if (addr1 != null) {
+			if (addr1.equals("주소1") || addr1.equals("")) {
 				map.put("firstAddr", null);
-			}else {
+			} else {
 				map.put("firstAddr", addr1);
 			}
-		}else {
+		} else {
 			map.put("firstAddr", addr1);
 		}
-		if(addr2!=null) {
-			if(addr2.equals("주소2")||addr2.equals("")) {
+		if (addr2 != null) {
+			if (addr2.equals("주소2") || addr2.equals("")) {
 				map.put("secondAddr", null);
-			}else {
+			} else {
 				map.put("secondAddr", addr2);
 			}
-		}else {
+		} else {
 			map.put("secondAddr", addr2);
 		}
-		if(addr3!=null) {
-			if(addr3.equals("주소3")||addr3.equals("")) {
+		if (addr3 != null) {
+			if (addr3.equals("주소3") || addr3.equals("")) {
 				map.put("thirdAddr", null);
-			}else {
+			} else {
 				map.put("thirdAddr", addr3);
 			}
-		}else {
+		} else {
 			map.put("thirdAddr", addr3);
 		}
-		
+
 		map.put("keywordORhashtag", keywordORhashtag);
 		map.put("nowPage", nowPage);
-		
+
 		return companyService.findCompanyListByCondition(map);
 	}
-	
+
 	/**
 	 * 뷰에서 선택된 대분류에 대응되는 소분류를 조회.
+	 * 
 	 * @author 송용준
-	 * @param bigCategoryNo 뷰에서 선택된 대분류
+	 * @param bigCategoryNo
+	 *            뷰에서 선택된 대분류
 	 * @return List<SmallCategoryVO> 조회한 소분류 리스트를 담은 객체
 	 */
 	@RequestMapping("/getSmallCategoryByBigCategoryAjax")
 	@ResponseBody
 	public List<SmallCategoryVO> getSmallCategoryByBigCategory(String bigCategoryNo) {
 		List<SmallCategoryVO> list = recruitService.findSmallCategoryListByBigCategoryNo(bigCategoryNo);
-		//System.out.println(list);
+		// System.out.println(list);
 		return list;
 	}
-	
-	
+
 	/**
 	 * 스터디룸(업체) 검색 뷰에서 선택된 addr1에 대응되는 addr2를 조회.
+	 * 
 	 * @author 송용준
-	 * @param addr1 뷰에서 선택된 첫번째 주소값
+	 * @param addr1
+	 *            뷰에서 선택된 첫번째 주소값
 	 * @return List<String> 조회한 addr2 리스트를 담은 객체
 	 */
 	@RequestMapping("/findSecondAddressListByFirstAddressName")
 	@ResponseBody
-	public List<String> findSecondAddressListByFirstAddressName(String addr1){
-		List<String> list=companyDAO.findSecondAddressListByFirstAddressName(addr1);
+	public List<String> findSecondAddressListByFirstAddressName(String addr1) {
+		List<String> list = companyDAO.findSecondAddressListByFirstAddressName(addr1);
 		return list;
 	}
-	
+
 	/**
 	 * 스터디룸(업체) 검색 뷰에서 선택된 addr2에 대응되는 addr3를 조회.
+	 * 
 	 * @author 송용준
-	 * @param addr2 뷰에서 선택된 두번째 주소값
+	 * @param addr2
+	 *            뷰에서 선택된 두번째 주소값
 	 * @return List<String> 조회한 addr3 리스트를 담은 객체
 	 */
 	@RequestMapping("/findThirdAddressListBySecondAddressName")
 	@ResponseBody
-	public List<String> findThirdAddressListBySecondAddressName(String addr2){
-		List<String> list=companyDAO.findThirdAddressListBySecondAddressName(addr2);
+	public List<String> findThirdAddressListBySecondAddressName(String addr2) {
+		List<String> list = companyDAO.findThirdAddressListBySecondAddressName(addr2);
 		return list;
 	}
+
 	/**
-	 * 스터디 현황 조회를 위한 페이징.
-	 * 해당 사용자에 따른 전체 수를 구한 뒤 페이징처리를 한다.
+	 * 스터디 현황 조회를 위한 페이징. 해당 사용자에 따른 전체 수를 구한 뒤 페이징처리를 한다.
+	 * 
 	 * @author 변태섭, 유동규
-	 * @param nowPage 현재 페이지
+	 * @param nowPage
+	 *            현재 페이지
 	 * @return StudyConditionListVO 페이징한 결과(list)와 페이징 객체가 담겨있는 객체
 	 */
 	@RequestMapping("/findStudyConditionByNowPage")
 	@ResponseBody
 	public StudyConditionListVO findStudyConditionByNowPage(int nowPage, HttpServletRequest request) {
-		return  recruitService.findStudyConditionByMemberEmail(((MemberVO)request.getSession().getAttribute("memberVO")).getMemberEmail(), nowPage);
+		return recruitService.findStudyConditionByMemberEmail(
+				((MemberVO) request.getSession().getAttribute("memberVO")).getMemberEmail(), nowPage);
 	}
-	
+
 	/**
 	 * 댓글 삭제하기
+	 * 
 	 * @author 유동규
-	 * @param commentNo 삭제할 댓글 번호
+	 * @param commentNo
+	 *            삭제할 댓글 번호
 	 */
-	@RequestMapping(value="/deleteCommentByCommentNo", method=RequestMethod.POST)
+	@RequestMapping(value = "/deleteCommentByCommentNo", method = RequestMethod.POST)
 	@ResponseBody
 	public void deleteCommentByCommentNo(int commentNo) {
 		recruitDAO.deleteCommentByCommentNo(commentNo);
 	}
-	
+
 	/**
 	 * 댓글 수정하기
+	 * 
 	 * @author 유동규
-	 * @param commentNo 수정할 댓글번호
-	 * @param content 수정할 내용
+	 * @param commentNo
+	 *            수정할 댓글번호
+	 * @param content
+	 *            수정할 내용
 	 */
-	@RequestMapping(value="/updateCommentByCommentNo", method=RequestMethod.POST)
+	@RequestMapping(value = "/updateCommentByCommentNo", method = RequestMethod.POST)
 	@ResponseBody
 	public void updateCommentByCommentNo(int commentNo, String content) {
 		Map<String, Object> map = new HashMap<>();
@@ -282,33 +310,36 @@ public class AjaxViewController {
 		map.put("content", content);
 		recruitDAO.updateCommentByCommentNo(map);
 	}
-	
-	
+
 	/**
-	 * 소분류, 대분류, 키워드에 따른 페이징 AJAX
-	 * nowPage를 받아 소분류, 대분류, 키워드를 같이 넘겨 페이징 결과 받기
+	 * 소분류, 대분류, 키워드에 따른 페이징 AJAX nowPage를 받아 소분류, 대분류, 키워드를 같이 넘겨 페이징 결과 받기
+	 * 
 	 * @author 유동규
-	 * @param bigCategoryNo 대분류
-	 * @param smallCategoryNo 소분류
-	 * @param keyword 검색조건(제목, 지역)
+	 * @param bigCategoryNo
+	 *            대분류
+	 * @param smallCategoryNo
+	 *            소분류
+	 * @param keyword
+	 *            검색조건(제목, 지역)
 	 * @return RecruitPostListVO pagingBean과 List<RecruitPostVO>가 담긴 객체 반환
 	 */
 	@RequestMapping("/findRecruitPostByCategoryAndKeyword")
 	@ResponseBody
-	public RecruitPostListVO findRecruitPostByCategoryAndKeyword(String bigCategoryNo, String smallCategoryNo, String keyword, HttpServletRequest request) {
+	public RecruitPostListVO findRecruitPostByCategoryAndKeyword(String bigCategoryNo, String smallCategoryNo,
+			String keyword, HttpServletRequest request) {
 		int nowPage = 1;
-		if(request.getParameter("nowPage") != null && request.getParameter("nowPage") != "") {
+		if (request.getParameter("nowPage") != null && request.getParameter("nowPage") != "") {
 			nowPage = Integer.parseInt(request.getParameter("nowPage"));
 		}
 		return recruitService.findRecruitPostByCategoryOrKeyword(bigCategoryNo, smallCategoryNo, keyword, nowPage);
 	}
-	
+
 	/**
-	 *업체 등록 시 사업자등록번호 중복확인을 위한 메서드. 
-	 *사용자가 입력한 사업자 등록번호를 실시간으로 중복확인 한다.
+	 * 업체 등록 시 사업자등록번호 중복확인을 위한 메서드. 사용자가 입력한 사업자 등록번호를 실시간으로 중복확인 한다.
 	 * 
 	 * @author 변태섭
-	 * @param 입력된 사업자 등록 번호
+	 * @param 입력된
+	 *            사업자 등록 번호
 	 * @return 중복인 경우 false, 중복이 아닌 경우 true
 	 */
 	@RequestMapping("/findCheckByLicense")
@@ -320,156 +351,178 @@ public class AjaxViewController {
 			return false;
 		}
 	}
-	
 
 	/**
-	 *예약현황 정보를 불러오는 메서드
-	 *사용자가 선택한 스터디룸과 날짜에 해당하는 예약 현황 정보를 조회하여 전송한다.
+	 * 예약현황 정보를 불러오는 메서드 사용자가 선택한 스터디룸과 날짜에 해당하는 예약 현황 정보를 조회하여 전송한다.
 	 * 
 	 * @author 김유란
-	 * @param selectedDate 사용자가 선택한 날짜
-	 * @param studyRoomNo 사용자가 선택한 스터디룸의 번호
+	 * @param selectedDate
+	 *            사용자가 선택한 날짜
+	 * @param studyRoomNo
+	 *            사용자가 선택한 스터디룸의 번호
 	 * @return StudyRoomConditionVO 예약 현황 정보를 담은 VO 리스트
 	 */
-	@RequestMapping(value="/findStudyRoomConditionByStudyRoomNoAndDate", method=RequestMethod.POST)
+	@RequestMapping(value = "/findStudyRoomConditionByStudyRoomNoAndDate", method = RequestMethod.POST)
 	@ResponseBody
-	public List<StudyRoomConditionVO> findStudyRoomConditionByStudyRoomNoAndDate(String selectedDate, String studyRoomNo) {
+	public List<StudyRoomConditionVO> findStudyRoomConditionByStudyRoomNoAndDate(String selectedDate,
+			String studyRoomNo) {
 		return studyroomService.findStudyRoomConditionByStudyRoomNoAndDate(selectedDate, studyRoomNo);
 	}
-	
+
 	/**
-	 *스터디룸 예약 취소 
-	 *스터디룸 예약상태를 '예약취소'로 변경한다.
+	 * 스터디룸 예약 취소 스터디룸 예약상태를 '예약취소'로 변경한다.
 	 * 
 	 * @author 김유란
-	 * @param memberEmail 회원 이메일
-	 * @param studyRoomConditionNo 스터디룸 예약 번호
+	 * @param memberEmail
+	 *            회원 이메일
+	 * @param studyRoomConditionNo
+	 *            스터디룸 예약 번호
 	 */
-	@RequestMapping(method=RequestMethod.POST, value="/updateStudyRoomConditionByMember")
+	@RequestMapping(method = RequestMethod.POST, value = "/updateStudyRoomConditionByMember")
 	@ResponseBody
 	public void updateStudyRoomConditionByMember(String memberEmail, String studyRoomConditionNo) {
 		studyroomService.updateStudyRoomConditionByMember(memberEmail, studyRoomConditionNo);
 	}
-	
+
 	/**
-	 *스터디 신청 취소 
-	 *스터디 신청 내역을 삭제한다.
+	 * 스터디 신청 취소 스터디 신청 내역을 삭제한다.
 	 * 
 	 * @author 김유란
-	 * @param memberEmail 회원 이메일
-	 * @param studyConditionNo 스터디 신청 번호
+	 * @param memberEmail
+	 *            회원 이메일
+	 * @param studyConditionNo
+	 *            스터디 신청 번호
 	 */
-	@RequestMapping(method=RequestMethod.POST, value="/deleteStudyConditionByStudyConditionNo")
+	@RequestMapping(method = RequestMethod.POST, value = "/deleteStudyConditionByStudyConditionNo")
 	@ResponseBody
 	public void deleteStudyConditionByStudyConditionNo(String memberEmail, String studyConditionNo) {
-		System.out.println(memberEmail+" "+studyConditionNo);
-			recruitService.deleteStudyConditionByStudyConditionNo(memberEmail, studyConditionNo);
+		System.out.println(memberEmail + " " + studyConditionNo);
+		recruitService.deleteStudyConditionByStudyConditionNo(memberEmail, studyConditionNo);
 	}
-	
-/**
-    * 선택된 월 정보를 이용해 스터디룸 예약정보를 조회하는 메서드
-    * 캘린더의 월이 변경될 때마다 호출
-    * 
-    * @author 김유란
-    * @param studyRoomNo 스터디룸 번호
-    * @param startDate 선택된 월의 첫날
-    * @param endDate 선택된 월의 마지막날
-    * @return 조회된 예약현황 정보를 담은 VO 리스트
-    */
+
+	/**
+	 * 선택된 월 정보를 이용해 스터디룸 예약정보를 조회하는 메서드 캘린더의 월이 변경될 때마다 호출
+	 * 
+	 * @author 김유란
+	 * @param studyRoomNo
+	 *            스터디룸 번호
+	 * @param startDate
+	 *            선택된 월의 첫날
+	 * @param endDate
+	 *            선택된 월의 마지막날
+	 * @return 조회된 예약현황 정보를 담은 VO 리스트
+	 */
 	@RequestMapping("/findStudyRoomConditionByStudyRoomNoAndMonth")
 	@ResponseBody
-	public JSONArray findStudyRoomConditionByStudyRoomNoAndMonth(String companyNo, String startDate, String endDate){
+	public JSONArray findStudyRoomConditionByStudyRoomNoAndMonth(String companyNo, String startDate, String endDate) {
 		return companyService.findStudyRoomConditionByCompanyNoAndMonth(companyNo, startDate, endDate);
 	}
-	
+
 	/**
 	 * 공휴일 정보 받아 예약현황 캘린더에 전송
+	 * 
 	 * @author 김유란
-	 * @param year 정보 조회를 원하는 연도
-	 * @param month 정보 조회를 원하는 월
+	 * @param year
+	 *            정보 조회를 원하는 연도
+	 * @param month
+	 *            정보 조회를 원하는 월
 	 * @return JSONArray 공휴일 정보를 담은 JSON객체 배열
 	 */
 	@RequestMapping("/findHolidayInfoByDate")
 	@ResponseBody
 	public JSONArray findHolidayInfoByDate(String year, String month) throws IOException {
-		 StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B090041/openapi/service/SpcdeInfoService/getRestDeInfo"); /*URL*/
-	        urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=esTFesfy%2FQV6VHLKYY4%2BpN2t9zAFnLmx9lInXwDXqRFTA%2FZcRvMgcVSDTCIiVelBr4KESA3BNGKabphAj2fs1w%3D%3D"); /*Service Key*/
-	        urlBuilder.append("&" + URLEncoder.encode("solYear","UTF-8") + "=" + URLEncoder.encode(year, "UTF-8")); /*연*/
-	        urlBuilder.append("&" + URLEncoder.encode("solMonth","UTF-8") + "=" + URLEncoder.encode(month, "UTF-8")); /*월*/
-	      //  urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /**/
-	       // urlBuilder.append("&" + URLEncoder.encode("totalCount","UTF-8") + "=" + URLEncoder.encode("16", "UTF-8")); /**/
-	        URL url = new URL(urlBuilder.toString());
-	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-	        conn.setRequestMethod("GET");
-	        conn.setRequestProperty("Content-type", "application/json");
-	        conn.setRequestProperty("Accept", "application/json;charset=UTF-8");
+		StringBuilder urlBuilder = new StringBuilder(
+				"http://apis.data.go.kr/B090041/openapi/service/SpcdeInfoService/getRestDeInfo"); /* URL */
+		urlBuilder.append("?" + URLEncoder.encode("ServiceKey", "UTF-8")
+				+ "=esTFesfy%2FQV6VHLKYY4%2BpN2t9zAFnLmx9lInXwDXqRFTA%2FZcRvMgcVSDTCIiVelBr4KESA3BNGKabphAj2fs1w%3D%3D"); /*
+																															 * Service
+																															 * Key
+																															 */
+		urlBuilder.append("&" + URLEncoder.encode("solYear", "UTF-8") + "=" + URLEncoder.encode(year, "UTF-8")); /* 연 */
+		urlBuilder
+				.append("&" + URLEncoder.encode("solMonth", "UTF-8") + "=" + URLEncoder.encode(month, "UTF-8")); /* 월 */
+		// urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" +
+		// URLEncoder.encode("1", "UTF-8")); /**/
+		// urlBuilder.append("&" + URLEncoder.encode("totalCount","UTF-8") + "=" +
+		// URLEncoder.encode("16", "UTF-8")); /**/
+		URL url = new URL(urlBuilder.toString());
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		conn.setRequestMethod("GET");
+		conn.setRequestProperty("Content-type", "application/json");
+		conn.setRequestProperty("Accept", "application/json;charset=UTF-8");
 
-	        BufferedReader rd;
-	        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-	            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-	        } else {
-	            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
-	        }
-	        StringBuilder sb = new StringBuilder();
-	        String line;
-	        while ((line = rd.readLine()) != null) {
-	            sb.append(line);
-	        }
-	        rd.close();
-	        conn.disconnect();
- 
-	    ObjectMapper mapper = new ObjectMapper();
-	     JsonFactory factory = mapper.getFactory();
-	     JsonParser jsonParser = factory.createParser(sb.toString());
-	     JsonNode node = mapper.readTree(jsonParser);
+		BufferedReader rd;
+		if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+			rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+		} else {
+			rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+		}
+		StringBuilder sb = new StringBuilder();
+		String line;
+		while ((line = rd.readLine()) != null) {
+			sb.append(line);
+		}
+		rd.close();
+		conn.disconnect();
 
-	     JSONArray arr = new JSONArray();
-	     List<String> titleList = node.findValuesAsText("dateName");
-	     List<String> dateList = node.findValuesAsText("locdate");	     
+		ObjectMapper mapper = new ObjectMapper();
+		JsonFactory factory = mapper.getFactory();
+		JsonParser jsonParser = factory.createParser(sb.toString());
+		JsonNode node = mapper.readTree(jsonParser);
 
-	     for(int i=0; i<titleList.size();i++) {
-	    	 JSONObject obj = new JSONObject();
-	    	 obj.put("title", titleList.get(i));
-			obj.put("start", dateList.get(i));			
-	    	 arr.add(obj);
-	     }
-	     return arr;
+		JSONArray arr = new JSONArray();
+		List<String> titleList = node.findValuesAsText("dateName");
+		List<String> dateList = node.findValuesAsText("locdate");
 
-	     }
-	
+		for (int i = 0; i < titleList.size(); i++) {
+			JSONObject obj = new JSONObject();
+			obj.put("title", titleList.get(i));
+			obj.put("start", dateList.get(i));
+			arr.add(obj);
+		}
+		return arr;
+
+	}
+
 	/**
 	 * 스터디 그룹 멤버 조회
+	 * 
 	 * @author 김유란
-	 * @param nowPage 현재 페이지
+	 * @param nowPage
+	 *            현재 페이지
 	 * @return GroupMemberListVO 페이징한 결과(list)와 페이징 객체가 담겨있는 객체
 	 */
 	@RequestMapping("/findGroupMemberByNowPage")
 	@ResponseBody
-	public GroupMemberListVO findGroupMemberByNowPage(String groupNo, String nowPage){
+	public GroupMemberListVO findGroupMemberByNowPage(String groupNo, String nowPage) {
 		return groupService.findGroupMemberByGroupNo(groupNo, nowPage);
 	}
-	
+
 	/**
 	 * 스터디 그룹 신청자 조회
+	 * 
 	 * @author 김유란
-	 * @param nowPage 현재 페이지
+	 * @param nowPage
+	 *            현재 페이지
 	 * @return studyConditionListVO 페이징한 결과(list)와 페이징 객체가 담겨있는 객체
 	 */
 	@RequestMapping("/findStudyConditionByNowPageAndConditionNo")
 	@ResponseBody
-	public StudyConditionListVO findStudyConditionByNowPageAndConditionNo(String groupNo, String nowPage){
+	public StudyConditionListVO findStudyConditionByNowPageAndConditionNo(String groupNo, String nowPage) {
 		return recruitService.findStudyConditionByGroupNo(groupNo, nowPage);
 	}
-	
-	
+
 	/**
 	 * 스터디그룹에 새 팀원을 등록(신청자 승인/거절)
+	 * 
 	 * @author 김유란
-	 * @param state 변경된 신청자 상태(승인/거절)
-	 * @param studyConditionNo 상태 변경될 신청 번호
+	 * @param state
+	 *            변경된 신청자 상태(승인/거절)
+	 * @param studyConditionNo
+	 *            상태 변경될 신청 번호
 	 * @return groupNo 팀원을 등록할 그룹 번호
 	 */
-	@RequestMapping(method=RequestMethod.POST, value="/registerGroupMember")
+	@RequestMapping(method = RequestMethod.POST, value = "/registerGroupMember")
 	@ResponseBody
 	public void registerGroupMember(String state, String studyConditionNo, String groupNo) {
 		groupService.registerGroupMember(state, studyConditionNo, groupNo);
@@ -499,38 +552,123 @@ public class AjaxViewController {
 	}
 
 	/**
-	 * 스터디 개설(모집완료)처리
-	 * 스터디 모집글 상태는 모집완료로, 승인된 신청자의 상태는 '진행중'으로 변경
-	 * @author 김유란
-	 * @param recruitPostNo 모집완료로 상태 변경할 스터디 모집글 번호
-	 * @param request 세션에 담긴 groupMemberVO 정보를 변경하기 위해 호출
+	 * 스터디 그룹 게시판의 현재 페이지 출력
+	 * 
+	 * @author 송용준
+	 * @param sgNo
+	 *            해당 게시판이 속한 스터디 그룹의 번호
+	 * @param nowPage
+	 *            현재 페이지
+	 * @return 스터디 그룹의 게시판
 	 */
-	@RequestMapping(method=RequestMethod.POST, value="/updateRecruitCondition")
+	@RequestMapping("findGroupBoardAjax")
+	@ResponseBody
+	public GroupPostListVO findGroupBoard(HttpServletRequest request, String sgNo, String pageNo) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("nowPage", pageNo);
+		map.put("sgNo", sgNo);
+		GroupPostListVO glist = groupService.findGroupBoard(map);
+
+		return glist;
+	}
+
+	/**
+	 * 스터디 개설(모집완료)처리 스터디 모집글 상태는 모집완료로, 승인된 신청자의 상태는 '진행중'으로 변경
+	 * 
+	 * @author 김유란
+	 * @param recruitPostNo
+	 *            모집완료로 상태 변경할 스터디 모집글 번호
+	 * @param request
+	 *            세션에 담긴 groupMemberVO 정보를 변경하기 위해 호출
+	 */
+	@RequestMapping(method = RequestMethod.POST, value = "/updateRecruitCondition")
 	@ResponseBody
 	public void updateRecruitCondition(String recruitPostNo, HttpServletRequest request) {
 		groupService.updateRecruitCondition(recruitPostNo);
 		HttpSession session = request.getSession(false);
-		if(session.getAttribute("groupMemberVO")!=null) {
-			GroupMemberVO gvo = (GroupMemberVO)session.getAttribute("groupMemberVO");
-			GroupVO groupVO = groupService.findStudyGroupInfoByStudyGroupNo(Integer.toString(gvo.getGroupVO().getGroupNo()));
+		if (session.getAttribute("groupMemberVO") != null) {
+			GroupMemberVO gvo = (GroupMemberVO) session.getAttribute("groupMemberVO");
+			GroupVO groupVO = groupService
+					.findStudyGroupInfoByStudyGroupNo(Integer.toString(gvo.getGroupVO().getGroupNo()));
 			gvo.setGroupVO(groupVO);
 			session.setAttribute("groupMemberVO", gvo);
 		}
-		
+
 	}
-	
-	@RequestMapping(method=RequestMethod.POST, value="/updateGroupName")
+
+	@RequestMapping(method = RequestMethod.POST, value = "/updateGroupName")
 	@ResponseBody
 	public void updateGroupName(String groupNo, String name, HttpServletRequest request) {
 		groupService.updateGroupName(groupNo, name);
 		HttpSession session = request.getSession(false);
-		if(session.getAttribute("groupMemberVO")!=null) {
-			GroupMemberVO gvo = (GroupMemberVO)session.getAttribute("groupMemberVO");
-			GroupVO groupVO = groupService.findStudyGroupInfoByStudyGroupNo(Integer.toString(gvo.getGroupVO().getGroupNo()));
+		if (session.getAttribute("groupMemberVO") != null) {
+			GroupMemberVO gvo = (GroupMemberVO) session.getAttribute("groupMemberVO");
+			GroupVO groupVO = groupService
+					.findStudyGroupInfoByStudyGroupNo(Integer.toString(gvo.getGroupVO().getGroupNo()));
 			gvo.setGroupVO(groupVO);
 			session.setAttribute("groupMemberVO", gvo);
 		}
-		
+
 	}
-	
+
+	/**
+	 * 스터디 그룹 게시글에 댓글 작성
+	 * 
+	 * @author 송용준
+	 * @param gpNo
+	 *            댓글이 달릴 게시글 번호
+	 * @param content
+	 *            댓글 내용
+	 */
+	@RequestMapping("registerGroupPostCommentAjax")
+	@ResponseBody
+	public String registerGroupPostComment(HttpServletRequest request, String comment, String gpNo) {
+		Map<String, Object> map = new HashMap<>();
+		HttpSession session = request.getSession();
+		MemberVO mvo = (MemberVO) session.getAttribute("memberVO");
+		GroupMemberVO gvo=(GroupMemberVO)session.getAttribute("groupMemberVO");
+		// 댓글을 작성하고자 하는 회원의 스터디 그룹 맴법 번호를 조회
+		int groupMemberNo = groupService.getGroupMemberNo(Integer.toString(gvo.getGroupVO().getGroupNo()), mvo.getMemberEmail());
+
+		map.put("comment", comment);
+		map.put("gpNo", gpNo);
+		map.put("gmNo", groupMemberNo);
+
+		groupDAO.registerGroupPostComment(map);
+
+		return "true";
+	}
+
+	/**
+	 * 스터디 그룹 게시글의 댓글 삭제
+	 * 
+	 * @author 송용준
+	 * @param commentNo
+	 *            삭제할 댓글 번호
+	 */
+	@RequestMapping("deleteGroupPostCommentByCommentNoAjax")
+	@ResponseBody
+	public String deleteGroupPostCommentByCommentNo(String commentNo) {
+		groupDAO.deleteGroupPostCommentByCommentNo(commentNo);
+
+		return "true";
+	}
+
+	/**
+	 * 스터디 그룹 게시글의 댓글 수정 : 업데이트
+	 * 
+	 * @author 송용준
+	 * @param commentNo
+	 *            수정할 댓글 번호
+	 */
+	@RequestMapping("updateGroupPostCommentByCommentNoAjax")
+	@ResponseBody
+	public String updateGroupPostCommentByCommentNo(String commentNo, String content) {
+		Map<String, String> map = new HashMap<>();
+		map.put("commentNo", commentNo);
+		map.put("content", content);
+		groupDAO.updateGroupPostCommentByCommentNo(map);
+
+		return "true";
+	}
 }

@@ -11,6 +11,15 @@ public class GroupMemberVO {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	
+
+	public GroupMemberVO(int groupMemberNo) {
+		super();
+		this.groupMemberNo = groupMemberNo;
+	}
+
+
 
 	public GroupMemberVO(int groupMemberNo, String position, String state, MemberVO memberVO, GroupVO groupVO) {
 		super();

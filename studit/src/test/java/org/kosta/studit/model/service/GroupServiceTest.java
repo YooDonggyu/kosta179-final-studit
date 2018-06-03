@@ -1,8 +1,12 @@
 package org.kosta.studit.model.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kosta.studit.model.dao.RecruitDAO;
+import org.kosta.studit.model.vo.GroupPostListVO;
 import org.kosta.studit.model.vo.RecruitPostVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -63,4 +67,26 @@ public class GroupServiceTest {
 		groupService.updateGroupName("7", "또바꿈");
 	}
 	
+	@Test
+	public void findGroupBoard() {
+		Map<String, Object> map=new HashMap<>();
+		map.put("sgNo", 3);
+		GroupPostListVO glist=groupService.findGroupBoard(map);
+		for(int i=0; i<glist.getList().size(); i++) {
+			System.out.println(glist.getList().get(i).getTitle());
+			System.out.println("------------------");
+			System.out.println(glist.getList().get(i).getGroupMemberVO().getMemberVO().getName());
+			
+		}
+	}
+	
 }
+
+
+
+
+
+
+
+
+

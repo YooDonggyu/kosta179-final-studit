@@ -76,6 +76,8 @@ public class MemberController {
 				request.getSession().setAttribute("rHitList", new ArrayList<>());
 				// 업체 조회수 증가 판단을 위한 session
 				request.getSession().setAttribute("cHitList", new ArrayList<>());
+				// 그룹 조회수 증가 판단을 위한 session
+				request.getSession().setAttribute("gHitList", new ArrayList<>());
 				// 아이디 저장 확인(cookie)
 				if(rememberEmail != null) {
 					Cookie cookie = new Cookie("remember", loginEmail);

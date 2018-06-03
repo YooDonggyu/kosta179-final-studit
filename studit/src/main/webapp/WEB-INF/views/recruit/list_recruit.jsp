@@ -3,7 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 
 
-<section class="signup-section text-center" >
+<section class="signup-section text-center no-padding-bottom" >
 <!-- style="background-image: url('${pageContext.request.contextPath}/resources/assets/img/recruit-main.png');  background-position: center; background-repeat:no-repeat; background-size: 100% 100%;" -->
 
 
@@ -106,10 +106,8 @@
 			<c:if test="${pb.nextPageGroup}">	
 				<li><a href="${pageContext.request.contextPath}/recruit/getRecruitPostList?pageNo=${pb.endPageOfPageGroup+1}">&raquo;</a></li>
 			</c:if>
-		</ul>	 		
+		</ul>
 	</div> 	
-	
-	
 	<input type="hidden" id="hiddenNowPage" value="${recruitPostListVO.pagingBean.nowPage}">
 </section>
 
@@ -236,13 +234,13 @@
 					$("#resultData").append("\""+keyword+"\"");
 				}
 				
-				 if(data.recruitPostList.length >0){
+				 if(data.recruitPostList.length >=0){
 					$("#resultData").append(data.pagingBean.totalPostCount+"건이 검색되었습니다.");
 				} 
 				
 			}//success
-		})//ajax
-	}//categoryCheck
+		});//ajax
+	};//categoryCheck	
 	
 	
 	//작성: 김유란

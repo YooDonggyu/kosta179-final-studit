@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.kosta.studit.model.vo.GroupMemberVO;
+import org.kosta.studit.model.vo.GroupPostCommentVO;
+import org.kosta.studit.model.vo.GroupPostVO;
 import org.kosta.studit.model.vo.GroupVO;
 
 public interface GroupDAO {
@@ -21,7 +23,7 @@ public interface GroupDAO {
 	
 	String findMemberPositionByMemberEmailAndStudyGroupNo(Map<String, String> map);
 
-	int countMyLeadGroupHasMemberByEmailAndStudyGroupNo(Map<String, String> map);
+	void deleteStudyMember(Map<String, String> map);
 
 	void updateGroupMemberPosition(Map<String, String> map);
 
@@ -38,6 +40,34 @@ public interface GroupDAO {
 	List<String> findConfirmedConditionNoByRecruitPostNo(String recruitPostNo);
 
 	void updateGroupName(Map<String, String> map);
+
+	int findTotalCountOfGroupPost(Map<String, Object> map);
+
+	List<GroupPostVO> findGroupPostList(Map<String, Object> map);
+
+	GroupPostVO findGroupBoardDetail(String groupPostNo);
+
+	void updateGroupPost(GroupPostVO gvo);
+
+	void createGroupPost(GroupPostVO gvo);
+
+	int getGroupMemberNo(Map<String, String> map);
+
+	void deleteGroupPost(String gpNo);
+
+	String findGroupPostWriterByGroupPostNo(String gpNo);
+
+	void updateGroupPostHitByGroupPostNo(String gpNo);
+
+	List<GroupPostCommentVO> findGroupPostCommentByGroupPostNo(String gpNo);
+
+	void registerGroupPostComment(Map<String, Object> map);
+
+	void deleteGroupPostCommentByCommentNo(String commentNo);
+
+	void updateGroupPostCommentByCommentNo(Map<String, String> map);
+
+	String findStudyGroupNameByStudyGroupNo(String sgNo);
 
 
 }

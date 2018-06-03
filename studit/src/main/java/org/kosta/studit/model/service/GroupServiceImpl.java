@@ -9,6 +9,8 @@ import org.kosta.studit.model.dao.GroupDAO;
 import org.kosta.studit.model.dao.RecruitDAO;
 import org.kosta.studit.model.vo.GroupMemberListVO;
 import org.kosta.studit.model.vo.GroupMemberVO;
+import org.kosta.studit.model.vo.GroupPostListVO;
+import org.kosta.studit.model.vo.GroupPostVO;
 import org.kosta.studit.model.vo.GroupVO;
 import org.kosta.studit.model.vo.MemberVO;
 import org.kosta.studit.model.vo.RecruitPostVO;
@@ -49,15 +51,19 @@ public class GroupServiceImpl implements GroupService {
 		map.put("memberEmail", memberEmail);
 		return groupDAO.findMemberPositionByMemberEmailAndStudyGroupNo(map);
 	}
-
-
+	
+	/**
+	 * 스터디 그룹을 탈퇴하고자 할 때 호출 : 직책을 탈퇴로 변경
+	 * @author 송용준
+	 * @param sgNo 탈퇴할 스터디 그룹의 번호
+	 * @param memberEmail 탈퇴할 회원 이메일
+	 */
 	@Override
-	public int countMyLeadGroupHasMemberByEmailAndStudyGroupNo(String memberEmail, String sgNo) {
+	public void deleteStudyMember(String memberEmail, String sgNo) {
 		Map<String, String> map=new HashMap<>();
 		map.put("memberEmail", memberEmail);
 		map.put("sgNo", sgNo);
-		
-		return groupDAO.countMyLeadGroupHasMemberByEmailAndStudyGroupNo(map);
+		groupDAO.deleteStudyMember(map);
 	}
 
 	/**
@@ -216,6 +222,106 @@ public class GroupServiceImpl implements GroupService {
 		map.put("name", name);
 		map.put("groupNo", groupNo);
 		groupDAO.updateGroupName(map);
+	}
+
+	/**
+	 * 스터디 그룹 내 게시글을 페이징 처리하여 반환
+	 * @author 송용준
+	 * @param pb 페이징 처리하기 위한 객체
+	 * @return List<GroupPostVO> 페이징 처리된 게시글
+	 */
+	@Override
+	public List<GroupPostVO> findGroupPostList(PagingBean pb){
+		Map<String, Object> map=new HashMap<>();
+		map.put("pagingBean", pb);
+		return groupDAO.findGroupPostList(map);
+	}
+	
+	/**
+	 * 스터디 그룹 내 게시글을 페이징 처리하여 반환
+	 * @author 송용준
+	 * @param map 페이징 처리하기 위한 객체
+	 * @return List<GroupPostVO> 페이징 처리된 게시글
+	 */
+	@Override
+	public List<GroupPostVO> findGroupPostList(Map<String, Object> map){
+		return groupDAO.findGroupPostList(map);
+	}
+	
+	/**
+	 * 스터디 그룹 내 게시글을 조건에 맞춰 페이징 처리하여 반환
+	 * @author 송용준
+	 * @param map 페이징 처리하기 위한 객체
+	 * @return GroupPostListVO 페이징 처리된 게시글
+	 */
+	@Override
+	public GroupPostListVO findGroupBoard(Map<String, Object> map) {
+		List<GroupPostVO> list=null;
+		PagingBean pb=null;
+		
+		if(map==null) {
+			pb=new PagingBean(groupDAO.findTotalCountOfGroupPost(null));
+			list=findGroupPostList(pb);
+		}else {
+			int nowPage=0;
+			if(map.get("nowPage")!=null && map.get("nowPage")!="") {
+				nowPage=Integer.parseInt((String)map.get("nowPage"));
+			}
+			
+			if(nowPage==0) {
+				pb=new PagingBean(groupDAO.findTotalCountOfGroupPost(map));
+			}else {
+				pb=new PagingBean(groupDAO.findTotalCountOfGroupPost(map), nowPage);
+			}
+			map.put("pagingBean", pb);
+			list=findGroupPostList(map);
+		}
+		
+		GroupPostListVO pagingList=new GroupPostListVO(list, pb);
+		
+		return pagingList;
+	}
+	
+	/**
+	 * 스터디 그룹 내 게시글의 상세보기를 하고자 할 때 호출
+	 * @author 송용준
+	 * @param groupPostNo 상세보기를 할 게시글 번호
+	 * @return GroupPostVO 상세보기할 게시글의 정보를 담은 객체
+	 */
+	@Override
+	public GroupPostVO findGroupBoardDetail(String groupPostNo) {
+		
+		return groupDAO.findGroupBoardDetail(groupPostNo);
+	}
+	
+	/**
+	 * 스터디 그룹 내 게시글의 수정 하고자 할 때 호출
+	 * @author 송용준
+	 * @param GroupPostVO 수정 할 게시글 정보를 담은 객체
+	 */
+	@Override
+	public void updateGroupPost(GroupPostVO gvo) {
+		groupDAO.updateGroupPost(gvo);
+	}
+	
+	/**
+	 * 스터디 그룹원의 번호를 조회
+	 * @author 송용준
+	 * @param sgNo 스터디 그룹 번호
+	 * @param memberEmail 조회할 그룹원의 이메일
+	 * @return int 조회한 스터디 그룹원의 번호
+	 */
+	@Override
+	public int getGroupMemberNo(String sgNo, String memberEmail) {
+		Map<String, String> map=new HashMap<>();
+		map.put("sgNo", sgNo);
+		map.put("email", memberEmail);
+		return groupDAO.getGroupMemberNo(map);
+	}
+
+	@Override
+	public String findStudyGroupNameByStudyGroupNo(String sgNo) {
+		return groupDAO.findStudyGroupNameByStudyGroupNo(sgNo);
 	}
 
 }

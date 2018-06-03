@@ -13,11 +13,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="memberVO.picPath" column="pic_path"/>
 		<result property="memberVO.name" column="member_name"/>
 	</resultMap>
+	
 	<resultMap type="groupVO" id="groupRM">
 		<result property="recruitPostVO.recruitPostNo" column="recruit_post_no"/>
 		<result property="recruitPostVO.condition" column="condition"/>
 		<result property="groupNo" column="sg_no"/>
 	</resultMap>
+	
+	<resultMap type="groupPostVO" id="groupPostRM">
+		<result property="groupMemberVO.memberVO.memberEmail" column="member_email"/>
+		<result property="groupMemberVO.memberVO.name" column="name"/>
+	</resultMap>
+	
+	<resultMap type="groupPostCommentVO" id="groupPostCommentRM">
+		<result property="groupMemberVO.memberVO.memberEmail" column="member_email"/>
+		<result property="groupMemberVO.memberVO.name" column="name"/>
+	</resultMap>
+	
 	<!-- 
 		본인이 팀장인 스터디 그룹의 개수 조회
 		@author 송용준
@@ -47,25 +59,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			group by sm1.sg_no
 		) a, RECRUIT_POST rp, study_group sg
 		where sg.sg_no = a.sg_no and sg.recruit_post_no = rp.recruit_post_no and a.cnt>1
-	</select>
-	
-	<!-- 
-		매개변수로 받은 스터디 그룹이 본인이 팀장이고 팀원이 있는 스터디 그룹인지 확인
-		@author 송용준, 유동규
-		@param sgNo 스터디 그룹의 번호
-		@return int 팀장이고 팀원이면 1, 아니면 0 반환
-	 -->
-	<select id="countMyLeadGroupHasMemberByEmailAndStudyGroupNo" parameterType="map" resultType="int">
-		select count(a.sg_no)
-		from (
-			select sm1.sg_no as sg_no, count(sm2.member_email) as cnt
-			from sg_member sm1, sg_member sm2 
-			where sm1.member_email=#{memberEmail} 
-					and sm1.position='팀장' 
-				  	and sm1.sg_no = sm2.sg_no
-			group by sm1.sg_no
-		) a, RECRUIT_POST rp, study_group sg
-		where sg.sg_no = a.sg_no and sg.recruit_post_no = rp.recruit_post_no and a.cnt>1 and sg_no=#{sgNo}
 	</select>
 	
 	<!-- 
@@ -177,9 +170,9 @@ where rnum between #{pagingBean.startRowNumber} and #{pagingBean.endRowNumber} o
 		@author 김유란
 		@param map(position: 변경할 직책명 / groupMemberNo: 변경할 그룹 멤버의 식별번호)
 	 -->
-	<select id="updateGroupMemberPosition"  parameterType="map">
+	<update id="updateGroupMemberPosition"  parameterType="map">
 	update sg_member set position=#{position} where sg_member_no=#{groupMemberNo}
-	</select>
+	</update>
 	
 		<!-- 
 		그룹 멤버 state(즐겨찾기) 변경
@@ -217,5 +210,204 @@ where rnum between #{pagingBean.startRowNumber} and #{pagingBean.endRowNumber} o
 	<update id="updateGroupName" parameterType="map">
 		update study_group set name=#{name} where sg_no=#{groupNo}
 	</update>
+	
+	
+	<!-- 
+		스터디 그룹에서 탈퇴
+		@author 송용준
+		@param memberEmail 회원 이메일
+		@param sgNo 탈퇴할 스터디 그룹
+	 -->
+	<update id="deleteStudyMember">
+		update sg_member
+		set position='탈퇴'
+		where sg_no=#{sgNo} and member_email=#{memberEmail}
+	</update>
+	
+	<!-- 
+		스터디 그룹의 총 게시물 수를 조회
+		@author 송용준
+		@param memberEmail 회원 이메일
+		@return string 본인이 팀장인 스터디 그룹의 개수
+	 -->
+	<select id="findTotalCountOfGroupPost" parameterType="map" resultType="int">
+		select count(sp.sg_post_no)
+		from sg_post sp, study_group sg, sg_member sm, member m
+		<where>
+			sp.sg_no=#{sgNo} and sp.sg_no=sg.sg_no and sg.sg_no=sm.sg_no and sp.sg_member_no=sm.sg_member_no and m.member_email=sm.member_email
+			<if test="keyword != null">
+				and sp.title || sp.content like '%'||#{keyword}||'%'
+			</if>
+			<if test="name != null">
+				and m.name=#{name}
+			</if>
+		</where>
+	</select>
+	
+	<!-- 
+		검색 조건에 맞는 스터디 그룹의 게시물을 페이징 처리하여 조회
+		@author 송용준
+		@param map 검색 조건&페이징 객체
+		@return groupPostVO 페이징 처리된 게시글 리스트
+	 -->
+	<select id="findGroupPostList" parameterType="map" resultMap="groupPostRM">
+		select sp.sg_post_no as groupPostNo, sp.title as title, sp.regdate as regdate, sp.hit as hit, sm.member_email as member_email, m.name as name
+		from sg_post sp, sg_member sm, member m, (
+			select cc.sg_post_no as sg_post_no, row_number() over(order by cc.sg_post_no desc) as rnum
+			from(
+				select distinct sp.sg_post_no as sg_post_no
+				from sg_post sp, study_group sg, sg_member sm, member m
+				<where>
+					sp.sg_no=#{sgNo}
+					<if test="keyword != null">
+						and sp.title || sp.content like '%'||#{keyword}||'%'
+					</if>
+					<if test="name != null">
+						and sp.sg_no=sg.sg_no and sg.sg_no=sm.sg_no and sp.sg_member_no=sm.sg_member_no and m.member_email=sm.member_email and m.name=#{name}
+					</if> 
+				</where>
+			)cc
+		) dc
+		where sp.sg_post_no = dc.sg_post_no and sm.sg_member_no = sp.sg_member_no and m.member_email = sm.member_email and dc.rnum between #{pagingBean.startRowNumber} and #{pagingBean.endRowNumber}
+		order by sp.regdate desc
+	</select>
+	
+	<!-- 
+		스터디 그룹 게시글 상세보기
+		@author 송용준
+		@param map 스터디 그룹 게시글의 번호
+		@return groupPostVO 상세보기 할 게시글
+	 -->
+	<select id="findGroupBoardDetail" parameterType="string" resultMap="groupPostRM">
+		select sp.title as title, sp.content as content, m.name as name, sm.member_email as member_email, sp.regdate as regdate, sp.hit as hit
+		from sg_post sp, sg_member sm, member m
+		where sp.sg_no=sm.sg_no and sm.member_email=m.member_email and sp.sg_member_no=sm.sg_member_no and sp.sg_post_no=#{value}
+	</select>
+	
+	<!-- 
+		스터디 그룹 게시글 수정
+		@author 송용준
+		@param GroupPostVO 수정할 게시글 정보를 담은 객체
+	 -->
+	<update id="updateGroupPost" parameterType="groupPostVO">
+		update sg_post
+		set content=#{content}
+		where sg_post_no=#{groupPostNo}
+	</update>
+	
+	<!-- 
+		스터디 그룹 맴버의 번호를 조회
+		@author 송용준
+		@param sgNo 조회할 스터디 그룹 번호
+		@param email 조회할 맴버의 이메일
+		@return int 맴버의 그룹 맴버 번호
+	 -->
+	<select id="getGroupMemberNo" parameterType="map" resultType="int">
+		select sg_member_no
+		from sg_member
+		where sg_no=#{sgNo} and member_email=#{email}
+	</select>
+	
+	<!-- 
+		스터디 그룹 게시글 작성
+		@author 송용준
+		@param GroupPostVO DB에 저장할 게시글 정보를 담은 객체
+	 -->
+	<insert id="createGroupPost" parameterType="groupPostVO">
+		<selectKey keyProperty="groupPostNo" resultType="int" order="BEFORE">
+			select
+			sg_post_seq.nextVal from dual
+		</selectKey>
+		insert into sg_post(sg_post_no, title, content, sg_member_no, regdate, sg_no)
+		values(#{groupPostNo}, #{title}, #{content}, #{groupMemberVO.groupMemberNo}, sysdate, #{groupVO.groupNo})
+	</insert>
+	
+	<!-- 
+		스터디 그룹 게시글 삭제
+		@author 송용준
+		@param string 스터디 그룹 게시글의 번호
+	 -->
+	<delete id="deleteGroupPost" parameterType="string">
+		delete from sg_post
+		where sg_post_no=#{value}
+	</delete>
+	
+	<!-- 
+		스터디 그룹 게시글의 작성자 조회
+		@author 송용준
+		@param string 스터디 그룹 게시글의 번호
+		@return string 작성자 이메일 
+	 -->
+	<select id="findGroupPostWriterByGroupPostNo" parameterType="string" resultType="string">
+		select sm.member_email
+		from sg_post sp, sg_member sm
+		where sp.sg_no=sm.sg_no and sp.sg_member_no=sm.sg_member_no and sp.sg_post_no=#{value}
+	</select>
+	
+	<!-- 
+		스터디 그룹 게시글 조회수 증가
+		@author 송용준
+		@param map 스터디 그룹 게시글의 번호
+	 -->
+	<update id="updateGroupPostHitByGroupPostNo" parameterType="string">
+		update sg_post
+		set hit=hit+1
+		where sg_post_no=#{value}
+	</update>
+	
+	<!-- 
+		스터디 그룹 게시글의 댓글 조회
+		@author 송용준
+		@param map 스터디 그룹 게시글의 번호
+		@return GroupPostCommentVO 댓글 정보를 담은 객체
+	 -->
+	<select id="findGroupPostCommentByGroupPostNo" parameterType="string" resultMap="groupPostCommentRM">
+		select sc.sg_comment_no as groupCommentNo, sc.content, to_char(sc.regdate, 'YYYY.MM.DD') as regdate, sm.member_email as member_email, m.name as name
+		from sg_post_comment sc, sg_member sm, member m
+		where sc.sg_post_no=#{value} and sc.sg_member_no=sm.sg_member_no and sm.member_email=m.member_email
+	</select>
+	
+	<!-- 
+		스터디 그룹 게시글에 댓글 작성
+		@author 송용준
+		@param map 작성할 댓글 정볼르 담은 객체
+	 -->
+	<insert id="registerGroupPostComment" parameterType="map">
+		insert into sg_post_comment(sg_comment_no, content, regdate, sg_post_no, sg_member_no)
+		values(sg_post_comment_seq.nextVal, #{comment}, sysdate, #{gpNo}, #{gmNo} )
+	</insert>
+	
+	<!-- 
+		스터디 그룹 게시글 댓글 삭제
+		@author 송용준
+		@param string 스터디 그룹 게시글의 댓글 번호
+	 -->
+	<delete id="deleteGroupPostCommentByCommentNo" parameterType="string">
+		delete from sg_post_comment
+		where sg_comment_no=#{value}
+	</delete>
+	
+	<!-- 
+		스터디 그룹 게시글 댓글 수정
+		@author 송용준
+		@param map 수정한 내용을 담은 객체
+	 -->
+	<update id="updateGroupPostCommentByCommentNo" parameterType="map">
+		update sg_post_comment
+		set content=#{content}
+		where sg_comment_no=#{commentNo}
+	</update>
+	
+	<!-- 
+		스터디 그룹의 이름 조회
+		@author 송용준
+		@param string 스터디 그룹 게시글 번호
+		@return 스터디 그룹 이름
+	 -->
+	<select id="findStudyGroupNameByStudyGroupNo" parameterType="string" resultType="string">
+		select name
+		from study_group
+		where sg_no=#{value}
+	</select>
 </mapper>
 

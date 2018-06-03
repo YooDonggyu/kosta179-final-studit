@@ -84,7 +84,7 @@
 					   		</c:if>
 					   </c:when>
 				   <c:otherwise>
-				   		<a href="" class="btn btn-primary">신청 ${recruitInfo.studyState} 상태</a> &emsp;
+				   		<a onclick="return goMyPage()" class="btn btn-primary">신청 ${recruitInfo.studyState} 상태</a> &emsp;
 				   </c:otherwise>
 			  	 </c:choose>
 		   
@@ -167,6 +167,12 @@
     <script>
     	function goBack(){
     		history.back();
+    	}
+    	
+    	function goMyPage(){
+    		if(confirm("스터디 통합관리 메뉴로 이동하시겠습니까?")){
+    			location.href="${pageContext.request.contextPath}/member/getMyPage";
+    		}
     	}
     
 		$(document).ready(function(){

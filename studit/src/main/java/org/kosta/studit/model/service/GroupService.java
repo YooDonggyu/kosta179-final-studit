@@ -1,6 +1,12 @@
 package org.kosta.studit.model.service;
 
+import java.util.List;
+import java.util.Map;
+
+import org.kosta.studit.model.PagingBean;
 import org.kosta.studit.model.vo.GroupMemberListVO;
+import org.kosta.studit.model.vo.GroupPostListVO;
+import org.kosta.studit.model.vo.GroupPostVO;
 import org.kosta.studit.model.vo.GroupVO;
 import org.kosta.studit.model.vo.RecruitPostVO;
 
@@ -8,7 +14,7 @@ public interface GroupService {
 
 	String findMemberPositionByMemberEmailAndStudyGroupNo(String sgNo, String memberEmail);
 
-	int countMyLeadGroupHasMemberByEmailAndStudyGroupNo(String memberEmail, String sgNo);
+	void deleteStudyMember(String memberEmail, String sgNo);
 
 	GroupMemberListVO findGroupMemberByGroupNo(String groupNo, String nowPage);
 
@@ -25,5 +31,19 @@ public interface GroupService {
 	void createAdditionalRecruit(RecruitPostVO recruitPostVO, String[] day);
 
 	void updateGroupName(String groupNo, String name);
+
+	GroupPostListVO findGroupBoard(Map<String, Object> map);
+
+	List<GroupPostVO> findGroupPostList(PagingBean pb);
+
+	List<GroupPostVO> findGroupPostList(Map<String, Object> map);
+
+	GroupPostVO findGroupBoardDetail(String groupPostNo);
+
+	void updateGroupPost(GroupPostVO gvo);
+
+	int getGroupMemberNo(String sgNo, String memberEmail);
+
+	String findStudyGroupNameByStudyGroupNo(String sgNo);
 
 }

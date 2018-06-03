@@ -175,4 +175,5 @@ public class GroupDAOTest {
 		map.put("groupNo", "15");
 		groupDAO.updateGroupName(map);
 	}
+
 }

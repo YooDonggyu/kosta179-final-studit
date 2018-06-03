@@ -37,7 +37,6 @@
 	                  <li class="dropdown-header">회원정보</li>
 	                  <li><a data-toggle="modal"  href="#checkMemberModal">회원정보 수정</a></li>
 	                  <li><a href="${pageContext.request.contextPath}/member/updatePasswordView">비밀번호 변경</a></li>
-	                  <li><a href="${pageContext.request.contextPath}/group/groupHome">나의 그룹</a></li>
 	                  <li><a href="${pageContext.request.contextPath}/member/logout">로그아웃</a></li>
 	                   <li class="divider"></li>
 	                  <c:if test="${sessionScope.memberVO.admin}"> 

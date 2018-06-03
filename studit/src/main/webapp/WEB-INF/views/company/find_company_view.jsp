@@ -62,7 +62,7 @@
       			<c:forEach items="${allCompanyList }" var="clist">
           			<div class="col-sm-4 ">
            				<div class="box box-services">
-              				<img src="${pageContext.request.contextPath }/resources/upload/업체1.JPG" style="width: 300px; height: 200px" onclick="return goDetail(${clist.companyNo})">
+              				<img src="${pageContext.request.contextPath }/resources/upload/${clist.profilePath}" style="width: 300px; height: 200px" onclick="return goDetail(${clist.companyNo})">
               				<div>
               					<h4 class="heading">${clist.name }</h4>
               				</div>
@@ -101,7 +101,9 @@
 					var studyroom="";
 				 	$.each(data.list, function(index, item) {
 						studyroom+="<div class='col-sm-4'><div class='box box-services'><div>";
-						studyroom+="<img src='${pageContext.request.contextPath }/resources/upload/업체1.JPG' style='width: 300px; height: 200px' onclick='return goDetail(";
+						studyroom+="<img src='${pageContext.request.contextPath }/resources/upload/";
+						studyroom+=item.profilePath;
+						studyroom+="' style='width: 300px; height: 200px' onclick='return goDetail(";
 						studyroom+=item.companyNo;
 						studyroom+=")'>";
 						studyroom+="</div><div><h4 class='heading'>";
@@ -139,14 +141,16 @@
 					if(result.list==""){
 						studyroom+="<c:forEach items='${allCompanyList }' var='clist'>";
 						studyroom+="<div class='col-sm-4'><div class='box box-services'><div>";
-						studyroom+="<img src='${pageContext.request.contextPath }/resources/upload/업체1.JPG' style='width: 300px; height: 200px' onclick='return goDetail(${clist.companyNo})'>";
+						studyroom+="<img src='${pageContext.request.contextPath }/resources/upload/${clist.profilePath}' style='width: 300px; height: 200px' onclick='return goDetail(${clist.companyNo})'>";
 						studyroom+="</div><div><h4 cl ass='heading'>${clist.name }</h4></div>";
 						studyroom+="<div id='showAddress' style='font-size: 14px; color: #AB8888; font-weight: bold;'>${clist.addr1 } ${clist.addr2 } ${clist.addr3 }</div>";
 						studyroom+="<p>${clist.intro }</p></div></div></c:forEach>";
 					}else{
 						$.each(result.list, function(index, item){
 							studyroom+="<div class='col-sm-4'><div class='box box-services'><div>";
-							studyroom+="<img src='${pageContext.request.contextPath }/resources/upload/업체1.JPG' style='width: 300px; height: 200px' onclick='return goDetail(";
+							studyroom+="<img src='${pageContext.request.contextPath }/resources/upload/";
+							studyroom+=item.profilePath;
+							studyroom+="' style='width: 300px; height: 200px' onclick='return goDetail(";
 							studyroom+=item.companyNo;
 							studyroom+=")'>";
 							studyroom+="</div><div><h4 class='heading'>";
@@ -208,7 +212,9 @@
 					}else{
 						$.each(result.list, function(index, item){
 							studyroom+="<div class='col-sm-4'><div class='box box-services'><div>";
-							studyroom+="<img src='${pageContext.request.contextPath }/resources/upload/업체1.JPG' style='width: 300px; height: 200px' onclick='return goDetail(";
+							studyroom+="<img src='${pageContext.request.contextPath }/resources/upload/";
+							studyroom+=item.profilePath;
+							studyroom+="' style='width: 300px; height: 200px' onclick='return goDetail(";
 							studyroom+=item.companyNo;
 							studyroom+=")'>";
 							studyroom+="</div><div><h4 class='heading'>";
@@ -269,7 +275,9 @@
 					}else{
 						$.each(result.list, function(index, item){
 							studyroom+="<div class='col-sm-4'><div class='box box-services'><div>";
-							studyroom+="<img src='${pageContext.request.contextPath }/resources/upload/업체1.JPG' style='width: 300px; height: 200px' onclick='return goDetail(";
+							studyroom+="<img src='${pageContext.request.contextPath }/resources/upload/";
+							studyroom+=item.profilePath;
+							studyroom+="' style='width: 300px; height: 200px' onclick='return goDetail(";
 							studyroom+=item.companyNo;
 							studyroom+=")'>";
 							studyroom+="</div><div><h4 class='heading'>";
@@ -309,7 +317,9 @@
 					}else{
 						$.each(result.list, function(index, item){
 							studyroom+="<div class='col-sm-4'><div class='box box-services'><div>";
-							studyroom+="<img src='${pageContext.request.contextPath }/resources/upload/업체1.JPG' style='width: 300px; height: 200px' onclick='return goDetail(";
+							studyroom+="<img src='${pageContext.request.contextPath }/resources/upload/";
+							studyroom+=item.profilePath;
+							studyroom+="' style='width: 300px; height: 200px' onclick='return goDetail(";
 							studyroom+=item.companyNo;
 							studyroom+=")'>";
 							studyroom+="</div><div><h4 class='heading'>";

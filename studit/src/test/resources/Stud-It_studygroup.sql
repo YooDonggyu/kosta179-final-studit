@@ -173,6 +173,74 @@ create sequence sg_post_seq nocache;
 insert into sg_post(sg_post_no, sg_no, title,  content, regdate, sg_member_no) 
 values(sg_post_seq.nextval, 1, '첫글이네요', '다들 성공하세요', sysdate, 2);
 
+insert into sg_post(sg_post_no, sg_no, title,  content, regdate, sg_member_no) 
+values(sg_post_seq.nextval, 3, '팀장입니다. 반갑습니다, 여러분!', '좋은 마음으로 모인만큼 열심히 해봐요!', sysdate, 3);
+
+insert into sg_post(sg_post_no, sg_no, title,  content, regdate, sg_member_no) 
+values(sg_post_seq.nextval, 3, '스터디 추후 일정', '정기 스터디 : 화요일/수요일/토요일', sysdate, 3);
+
+insert into sg_post(sg_post_no, sg_no, title,  content, regdate, sg_member_no) 
+values(sg_post_seq.nextval, 3, '잘부탁드려요~^^', 'f@g.com 입니다!', sysdate, 21);
+
+insert into sg_post(sg_post_no, sg_no, title,  content, regdate, sg_member_no) 
+values(sg_post_seq.nextval, 3, '하이루~', 'b@b.com 입니다!', sysdate, 22);
+
+insert into sg_post(sg_post_no, sg_no, title,  content, regdate, sg_member_no) 
+values(sg_post_seq.nextval, 3, 'Hello, everybody!', 'My email address is g@g.com 입니다!', sysdate, 23);
+
+insert into sg_post(sg_post_no, sg_no, title,  content, regdate, sg_member_no) 
+values(sg_post_seq.nextval, 3, '여기는 뭐하는 곳이죠?', '제가 왜 이 스터디를 신청했는지 모르겠네요.', sysdate, 21);
+
+insert into sg_post(sg_post_no, sg_no, title,  content, regdate, sg_member_no) 
+values(sg_post_seq.nextval, 3, '제가 신청한 게 아니라 물어보는 거에요.', 'ㅇㅇ', sysdate, 21);
+
+insert into sg_post(sg_post_no, sg_no, title,  content, regdate, sg_member_no) 
+values(sg_post_seq.nextval, 3, '밑분 뭐하시는 분이죠?;;', '마음에 드네요. 저랑 사귀어요.', sysdate, 23);
+
+insert into sg_post(sg_post_no, sg_no, title,  content, regdate, sg_member_no) 
+values(sg_post_seq.nextval, 3, '그래서 우리 첫 스터디는 어디서?', '팀장님 소환!', sysdate, 23);
+
+insert into sg_post(sg_post_no, sg_no, title,  content, regdate, sg_member_no) 
+values(sg_post_seq.nextval, 3, '첫 스터디 장소 관련 공지', '다들 저희집 앞으로 모이세요.', sysdate, 3);
+
+insert into sg_post(sg_post_no, sg_no, title,  content, regdate, sg_member_no) 
+values(sg_post_seq.nextval, 3, '첫 스터디 주제', '모여서 정하도록 하죠.', sysdate, 3);
+
+-------
+
+insert into sg_post(sg_post_no, sg_no, title,  content, regdate, sg_member_no) 
+values(sg_post_seq.nextval, 3, '팀장입니다. 다음주도 화이팅!', '좋은 마음으로 모인만큼 열심히 해봐요!', sysdate, 3);
+
+insert into sg_post(sg_post_no, sg_no, title,  content, regdate, sg_member_no) 
+values(sg_post_seq.nextval, 3, '다음주 추후 일정', '정기 스터디 : 화요일/수요일/토요일', sysdate, 3);
+
+insert into sg_post(sg_post_no, sg_no, title,  content, regdate, sg_member_no) 
+values(sg_post_seq.nextval, 3, '다음주도 잘부탁드려요~^^', 'f@g.com 입니다!', sysdate, 21);
+
+insert into sg_post(sg_post_no, sg_no, title,  content, regdate, sg_member_no) 
+values(sg_post_seq.nextval, 3, '제겐 정말 유익한 시간이었습니다!', 'b@b.com 입니다!', sysdate, 22);
+
+insert into sg_post(sg_post_no, sg_no, title,  content, regdate, sg_member_no) 
+values(sg_post_seq.nextval, 3, 'It was very impressived!!', 'My email address is g@g.com 입니다!', sysdate, 23);
+
+insert into sg_post(sg_post_no, sg_no, title,  content, regdate, sg_member_no) 
+values(sg_post_seq.nextval, 3, '지금부터 우리는!', '여자친구가 부릅니다.', sysdate, 21);
+
+insert into sg_post(sg_post_no, sg_no, title,  content, regdate, sg_member_no) 
+values(sg_post_seq.nextval, 3, '다들 연락처 교환하셨나요?', 'ㅇㅇ', sysdate, 21);
+
+insert into sg_post(sg_post_no, sg_no, title,  content, regdate, sg_member_no) 
+values(sg_post_seq.nextval, 3, '밑분 빼곤 다 했습니다.', '마음에 드네요. 저랑 사귀어요.', sysdate, 23);
+
+insert into sg_post(sg_post_no, sg_no, title,  content, regdate, sg_member_no) 
+values(sg_post_seq.nextval, 3, '왜 저만? 장난이 심하시네요;;', '팀장님 소환!', sysdate, 23);
+
+insert into sg_post(sg_post_no, sg_no, title,  content, regdate, sg_member_no) 
+values(sg_post_seq.nextval, 3, '팀장입니다. 다들 내 밑으로 입 다물.', '다들 저희집 앞으로 모이세요.', sysdate, 3);
+
+insert into sg_post(sg_post_no, sg_no, title,  content, regdate, sg_member_no) 
+values(sg_post_seq.nextval, 3, '두번 째 스터디 주제는..', '모여서 정하도록 하죠.', sysdate, 3);
+
 --모집 완료된 스터디 게시글 댓글
 drop table sg_post_comment;
 create table sg_post_comment(
@@ -189,6 +257,15 @@ create sequence sg_post_comment_seq nocache;
 
 insert into sg_post_comment(sg_comment_no, content, sg_post_no, sg_member_no, regdate)
 values (sg_post_comment_seq.nextval, '첫 모임', 1, 2, sysdate);
+
+insert into sg_post_comment(sg_comment_no, content, sg_post_no, sg_member_no, regdate)
+values (sg_post_comment_seq.nextval, '시러여~', 26, 21, sysdate);
+insert into sg_post_comment(sg_comment_no, content, sg_post_no, sg_member_no, regdate)
+values (sg_post_comment_seq.nextval, '시집가든가', 26, 22, sysdate);
+insert into sg_post_comment(sg_comment_no, content, sg_post_no, sg_member_no, regdate)
+values (sg_post_comment_seq.nextval, '어느 시대에서 오심요?', 26, 21, sysdate);
+insert into sg_post_comment(sg_comment_no, content, sg_post_no, sg_member_no, regdate)
+values (sg_post_comment_seq.nextval, '석기시대요', 26, 23, sysdate);
 
 select p.title, c.content
 from sg_post p, sg_post_comment c

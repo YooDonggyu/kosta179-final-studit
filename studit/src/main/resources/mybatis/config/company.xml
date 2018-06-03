@@ -171,6 +171,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select day from com_business_day where company_no=#{value}
 	</select>
 	
+	<!-- 
+		검색 조건으로 업체 조회 
+		@author 송용준
+		@param 검색 조건과 pagingBean
+    -->
 	<select id="findCompanyListByCondition" parameterType="map" resultType="companyVO">
 		select com.company_no, com.name, com.addr1, com.addr2, com.addr3, com.intro, com.profile_path 
 		from company com, (
@@ -196,7 +201,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			)cc
 		) dc
 		where com.company_no = dc.company_no and dc.rnum between #{pagingBean.startRowNumber} and #{pagingBean.endRowNumber} 
-		order by regdate desc
+		order by com.regdate desc
 		
 	</select>
 	

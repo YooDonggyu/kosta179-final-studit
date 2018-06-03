@@ -59,7 +59,7 @@ public class CompanyController {
 		CompanyListVO allCompanyList=companyService.findCompanyListByCondition(null);
 		//DB에 저장된 모든 해쉬태그 목록 : 업체가 가진 해쉬태그를 뷰에 표시
 		List<Map<String, Object>> allHashTagList=companyService.readAllHashTag();
-		
+		System.out.println(allCompanyList.getList().get(0).getProfilePath());
 		request.setAttribute("firstAddrList", firstAddrList);
 		request.setAttribute("allCompanyList", allCompanyList.getList());
 		request.setAttribute("pagingBean", allCompanyList.getPagingBean());

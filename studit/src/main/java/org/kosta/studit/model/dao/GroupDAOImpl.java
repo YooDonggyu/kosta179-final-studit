@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.kosta.studit.model.vo.GroupMemberVO;
+import org.kosta.studit.model.vo.GroupPostCommentVO;
+import org.kosta.studit.model.vo.GroupPostVO;
 import org.kosta.studit.model.vo.GroupVO;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -106,9 +108,8 @@ public class GroupDAOImpl implements GroupDAO {
 	}
 
 	@Override
-
-	public int countMyLeadGroupHasMemberByEmailAndStudyGroupNo(Map<String, String> map) {
-		return template.selectOne("group.countMyLeadGroupHasMemberByEmailAndStudyGroupNo", map);
+	public void deleteStudyMember(Map<String, String> map) {
+		template.update("group.deleteStudyMember", map);
 	}
 
 	/**
@@ -142,6 +143,103 @@ public class GroupDAOImpl implements GroupDAO {
 	public void updateGroupMemberPosition(Map<String, String> map) {
 		template.update("group.updateGroupMemberPosition", map);
 	}
+	
+	/**
+	 * 스터디 그룹 게시판의 총 게시글 갯수를 반환
+	 * @author 송용준
+	 * @param map 스터디 그룹 정보를 담은 객체
+	 */
+	@Override
+	public int findTotalCountOfGroupPost(Map<String, Object> map) {
+		return template.selectOne("group.findTotalCountOfGroupPost", map);
+	}
+	
+	/**
+	 * 조건에 맞는 스터디 그룹 게시판의 게시글 리스트 반환
+	 * @author 송용준
+	 * @param map 검색 조건을 담은 객체
+	 * @return List<GroupPostVO> 검색 조건에 부합하는 게시글 리스트
+	 */
+	@Override
+	public List<GroupPostVO> findGroupPostList(Map<String, Object> map) {
+		return template.selectList("group.findGroupPostList", map);
+	}
+	
+	/**
+	 * 스터디 그룹 내 게시글의 상세보기를 하고자 할 때 호출
+	 * @author 송용준
+	 * @param groupPostNo 상세보기를 할 게시글 번호
+	 * @return GroupPostVO 상세보기할 게시글의 정보를 담은 객체
+	 */
+	@Override
+	public GroupPostVO findGroupBoardDetail(String groupPostNo) {
+		return template.selectOne("group.findGroupBoardDetail", groupPostNo);
+	}
+	
+	/**
+	 * 스터디 그룹 내 게시글의 수정 하고자 할 때 호출
+	 * @author 송용준
+	 * @param GroupPostVO 수정 할 게시글 정보를 담은 객체
+	 */
+	@Override
+	public void updateGroupPost(GroupPostVO gvo) {
+		template.update("group.updateGroupPost", gvo);
+	}
+	
+	/**
+	 * 스터디 그룹원의 번호를 조회
+	 * @author 송용준
+	 * @param sgNo 스터디 그룹 번호
+	 * @param memberEmail 조회할 그룹원의 이메일
+	 * @return int 조회한 스터디 그룹원의 번호
+	 */
+	@Override
+	public int getGroupMemberNo(Map<String, String> map) {
+		return template.selectOne("group.getGroupMemberNo", map);
+	}
+	
+	/**
+	 * 스터디 그룹 내 게시글을 등록
+	 * @author 송용준
+	 * @param title, content 작성한 게시글 정보
+	 * @return 상세보기 화면으로 이동
+	 */
+	@Override
+	public void createGroupPost(GroupPostVO gvo) {
+		template.insert("group.createGroupPost", gvo);
+	}
+	
+	/**
+	 * 스터디 그룹 내 게시글 삭제
+	 * @author 송용준
+	 * @param gpNo 삭제할 게시글의 번호
+	 * @return 삭제 완료 후, 게시판 첫 페이지로 이동
+	 */
+	@Override
+	public void deleteGroupPost(String gpNo) {
+		template.delete("group.deleteGroupPost", gpNo);
+	}
+	
+	/**
+	 * 스터디 그룹 게시판 내 게시글의 작성자 이메일을 반환
+	 * @author 송용준
+	 * @param gpNo 작성자를 찾을 게시글의 번호
+	 * @return 해당 게시글의 작성자 이메일
+	 */
+	@Override
+	public String findGroupPostWriterByGroupPostNo(String gpNo) {
+		return template.selectOne("group.findGroupPostWriterByGroupPostNo", gpNo);
+	}
+	
+	/**
+	 * 스터디 그룹 게시판 내 게시글의 조회수를 증가
+	 * @author 송용준
+	 * @param gpNo 조회수를 증가할 게시글의 번호
+	 */
+	@Override
+	public void updateGroupPostHitByGroupPostNo(String gpNo) {
+		template.update("group.updateGroupPostHitByGroupPostNo", gpNo);
+	}
 
 	/**
 	 * 스터디 그룹 멤버의 그룹 즐겨찾기 상태 변경(true or false)
@@ -151,8 +249,6 @@ public class GroupDAOImpl implements GroupDAO {
 	@Override
 	public void updateGroupMemberState(Map<String,String> map) {
 		template.update("group.updateGroupMemberState", map);
-		
-		
 	}
 	
 	/**
@@ -170,6 +266,31 @@ public class GroupDAOImpl implements GroupDAO {
 	@Override
 	public void updateGroupName(Map<String,String> map) {
 		template.update("group.updateGroupName", map);
+	}
+
+	@Override
+	public List<GroupPostCommentVO> findGroupPostCommentByGroupPostNo(String gpNo) {
+		return template.selectList("group.findGroupPostCommentByGroupPostNo", gpNo);
+	}
+
+	@Override
+	public void registerGroupPostComment(Map<String, Object> map) {
+		template.insert("group.registerGroupPostComment", map);
+	}
+
+	@Override
+	public void deleteGroupPostCommentByCommentNo(String commentNo) {
+		template.delete("group.deleteGroupPostCommentByCommentNo", commentNo);
+	}
+
+	@Override
+	public void updateGroupPostCommentByCommentNo(Map<String, String> map) {
+		template.update("group.updateGroupPostCommentByCommentNo", map);
+	}
+
+	@Override
+	public String findStudyGroupNameByStudyGroupNo(String sgNo) {
+		return template.selectOne("group.findStudyGroupNameByStudyGroupNo", sgNo);
 	}
 
 }
