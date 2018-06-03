@@ -60,7 +60,10 @@ public class GroupController {
 		String position=groupService.findMemberPositionByMemberEmailAndStudyGroupNo(sgNo,memberEmail);
 		//5. Top3 회원
 		List<Map<String, Object>> list=groupService.findTopThreeMemberByStudyGroup(sgNo);
-		
+		//6. 해당 스터디 그룹의 리더 정보
+		MemberVO leaderInfo=groupDAO.findStudyGroupLeaderByStudyNo(sgNo);
+		//7. 해당 스터디 그룹의 팀원수
+		int GroupMemberCount=groupService.getGroupMemberCount(sgNo);
 		
 		MemberVO memberVO = new MemberVO();
 		memberVO.setMemberEmail(memberEmail);
@@ -72,6 +75,8 @@ public class GroupController {
 		groupMemberVO.setPosition(position);
 		session.setAttribute("groupMemberVO", groupMemberVO);
 		request.setAttribute("topList", list);
+		request.setAttribute("leader", leaderInfo);
+		request.setAttribute("GroupMemberCount", GroupMemberCount);
 		return"groupHome.tiles";
 	}
 	

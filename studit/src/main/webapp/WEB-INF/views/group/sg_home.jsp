@@ -8,8 +8,8 @@
             <div class="col-xl-2 col-md-4 col-6">
               <div class="wrapper count-title d-flex">
                 <div class="icon"><i class="icon-user"></i></div>
-                <div class="name"><strong class="text-uppercase">LEADER</strong><span>Last 7 days</span>
-                  <div class="count-number">25</div>
+                <div class="name"><strong class="text-uppercase">LEADER</strong><span>${leader.memberEmail }</span>
+                  <div class="count-number" style="font-size: 30px; margin-top: 15px;">${leader.name }</i></div>
                 </div>	
               </div>
             </div>
@@ -17,7 +17,7 @@
               <div class="wrapper count-title d-flex">
                 <div class="icon"><i class="icon-padnote"></i></div>
                 <div class="name"><strong class="text-uppercase">GROUP MEMBER</strong><span>Last 5 days</span>
-                  <div class="count-number">400</div>
+                  <div class="count-number" align="center">${GroupMemberCount }</div>
                 </div>
               </div>
             </div>
@@ -61,16 +61,35 @@
       <section class="dashboard-header section-padding">
         <div class="container-fluid">
           <div class="row d-flex align-items-md-stretch">
-          	<div class="col-lg-1"></div>
             <!-- To Do List-->
             <div class="col-lg-3 col-md-6">
-              <div class="wrapper to-do">
-                <header>
-                  <h2 class="display h4" style="text-align: center;">Today Schedule</h2>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+              <div class="wrapper to-do" style="border:1px solid; border-color: #BDBDBD;">
+                <header style="margin: 20px;">
+                  <h2 class="display h4" style="text-align: center;">Register Schedule</h2>
+                  <p>Click the "SCHEDULER" tap for checking whole schedule</p>
                 </header>
-                
-                <ul class="check-lists list-unstyled">
+                <table class="table">
+                	<thead>
+                		<tr>
+                			<th>
+                				<select id="kanban" name="kanban" class="form-control">
+                					<option value="todo">TO DO</option>
+                					<option value="doing">DOING</option>
+                					<option value="done">DONE</option>
+                				</select>
+                			</th>
+                			<th><input type="text" name="title" id="title" placeholder="제목을 입력하세요!" class="form-control"></th>
+                		</tr>
+                	</thead>
+                	<tbody>
+                		<tr>
+                			<td colspan="2">
+                				<pre><textarea style="width:100%; resize:none; height: 100px;" placeholder="내용을 입력하세요!" id="content" name="content"></textarea></pre>
+                			</td>
+                		</tr>
+                	</tbody>
+                </table>
+                <!-- <ul class="check-lists list-unstyled">
                   <li class="d-flex align-items-center"> 
                     <input type="checkbox" id="list-1" name="list-1" class="form-control-custom">
                     <label for="list-1">Similique sunt in culpa qui officia</label>
@@ -103,11 +122,12 @@
                     <input type="checkbox" id="list-8" name="list-8" class="form-control-custom">
                     <label for="list-8">Ed ut perspiciatis unde omnis iste</label>
                   </li>
-                </ul>
+                </ul> -->
+                
               </div>
             </div>
             <!-- Pie Chart-->
-            <div class="col-lg-3 col-md-6">
+            <div class="col-lg-4 col-md-6">
               <div class="wrapper project-progress" style="text-align: center;">
                 <h2 class="display h4">Progress Of Study</h2><!-- 
                 <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p> -->
@@ -127,7 +147,7 @@
                 </div>
               </div>
             </div> --%>
-            <div class="col-lg-4 col-md-12 flex-lg-last flex-md-first align-self-baseline">
+            <div class="col-lg-5 col-md-12 flex-lg-last flex-md-first align-self-baseline">
 				<h2 class="display h4" style="text-align: center;">Top3 Member Rank</h2>
 				<form action="${pageContext.request.contextPath}/group/updateGroupMemberPosition" method="post" id="changePositionForm">
 			  	<table class="table table-hover">
@@ -159,11 +179,17 @@
 				<input type="hidden" name="groupMemberNo" id="groupMemberNo">
 				</form>
 			</div>
-            <div class="col-lg-1"></div>
           </div>
         </div>
       </section>
-      
+
+<style>
+th,td{
+	text-align: center;
+	vertical-align: middle;
+}
+</style>
+
 <script>
 $(document).ready(function(){
 	var chartDiv = $("#pieChartt");

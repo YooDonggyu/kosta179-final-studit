@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<div id="whole">
 <!-- 글수정 폼 -->
 <form method="post" action="${pageContext.request.contextPath }/group/updateGroupPostView" id="updateGroupPostForm">
 	<input type="hidden" id="gpNo" name="gpNo" value="${gpNo }">
@@ -16,87 +17,62 @@
 <form method="post" action="${pageContext.request.contextPath }/group/deleteGroupPost" id="deleteGroupPostForm">
 	<input type="hidden" name="gpNo" value="${gpNo }">
 </form>
-<hr>
-<h3 style="font-weight: bold; text-align: center;">${glist.title }</h3>
-<hr>
-<table>
-	<tbody>
-		<tr>
-			<td>작성자 : ${glist.groupMemberVO.memberVO.name}(${glist.groupMemberVO.memberVO.memberEmail })</td>
-			<td>등록일 : ${glist.regdate}</td>
-			<td>조회수 : ${glist.hit}</td>
-		</tr>
-		<tr>
-			<td colspan="2"><textarea style="width:100%; height: 250px; resize: none;"  readonly="readonly" id="content" name="content">${glist.content }</textarea></td>
-		</tr>
-	</tbody>
-</table>
 
-<c:if test="${memberVO.memberEmail eq glist.groupMemberVO.memberVO.memberEmail }">
-	<input type="button" value="수정" onclick="return updateGroupPost()">
-	<input type="button" value="삭제" onclick="return deleteGroupPost()">
-</c:if>
-<input type="button" value="목록" onclick="return goBack()">
-
-
-<!-- comment -->
-    <div class="container" >
-    <!-- comment -->
-    <div class="row" >
-    <div class="col-xs-1"></div>
-    	<div class="col-xs-10" id="commentArea">
-    		 <c:forEach items="${comment }" var="comment"  >
-    		 	<div class="panel panel-default no-shadow no-border">
-    				<div class="panel-body  no-padding">
-    						<div class="row">
-    						<div class="col-xs-6 recruit-comment-left "><label class="label label-default ">${comment.groupMemberVO.memberVO.name}님</label>&nbsp; ${comment.regdate }</div>
-    						<div class="col-xs-6 recruit-comment-right">
-	    							<c:if test="${sessionScope.memberVO.memberEmail == comment.groupMemberVO.memberVO.memberEmail }">
-		    							<button class="btn btn-xs btn-default cuBtn recruit-comment-right" value="${comment.groupCommentNo}" >수정</button>
-		    							<button class="btn btn-xs btn-default cdBtn recruit-comment-right" value="${comment.groupCommentNo}" >삭제</button>
-		    						</c:if>
-		    				</div>
-    						</div>
-    						<div class="col-xm-12">
-	    						<input type="text"  style="background-color: #ffffff" class="form-control ${comment.groupCommentNo}"   value="${comment.content}" readonly="readonly">
-    						</div> 
-    				</div>
-    			</div>
-    		</c:forEach>
-    	</div>
-    	 <div class="col-xs-1"></div>
-    </div>
-    
-    <!-- comment insert box -->
-    <div class="row" >
-    <div class="col-xs-1"></div>
-    	<div class="col-xs-10"  >
-    			<hr>
-    		 	<div class="panel panel-default no-shadow no-border">
-    				<div class="panel-body no-padding">
-    						<div class="row">
-    						<div class="col-xs-6 recruit-comment-left"><label class="label label-default ">${sessionScope.memberVO.name}(${sessionScope.memberVO.memberEmail })님 댓글 달기</label></div>
-	    						<div class="col-xs-6 recruit-comment-right">
-		    						<input type="button"  class="btn btn-xs btn-default" value="등록"  id="registerCommentBtn"  >
-			    				</div>
-    						</div>
-    						<div class="col-xm-12">
-	    						<input type="text"  class="form-control" id="registerComment">
-    						</div> 
-    				</div>
-    			</div>
-    	</div>
-    <div class="col-xs-1"></div>
-    </div>
-    </div>
-
-
-
-
-
-
-
-
+<hr style="margin-top: 60px; width:85%;">
+<div class="container">
+  <div style="text-align: center;">
+  <h1>${glist.title }</h1>
+  </div>           
+  <table class="table table-condensed">
+    <thead>
+      <tr>
+        <th>작성자 : ${glist.groupMemberVO.memberVO.name}(${glist.groupMemberVO.memberVO.memberEmail })</th>
+        <th>등록일 : ${glist.regdate}</th>
+        <th>조회수 : ${glist.hit}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td colspan="3"><textarea style="width:100%; height: 250px; resize: none;"  readonly="readonly" id="content" name="content">${glist.content }</textarea></td>
+      </tr>
+      <tr>
+      	<td colspan="3" align="center">
+      		<c:if test="${memberVO.memberEmail eq glist.groupMemberVO.memberVO.memberEmail }">
+			<input type="button" value="수정" onclick="return updateGroupPost()">
+			<input type="button" value="삭제" onclick="return deleteGroupPost()">
+			</c:if>
+			<input type="button" value="목록" onclick="return goBack()">
+		</td>
+      </tr>
+      <tr>
+      <td colspan="3" align="right">
+      	<c:forEach items="${comment }" var="comment"  >
+   		 	<div class="panel panel-default no-shadow no-border">
+   				<div class="panel-body  no-padding">
+   						<div class="row">
+   						<div class="col-xs-6 recruit-comment-left " style="margin-left: 20px;"><label class="label label-default ">${comment.groupMemberVO.memberVO.name}님</label>&nbsp; ${comment.regdate }  </div>
+   						<div class="col-xs-6 recruit-comment-right">
+    							<c:if test="${sessionScope.memberVO.memberEmail == comment.groupMemberVO.memberVO.memberEmail }">
+	    							<button class="btn btn-xs btn-default cuBtn recruit-comment-right" value="${comment.groupCommentNo}" >수정</button>
+	    							<button class="btn btn-xs btn-default cdBtn recruit-comment-right" value="${comment.groupCommentNo}" >삭제</button>
+	    						</c:if>
+	    				</div>
+   						</div>
+   						<div class="col-xm-12">
+    						<input type="text"  style="background-color: #ffffff" class="form-control ${comment.groupCommentNo}"   value="${comment.content}" readonly="readonly">
+   						</div> 
+   				</div>
+   			</div>
+   		</c:forEach>
+      
+      <div class="col-xs-6 recruit-comment-left" style="margin-left: 5px; margin-top: 5px;" align="left"><label class="label label-default ">${sessionScope.memberVO.name}(${sessionScope.memberVO.memberEmail })님 댓글 달기  <input type="button"  class="btn btn-xs btn-default" value="등록"  id="registerCommentBtn"  ></label></div>
+      <input type="text"  class="form-control" id="registerComment">
+    </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
 
 <script>
 function updateGroupPost(){

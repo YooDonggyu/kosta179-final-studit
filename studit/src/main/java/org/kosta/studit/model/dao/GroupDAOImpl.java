@@ -8,6 +8,7 @@ import org.kosta.studit.model.vo.GroupMemberVO;
 import org.kosta.studit.model.vo.GroupPostCommentVO;
 import org.kosta.studit.model.vo.GroupPostVO;
 import org.kosta.studit.model.vo.GroupVO;
+import org.kosta.studit.model.vo.MemberVO;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -302,6 +303,16 @@ public class GroupDAOImpl implements GroupDAO {
 	@Override
 	public int getTotalStudyGroupCount() {
 		return template.selectOne("group.getTotalStudyGroupCount");
+	}
+
+	@Override
+	public MemberVO findStudyGroupLeaderByStudyNo(String sgNo) {
+		return template.selectOne("group.findStudyGroupLeaderByStudyNo", sgNo);
+	}
+
+	@Override
+	public List<GroupMemberVO> getGroupMemberCount(String sgNo) {
+		return template.selectList("group.getGroupMemberCount", sgNo);
 	}
 
 }

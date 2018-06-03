@@ -6,7 +6,7 @@
 <form method="post" action="${pageContext.request.contextPath}/group/findGroupBoard" id="goList">
 	<input type="hidden" value="${nowPage }" name="nowPage">
 </form>
-<div class="comtainer">
+<div class="comtainer" align="center">
 <div class="col-sm-3" ></div>
 	<div class="col-sm-6">
         <form action="${pageContext.request.contextPath}/group/createGroupPost" class="form-horizontal" role="form" onsubmit="return check()">

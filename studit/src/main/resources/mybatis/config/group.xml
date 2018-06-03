@@ -432,5 +432,17 @@ where rnum between #{pagingBean.startRowNumber} and #{pagingBean.endRowNumber} o
 		select count(*) from study_group
 	</select>
 	
+	<select id="findStudyGroupLeaderByStudyNo" parameterType="string" resultType="memberVO">
+		select sm.member_email as memberEmail, m.name as name
+		from sg_member sm, member m
+		where sm.sg_no=#{value} and sm.member_email=m.member_email and sm.position='팀장'
+	</select>
+	
+	<select id="getGroupMemberCount" parameterType="string" resultType="groupMemberVO">
+		select sg_member_no as groupMemberNo, position
+		from sg_member
+		where sg_no=#{value}
+	</select>
+	
 </mapper>
 

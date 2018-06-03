@@ -333,4 +333,17 @@ public class GroupServiceImpl implements GroupService {
 		return flist;
 	}
 
+	@Override
+	public int getGroupMemberCount(String sgNo) {
+		List<GroupMemberVO> mvo=groupDAO.getGroupMemberCount(sgNo);
+		int count=0;
+		
+		for(int i=0; i<mvo.size(); i++) {
+			if(!mvo.get(i).getPosition().equals("탈퇴")) {
+				count++;
+			}
+		}
+		return count;
+	}
+
 }

@@ -8,6 +8,7 @@ import org.kosta.studit.model.vo.GroupMemberVO;
 import org.kosta.studit.model.vo.GroupPostCommentVO;
 import org.kosta.studit.model.vo.GroupPostVO;
 import org.kosta.studit.model.vo.GroupVO;
+import org.kosta.studit.model.vo.MemberVO;
 
 public interface GroupDAO {
 
@@ -72,6 +73,10 @@ public interface GroupDAO {
 	List<Map<String, Object>> findPostCountOfMemberByStudyGroup(String sgNo);
 
 	int getTotalStudyGroupCount();
+
+	MemberVO findStudyGroupLeaderByStudyNo(String sgNo);
+
+	List<GroupMemberVO> getGroupMemberCount(String sgNo);
 
 
 }
