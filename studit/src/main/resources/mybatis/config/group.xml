@@ -487,5 +487,17 @@ where rnum between #{pagingBean.startRowNumber} and #{pagingBean.endRowNumber} o
 	<delete id="deleteStudyGroupMemo" parameterType="int">
 		delete from study_group_memo where sg_memo_no = #{value}
 	</delete>
+	
+	<!-- 
+		스터디 그룹 칸반 메모 분류별 개수 구하기
+		@author 김유란
+	 -->
+	<select id="findStudyGroupMemoCountByGroupNo" parameterType="string"  resultType="map">
+		select count(decode(position,'todo', 1)) todo, 
+					count(decode(position,'doing', 1)) doing, 
+					count(decode(position,'done', 1)) done
+		from study_group_memo
+		where sg_no=#{value}
+	</select>
 </mapper>
 

@@ -129,7 +129,10 @@ vertical-align: sub;
 						    		<tr>
 						    			<td colspan="4" style="height: 100px;">
 						    				<div class="updateBtnDiv">
-									    		<a href="${pageContext.request.contextPath }/company/updateStudyroomFrom?memberEmail=${memberVO.memberEmail }&studyRoomNo=${srno}"><input type="button" id="updateBtn" value="수정하기" class="btn btn-danger updateBtn"></a>
+						    				<form method="post" action="${pageContext.request.contextPath }/company/updateStudyroomForm">
+						    					<input type="hidden" name="studyRoomNo" value="${srno}">
+									    		<input type="submit" id="updateBtn" value="수정하기" class="btn btn-danger updateBtn">
+									    	</form>
 									    	</div>
 						    			</td>
 						    		</tr>

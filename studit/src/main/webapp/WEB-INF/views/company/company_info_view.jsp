@@ -130,7 +130,7 @@ $(document).ready(function(){
 			    		<tr>
 			    			<td colspan="4" style="height: 100px;">
 			    				<div class="updateBtnDiv" >
-				    				<a href="${pageContext.request.contextPath }/company/updateCompanyForm?companyNo=${cvo.companyNo}"><input type="button" value="수정하기" class="btn btn-danger updateBtn"></a>
+				    				<input type="button" value="수정하기" class="btn btn-danger updateBtn" onclick="updateCompanyForm(${cvo.companyNo})">
 			    				</div>
 			    			</td>
 			    		</tr>
@@ -214,7 +214,7 @@ $(document).ready(function(){
 			    		<tr>
 			    			<td colspan="4" style="height: 100px;">
 			    				<div class="updateBtnDiv" >
-				    				<a href="${pageContext.request.contextPath }/company/updateCompanyForm?companyNo=${cvo.companyNo}"><input type="button" value="수정하기" class="btn btn-danger updateBtn"></a>
+			    					<input type="button" value="수정하기" class="btn btn-danger updateBtn" onclick="updateCompanyForm(${cvo.companyNo})">
 			    				</div>
 			    			</td>
 			    		</tr>
@@ -226,5 +226,13 @@ $(document).ready(function(){
   </div>
   </div>
   </div>
-  </section>
-                
+  <form method="post" id="updateCompanyForm" action="${pageContext.request.contextPath }/company/updateCompanyForm">
+  	<input type="hidden" name="selectedCompanyNo" id="selectedCompanyNo">
+  </form>
+  </section>         
+  <script>
+  function updateCompanyForm(companyNo){
+	  $("#selectedCompanyNo").val(companyNo);
+	  $("#updateCompanyForm").submit();
+  }
+  </script>

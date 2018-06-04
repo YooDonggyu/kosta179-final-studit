@@ -355,4 +355,14 @@ public class GroupDAOImpl implements GroupDAO {
 	public void deleteStudyGroupMemo(int memoNo) {
 		template.delete("group.deleteStudyGroupMemo", memoNo);
 	}
+	
+	/**
+	 * 스터디 그룹 칸반 메모 분류별 개수 구하기(그룹 메인에 보여주기)
+	 * @author 김유란
+	 * @param groupNo 그룹 번호
+	 */
+	@Override
+	public Map<String,String> findStudyGroupMemoCountByGroupNo(String groupNo) {
+		return template.selectOne("group.findStudyGroupMemoCountByGroupNo", groupNo);
+	}
 }

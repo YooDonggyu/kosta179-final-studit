@@ -89,8 +89,7 @@
 			  	 </c:choose>
 		   
 				    <c:if test="${sessionEmail == requestEmail }"> 
-				    	<a href="${pageContext.request.contextPath}/recruit/updateRecruitPostInfoByRecruitNoView?recruitNo=${recruitInfo.detail.recruitPostNo}&bigCategoryNo=${recruitInfo.detail.smallCategoryVO.bigCategoryVO.bigCategoryNo}" 
-				    		class="btn btn-primary">수정</a> &nbsp;
+				    	<input type="button" value="수정" class="btn btn-primary" onclick="goUpdateRecruitPost()">&nbsp;
 					    <c:if test="${recruitInfo.detail.condition eq '모집중'}">		
 					    	<a  data-toggle="modal"  href="#deleteConfrimModal" class="btn btn-primary" >삭제</a> &nbsp;
 					    </c:if>
@@ -99,7 +98,10 @@
 		    	</div><!-- col -->
 		    	<div class="col-xs-3" ></div>
 		    </div><!-- row -->
-    
+    		<form method="post" id="updateRecruitPostViewForm" action="${pageContext.request.contextPath}/recruit/updateRecruitPostInfoByRecruitNoView">
+				    	<input type="hidden" name="recruitNo" value="${recruitInfo.detail.recruitPostNo}">
+				    	<input type="hidden" name="bigCategoryNo" value="${recruitInfo.detail.smallCategoryVO.bigCategoryVO.bigCategoryNo}">
+		  	</form>	
 		    <div class="row">
 		    	<div class="col-xs-12">
 		    	<br><br>
@@ -165,6 +167,11 @@
     <jsp:include page="register_recruit_study.jsp" />
     
     <script>
+    
+    	function goUpdateRecruitPost(){
+    		$("#updateRecruitPostViewForm").submit();
+    	}
+    
     	function goBack(){
     		history.back();
     	}

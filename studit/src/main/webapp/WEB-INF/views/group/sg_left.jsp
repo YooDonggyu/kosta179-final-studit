@@ -25,7 +25,7 @@
           <ul id="side-main-menu" class="side-menu list-unstyled">               
             <li><a id="home" onclick="return groupHome(${groupMemberVO.groupVO.groupNo})"> <i class="icon-home"></i><span>HOME</span></a></li>
             <li> <a onclick="return groupBoard()"><i class="icon-presentation"></i><span>BOARD</span></a></li>
-            <li> <a href="${pageContext.request.contextPath }/group/studyGourpKanbanView?studyGroupNo=${groupMemberVO.groupVO.groupNo}"> <i class="icon-grid"> </i><span>SCHEDULER</span></a></li>
+            <li> <a href="${pageContext.request.contextPath }/group/studyGourpKanbanView" onclick="window.open(this.href, 'kanban', 'width=900, height=600'); return false"> <i class="icon-grid"> </i><span>SCHEDULER</span></a></li>
             <c:choose>
             	<c:when test="${groupMemberVO.position eq '팀장' }">
             		 <li> <a href="${pageContext.request.contextPath}/group/findGroupMemberView"><i class="icon-form"></i><span>LEADER</span></a></li>

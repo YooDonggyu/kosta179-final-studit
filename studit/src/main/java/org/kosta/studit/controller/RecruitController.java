@@ -117,7 +117,7 @@ public class RecruitController {
 	 * @param bigCategoryNo 소분류 목록을 조회하기 위해 선택한 대분류 목록을 사용
 	 * @return update_recruit.tiles tiles가 적용된 update 페이지로 이동
 	 */
-	@RequestMapping("/updateRecruitPostInfoByRecruitNoView")
+	@RequestMapping(method=RequestMethod.POST, value="/updateRecruitPostInfoByRecruitNoView")
 	public String updateRecruitPostInfoByRecruitNoView(int recruitNo, Model model, int bigCategoryNo) {
 		Map<String, Object> map = recruitService.findRecruitPostDetailByRecruitNo(null, recruitNo);
 		model.addAttribute("recruitInfo", map);

@@ -9,7 +9,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.swing.plaf.synth.SynthSplitPaneUI;
 
 import org.kosta.studit.model.dao.CompanyDAO;
 import org.kosta.studit.model.dao.MemberDAO;
@@ -20,7 +19,6 @@ import org.kosta.studit.model.service.StudyRoomService;
 import org.kosta.studit.model.vo.CompanyListVO;
 import org.kosta.studit.model.vo.CompanyVO;
 import org.kosta.studit.model.vo.MemberVO;
-import org.kosta.studit.model.vo.StudyRoomConditionVO;
 import org.kosta.studit.model.vo.StudyRoomVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -69,7 +67,7 @@ public class CompanyController {
 		return "company/find_company_view.tiles";
 	}
 	
-	/**ajax로 변경
+	/**
 	 * 업체의 스터디룸 예약현황 뷰를 호출하는 메서드
 	 * 업체회원이 보유한 스터디룸의 예약현황 정보 조회를 위해 
 	 * 영업일, 스터디룸 정보, 각 스터디룸별 예약현황 데이터를 가져와 뷰로 전송한다.
@@ -77,7 +75,7 @@ public class CompanyController {
 	 * @param request 세션을 얻기 위해 호출
 	 * @return 업체 스터디룸 예약현황 관리 뷰로 이동(tiles)
 	 */
-	@RequestMapping("/findStudyRoomConditionByCompanyNo")
+	@RequestMapping(method=RequestMethod.POST, value="/findStudyRoomConditionByCompanyNo")
 	public String findStudyRoomConditionByCompanyNo(Model model, String companyNo) {
 		model.addAttribute("companyNo", companyNo);
 		model.addAttribute("waitCountList", companyDAO.findWaitStudyRoomConditionCountByCompanyNo(companyNo));
@@ -88,7 +86,7 @@ public class CompanyController {
 	}
 	
 	/**
-	 * 업체의 스터디룸 예약현황 수정 메서드
+	 * 업체의 스터디룸 예약현황 수정 메서드-->ajax로 변경
 	 * 업체회원이 스터디룸 예약을 승인하거나 수정할 때 실행 
 	 * @author 김유란
 	 * @param studyRoomConditionVO 수정된 예약정보를 담은 VO
@@ -241,19 +239,19 @@ public class CompanyController {
 	
 	/**
 	 * 스터디룸을 추가하는 폼으로 이동
-	 * @author 변태섭
+	 * @author 변태섭, 김유란(업체번호만 받아오고 그 업체번호로 업체 이름을 조회해서 뷰에 넘김)
 	 * @param companyNo 스터디룸이 추가 되는 업체 번호
 	 * @param model companyNo을 받아 view로 넘겨주는 역할
 	 */
-	@RequestMapping("/registerStudyRoomForm")
-	public String registerStudyroomForm(HttpServletRequest request, String companyNo, String companyName, Model model) {
+	@RequestMapping(method=RequestMethod.POST, value="/registerStudyRoomForm")
+	public String registerStudyroomForm(HttpServletRequest request, String companyNo, Model model) {
 		HttpSession session = request.getSession(false);
 		MemberVO mvo = (MemberVO) session.getAttribute("memberVO");
-		
 		model.addAttribute("cvoList", companyDAO.findCompanyByMemberEmail(mvo.getMemberEmail()));
 		model.addAttribute("srvoList", studyroomDAO.findStudyRoomListByMemberEmail(mvo.getMemberEmail()));
 		model.addAttribute("cno", companyNo);
-		model.addAttribute("cname", companyName);
+		CompanyVO cvo = companyDAO.findCompanyByCompanyNo(Integer.parseInt(companyNo));
+		model.addAttribute("cname", cvo.getName());
 		return "company/add_studyroom/hostpage_left.tiles";
 	}
 	
@@ -264,7 +262,7 @@ public class CompanyController {
 	 * @param memberEmail 회원 이메일
 	 * @param model View 단에 데이터를 전달하는 객체
 	 */
-	@RequestMapping("StudyRoomInfoView")
+	@RequestMapping(method=RequestMethod.POST, value="StudyRoomInfoView")
 	public String StudyRoomInfoView(String studyRoomNo, String memberEmail, Model model) {
 		model.addAttribute("cvoList", companyDAO.findCompanyByMemberEmail(memberEmail));
 		model.addAttribute("srvoList", studyroomDAO.findStudyRoomListByMemberEmail(memberEmail));
@@ -280,10 +278,10 @@ public class CompanyController {
 	 * @param companyNo 업체 번호
 	 * @param model 업체 번호를 View단으로 보내기 위해 사용
 	 */
-	@RequestMapping("updateCompanyForm")
-	public String updateCompanyForm(String companyNo, Model model) {
-		model.addAttribute("cno", companyNo);
-		int cno = Integer.parseInt(companyNo);
+	@RequestMapping(method=RequestMethod.POST, value="updateCompanyForm")
+	public String updateCompanyForm(String selectedCompanyNo, Model model) {
+		model.addAttribute("cno", selectedCompanyNo);
+		int cno = Integer.parseInt(selectedCompanyNo);
 		model.addAttribute("cvo", companyDAO.findCompanyByCompanyNo(cno));
 		model.addAttribute("hashtags", companyDAO.findHashTagByCompanyNo(cno));
 		model.addAttribute("days", companyDAO.findBusinessDayByCompanyNo(cno));
@@ -351,7 +349,7 @@ public class CompanyController {
 	 * @param model 스터디룸 수정 관련 데이터를 담아 보냄
 	 * @return
 	 */
-	@RequestMapping("updateStudyroomFrom")
+	@RequestMapping(method=RequestMethod.POST, value="/updateStudyroomForm")
 	public String updateStudyroomFrom(String studyRoomNo, String memberEmail, Model model) {
 			model.addAttribute("cvoList", companyDAO.findCompanyByMemberEmail(memberEmail));
 			model.addAttribute("srvoList", studyroomDAO.findStudyRoomListByMemberEmail(memberEmail));

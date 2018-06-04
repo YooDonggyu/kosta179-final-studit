@@ -25,7 +25,7 @@
               <div class="wrapper count-title d-flex">
                 <div class="icon"><i class="icon-check"></i></div>
                 <div class="name"><strong class="text-uppercase">TO DO LIST</strong><span>Last 2 months</span>
-                  <div class="count-number">342</div>
+                  <div class="count-number">${memoCount.TODO}</div>
                 </div>
               </div>
             </div>
@@ -33,7 +33,7 @@
               <div class="wrapper count-title d-flex">
                 <div class="icon"><i class="icon-bill"></i></div>
                 <div class="name"><strong class="text-uppercase">DOING LIST</strong><span>Last 2 days</span>
-                  <div class="count-number">123</div>
+                  <div class="count-number">${memoCount.DOING}</div>
                 </div>
               </div>
             </div>
@@ -41,7 +41,7 @@
               <div class="wrapper count-title d-flex">
                 <div class="icon"><i class="icon-list"></i></div>
                 <div class="name"><strong class="text-uppercase">DONE LIST</strong><span>Last 3 months</span>
-                  <div class="count-number">92</div>
+                  <div class="count-number">${memoCount.DONE}</div>
                 </div>
               </div>
             </div>
@@ -62,7 +62,7 @@
         <div class="container-fluid">
           <div class="row d-flex align-items-md-stretch">
             <!-- To Do List-->
-            <div class="col-lg-3 col-md-6">
+            <!-- <div class="col-lg-3 col-md-6">
               <div class="wrapper to-do" style="border:1px solid; border-color: #BDBDBD;">
                 <header style="margin: 20px;">
                   <h2 class="display h4" style="text-align: center;">Register Schedule</h2>
@@ -88,7 +88,7 @@
                 			</td>
                 		</tr>
                 	</tbody>
-                </table>
+                </table> -->
                 <!-- <ul class="check-lists list-unstyled">
                   <li class="d-flex align-items-center"> 
                     <input type="checkbox" id="list-1" name="list-1" class="form-control-custom">
@@ -124,8 +124,8 @@
                   </li>
                 </ul> -->
                 
-              </div>
-            </div>
+              <!-- </div>
+            </div> -->
             <!-- Pie Chart-->
             <div class="col-lg-4 col-md-6">
               <div class="wrapper project-progress" style="text-align: center;">
@@ -147,6 +147,7 @@
                 </div>
               </div>
             </div> --%>
+            <div class="col-sm-1"></div>
             <div class="col-lg-5 col-md-12 flex-lg-last flex-md-first align-self-baseline">
 				<h2 class="display h4" style="text-align: center;">Top3 Member Rank</h2>
 				<form action="${pageContext.request.contextPath}/group/updateGroupMemberPosition" method="post" id="changePositionForm">
@@ -179,8 +180,8 @@
 				<input type="hidden" name="groupMemberNo" id="groupMemberNo">
 				</form>
 			</div>
-          </div>
-        </div>
+         </div>
+        </div> 
       </section>
 
 <style>
@@ -191,6 +192,10 @@ th,td{
 </style>
 
 <script>
+
+var todo = parseInt("${memoCount.TODO}", 10);
+var doing =parseInt("${memoCount.DOING}", 10);
+var done = parseInt("${memoCount.DONE}", 10);
 $(document).ready(function(){
 	var chartDiv = $("#pieChartt");
 	var myChart = new Chart(chartDiv, {
@@ -198,7 +203,7 @@ $(document).ready(function(){
 	    data: {
 	        labels: ["TO DO", "DOING", "DONE"],
 	        datasets: [{
-	            data: [30,60, 10],
+	            data: [todo, doing, done],
 	            backgroundColor: [
 	            	"#FF6384",
 		            "#4BC0C0",

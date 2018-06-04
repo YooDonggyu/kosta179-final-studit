@@ -186,7 +186,7 @@ public class GroupDAOTest {
 		System.out.println(groupDAO.findTotalCountOfGroupPost(map));
 	}
 	
-	@Test
+	//@Test
 	public void findPostCountOfMemberByStudyGroup() {
 		List<Map<String, Object>> list=groupDAO.findPostCountOfMemberByStudyGroup("3");
 		if(list!=null) {
@@ -215,5 +215,10 @@ public class GroupDAOTest {
 		memoVO.setContent("이 테스트 하고 잘꺼야 ㅠ");
 		groupDAO.registerStudyGroupMemo(memoVO);
 		System.out.println(groupDAO.findStudyGroupMemoByStudyGroupNo(1));
+	}
+	
+	@Test
+	public void findStudyGroupMemoCountByGroupNoTest() {
+		System.out.println(groupDAO.findStudyGroupMemoCountByGroupNo("12"));
 	}
 }

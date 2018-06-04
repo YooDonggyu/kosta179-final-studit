@@ -79,6 +79,7 @@ public class GroupController {
 		request.setAttribute("topList", list);
 		request.setAttribute("leader", leaderInfo);
 		request.setAttribute("GroupMemberCount", GroupMemberCount);
+		request.setAttribute("memoCount", groupDAO.findStudyGroupMemoCountByGroupNo(sgNo));
 		return"groupHome.tiles";
 	}
 	
@@ -310,7 +311,7 @@ public class GroupController {
 	 * @param title, content 작성한 게시글 정보
 	 * @return 상세보기 화면으로 이동
 	 */
-	@RequestMapping("createGroupPost")
+	@RequestMapping("/createGroupPost")
 	public String createGroupPost(HttpServletRequest request, String title, String content) {
 		HttpSession session=request.getSession(false);
 		MemberVO mvo=(MemberVO)session.getAttribute("memberVO");
@@ -331,7 +332,7 @@ public class GroupController {
 	 * @param gpNo 삭제할 게시글의 번호
 	 * @return 삭제 완료 후, 게시판 첫 페이지로 이동
 	 */
-	@RequestMapping("deleteGroupPost")
+	@RequestMapping("/deleteGroupPost")
 	public String deleteGroupPost(String gpNo) {
 		groupDAO.deleteGroupPost(gpNo);
 		
@@ -340,17 +341,18 @@ public class GroupController {
 	
    /**
 	 * 스터디 그룹 칸반 뷰
-	 * @author 변태섭
+	 * @author 변태섭, 김유란(그룹 번호 세션에서 받아오는 것으로 변경)
 	 * @param model 데이터를 담아 전달
 	 * @param studyGourpNo 스터디 그룹 번호
 	 * @return 해당 스터디룸의 칸반 메모들을 담은 List 객체
 	 */
-	@RequestMapping("studyGourpKanbanView")
-	public String studyGourpKanbanView(Model model, String studyGroupNo) {
-		System.out.println(studyGroupNo);
-		List<MemoVO> memoList = groupDAO.findStudyGroupMemoByStudyGroupNo(Integer.parseInt(studyGroupNo));
-		model.addAttribute("memoList", memoList);
-		return "group/schedule_group.tiles";
+	@RequestMapping("/studyGourpKanbanView")
+	public String studyGourpKanbanView(HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
+		GroupMemberVO gvo = (GroupMemberVO)session.getAttribute("groupMemberVO");	
+		List<MemoVO> memoList = groupDAO.findStudyGroupMemoByStudyGroupNo(gvo.getGroupVO().getGroupNo());
+	   request.setAttribute("memoList", memoList);
+		return "group/schedule_group";
 	}
 	
 	/**
@@ -358,7 +360,7 @@ public class GroupController {
 	 * @param memoVO 입력받은 메모 데이터
 	 */
 	@PostMapping
-	@RequestMapping("registerMemo")
+	@RequestMapping("/registerMemo")
 	public String registerMemo(MemoVO memoVO) {
 		System.out.println(memoVO);
 		groupDAO.registerStudyGroupMemo(memoVO);
@@ -386,29 +388,11 @@ public class GroupController {
 	 * 스터디 그룹 칸반 메모를 삭제하는 메서드
 	 * @param memoNo 메모 번호
 	 */
-	@RequestMapping("deleteStudyGroupMemo")
+	@RequestMapping("/deleteStudyGroupMemo")
 	public String deleteStudyGroupMemo(String studyGroupNo, String memoNo) {
 		int mno = Integer.parseInt(memoNo);
 		groupDAO.deleteStudyGroupMemo(mno);
 		return "redirect:studyGourpKanbanView?studyGroupNo="+studyGroupNo;
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

@@ -86,4 +86,6 @@ public interface GroupDAO {
 	void updateStudyGroupMemoPosition(Map<String, Object> map);
 
 	void deleteStudyGroupMemo(int memoNo);
+
+	Map<String, String> findStudyGroupMemoCountByGroupNo(String groupNo);
 }

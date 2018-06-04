@@ -252,3 +252,21 @@ insert into sg_post_pic(sg_post_pic_no, sg_post_no) values(sg_post_pic_seq.nextv
 commit
 
 update recruit_post set condition='모집중' where recruit_post_no='1'
+
+drop table study_group_memo
+create table study_group_memo(
+	sg_memo_no number primary key,
+	content varchar2(100) not null,
+	color varchar2(100) not null,
+	sg_no number not null,
+     position varchar2(100) not null,
+	constraint fk99_sg_no foreign key(sg_no) references study_group(sg_no)
+)
+
+select * from study_group_memo
+
+select count(decode(position,'todo', 1)) todo, count(decode(position,'doing', 1)) doing, count(decode(position,'done', 1)) done
+from study_group_memo
+where sg_no=12
+
+create sequence study_group_memo_seq nocache;
