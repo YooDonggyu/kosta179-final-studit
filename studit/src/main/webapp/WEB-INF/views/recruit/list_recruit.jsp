@@ -55,7 +55,7 @@
 <section id="features" class="section">
 	<div class="container">
 		<div style="float: left" id="resultData">
-			${recruitPostListVO.pagingBean.totalPostCount}건이 검색되었습니다.
+			<span class="label label-default">${recruitPostListVO.pagingBean.totalPostCount}개</span> 
 		</div>
 		<button class="btn btn-transparent" style="float: right;" id="createRecruitPost"><b>새 스터디 모집하기</b></button><br><br><br>
 	  	<table class="table table-hover">
@@ -217,22 +217,24 @@
 				$("#hiddenNowPage").val(pagingData.nowPage);
 				
 				//검색한 키워드를 테이블 상단에 뿌려주기 위한 작업
+				var strResult = "";
 				$("#resultData").empty();
 				if(bigCategory > 0){
-					$("#resultData").append("\""+$("#bigCategory option:selected").text()+"\"");
+					strResult += "<span class='label label-success'>"+$("#bigCategory option:selected").text()+"</span>";
 				}
 				if(smallCategory.length >0){
 					$("input[name='category']:checked").each(function(i){
-						$("#resultData").append("\""+$(this).data("citem")+"\"")
+						strResult += "<span class='label label-info'>"+$(this).data("citem")+"</span>";
 					});
 				}
 				if(keyword != "" && keyword != null){
-					$("#resultData").append("\""+keyword+"\"");
+					strResult += "<span class='label label-warning'>"+keyword+"</span>";
 				}
 				
 				 if(data.recruitPostList.length >=0){
-					$("#resultData").append(data.pagingBean.totalPostCount+"건이 검색되었습니다.");
+					 strResult += "<span class='label label-default'>"+data.pagingBean.totalPostCount+"개</span>";
 				} 
+				 $("#resultData").html(strResult);
 				
 			}//success
 		});//ajax
