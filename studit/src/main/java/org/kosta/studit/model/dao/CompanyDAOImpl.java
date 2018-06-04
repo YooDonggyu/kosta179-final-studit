@@ -387,5 +387,36 @@ public class CompanyDAOImpl implements CompanyDAO {
 		public void updateCompanyCondition(Map<String, Object> map) {
 			template.update("company.updateCompanyCondition", map);
 		}
+		
+		/**
+		 * 등록 된 업체 사진 개수를 반환하는 메서드
+   		 * @author 변태섭
+   		 * @param 업체 번호
+   		 * @return 해당 업체가 보유한 사진 개수
+		 */
+		@Override
+		public int findCountCompanyPicFileByCompanyNo(int companyNo) {
+			return template.selectOne("company.findCountCompanyPicFileByCompanyNo", companyNo);
+		}
+		
+		/**
+		 * 해당 업체에 등록된 추가 사진 경로를 모두 삭제하는 메서드
+   		 * @author 변태섭
+   		 * @param 업체 번호
+		 */
+		@Override
+		public void deleteCompanyPicFileByCompanyNo(int companyNo) {
+			template.delete("company.deleteCompanyPicFileByCompanyNo", companyNo);
+		}
+		
+		/**
+		 * 해당 업체에 등록된 추가 사진 중 더 오래된 사진 경로 하나를 삭제하는 메서드
+   		 * @author 변태섭
+   		 * @param 업체 번호
+		 */
+		@Override
+		public void deleteOneCompanyPicFileByCompanyNo(int companyNo) {
+			template.delete("company.deleteOneCompanyPicFileByCompanyNo", companyNo);
+		}
 }
 

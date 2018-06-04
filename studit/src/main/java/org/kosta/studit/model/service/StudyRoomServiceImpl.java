@@ -116,15 +116,23 @@ public class StudyRoomServiceImpl implements StudyRoomService {
 		studyRoomConditionVO.setStudyRoomConditionNo(Integer.parseInt(studyRoomConditionNo));
 		studyroomDAO.updateStudyRoomConditionByMember(studyRoomConditionVO);
 	}
-
+	
+	/**
+	 * 스터디룸 정보를 수정하는 메서드
+	 * @author 변태섭
+	 * @param companyNo 업체 번호
+	 * @param studyRoomNo 스터디룸 번호
+	 * @param studyRoomPicFile 스터디룸 사진 경로
+	 * @param studyRoomFunction 스터디룸 제공 기능
+	 */
 	@Transactional
 	@Override
 	public void updateStudyRoom(String companyNo, String memberEmail, String studyRoomNo, StudyRoomVO studyRoomVO, MultipartFile studyRoomPicFile, String[] studyRoomFunction) {
-		//스터디룸 사진 인코딩
 		studyroomDAO.updateStudyRoom(studyRoomVO);
 		Map<String, Object> map = new HashMap<String, Object>();
 		 map.put("studyRoomNo", studyRoomNo);
 		CompanyVO cvo = companyDAO.findCompanyByCompanyNo(Integer.parseInt(companyNo));
+			//스터디룸 사진 인코딩
 			if(studyRoomPicFile!=null && !studyRoomPicFile.isEmpty()) {
 			     String fileName = memberEmail+"_"+cvo.getName()+"_"+studyRoomVO.getName()+"_"+studyRoomPicFile.getOriginalFilename();
 			     //String path = request.getSession(false).getServletContext().getRealPath("upload"); 개발 완료 후 적용

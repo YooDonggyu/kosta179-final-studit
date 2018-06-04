@@ -9,6 +9,7 @@ import org.kosta.studit.model.vo.GroupPostCommentVO;
 import org.kosta.studit.model.vo.GroupPostVO;
 import org.kosta.studit.model.vo.GroupVO;
 import org.kosta.studit.model.vo.MemberVO;
+import org.kosta.studit.model.vo.MemoVO;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -27,7 +28,6 @@ public class GroupDAOImpl implements GroupDAO {
 	@Override
 	public int findMyLeadStudyGroupCountByEmail(String memberEmail) {
 		return template.selectOne("group.findMyLeadStudyGroupCountByEmail", memberEmail);
-
 	}
 
 	/**
@@ -315,4 +315,44 @@ public class GroupDAOImpl implements GroupDAO {
 		return template.selectList("group.getGroupMemberCount", sgNo);
 	}
 
+   /**
+	 * 스터디 그룹 칸반 메모를 가져오는 메서드
+	 * @author 변태섭
+	 * @param groupNo 스터디 그룹 번호
+	 *	@return List<MemoVO> 메모 데이터 객체
+	 */
+	@Override
+	public List<MemoVO> findStudyGroupMemoByStudyGroupNo(int groupNo) {
+		return template.selectList("group.findStudyGroupMemoByStudyGroupNo", groupNo);
+	}
+	
+	/**
+	 * 스터디 그룹 칸만 메모를 등록하는 메서드
+	 * @author 변태섭
+	 * @param memoVO 메모 데이터를 담은 객체
+	 */
+	@Override
+	public void registerStudyGroupMemo(MemoVO memoVO) {
+		template.insert("group.registerStudyGroupMemo", memoVO);
+	}
+	
+	/**
+	 * 스터디 그룹 칸반 메모의 위치를 수정하는 메서드
+	 * @author 변태섭
+	 * @param map 메모 번호와 위치를 담은 객체
+	 */
+	@Override
+	public void updateStudyGroupMemoPosition(Map<String, Object> map) {
+		template.update("group.updateStudyGroupMemoPosition", map);
+	}
+	
+	/**
+	 * 스터디 그룹 칸반 메모를 삭제하는 메서드
+	 * @author 변태섭
+	 * @param memoNo 메모 번호
+	 */
+	@Override
+	public void deleteStudyGroupMemo(int memoNo) {
+		template.delete("group.deleteStudyGroupMemo", memoNo);
+	}
 }

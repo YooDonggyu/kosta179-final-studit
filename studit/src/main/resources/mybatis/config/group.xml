@@ -4,6 +4,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="group">
+	<!-- Result Map -->
 	<resultMap type="groupMemberVO" id="groupMemberRM">
 		<result property="groupVO.groupNo" column="sg_no"/>
 		<result property="groupVO.name" column="name"/>
@@ -28,6 +29,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<resultMap type="groupPostCommentVO" id="groupPostCommentRM">
 		<result property="groupMemberVO.memberVO.memberEmail" column="member_email"/>
 		<result property="groupMemberVO.memberVO.name" column="name"/>
+	</resultMap>
+		
+	<resultMap type="memoVO" id="memoRM">
+		<result property="sgMemoNo" column="sg_memo_no"/>
+		<result property="sgNo" column="sg_no"/>
 	</resultMap>
 	
 	<!-- 
@@ -443,5 +449,43 @@ where rnum between #{pagingBean.startRowNumber} and #{pagingBean.endRowNumber} o
 		where sg_no=#{value}
 	</select>
 
+	<!-- 
+		스터디 그룹 칸반 메모를 가져오는 쿼리
+		@author 변태섭
+		@param 스터디 그룹 번호
+		@return 메모 데이터 객체
+	 -->
+	<select id="findStudyGroupMemoByStudyGroupNo" parameterType="int" resultMap="memoRM">
+		select sg_memo_no, content, position, color, sg_no
+		from STUDY_GROUP_MEMO
+		where sg_no = #{value}
+	</select>
+	
+	<!-- 
+		스터디 그룹 칸반 메모를 등록하는 쿼리
+		@author 변태섭
+		@param MemoVO 메모 데이터를 갖고있는 객체
+	 -->
+	<insert id="registerStudyGroupMemo" parameterType="memoVO">
+		insert into study_group_memo(sg_memo_no, content, position, color, sg_no)
+		values (study_group_memo_seq.nextval, #{content}, #{position}, #{color}, ${sgNo})
+	</insert>
+	
+	<!--	
+		스터디 그룹 칸반 메모의 위치를 수정하는 쿼리
+		@author 변태섭
+		@param Map 메모 위치와 메모 번호를 담은 객체 
+	 -->
+	<update id="updateStudyGroupMemoPosition" parameterType="map">
+		update study_group_memo set position = #{position} where sg_memo_no = #{memoNo}
+	</update>
+	
+	<!-- 
+		스터디 그룹 칸반 메모를 삭제하는 쿼리
+		@author 변태섭
+	 -->
+	<delete id="deleteStudyGroupMemo" parameterType="int">
+		delete from study_group_memo where sg_memo_no = #{value}
+	</delete>
 </mapper>
 

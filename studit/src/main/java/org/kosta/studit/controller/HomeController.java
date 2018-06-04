@@ -75,8 +75,4 @@ public class HomeController {
 		System.out.println("homecontroller viewName:"+ viewName);
 		return "member/"+viewName+".tiles";
 	}
-
-	
-	
-
 }

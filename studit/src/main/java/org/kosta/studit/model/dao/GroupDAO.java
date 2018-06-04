@@ -9,6 +9,7 @@ import org.kosta.studit.model.vo.GroupPostCommentVO;
 import org.kosta.studit.model.vo.GroupPostVO;
 import org.kosta.studit.model.vo.GroupVO;
 import org.kosta.studit.model.vo.MemberVO;
+import org.kosta.studit.model.vo.MemoVO;
 
 public interface GroupDAO {
 
@@ -78,6 +79,11 @@ public interface GroupDAO {
 
 	List<GroupMemberVO> getGroupMemberCount(String sgNo);
 
+	List<MemoVO> findStudyGroupMemoByStudyGroupNo(int groupNo);
 
+	void registerStudyGroupMemo(MemoVO memoVO);
 
+	void updateStudyGroupMemoPosition(Map<String, Object> map);
+
+	void deleteStudyGroupMemo(int memoNo);
 }

@@ -397,6 +397,7 @@ public class CompanyDAOTest {
 			int cno = 5;
 			companyDAO.deleteCompanyBusinessDayByCompanyNo(cno);
 		}
+		
 	 /**
 		* 업체 목록 조회 - 관리자용
 	    * @author 유동규 
@@ -413,4 +414,19 @@ public class CompanyDAOTest {
 		   System.out.println(companyDAO.getCompanyListForAdmin(map));
 	   }
 	   
+		/**
+		 * 업체 추가 사진 삭제 테스트
+		 * @author 변태섭
+		 */
+		//@Test
+		public void deleteCompanyPicFileTest() {
+			int cno=3;
+			System.out.println(companyDAO.findCountCompanyPicFileByCompanyNo(cno));
+			System.out.println("----------------------------------------------------------------");
+			companyDAO.deleteOneCompanyPicFileByCompanyNo(cno);
+			System.out.println(companyDAO.findCountCompanyPicFileByCompanyNo(cno));
+			System.out.println("----------------------------------------------------------------");
+			companyDAO.deleteCompanyPicFileByCompanyNo(cno);
+			System.out.println(companyDAO.findCountCompanyPicFileByCompanyNo(cno));
+		}
 }

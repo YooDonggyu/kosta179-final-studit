@@ -39,8 +39,7 @@ public interface CompanyService {
 	
 	JSONArray findStudyRoomConditionCountByMonth(String companyNo);
 
-	void updateCompany(CompanyVO companyVO, String day, String hashtag);
-
 	CompanyListVO getCompanyListForAdmin(int nowPage, String comSrch);
 
+	void updateCompany(CompanyVO companyVO, String day, String hashtag, List<String> companyPicFileList);
 }

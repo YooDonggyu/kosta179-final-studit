@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -88,4 +89,18 @@ public class AjaxViewControllerTest {
 	          .andExpect(content().contentType("application/json;charset=UTF-8")) 
 	          .andExpect(status().isOk());
 	    }
+	    
+	    /**
+	     * 스터디 그룹 칸반 메모 위치 옮기는 테스트
+	     * @author 변태섭
+	     */
+	  /*@Test
+	    public void updateStudyGroupMemoPositionTest() throws Exception{
+	       mock.perform(get("/ajax/updateStudyGroupMemoPosition")
+	             .param("memoNo", "6")
+	       		 .param("position", "done"))
+	          .andDo(print())
+	          .andExpect(content().contentType("application/json;charset=UTF-8")) 
+	          .andExpect(status().isOk());
+	    }*/
 }

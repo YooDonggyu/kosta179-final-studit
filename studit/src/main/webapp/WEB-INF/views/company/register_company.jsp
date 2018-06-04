@@ -135,34 +135,33 @@
 		
 		// 해시태그 입력
 		$("#hashtag").on('keyup',function(){
-			var $tagsplit = '';
-			var $maxtag = '';
-			var $this = $(this);
-			var keycount = ($this.val().match(/,/g) || []).length;
-			if(keycount>2){
-					alert('해시태그는 최대 3개 가능합니다.');
-					$maxtag = $this.val().substring(0,$this.val().length-1);
-					$this.val($maxtag);
-					console.log($maxtag);
-			}
-			console.log(keycount);
-			var $tagtrim = $this.val().replace(' ','');
-			$this.val($tagtrim);
-			for(var i=0; i<$this.val().split(',').length; i++){
-				if($this.val().split(',')[i].length>8){
-					alert('해시태그는 최대 8글자까지 가능합니다.');
-					$maxtag = $this.val().substring(0,$this.val().length-1);
-					$this.val($maxtag);
-				}
-				$tagsplit+="<input type='button' class='btn btn-success tag' value='#"+$this.val().split(',')[i]+"'>&emsp;";
-			}
-			if($tagsplit == "<input type='button' class='btn btn-success tag' value='#'>&emsp;"){
-				$('#tag-ex').html('');	
+			$(this).val($(this).val().replace(' ',''));
+		});//on keyup	
+		
+		// 해시태그 등록
+		$('#hashBtn').on('click',function(){
+			$('#tags').addClass($('#hashtag').val());
+			$('#hashtag').val('');
+			$('#tags').val($('#tags').attr('class'));
+			var hashview = $('#tags').attr('class').split(' ');
+			var viewtags = '';
+			if(hashview.length > 3){
+				alert('최대 3개까지 등록 가능합니다.');
 			}else{
-				$('#tag-ex').html($tagsplit);
+				for(var i=0; i<hashview.length; i++){
+					console.log('hashview[i]: '+hashview[i]);
+					viewtags += '<input type="button" class="btn btn-info" value="#'+hashview[i]+'">&emsp;';
+				}
+				$('#tag-ex').html(viewtags);
 			}
-			$tagsplit = '';
-		});//on keyup
+		});//on click
+		
+		// 해시태그 RESET
+		$('#hashResetBtn').on('click', function(){
+			$('#tags').attr('class','');
+			$('#tags').val('');
+			$('#tag-ex').html('');
+		});
 		
 		//사진 업로드 추가(업체)
 		var picmax = 0;
@@ -510,12 +509,23 @@
                 
                 <div class="form-group">
                     <label for="hashtag" class="col-sm-3 control-label formCategory">해시태그</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="hashtag" name="hashtag" placeholder="독서, 로맨틱, 성공적 (최대 3가지)" class="form-control"><br>
+                    <div class="col-sm-3">
+                        <input type="text" id="hashtag" style="width: 200px; margin: 0px;" maxlength="8" placeholder="최대 8글자, 최대 3가지" class="form-control">
                         </div>
-                         <div class="col-sm-5 text-left">
+                        <div class="col-sm-1">
+                        	<input type="button" id="hashBtn" class="btn btn-default" value="추가">
+                        </div>
+                        <div class="col-sm-1 text-left">
+                        	<input type="button" id="hashResetBtn" class="btn btn-warning" value="RESET">
+                        </div>
+                        <br><br>
+                </div>
+                <div class="hashViewForm text-left">
+                	<div class="col-sm-3"></div>
+                    <div class="col-sm-5">
+                         <input type="hidden" id="tags" name="hashtag">
                         <span id="tag-ex"></span>
-                    </div>
+                    </div><br><br><br><br>
                 </div>
     </div>
     

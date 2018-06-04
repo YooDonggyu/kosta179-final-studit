@@ -499,6 +499,22 @@ public class AjaxViewController {
 	public GroupMemberListVO findGroupMemberByNowPage(String groupNo, String nowPage) {
 		return groupService.findGroupMemberByGroupNo(groupNo, nowPage);
 	}
+	
+	/**
+	 * 스터디 그룹 칸반 메모 위치 변경
+	 * @author 변태섭
+	 * @param memoNo 메모 번호
+	 * @param position 메모 위치
+	 */
+	/*@RequestMapping("/updateStudyGroupMemoPosition")
+	@ResponseBody
+	public String updateStudyGroupMemoPosition(String memoNo, String position) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("memoNo", Integer.parseInt(memoNo));
+		map.put("position", position);
+		groupDAO.updateStudyGroupMemoPosition(map);
+		return "true";
+	}*/
 
 	/**
 	 * 스터디 그룹 신청자 조회

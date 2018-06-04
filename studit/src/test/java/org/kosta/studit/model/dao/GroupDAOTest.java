@@ -10,6 +10,7 @@ import org.kosta.studit.model.PagingBean;
 import org.kosta.studit.model.vo.GroupMemberVO;
 import org.kosta.studit.model.vo.GroupVO;
 import org.kosta.studit.model.vo.MemberVO;
+import org.kosta.studit.model.vo.MemoVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -195,4 +196,24 @@ public class GroupDAOTest {
 		}
 	}
 	
+   /**
+	 * 스터디 그룹 칸반 메모 받아오는 테스트
+	 * @author 변태섭
+	 */
+	//@Test
+	public void findStudyGroupMemoByStudyGroupNoTest() {
+		int groupNo =1;
+		System.out.println(groupDAO.findStudyGroupMemoByStudyGroupNo(groupNo));
+	}
+	
+	//@Test
+	public void registerStudyGroupMemoTest() {
+		MemoVO memoVO = new MemoVO();
+		memoVO.setColor("warning");
+		memoVO.setPosition("todo");
+		memoVO.setSgNo(1);
+		memoVO.setContent("이 테스트 하고 잘꺼야 ㅠ");
+		groupDAO.registerStudyGroupMemo(memoVO);
+		System.out.println(groupDAO.findStudyGroupMemoByStudyGroupNo(1));
+	}
 }

@@ -19,10 +19,12 @@ import org.kosta.studit.model.vo.GroupPostListVO;
 import org.kosta.studit.model.vo.GroupPostVO;
 import org.kosta.studit.model.vo.GroupVO;
 import org.kosta.studit.model.vo.MemberVO;
+import org.kosta.studit.model.vo.MemoVO;
 import org.kosta.studit.model.vo.RecruitPostVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -334,6 +336,61 @@ public class GroupController {
 		groupDAO.deleteGroupPost(gpNo);
 		
 		return "group/delete_post_ok.sgtiles";
+	}
+	
+   /**
+	 * 스터디 그룹 칸반 뷰
+	 * @author 변태섭
+	 * @param model 데이터를 담아 전달
+	 * @param studyGourpNo 스터디 그룹 번호
+	 * @return 해당 스터디룸의 칸반 메모들을 담은 List 객체
+	 */
+	@RequestMapping("studyGourpKanbanView")
+	public String studyGourpKanbanView(Model model, String studyGroupNo) {
+		System.out.println(studyGroupNo);
+		List<MemoVO> memoList = groupDAO.findStudyGroupMemoByStudyGroupNo(Integer.parseInt(studyGroupNo));
+		model.addAttribute("memoList", memoList);
+		return "group/schedule_group.tiles";
+	}
+	
+	/**
+	 * 스터디 그룹 칸반 메모를 등록하는 메서드
+	 * @param memoVO 입력받은 메모 데이터
+	 */
+	@PostMapping
+	@RequestMapping("registerMemo")
+	public String registerMemo(MemoVO memoVO) {
+		System.out.println(memoVO);
+		groupDAO.registerStudyGroupMemo(memoVO);
+		return "redirect:studyGourpKanbanView?studyGroupNo="+memoVO.getSgNo();
+	}
+	
+	/**
+     * 스터디 그룹 칸반 메모 위치 옮기는 메서드
+     * @author 변태섭
+     * @param memoNo 메모 번호
+     * @param position 옮길 메모 위치
+     */
+	@RequestMapping("/updateStudyGroupMemoPosition")
+	public String updateStudyGroupMemoPosition(String studyGroupNo, String memoNo, String position) {
+		System.out.println(memoNo);
+		System.out.println(position);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("memoNo", Integer.parseInt(memoNo));
+		map.put("position", position);
+		groupDAO.updateStudyGroupMemoPosition(map);
+		return "redirect:studyGourpKanbanView?studyGroupNo="+studyGroupNo;
+	}
+	
+	/**
+	 * 스터디 그룹 칸반 메모를 삭제하는 메서드
+	 * @param memoNo 메모 번호
+	 */
+	@RequestMapping("deleteStudyGroupMemo")
+	public String deleteStudyGroupMemo(String studyGroupNo, String memoNo) {
+		int mno = Integer.parseInt(memoNo);
+		groupDAO.deleteStudyGroupMemo(mno);
+		return "redirect:studyGourpKanbanView?studyGroupNo="+studyGroupNo;
 	}
 }
 

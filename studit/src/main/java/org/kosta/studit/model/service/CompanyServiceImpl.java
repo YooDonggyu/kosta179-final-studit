@@ -1,4 +1,3 @@
-
 package org.kosta.studit.model.service;
 
 import java.util.ArrayList;
@@ -224,7 +223,7 @@ public class CompanyServiceImpl implements CompanyService {
 	@Override
 	public void registerCompany(CompanyVO companyVO, String day, String hashtag, List<String> companyPicFileList) {
 		String[] days = day.split(" ");
-		String[] hashtags = hashtag.split(",");
+		String[] hashtags = hashtag.split(" ");
 		Map<String, Object> map = new HashMap<String, Object>();
 		System.out.println("days: "+days+", hashtags: "+hashtags+",before map: "+map);
 		
@@ -328,8 +327,6 @@ public class CompanyServiceImpl implements CompanyService {
 		return arr;
 		}
 
-	
-	
 	/**
 	 * 관리자 - 업체 페이징
 	 * @author 유동규
@@ -358,17 +355,24 @@ public class CompanyServiceImpl implements CompanyService {
 	 */
 	@Transactional
 	@Override
-	public void updateCompany(CompanyVO companyVO, String day, String hashtag) {
+	public void updateCompany(CompanyVO companyVO, String day, String hashtag, List<String> companyPicFileList) {
 		String[] days = day.split(" ");
-		String[] hashtags = hashtag.split(",");
+		String[] hashtags = hashtag.split(" ");
 		System.out.println("day: "+days);
 		System.out.println("hashtag: "+hashtags);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("companyNo", companyVO.getCompanyNo());
 		
+		// 업체 기본 정보 수정
 		companyDAO.updateCompany(companyVO);
 		System.out.println("updateCompany Complete");
+		// 업체 프로필 수정
+		if(companyVO.getProfilePath() != null) {
+		companyDAO.updateCompanyProfilePath(companyVO);
+		System.out.println("updateCompanyProfilePath Complete");
+		}
 		
+		// 업체 요일 수정
 		companyDAO.deleteCompanyBusinessDayByCompanyNo(companyVO.getCompanyNo());
 		System.out.println("delete BusinessDay Complete");
 		companyDAO.deleteHashtagByCompanyNo(companyVO.getCompanyNo());
@@ -379,14 +383,28 @@ public class CompanyServiceImpl implements CompanyService {
 			companyDAO.registerBusinessDay(map);
 		}
 		System.out.println("register BusinessDay Complete");
-	
+		
+		// 해시태그 수정
 		for(int j=0; j<hashtags.length; j++) {
 			map.put("tag", hashtags[j]);
 			companyDAO.registerHashtag(map);
 		}
 		System.out.println("register Hashtag Complete");
+		
+		// 업체 수가 사진 수정
+		if(companyPicFileList.size() == 2) {
+			companyDAO.deleteCompanyPicFileByCompanyNo(companyVO.getCompanyNo());
+			for(int k =0; k<companyPicFileList.size(); k++) {
+				map.put("companyPicPath", companyPicFileList.get(k));
+				companyDAO.registerCompanyPicPath(map);
+			}
+		}else if(!companyPicFileList.isEmpty() && companyPicFileList.size() == 1){
+			int cpCount = companyDAO.findCountCompanyPicFileByCompanyNo(companyVO.getCompanyNo());
+			if(cpCount == 2) {
+				companyDAO.deleteOneCompanyPicFileByCompanyNo(companyVO.getCompanyNo());
+			}
+			map.put("companyPicPath", companyPicFileList.get(0));
+			companyDAO.registerCompanyPicPath(map);
+		}
 	}
-
-	
-
 }

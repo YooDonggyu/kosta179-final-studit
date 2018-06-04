@@ -9,6 +9,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.swing.plaf.synth.SynthSplitPaneUI;
 
 import org.kosta.studit.model.dao.CompanyDAO;
 import org.kosta.studit.model.dao.MemberDAO;
@@ -72,7 +73,6 @@ public class CompanyController {
 	 * 업체의 스터디룸 예약현황 뷰를 호출하는 메서드
 	 * 업체회원이 보유한 스터디룸의 예약현황 정보 조회를 위해 
 	 * 영업일, 스터디룸 정보, 각 스터디룸별 예약현황 데이터를 가져와 뷰로 전송한다.
-	 * 
 	 * @author 김유란
 	 * @param request 세션을 얻기 위해 호출
 	 * @return 업체 스터디룸 예약현황 관리 뷰로 이동(tiles)
@@ -301,12 +301,36 @@ public class CompanyController {
 	 * @return
 	 */
 	@RequestMapping("updateCompany")
-	public String updateCompany(CompanyVO companyVO, String day, String hashtag, MultipartFile[] companyPicFile) {
+	public String updateCompany(String memberEmail, CompanyVO companyVO, String day, String hashtag, MultipartFile[] companyPicFile) {
 		System.out.println(companyVO);
 		System.out.println(day);
 		System.out.println(hashtag);
 		System.out.println(companyPicFile); //사진 처리 아직X
-		companyService.updateCompany(companyVO, day, hashtag);
+		System.out.println(memberEmail);
+		
+		List<String> companyPicFileList = new ArrayList<String>();
+		
+	//업체 사진 인코딩
+	for(int i=0; i<companyPicFile.length; i++) {
+			if(companyPicFile[i]!=null && !companyPicFile[i].isEmpty()) {
+			     String fileName = memberEmail+"_"+companyVO.getName()+"_"+companyPicFile[i].getOriginalFilename();
+			     //String path = request.getSession(false).getServletContext().getRealPath("upload"); 개발 완료 후 적용
+			     
+			     String path = "C:/resources/upload/";
+			     try {
+			    	companyPicFile[i].transferTo(new File(path, fileName));//지정 경로에 실제 파일 저장
+			    	if(i==0) {
+			    		companyVO.setProfilePath(fileName);
+			    	}else {
+			    		companyPicFileList.add(fileName);
+			    	}
+			     } catch (IllegalStateException | IOException e) {
+			        return "member/update_pic_fail.tiles";
+			     } 
+			  }
+		}
+		
+		companyService.updateCompany(companyVO, day, hashtag, companyPicFileList);
 		return "redirect:updateCompanyOkView";
 	}
 	

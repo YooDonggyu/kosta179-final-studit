@@ -139,8 +139,17 @@
 			console.log('#day: '+$('#days').val());
 		}
 		
+		// HashTag Setting
+		var hashviewSet = $('#tags').attr('class').split(' ');
+		var viewtagsSet = '';
+		for(var i=0; i<hashviewSet.length; i++){
+			console.log('hashview[i]: '+hashviewSet[i]);
+			viewtagsSet += '<input type="button" class="btn btn-info" value="#'+hashviewSet[i]+'">&emsp;';
+		}
+		$('#tag-ex').html(viewtagsSet);
+		
 		// open time에 따라 close time을 동적 할당
-		$("#timeSelect1").change(function(){
+		$("#timeSelect1").on('change', function(){
 			var endTime = '';
 			$("#timeSelect2").html('');
 			console.log("timeSelect1 val: "+$(this).val());
@@ -153,7 +162,7 @@
 				}
 			}
 			$("#timeSelect2").html(endTime);
-		});//change
+		});//on change
 		
 		$('#timeSelect2').on('change',function(){
 			console.log('timeSelect2 change');
@@ -161,7 +170,7 @@
 			var endFlag = parseInt($('#timeSelect2').val(),10);
 			if(openFlag >= endFlag){
 				alert("종료 시간은 시작 시간보다 늦어야 합니다.");
-				$('#timeSelect2 option:eq(${cvo.close})').attr('selected', 'selected');
+				$('#timeSelect2 option:eq(24)').attr('selected', 'selected');
 			}
 		});//change
 
@@ -192,53 +201,6 @@
 			console.log($("#day").val());
 		});//on
 		
-		// 해시태그 입력
-		$("#hashtag").on('keyup',function(){
-			var $tagsplit = '';
-			var $maxtag = '';
-			var $this = $(this);
-			var keycount = ($this.val().match(/,/g) || []).length;
-			if(keycount>2){
-					alert('해시태그는 최대 3개 가능합니다.');
-					$maxtag = $this.val().substring(0,$this.val().length-1);
-					$this.val($maxtag);
-					console.log($maxtag);
-			}
-			console.log(keycount);
-			
-			var $tagtrim = $this.val().replace(' ','');
-			$this.val($tagtrim);
-			var $overTag = $this.val().split(',');
-			var $tag = '';
-				for(var i=0; i<$overTag.length; i++){
-					if($overTag[i].length>8){
-						alert('해시태그는 최대 8글자까지 가능합니다.');
-						$tag = $overTag[i].substring(0,8);
-						console.log('before tag maxtag: '+$maxtag);
-					}else{
-						$tag = $overTag[i];
-					}
-					if(i == 0){
-						$maxtag = $tag;
-						$tag='';
-						console.log('i==0 maxtag: '+$maxtag);
-					}else{
-						$maxtag += ','+$tag;
-						console.log('else maxtag: '+$maxtag);
-						$tag='';
-					}
-						$this.val($maxtag);
-					console.log('after maxtag: '+$maxtag);
-				$tagsplit+="<input type='button' class='btn btn-success tag' value='#"+$this.val().split(',')[i]+"'>&emsp;";
-			}
-			if($tagsplit == "<input type='button' class='btn btn-success tag' value='#'>&emsp;"){
-				$('#tag-ex').html('');	
-			}else{
-				$('#tag-ex').html($tagsplit);
-			}
-			$tagsplit = '';
-			$maxtag = '';
-		});//on keyup
 		
 		//사진 업로드 추가(업체)
 		var picmax = 0;
@@ -263,6 +225,37 @@
 				telFlag = true;
 			}
 		});// keyup
+		
+		// 해시태그 입력
+		$("#hashtag").on('keyup',function(){
+			$(this).val($(this).val().replace(' ',''));
+		});//on keyup	
+		
+		
+		// 해시태그 등록
+		$('#hashBtn').on('click',function(){
+			$('#tags').addClass($('#hashtag').val());
+			$('#hashtag').val('');
+			$('#tags').val($('#tags').attr('class'));
+			var hashview = $('#tags').attr('class').split(' ');
+			var viewtags = '';
+			if(hashview.length > 3){
+				alert('최대 3개까지 등록 가능합니다.');
+			}else{
+				for(var i=0; i<hashview.length; i++){
+					console.log('hashview[i]: '+hashview[i]);
+					viewtags += '<input type="button" class="btn btn-info" value="#'+hashview[i]+'">&emsp;';
+				}
+				$('#tag-ex').html(viewtags);
+			}
+		});//on click
+		
+		// 해시태그 RESET
+		$('#hashResetBtn').on('click', function(){
+			$('#tags').attr('class','');
+			$('#tags').val('');
+			$('#tag-ex').html('');
+		});
 		
 		//사업자 등록번호 체크
 		$("#license").keyup(function(){
@@ -401,25 +394,25 @@
 
 	// submit Btn
 	function registerFlag(){
-		if(!companyNameFlag){
+		if($('#companyName').val() == ''){
 			alert("상호명을 확인해주세요.");
 			return false;
-		}else if(!addrFlag){
+		}else if($('#addrDetail').val() == ''){
 			alert("상세주소를 확인해주세요.");
 			return false;
-		}else if(!telFlag){
+		}else if($('#tel').val() == ''){
 			alert("전화번호를 확인해주세요.");
 			return false;
-		}else if(!urlFlag){
+		}else if($('#url').val() == ''){
 			alert("업체 url을 확인해주세요.");
 			return false;
 		}else if($("#day").val()==''){
 			alert("영업요일을 선택해주세요.");
 			return false;
-		}else if(!introFlag){
+		}else if($('#intro').val() == ''){
 			alert("업체 소개를 확인해주세요.");
 			return false;
-		}else if($("#hashtag").val()==''){
+		}else if($("#tags").val()==''){
 			alert("해시태그를 등록해주세요.");
 			return false;
 		}else{
@@ -458,10 +451,10 @@
 								<input type="text" id="sample5_address" name="primaryAddr" readonly="readonly" value="${cvo.primaryAddr }" class="form-control"><br>
 								<input type="text" id="addrDetail" name="detailAddr" value="${cvo.detailAddr }" class="form-control" required="required">
 								<input type="hidden" id="addr" name="addr">
-								<input type="hidden" id="addr1" name="addr1">
-								<input type="hidden" id="addr2" name="addr2">
-								<input type="hidden" id="addr3" name="addr3">
-								<input type="hidden" id="addr4" name="addr4">
+								<input type="hidden" id="addr1" name="addr1"  value="${cvo.addr1 }">
+								<input type="hidden" id="addr2" name="addr2"  value="${cvo.addr2 }">
+								<input type="hidden" id="addr3" name="addr3"  value="${cvo.addr3 }">
+								<input type="hidden" id="addr4" name="addr4"  value="${cvo.addr4 }">
 								<div id="map" style="height:300px;margin-top:10px;display:none"></div>
 		                    </div>
 		                </div>
@@ -513,6 +506,7 @@
 		                    	 <select id="timeSelect1" name="open">
 		       							<option value="00"> 00 </option>
 		       							<option value="01"> 01 </option>
+		       							<option value="02"> 02 </option>
 		       							<option value="03"> 03 </option>
 		       							<option value="04"> 04 </option>
 		       							<option value="05"> 05 </option>
@@ -569,9 +563,17 @@
 		            	
 		            	<div class="form-group">
 		            		<label for="" class="col-sm-2 control-label formCategory">공휴일 영업 유무</label>
-		                    <div class="col-sm-6">	
-								<label><input type='radio' name='holiday' value='영업' checked='checked'/>영업</label>&emsp;&emsp;
-								<label><input type='radio' id="test" name='holiday' value='휴업' />휴업</label>
+		                    <div class="col-sm-6">
+		                    	<c:choose>
+		                    		<c:when test="${cvo.holiday eq '영업' }">
+										<label><input type='radio' name='holiday' value='영업' checked='checked'/>영업</label>&emsp;&emsp;
+										<label><input type='radio' id="test" name='holiday' value='휴업' />휴업</label>
+		                    		</c:when>
+		                    		<c:otherwise>
+		                    			<label><input type='radio' name='holiday' value='영업'/>영업</label>&emsp;&emsp;
+										<label><input type='radio' id="test" name='holiday' value='휴업' checked='checked' />휴업</label>
+		                    		</c:otherwise>
+		                    	</c:choose>
 		                    </div>
 		            	</div>
 		            	
@@ -592,11 +594,12 @@
 		                    </div>
 		                    <div class="col-sm-1"><input type="button" id="fileBtn" value="추가" class = "btn btn-default"></div>
 		                </div>
-		                
-		                <div class="form-group">
-		                    <label for="hashtag" class="col-sm-2 control-label formCategory">해시태그</label>
-		                    <div class="col-sm-4">
 		                    
+		                    	
+				        <div class="form-group">
+			                    	<label for="hashtag" class="col-sm-3 control-label formCategory">해시태그</label>
+			                    <div class="col-sm-3">
+			                    
 		                    	<c:set var="hashtag" value=""/>
 		                    	<c:forEach items="${hashtags }" var="tag" varStatus="info">
 		                    		<c:choose>
@@ -604,20 +607,32 @@
 				                    		<c:set var="hashtag" value="${tag.CONTENT }"/>
 			                    		</c:when>
 			                    		<c:otherwise>
-				                    		<c:set var="hashtag" value="${hashtag },${tag.CONTENT }"/>
+				                    		<c:set var="hashtag" value="${hashtag } ${tag.CONTENT }"/>
 			                    		</c:otherwise>
 		                    		</c:choose>
 		                    	</c:forEach>
 		                    	
-		                        <input type="text" id="hashtag" name="hashtag" value="${hashtag }" placeholder="독서, 로맨틱, 성공적 (최대 3가지)" class="form-control"><br>
+			                        <input type="text" id="hashtag" style="width: 200px; margin: 0px;" maxlength="8" placeholder="최대 8글자, 최대 3가지" class="form-control">
 		                        </div>
-		                         <div class="col-sm-5 text-left">
+		                        <div class="col-sm-1">
+		                        	<input type="button" id="hashBtn" class="btn btn-default" value="추가">
+		                        </div>
+		                        <div class="col-sm-1 text-left">
+		                        	<input type="button" id="hashResetBtn" class="btn btn-warning" value="RESET">
+		                        </div>
+		                        <br><br>
+		                </div>
+		                <div class="hashViewForm text-left">
+		                	<div class="col-sm-3"></div>
+		                    <div class="col-sm-5">
+		                         <input type="hidden" id="tags" value="${hashtag }" class="${hashtag }" name="hashtag">
 		                        <span id="tag-ex"></span>
-		                    </div>
+		                    </div><br><br><br><br>
 		                </div>
 		                
 		                <div class="form-group">
 				          	 <div class="col-sm-6 col-sm-offset-2">
+				          	 			<input type="hidden" name="memberEmail" value="${memberVO.memberEmail }">
 				                        <button type="submit" class="btn btn-primary btn-block" onclick="return registerFlag()">수정하기</button>
 				             </div>
 				         </div>

@@ -76,12 +76,15 @@ public interface CompanyDAO {
 
 	void deleteCompanyBusinessDayByCompanyNo(int companyNo);
 
-
 	int getTotalCompanyCount(String comSrch);
 
 	List<CompanyVO> getCompanyListForAdmin(Map<String, Object> map);
 
 	void updateCompanyCondition(Map<String, Object> map);
 
+	int findCountCompanyPicFileByCompanyNo(int companyNo);
 
+	void deleteCompanyPicFileByCompanyNo(int companyNo);
+
+	void deleteOneCompanyPicFileByCompanyNo(int companyNo);
 }

@@ -77,6 +77,7 @@
 		<mvc:exclude-mapping path="/ajax/findCompanyListByAddressAndKeywordAndHashTagAjax" />
 		<mvc:exclude-mapping path="/ajax/findThirdAddressListBySecondAddressName" />
 		<mvc:exclude-mapping path="/ajax/findCompanyListByConditionAjax" />
+		<mvc:exclude-mapping path="/ajax/updateStudyGroupMemoPosition" />
 		<mvc:exclude-mapping path="/member/login"/>
 		<mvc:exclude-mapping path="/member/registerMember"/>
 		<mvc:exclude-mapping path="/recruit/getRecruitPostList" />
@@ -85,6 +86,7 @@
 		<mvc:exclude-mapping path="/member/findPasswordView" />
 		<mvc:exclude-mapping path="/member/findPassword" />
 		<mvc:exclude-mapping path="/member/checkPasswordHintAndAnswer" />
+		
 		<bean class="org.kosta.studit.controller.SessionCheckInterceptor"/>
 	</mvc:interceptor>
 	<mvc:interceptor>

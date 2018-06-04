@@ -518,6 +518,36 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     	set state = #{state}
     	where company_no = #{companyNo}
     </update>
+   	
+   	<!-- 
+   		등록 된 업체 사진 개수를 반환하는 쿼리
+   		@author 변태섭
+   		@param 업체 번호
+   		@return 해당 업체가 보유한 사진 개수
+   	 -->
+   	<select id="findCountCompanyPicFileByCompanyNo" parameterType="int" resultType="int">
+   		select count(*) from com_pic where company_no = #{value}
+   	</select>
+   	
+   	<!-- 
+   		해당 업체에 등록된 추가 사진 경로를 모두 삭제하는 쿼리
+   		@author 변태섭
+   		@param 업체 번호
+   	 -->
+   	<delete id="deleteCompanyPicFileByCompanyNo" parameterType="int">
+   		delete from com_pic where company_no = #{value}
+   	</delete>
+   	
+   	<!-- 
+   		해당 업체에 등록된 추가 사진 중 더 오래된 사진 경로 하나를 삭제하는 쿼리
+   		@author 변태섭
+   		@param 업체 번호
+   	 -->
+   	<delete id="deleteOneCompanyPicFileByCompanyNo" parameterType="int">
+   		delete from com_pic
+		where company_no = #{value}
+				and com_pic_no = (select min(com_pic_no) from com_pic where company_no = #{value})
+   	</delete>
 </mapper>
  
  
