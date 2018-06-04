@@ -18,8 +18,6 @@
 		            <li class="headerUl"><a href="${pageContext.request.contextPath}/recruit/getRecruitPostList?pageNo=1">STUDY</a></li>
 		            <li class="headerUl"><a href="${pageContext.request.contextPath}/company/findCompanyView">STUDY-ROOM</a></li>
 		            <li class="headerUl"><a href="${pageContext.request.contextPath}/company/companyView">PLACE</a></li>
-		            <li class="headerUl"><a href="${pageContext.request.contextPath}/group/studyGourpKanbanView"></a> </li> 
-		            <%-- <li><a href="${pageContext.request.contextPath}/member/getMyPage?nowPage=1"></a></li> --%>
 	          	</ul>
             
               <ul class="nav navbar-nav navbar-right">

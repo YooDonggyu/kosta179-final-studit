@@ -294,19 +294,19 @@ $(document).ready(function(){
 			 	var pb = data.pagingBean;
 			 	//이전 그룹이 있으면
 			 	if(pb.previousPageGroup){
-			 		$("#divData").append('<li><a href="#" onclick="return ajaxComSrch('+pb.startPageOfPageGroup-1+')">&laquo;</a></li>');
+			 		$("#divData").append('<li><a href="#" onclick="return ajaxComSrch('+(pb.startPageOfPageGroup-1)+')">&laquo;</a></li>');
 			 	}
 			 	//가운데 번호 그리기
 			 	for(var i = pb.startPageOfPageGroup; i<= pb.endPageOfPageGroup; i++){
 			 		if(i !=nowPage){
-			 			$("#divData").append('<li><a href="#" onclick="return ajaxComSrch('+i+')">'+i+'</a></li>');
+			 			$("#divData").append('<li><a href="javacript:void(0);" onclick="return ajaxComSrch('+i+')">'+i+'</a></li>');
 			 		}else{
-			 			$("#divData").append('<li class="disabled"><a href="#">'+i+'</a></li>');
+			 			$("#divData").append('<li class="disabled"><a href="javacript:void(0);">'+i+'</a></li>');
 			 		}
 			 	} 
 			 	//다음 그룹이 있으면
 			 	if(pb.nextPageGroup){
-			 		$("#divData").append('<li><a href="#" onclick="return ajaxComSrch('+pb.startPageOfPageGroup+1+')">&raquo;</a></li>');
+			 		$("#divData").append('<li><a href="javacript:void(0);" onclick="return ajaxComSrch('+(pb.emdPageOfPageGroup+1)+')">&raquo;</a></li>');
 			 	}
  			}//success
  		})//ajax
@@ -338,7 +338,7 @@ $(document).ready(function(){
 							"<td>";
 							$.map(data.map, function(value, i){
 								if(item.memberEmail == i){
-									str +="<h5><span class='label label-warning stopMember'>"+value+"</span></h5>";
+									str +="<h5><span class='label label-warning stopMember'data-email='"+item.memberEmail+"'>"+value+"</span></h5>";
 								}
 							})
 							str += "</td>";
@@ -352,19 +352,19 @@ $(document).ready(function(){
 				 	var pb = data.pagingBean;
 				 	//이전 그룹이 있으면
 				 	if(pb.previousPageGroup){
-				 		$("#divMemberData").append('<li><a href="#" onclick="return ajaxMemberFunc('+pb.startPageOfPageGroup-1+')">&laquo;</a></li>');
+				 		$("#divMemberData").append('<li><a href="javacript:void(0);" onclick="return ajaxMemberFunc('+(pb.startPageOfPageGroup-1)+')">&laquo;</a></li>');
 				 	}
 				 	//가운데 번호 그리기
 				 	for(var i = pb.startPageOfPageGroup; i<= pb.endPageOfPageGroup; i++){
 				 		if(i !=nowPage){
-				 			$("#divMemberData").append('<li><a href="#" onclick="return ajaxMemberFunc('+i+')">'+i+'</a></li>');
+				 			$("#divMemberData").append('<li><a href="javacript:void(0);" onclick="return ajaxMemberFunc('+i+')">'+i+'</a></li>');
 				 		}else{
-				 			$("#divMemberData").append('<li class="disabled"><a href="#">'+i+'</a></li>');
+				 			$("#divMemberData").append('<li class="disabled"><a href="javacript:void(0);">'+i+'</a></li>');
 				 		} 
 				 	} 
 				 	//다음 그룹이 있으면
 				 	if(pb.nextPageGroup){
-				 		$("#divMemberData").append('<li><a href="#" onclick="return ajaxMemberFunc('+pb.startPageOfPageGroup+1+')">&raquo;</a></li>');
+				 		$("#divMemberData").append('<li><a href="javacript:void(0);" onclick="return ajaxMemberFunc('+(pb.endPageOfPageGroup+1)+')">&raquo;</a></li>');
 				 	}
 	 			}//success
 	 		})//ajax
