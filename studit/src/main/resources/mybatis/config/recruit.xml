@@ -374,7 +374,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 							, row_number() over(order by recruit_post_no desc) as rnum
 				from recruit_post
 				<where>
-				 condition in ('모집중','추가모집')
+				 condition = '모집중' or condition=  '추가모집'
 					<choose>
 						<when test="dataMap.smallCategoryNo != null and dataMap.smallCategoryNo.size != 0">
 							<!-- 소분류 검색 -->
@@ -405,7 +405,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 					and s.big_category_no = b.big_category_no
 					and  rnum between #{pb.startRowNumber} and #{pb.endRowNumber}
 				order by a.recruit_post_no desc
-					
 	</select>
 	
 	

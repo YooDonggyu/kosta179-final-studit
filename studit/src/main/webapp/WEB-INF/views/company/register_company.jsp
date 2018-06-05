@@ -35,7 +35,6 @@
 	display: view;
 }
 </style>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7089f989ad92f0b98ff8257f8cc869ef&libraries=services"></script>
 <script>
 		// 작성: 변태섭
 		// 기능: 우편번호 API Sciprt
@@ -540,7 +539,7 @@
           <div class="form-group">
               <label for="capacity" class="col-sm-3 control-label formCategory">수용 인원</label>
               <div class="capacityPriceForm text-left">
-              		<div class="col-sm-3">
+              		<div class="col-sm-2">
                 		  <input type="number" min="1" id="capacity" name="capacity" required="required" placeholder="6" class = "form-control">
               		</div>
               		<label for="" class="col-sm-1 control-label" style="text-align:left; padding-left:0px;">명</label>
@@ -684,7 +683,6 @@
         </div> <!-- /container -->
      <div class="col - sm- 3" ></div>  
 </section>
-<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7089f989ad92f0b98ff8257f8cc869ef&libraries=services"></script>
 <script>
     var mapContainer = document.getElementById('map'), // 지도를 표시할 div
         mapOption = {

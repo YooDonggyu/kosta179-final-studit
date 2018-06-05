@@ -59,7 +59,7 @@ $(document).ready(function(){
           <div class="form-group">
               <label for="capacity" class="col-sm-2 control-label formCategory">수용 인원</label>
               <div class="capacityPriceForm text-left">
-              		<div class="col-sm-1">
+              		<div class="col-sm-2">
                 		  <input type="number" min="1" id="capacity" name="capacity" required="required" placeholder="6" class = "form-control">
               		</div>
               		<label for="" class="col-sm-1 control-label" style="text-align:left; padding-left:0px;">명</label>

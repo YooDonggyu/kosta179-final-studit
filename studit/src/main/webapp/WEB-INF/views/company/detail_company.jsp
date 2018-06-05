@@ -90,10 +90,11 @@
 				<div class="carousel-inner">
 					<%-- 아래 warning은 무시 --%>
 						<c:forEach items="${cPicList}" begin="0" end="${mainCnt}" varStatus="count" >
-							<c:choose>
+			<%-- 				<c:choose>
 						<c:when test="${count.count == 1 }"><div class="item active"></c:when>
 							<c:otherwise><div class="item"></c:otherwise>
-						</c:choose>
+						</c:choose> --%>
+						<div class="item active">
 								<div class="row">
 									<c:if test="${cntFlag}">
 										<c:forEach items="${cPicList}" var="pic" begin="${startCnt}" end="${endCnt}">
@@ -174,14 +175,14 @@
 							<div class="row sidebar-main-row " style="padding-top: 10px; padding-bottom: 10px; ">
 								<div class="col-sm-4">${list.name}</div>
 								<div class="col-sm-6">
-									<a href="" class="btn btn-default btn-xs tag">${list.price}</a>
-									<a href="" class="btn btn-default btn-xs tag">${list.capacity}명</a>
+									<a href="javacsript:void(0);" class="btn btn-default btn-xs tag">${list.price}</a>
+									<a href="javacsript:void(0);" class="btn btn-default btn-xs tag">${list.capacity}명</a>
 								</div>
 								<div class="col-sm-2">
 									<h5><a href="javascript:void(0);" class="label label-default studit-color"  onclick="hideAndShow(${list.studyRoomNo})">상세보기</a></h5>
 								</div>
 							</div>
-							<div class="row ${list.studyRoomNo} sDetail" >
+							<div class="row ${list.studyRoomNo} sDetail" style="display: none;">
 								<div class="list-group">
 									<div class="col-sm-12" >
 										<c:forEach items="${sPicList}" var="pList">
@@ -201,12 +202,13 @@
 									</c:forEach>
 								</button>
 								<button type="button" class="list-group-item"><p class="blog-post-meta" style="font-size: 13px;">설명</p>${list.content }</button>
-								<div style="width: 100%; text-align: right;"><a href="javascript:void(0);"  onclick="go()" class="btn btn-sm" style=" width:100%; background-color: #FFBC9B; color:#ffffff;	">신청하기</a></div>
-								<form action="${pageContext.request.contextPath }/studyroom/createStudyRoomConditionView" method="post" id="hiddenStudyRoomNoForm ${list.studyRoomNo}">
-									<input type="hidden" value="${list.studyRoomNo}" name="studyRoomNo">
-								</form>
+								<div style="width: 100%; text-align: right;"><a href="javascript:void(0);"  onclick="go(${list.studyRoomNo})" class="btn btn-sm" style=" width:100%; background-color: #FFBC9B; color:#ffffff;	">신청하기</a></div>
+								
 							</div>
 					</c:forEach>
+					<form action="${pageContext.request.contextPath }/studyroom/createStudyRoomConditionView" method="post" id="hiddenStudyRoomNoForm">
+						<input type="hidden" id="hiddenStudyRoomNo" value="" name="studyRoomNo">
+					</form>
 				</c:if>
 			</div>
 		</div>
@@ -216,40 +218,9 @@
 
 
 
-<!-- 지도 생성을 위한 script -->
-<script>
-	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-	    mapOption = {
-	        center: new daum.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-	        level: 3 // 지도의 확대 레벨
-	    };  
-	// 지도를 생성합니다    
-	var map = new daum.maps.Map(mapContainer, mapOption); 
-	// 주소-좌표 변환 객체를 생성합니다
-	var geocoder = new daum.maps.services.Geocoder();
-	// 주소로 좌표를 검색합니다
-	geocoder.addressSearch($("#hiddenAddr").val(), function(result, status) {
-	    // 정상적으로 검색이 완료됐으면 
-	     if (status === daum.maps.services.Status.OK) {
-	        var coords = new daum.maps.LatLng(result[0].y, result[0].x);
-	        // 결과값으로 받은 위치를 마커로 표시합니다
-	        var marker = new daum.maps.Marker({
-	            map: map,
-	            position: coords
-	        });
-	        // 인포윈도우로 장소에 대한 설명을 표시합니다
-	        var infowindow = new daum.maps.InfoWindow({
-	             content: '<div style="width:150px;text-align:center;padding:6px 0;">'+$("#hiddenAddr").val()+'</div>' 
-	        });
-	        infowindow.open(map, marker);
-	        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-	        map.setCenter(coords);
-	    } 
-	});    
-</script>
+
 
 <script>
-	
 	var imgCommonPreview = new Image();
 		function showPicture(imgSrc) {
 			var img = "${pageContext.request.contextPath}/resources/upload/"+imgSrc;
@@ -333,11 +304,41 @@
 	
 	
 	function go(no){
-		var temp = "hiddenStudyRoomNoForm"+no;
-		$(temp).submit();
+		$("#hiddenStudyRoomNo").val(no); 
+		$("#hiddenStudyRoomNoForm").submit();
 	}
 </script>
- 
+ <!-- 지도 생성을 위한 script -->
+<script>
+	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+	    mapOption = {
+	        center: new daum.maps.LatLng(37.537187, 127.005476), // 지도의 중심좌표
+	        level: 3 // 지도의 확대 레벨
+	    };  
+	// 지도를 생성합니다    
+	var map = new daum.maps.Map(mapContainer, mapOption); 
+	// 주소-좌표 변환 객체를 생성합니다
+	var geocoder = new daum.maps.services.Geocoder();
+	// 주소로 좌표를 검색합니다
+	geocoder.addressSearch($("#hiddenAddr").val(), function(result, status) {
+	    // 정상적으로 검색이 완료됐으면 
+	     if (status === daum.maps.services.Status.OK) {
+	        var coords = new daum.maps.LatLng(result[0].y, result[0].x);
+	        // 결과값으로 받은 위치를 마커로 표시합니다
+	        var marker = new daum.maps.Marker({
+	            map: map,
+	            position: coords
+	        });
+	        // 인포윈도우로 장소에 대한 설명을 표시합니다
+	        var infowindow = new daum.maps.InfoWindow({
+	             content: '<div style="width:150px;text-align:center;padding:6px 0;">'+$("#hiddenAddr").val()+'</div>' 
+	        });
+	        infowindow.open(map, marker);
+	        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+	        map.setCenter(coords);
+	    } 
+	});    
+</script>
 <style>
 	.left{
 		text-align: left;

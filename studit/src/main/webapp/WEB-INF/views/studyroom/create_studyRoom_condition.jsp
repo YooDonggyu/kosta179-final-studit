@@ -96,7 +96,7 @@ $(document).ready(function() {
             dow: ${businessDay.dow}, 
          },
          header: {
-           left: 'prev,next today',
+           left: 'prev,next',
            center: 'title',
            right: 'month'
          },
@@ -173,7 +173,7 @@ function getTimeTable(selectedDate){
          result=data;//ajax로 받아온 정보를 외부에서도 사용할 수 있게 변수에 저장
          //시간선택표 생성작업
          var timeTable='';
-         for(var i=open; i<=close; i++){
+         for(var i=parseInt(open, 10); i<=close; i++){
             timeTable+=  "<input type='button' id='time' class='btn btn-default' value='"+i+"'>"
          }//for(timeTable)
          $("#times").html(timeTable);

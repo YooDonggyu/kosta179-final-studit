@@ -198,7 +198,7 @@
 	              					<strong>${clist.name }</strong> 
 	              				</div>
 	              				<div style="font-size: 14px; color: #AB8888; font-weight: bold;">${clist.addr1 } ${clist.addr2 } ${clist.addr3 }</div><br>
-	              				<p>${clist.intro }</p>
+	              				<p style="text-overflow: ellipsis; overflow: hidden; height: 150px;white-space: pre;">${clist.intro }</p>
 	            			</div>
 	          			</div>
 	         		</c:forEach>

@@ -162,7 +162,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		@return GroupMemberVO
 	 -->
 	<select id="findGroupMemberByGroupNo" parameterType="map"  resultMap="groupMemberRM">
-	select member_email, member_name, position, sg_no, sg_member_no, pic_path
+	select distinct member_email, member_name, position, sg_no, sg_member_no, pic_path
 from(
 			select row_number() over(order by position desc) rnum, 
 							m.member_email, m.name member_name, m.pic_path, sgm.position, sgm.sg_no, sgm.sg_member_no

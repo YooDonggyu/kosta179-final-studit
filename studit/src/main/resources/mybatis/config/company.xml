@@ -384,6 +384,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 					select company_no, hit
 							, rank() over(order by hit desc) as rnum
 					from company
+					where state = '승인'
 				)h, company c
 		where h.company_no = c.company_no
 				   and rnum between 1 and 3
