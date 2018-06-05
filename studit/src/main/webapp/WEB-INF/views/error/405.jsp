@@ -12,7 +12,7 @@
 <body>
 
 <div class="row">
-	<img  src="resources/assets/img/error/405.png" width="100%" height="600px" onclick="go()" data-toggle="tooltip" title="클릭하면 메인으로 이동합니다.">
+	<img  src="${pageContext.request.contextPath}/resources/assets/img/error/405.png" width="100%" height="600px" onclick="go()" data-toggle="tooltip" title="클릭하면 메인으로 이동합니다.">
 </div>
 </body>
 

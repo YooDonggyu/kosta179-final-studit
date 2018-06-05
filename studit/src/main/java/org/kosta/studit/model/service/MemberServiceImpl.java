@@ -52,7 +52,7 @@ public class MemberServiceImpl implements MemberService {
 		if (rMemberVO == null) {
 			throw new EmailNotFoundException("해당 아이디가 없습니다.");
 		}else if (!memberDAO.isMember(rMemberVO.getMemberEmail())) {
-			throw new IsNotMemberException("탈퇴된 아이디입니다.");
+			throw new IsNotMemberException("탈퇴 혹은 정지된 아이디입니다.");
 		} else {
 			// 3.비밀번호 확인
 			if (rMemberVO.getPassword().equals(memberVO.getPassword())) {

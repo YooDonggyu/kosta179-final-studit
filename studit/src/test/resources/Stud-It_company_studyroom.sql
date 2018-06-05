@@ -161,17 +161,6 @@ company_no_seq.nextval
 
 update company set state='승인' where company_no=1
 
---공지사항
-CREATE TABLE com_announcement
-(
-	anc_no number primary key,
-	title varchar2(100) not null,
-	content clob not null,
-	regdate date not null,
-	company_no number not null,
-	constraint fk_company_no foreign key(company_no) references company(company_no)
-);
-create sequence anc_no_seq nocache;
 
 --업체 사진
 CREATE TABLE com_pic
@@ -183,46 +172,6 @@ CREATE TABLE com_pic
 );
 create sequence com_pic_no_seq nocache;
 
---업체 후기
-CREATE TABLE com_review
-(
-	com_review_no number primary key,
-	content clob not null,
-	score number not null,
-	regdate date not null,
-	member_email varchar2(100) not null,
-	company_no number not null,
-	constraint fk3_company_no foreign key(company_no) references company(company_no),
-	constraint fk11_member_email foreign key(member_email) references member(member_email)
-);
-
-create sequence com_review_seq nocache;
-
--- 업체 후기는 예약완료인 회원만 남길 수 있음
---insert into com_review(com_review_no, content, score, regdate, name, company_no) 
---values(com_review_seq.nextval, '다신 안가요', 1, sysdate, '유란', 1) ;
-
---업체 후기 댓글
-drop table com_review_comment;
-CREATE TABLE com_review_comment(
-	com_comment_no number primary key,
-	content clob not null,
-	com_review_no number not null,
-	company_no number not null,
-	regdate date not null,
-	constraint fk_com_review_no foreign key(com_review_no) references com_review(com_review_no),
-	constraint fkcompany_no foreign key(company_no) references company(company_no)
-);
-
-drop sequence com_review_comment_seq; 
-create sequence com_review_comment_seq nocache;
-
---후기가 있어야만 댓글을 달 수 있음 : 업체
---insert into com_review_comment(com_comment_no, content, com_review_no, company_no, regdate) values(com_review_comment_seq.nextval, '왜그러세요', 2, 2, sysdate);
-
-select com.name, r.content, r.name, c.content, c.company_no 
-from com_review_comment c, com_review r, company com
-where com.company_no=r.company_no and r.com_review_no=c.com_review_no
 
 --업체 요일 선택
 create table com_business_day (

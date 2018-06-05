@@ -3,6 +3,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <style>
+	.box-design{
+		padding-top: 20px;
+		padding-bottom: 20px;
+		border: 1px solid white;
+		border-radius: 20px;
+		background-color:white; 
+		height:400px;
+	}
 	.none{
 		display:none
 	}
@@ -57,12 +65,10 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12" style="padding-bottom: 70px;">
               <p>500,000 users have already trusted <a href="http://edu2.kosta.or.kr">our informations</a>.<br />Try it for yourself.</p>
             </div>
-            <div class="col-md-12 col-lg-8 col-lg-offset-2">
-              <p class="margin-bottom--zero"><img alt="" src="${pageContext.request.contextPath }/resources/assets/img/features3.png" class="img-responsive"></p>
-            </div>
+            
           </div>
         </div>
       </section>
@@ -75,15 +81,15 @@
         <div class="container">
           <div class="row">
             <div class="col-md-4">
-              <div class="box-simple">
+              <div class="box-simple box-design">
                 <div class="icon"><i class="pe-7s-map-2"></i></div>
                 <h3>PLACE COUNT</h3>
                 <h2><span class="count">${companyCount}</span></h2>
-                <p>다양한 종류의 <strong>PLACE</strong> 가 있습니다.<br> <u>HASHTAG</u>, <u>지역</u>별로 검색해하세요. <br><br>혹시, PLACE를 갖고 있다면 <br> 여러분도 등록할 수 있습니다.</p>
+                <p>다양한 종류의 <strong>PLACE</strong> 가 있습니다.<br> <u>HASHTAG</u>, <u>지역</u>별로 검색하세요. <br><br>혹시, PLACE를 갖고 있다면 <br> 여러분도 등록할 수 있습니다.</p>
               </div> 
             </div>
             <div class="col-md-4">
-              <div class="box-simple">
+              <div class="box-simple box-design">
                 <div class="icon"><i class="pe-7s-phone"></i></div>
                 <h3>STUDY COUNT</h3>
                 <h2><span class="count">${recruitCount }</span></h2>
@@ -91,7 +97,7 @@
               </div>
             </div>
             <div class="col-md-4"> 
-              <div class="box-simple">
+              <div class="box-simple box-design">
                 <div class="icon"><i class="pe-7s-mail-open-file"></i></div>
                 <h3>STUDY GROUP COUNT</h3>
                 <h2><span class="count">${groupCount}</span></h2>
@@ -185,7 +191,7 @@
 				<input type="hidden" id="companyNo" name="companyNo">
 	      			<c:forEach items="${companyList }" begin="0" end="2" var="clist">
 	          			<div class="col-sm-4 ">
-	           				<div class="box box-services" style="background: white; border:1px solid white; border-radius: 8px; ">
+	           				<div class="box box-services" style="background: white; border:1px solid white; border-radius: 20px; ">
 	           					<h5 style="text-align: right;"><span class="label label-danger">HIT ${clist.hit}</span></h5>
 	              				<img src="${pageContext.request.contextPath }/resources/upload/${clist.profilePath}" style="width: 100%; height: 200px" onclick="return goDetail(${clist.companyNo})">
 	              				<div class="text-center" style="font-size: 30px;">
@@ -206,7 +212,7 @@
         <div class="container">
           <div class="row text-center-mobile"> 
             <div class="col-md-6">
-              <p><img alt="" src="${pageContext.request.contextPath }/resources/assets/img/features2.png" class="img-responsive" style="padding-top: 120px; padding-right: 50px;"></p>
+              <p><img alt="" src="${pageContext.request.contextPath }/resources/assets/img/main-studyroom.png" class="img-responsive" style="padding-top: 120px; padding-right: 50px;"></p>
             </div>
             <div class="col-md-6">
               <div class="icon brand-terciary"><i class="pe-7s-rocket"></i></div>

@@ -25,7 +25,7 @@
 				<p class="lead blog-description">
 					<!-- 해시태그, -->
 					<c:forEach items="${cTagList}" var="tag">
-						<input type="button" class="btn btn-danger btn-xs tag studit-color" value="${fn:substring(tag.CONTENT,1,tag.CONTENT.length())}">
+						<input type="button" class="btn btn-danger btn-xs tag studit-color" value="${fn:substring(tag.CONTENT,0,tag.CONTENT.length())}">
 					</c:forEach>
 				</p>
 			</div>
@@ -74,6 +74,9 @@
            	<fmt:parseNumber var="startCnt"  integerOnly="true" type="number" value="0" />
            	<fmt:parseNumber var="endCnt"  integerOnly="true" type="number" value="2" />
            	<fmt:parseNumber var="nowCnt"  integerOnly="true" type="number" value="1" />
+           	<c:if test="${mainCnt == 0 }">
+           		<fmt:parseNumber var="mainCnt"  integerOnly="true" type="number" value="0" />
+           	</c:if>
            	<c:set var="cntFlag" value="true" />
            	<div class="row row-padding" >
 	           	<div class="col-sm-6 "><h2 class="blog-post-title">사진</h2></div>
@@ -86,9 +89,9 @@
                 <!-- Carousel items -->
 				<div class="carousel-inner">
 					<%-- 아래 warning은 무시 --%>
-						<c:forEach items="${cPicList}" begin="1" end="${mainCnt}" varStatus="count" >
-						<c:choose>
-							<c:when test="${count.count == 1 }"><div class="item active"></c:when>
+						<c:forEach items="${cPicList}" begin="0" end="${mainCnt}" varStatus="count" >
+							<c:choose>
+						<c:when test="${count.count == 1 }"><div class="item active"></c:when>
 							<c:otherwise><div class="item"></c:otherwise>
 						</c:choose>
 								<div class="row">
@@ -175,10 +178,10 @@
 									<a href="" class="btn btn-default btn-xs tag">${list.capacity}명</a>
 								</div>
 								<div class="col-sm-2">
-									<h5><a href="javascript:void(0);" class="label label-default studit-color"  onclick="hideAndShow(${list.studyRoomNo})">더보기</a></h5>
+									<h5><a href="javascript:void(0);" class="label label-default studit-color"  onclick="hideAndShow(${list.studyRoomNo})">상세보기</a></h5>
 								</div>
 							</div>
-							<div class="row ${list.studyRoomNo} sDetail" style="display: none;">
+							<div class="row ${list.studyRoomNo} sDetail" >
 								<div class="list-group">
 									<div class="col-sm-12" >
 										<c:forEach items="${sPicList}" var="pList">
@@ -198,12 +201,11 @@
 									</c:forEach>
 								</button>
 								<button type="button" class="list-group-item"><p class="blog-post-meta" style="font-size: 13px;">설명</p>${list.content }</button>
-								<div style="width: 100%; text-align: right;"><a href="#"  onclick="go()" class="btn btn-sm" style=" width:100%; background-color: #FFBC9B; color:#ffffff;	">신청하기</a></div>
-								<form action="${pageContext.request.contextPath }/studyroom/createStudyRoomConditionView" method="post" id="hiddenStudyRoomNoForm">
+								<div style="width: 100%; text-align: right;"><a href="javascript:void(0);"  onclick="go()" class="btn btn-sm" style=" width:100%; background-color: #FFBC9B; color:#ffffff;	">신청하기</a></div>
+								<form action="${pageContext.request.contextPath }/studyroom/createStudyRoomConditionView" method="post" id="hiddenStudyRoomNoForm ${list.studyRoomNo}">
 									<input type="hidden" value="${list.studyRoomNo}" name="studyRoomNo">
 								</form>
 							</div>
-						</div>
 					</c:forEach>
 				</c:if>
 			</div>
@@ -211,7 +213,6 @@
 	<div class="col-sm-1"></div>
 	</div>
 	</div><!-- container -->
-
 
 
 
@@ -331,11 +332,12 @@
 	});
 	
 	
-	function go(){
-		$("#hiddenStudyRoomNoForm").submit();
+	function go(no){
+		var temp = "hiddenStudyRoomNoForm"+no;
+		$(temp).submit();
 	}
 </script>
-
+ 
 <style>
 	.left{
 		text-align: left;

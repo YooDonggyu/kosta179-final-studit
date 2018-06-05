@@ -457,7 +457,7 @@ where rnum between #{pagingBean.startRowNumber} and #{pagingBean.endRowNumber} o
 	 -->
 	<select id="findStudyGroupMemoByStudyGroupNo" parameterType="int" resultMap="memoRM">
 		select sg_memo_no, content, position, color, sg_no
-		from STUDY_GROUP_MEMO
+		from sg_memo
 		where sg_no = #{value}
 	</select>
 	
@@ -467,8 +467,8 @@ where rnum between #{pagingBean.startRowNumber} and #{pagingBean.endRowNumber} o
 		@param MemoVO 메모 데이터를 갖고있는 객체
 	 -->
 	<insert id="registerStudyGroupMemo" parameterType="memoVO">
-		insert into study_group_memo(sg_memo_no, content, position, color, sg_no)
-		values (study_group_memo_seq.nextval, #{content}, #{position}, #{color}, ${sgNo})
+		insert into sg_memo(sg_memo_no, content, position, color, sg_no)
+		values (sg_memo_seq.nextval, #{content}, #{position}, #{color}, ${sgNo})
 	</insert>
 	
 	<!--	
@@ -477,7 +477,7 @@ where rnum between #{pagingBean.startRowNumber} and #{pagingBean.endRowNumber} o
 		@param Map 메모 위치와 메모 번호를 담은 객체 
 	 -->
 	<update id="updateStudyGroupMemoPosition" parameterType="map">
-		update study_group_memo set position = #{position} where sg_memo_no = #{memoNo}
+		update sg_memo set position = #{position} where sg_memo_no = #{memoNo}
 	</update>
 	
 	<!-- 
@@ -485,7 +485,7 @@ where rnum between #{pagingBean.startRowNumber} and #{pagingBean.endRowNumber} o
 		@author 변태섭
 	 -->
 	<delete id="deleteStudyGroupMemo" parameterType="int">
-		delete from study_group_memo where sg_memo_no = #{value}
+		delete from sg_memo where sg_memo_no = #{value}
 	</delete>
 	
 	<!-- 
@@ -496,7 +496,7 @@ where rnum between #{pagingBean.startRowNumber} and #{pagingBean.endRowNumber} o
 		select count(decode(position,'todo', 1)) todo, 
 					count(decode(position,'doing', 1)) doing, 
 					count(decode(position,'done', 1)) done
-		from study_group_memo
+		from sg_memo
 		where sg_no=#{value}
 	</select>
 </mapper>

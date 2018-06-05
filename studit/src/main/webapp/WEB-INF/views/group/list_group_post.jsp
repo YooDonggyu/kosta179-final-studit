@@ -6,7 +6,7 @@
 		<div class="row content">
 			<div class="col-md-12" style="text-align: center; padding-top: 35px; padding-bottom: 35px;">
 				<div>
-				<img src="${pageContext.request.contextPath }/resources/upload/studygroup.png" width="70px" height="70px">
+				<img src="${pageContext.request.contextPath }/resources/assets/img/studygroup.png" width="70px" height="70px">
 				</div>
 				<span style="font-weight: 500; font-size: 35px;">속닥속닥 게시판</span>
 				<p class="lead text-gray-light" style="font-size: 15px;">우리만의 비밀스런 이야기 공간</p>

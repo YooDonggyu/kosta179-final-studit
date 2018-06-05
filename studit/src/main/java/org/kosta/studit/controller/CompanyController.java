@@ -58,7 +58,6 @@ public class CompanyController {
 		CompanyListVO allCompanyList=companyService.findCompanyListByCondition(null);
 		//DB에 저장된 모든 해쉬태그 목록 : 업체가 가진 해쉬태그를 뷰에 표시
 		List<Map<String, Object>> allHashTagList=companyService.readAllHashTag();
-		System.out.println(allCompanyList.getList().get(0).getProfilePath());
 		request.setAttribute("firstAddrList", firstAddrList);
 		request.setAttribute("allCompanyList", allCompanyList.getList());
 		request.setAttribute("pagingBean", allCompanyList.getPagingBean());
@@ -350,7 +349,8 @@ public class CompanyController {
 	 * @return
 	 */
 	@RequestMapping(method=RequestMethod.POST, value="/updateStudyroomForm")
-	public String updateStudyroomFrom(String studyRoomNo, String memberEmail, Model model) {
+	public String updateStudyroomFrom(String studyRoomNo, Model model, HttpServletRequest request) {
+			String memberEmail = ((MemberVO)request.getSession().getAttribute("memberVO")).getMemberEmail();
 			model.addAttribute("cvoList", companyDAO.findCompanyByMemberEmail(memberEmail));
 			model.addAttribute("srvoList", studyroomDAO.findStudyRoomListByMemberEmail(memberEmail));
 			model.addAttribute("srno",studyRoomNo);

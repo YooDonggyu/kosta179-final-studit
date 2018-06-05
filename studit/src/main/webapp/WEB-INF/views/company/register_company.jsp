@@ -350,8 +350,8 @@
 		}else if(!introFlag){
 			alert("업체 소개를 확인해주세요.");
 			return false;
-		}else if($("#hashtag").val()==''){
-			alert("해시태그를 등록해주세요.");
+		}else if($("#tags").val()==''){
+			alert("해시태그를 등록해주세요."); 
 			return false;
 		}else if(!checkBox){
 			alert("약관 동의에 체크를 해주세요.");
@@ -540,11 +540,11 @@
           <div class="form-group">
               <label for="capacity" class="col-sm-3 control-label formCategory">수용 인원</label>
               <div class="capacityPriceForm text-left">
-              		<div class="col-sm-1">
+              		<div class="col-sm-3">
                 		  <input type="number" min="1" id="capacity" name="capacity" required="required" placeholder="6" class = "form-control">
               		</div>
               		<label for="" class="col-sm-1 control-label" style="text-align:left; padding-left:0px;">명</label>
-              		<label for="price" class="col-sm-2 control-label formCategory">이용 가격</label>
+              		<label for="price" class="col-sm-1 control-label formCategory">이용 가격</label>
               		<div class="col-sm-2">
                   		  <input type="number" id="price" min="1" name="price" required="required" placeholder="시간당 가격" class = "form-control">
                   	</div>
