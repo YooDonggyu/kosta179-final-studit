@@ -107,6 +107,14 @@ public class RecruitServiceTest {
 		System.out.println(recruitService.findStudyConditionByGroupNo("1", "1"));
 	}
 	
+	/**
+	 * 모집 게시글 번호에 상세보기 정보 조회 TEST
+	 * @author 유동규
+	 */
+	//@Test
+	public void findRecruitCommentByRecruitNoTest() {
+		System.out.println(recruitService.findRecruitPostDetailByRecruitNo("a@a.com", 1));
+	}
 
 }
 

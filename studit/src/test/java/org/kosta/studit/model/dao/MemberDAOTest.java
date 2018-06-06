@@ -102,10 +102,12 @@ public class MemberDAOTest {
 		memberDAO.registerMemberPosition(map);
 		//System.out.println(memberDAO.findMemberByEmail("a@a.com"));
 	}
-	
-	@Test
-	public void test() {
-		
+	/**
+	 * 관리자용- 회원 목록 가져오기
+	 * @author 유동규
+	 */
+	//@Test
+	public void getMemberListForAdminTest() {
 		String memberSrch = null;
 		int totalCnt = memberDAO.getTotalMemberForAdmin(memberSrch);
 		PagingBean pb = new PagingBean(totalCnt, 1);

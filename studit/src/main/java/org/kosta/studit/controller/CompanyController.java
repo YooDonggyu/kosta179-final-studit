@@ -210,16 +210,13 @@ public class CompanyController {
 	/**
 	 * 업체 번호에 따른 상세 업체 내용 조회
 	 * @author 유동규
-	 * @param model
-	 * @param request
-	 * @return
+	 * @return detail_company 상세내용이 보일 화면 
 	 */
 	@RequestMapping("/findDetailCompanyInfoByCompanyNo")
 	public String findDetailCompanyInfoByCompanyNo(Model model, HttpServletRequest request) {
 		int companyNo = -1;
 		if(request.getParameter("companyNo") != null ) {
 			companyNo = Integer.parseInt(request.getParameter("companyNo"));
-			
 			// 1.세션 이메일과 게시글 작성자를 비교해서 작성자이면 조회수 증가 방지
 			// 2.cHitList에 포함된 게시글은 조회수 증가 방지
 			String sessionEmail = ((MemberVO) request.getSession().getAttribute("memberVO")).getMemberEmail();
@@ -229,10 +226,8 @@ public class CompanyController {
 				companyDAO.updateCompanyHit(companyNo);
 				cHitList.add(companyNo);
 			}
-			
 		}
 		model.addAttribute("com", companyService.findDetailCompanyInfoByCompanyNo(companyNo));
-		
 		return "company/detail_company.tiles";
 	}
 	

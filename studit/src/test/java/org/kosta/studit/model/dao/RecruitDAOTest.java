@@ -469,7 +469,7 @@ public class RecruitDAOTest {
 		System.out.println(recruitDAO.findMemberByStudyConditionNo("1"));		
 		}
 	
-	@Test
+	//@Test
 	public void updateRecruitPostNo() {
 		Map<String,String> map = new HashMap<>();
 		map.put("table", "recruit_post_comment");
@@ -478,5 +478,36 @@ public class RecruitDAOTest {
 		recruitDAO.updateRecruitPostNo(map);
 	}
 
+	/**
+	 * 댓글 추가 TEST
+	 * @author 유동규
+	 */
+	//@Test
+	public void registerCommentByRecruitNoTest() {
+		Map<String, Object> map = new HashMap<>();
+		map.put("comment", "111");
+		map.put("userEmail", "a@a.com");
+		map.put("recruitNo", 1);
+		recruitDAO.registerCommentByRecruitNo(map);
+	}
 	
+	/**
+	 * 댓글 수정 TEST
+	 * @author 유동규
+	 */
+	//@Test
+	public void updateCommentByRecruitNoTest() {
+		Map<String, Object> map = new HashMap<>();
+		map.put("comment", "111");
+		map.put("recruitNo", 1);
+		recruitDAO.updateCommentByCommentNo(map);
+	}
+	/**
+	 * 댓글 삭제 TEST
+	 * @author 유동규
+	 */
+	//@Test
+	public void deleteCommentByRecruitNoTest() {
+		recruitDAO.deleteCommentByCommentNo(1);
+	}
 }

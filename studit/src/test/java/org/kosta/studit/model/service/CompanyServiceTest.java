@@ -44,6 +44,10 @@ public class CompanyServiceTest {
 		System.out.println(companyService.findBusinessDayByCompanyNo(1));
 	}
 	
+	/**
+	 * 업체 번호로 업체 상세정보와 업체가 제공하는 스터디 룸 정보들 가져오기 테스트
+	 * @author 유동규
+	 */
 	//@Test
 	public void findDetailCompanyInfoByCompanyNoTest() {
 		System.out.println(companyService.findDetailCompanyInfoByCompanyNo(1));
@@ -81,7 +85,7 @@ public class CompanyServiceTest {
 	 */
 	//@Test
 	public void getCompanyListForAdminTest() {
-		//System.out.println(companyService.getCompanyListForAdmin(1));
+		System.out.println(companyService.getCompanyListForAdmin(1, null));
 	}
 
 }

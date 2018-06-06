@@ -260,7 +260,13 @@ public class CompanyServiceImpl implements CompanyService {
 			memberDAO.registerMemberPosition(memberPositionMap);
 		}
 	}
-	
+	/**
+	 * 업체 상세보기 화면.
+	 * 조회할 업체의 정보, 사진, 서터디 룸 정보 등을 담아 전달한다.
+	 * @author 유동규
+	 * @param companyNo  조회할 업체 번호
+	 * @return Map<String, object> 여러 정보들이 담긴 map을 반환
+	 */
 	@Override
 	public Map<String, Object> findDetailCompanyInfoByCompanyNo(int companyNo) {
 		//회사정보

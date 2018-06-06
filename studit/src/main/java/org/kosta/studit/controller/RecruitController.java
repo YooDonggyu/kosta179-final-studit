@@ -67,7 +67,11 @@ public class RecruitController {
 		model.addAttribute("bigCategoryList", recruitDAO.getBigCategoryList());
 		return "recruit/list_recruit.tiles";
 	}
-	
+	/**
+	 * 메인화면에서 인기 검색어를 클릭했을 때 조회하기 위한 메서드
+	 * @param keyword 클릭한 인기 검색어 
+	 * @return list_recruit.tiles 검색 목록
+	 */
 	@RequestMapping("/findRecruitPostListByKeyword")
 	public String findRecruitPostListByKeyword(Model model,String keyword) {
 		RecruitPostListVO rplVO = recruitService.findRecruitPostByCategoryOrKeyword("", "", keyword, 1);
