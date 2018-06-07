@@ -374,7 +374,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 							, row_number() over(order by recruit_post_no desc) as rnum
 				from recruit_post
 				<where>
-				 condition = '모집중' or condition=  '추가모집'
+				 condition in ('모집중', '추가모집')
 					<choose>
 						<when test="dataMap.smallCategoryNo != null and dataMap.smallCategoryNo.size != 0">
 							<!-- 소분류 검색 -->
@@ -415,7 +415,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="findRecruitPostCountByCategoryOrKeyword" resultType="int">
 		select count(*) from recruit_post
 		<where>
-			condition = '모집중'
+			 condition in ('모집중', '추가모집')
 			<choose>
 				<when test="smallCategoryNo != null and smallCategoryNo.size != 0">
 					<!-- 소분류 검색 -->
@@ -540,6 +540,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				where r.member_email = m.member_email
 						and s.small_category_no = r.small_category_no
 						and s.big_category_no = b.big_category_no
+						and r.condition in ('모집중', '추가모집')
 				)
 		where rnum between 1 and 5
 	 </select>
